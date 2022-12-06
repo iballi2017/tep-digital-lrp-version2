@@ -51,7 +51,12 @@ export class LoginComponent implements OnInit {
         next: (response: any) => {
           if (response) {
             this.isLogging = false;
-            this.openSnackBar(response?.message);
+            const successResponse = response?.message;
+            const x = new Snackbar(successResponse, this._snackBar);
+            // x.openTextSnackBar();
+            x.successSnackbar();
+            this._router.navigate(['/program-starter']);
+
             // setTimeout(() => {
             // this.ngRedux.dispatch({
             //   type: ADD_LOGINUSER_SUCCESS,
@@ -63,11 +68,18 @@ export class LoginComponent implements OnInit {
         error: (err: any) => {
           if (err) {
             console.warn('Error: ', err);
+            if (!err?.error?.message) {
+              new Snackbar(
+                'Login failed, try again!',
+                this._snackBar
+              ).errorSnackbar();
+              this.isLogging = false;
+              return;
+            }
             const errorResponse = err?.error?.message;
             // this.toastr.error(err.message)
             this.isLogging = false;
-            const x = new Snackbar(errorResponse, this._snackBar);
-            x.errorSnackbar();
+            new Snackbar(errorResponse, this._snackBar).errorSnackbar();
           }
           // this.ngRedux.dispatch({
           //   type: ADD_LOGINUSER_FAILURE,
@@ -76,11 +88,5 @@ export class LoginComponent implements OnInit {
         },
       });
     }
-  }
-
-  openSnackBar(Data: any) {
-    const x = new Snackbar(Data, this._snackBar);
-    // x.openTextSnackBar();
-    x.successSnackbar();
   }
 }

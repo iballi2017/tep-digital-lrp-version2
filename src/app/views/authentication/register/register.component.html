@@ -1,1 +1,130 @@
-<p>register works!</p>
+<!-- <p>register works!</p> -->
+
+<div id="register-page">
+    <div class="page-wrapper school-bg pt-5 pb-3">
+        <div class="inner container-fluid">
+            <div class="title-image-wrapper">
+                <img src="../assets/images/TEP-school-custom-title-image.png" alt="" class="img-fluid">
+            </div>
+            <ng-template #registeredSuccessfully>
+                <div class="alert alert-info text-center">
+                    Your account has been successfully created<br />
+                    <a class="text-link" [routerLink]="['/auth']">Login</a>
+                </div>
+            </ng-template>
+            <div class="form-wrapper" *ngIf="!isRegistered; else registeredSuccessfully">
+                <div class="form-card mb-4">
+                    <div>
+                        <div class="text-center">
+                            <h5 class="text-uppercase title">Sign Up</h5>
+                        </div>
+                        <form [formGroup]="RegisterUserForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <label for="FullName" class="form-label text-uppercase">Full Name</label>
+                                <input type="text" id="FullName" class="form-control" formControlName="FullName"
+                                    [ngClass]="{'is-invalid': RegisterUserForm.get('FullName')?.touched && RegisterUserForm.get('FullName')?.invalid}"
+                                    required>
+                                <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Name
+                                    is
+                                    required.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="EmailAddress" class="form-label text-uppercase">Email Address</label>
+                                <input type="email" id="EmailAddress" class="form-control"
+                                    formControlName="EmailAddress"
+                                    [ngClass]="{'is-invalid': RegisterUserForm.get('EmailAddress')?.touched && RegisterUserForm.get('EmailAddress')?.invalid}"
+                                    required>
+
+
+                                <span class="invalid-feedback">
+                                    <small class="form-text text-danger"
+                                        *ngIf="RegisterUserForm.get('EmailAddress')?.hasError('required')">Email is
+                                        required.
+                                    </small>
+                                    <small class="form-text text-danger"
+                                        *ngIf="RegisterUserForm.get('EmailAddress')?.hasError('email')">You entered an
+                                        invalid
+                                        Email.
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Party" class="form-label text-uppercase">Select Party</label>
+                                <div class="d-flex flex-wrap">
+                                    <div class="custom-check me-4">
+                                        <input type="radio" id="Operator" value="Operator" name="Party"
+                                            formControlName="Party">
+                                        <label for="Operator" class="check-label">
+                                            <span class="ui-radio"></span>
+                                            Operator
+                                        </label>
+                                    </div>
+
+                                    <div class="custom-check">
+                                        <input type="radio" id="ParentGuardian" value="Parent/Guardian" name="Party"
+                                            formControlName="Party">
+                                        <label for="ParentGuardian" class="check-label">
+                                            <span class="ui-radio"></span>
+                                            Parent/Guardian
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Gender" class="form-label text-uppercase">Gender</label>
+                                <div class="select-drop-wrapper_">
+                                    <select id="Gender" class="form-select" formControlName="Gender"
+                                        [ngClass]="{'is-invalid': RegisterUserForm.get('Gender')?.touched && RegisterUserForm.get('Gender')?.invalid}"
+                                        required>
+                                        <option value="male">Male</option>
+                                        <option value="femail">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Gender
+                                    is
+                                    required.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password" class="form-label text-uppercase">Password</label>
+                                <!-- <div class="password-text-toggle-wrapper"> -->
+                                <!-- <input type="password" id="Password" class="form-control"> -->
+                                <!-- <div class="input-group mb-3">
+                                    <input type="password" id="Password" class="form-control" formControlName="Password"
+                                        [ngClass]="{'is-invalid': RegisterUserForm.get('Password')?.touched && RegisterUserForm.get('Password')?.invalid}"
+                                        required>
+                                    <div class="input-group-append">
+                                        <button class="" type="button" id="inputTypeToggler"></button>
+                                    </div>
+                                </div> -->
+                                <div id="passsword-toggle-field">
+                                    <input [type]="!fieldType ? 'password': 'text'" id="Password" class="form-control" formControlName="Password" #Password
+                                        [ngClass]="{'is-invalid': RegisterUserForm.get('Password')?.touched && RegisterUserForm.get('Password')?.invalid}"
+                                        required>
+                                        <button type="button" id="inputTypeToggler"(click)="toggleFieldAttr()"></button>
+                                </div>
+
+                                <small id="PasswordErrorMsg" class="form-text text-danger invalid-feedback">Password
+                                    is
+                                    required.</small>
+                                <!-- </div> -->
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button mat-raised-button class="btn primary-btn btn-block text-uppercase form-btn"
+                                    [ngClass]="{'primary-btn': RegisterUserForm.valid && !isSending}"
+                                    [disabled]="RegisterUserForm.invalid || isSending">
+                                    <span *ngIf="!isSending">{{submitBtnLabel}}</span>
+                                    <span *ngIf="isSending">Sending...</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center text-bold text-white">
+                    Already have an account <a [routerLink]="['/auth/login']" class="text-link">LOGIN</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

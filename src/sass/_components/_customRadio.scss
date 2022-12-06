@@ -1,0 +1,53 @@
+.custom-check {
+    input[type="radio"] {
+        position: absolute;
+        &:checked + label {
+            // color: red;
+        }
+    }
+    label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .ui-radio,
+    .ui-check {
+        display: block;
+        width: 1.2rem;
+        min-width: 1.2rem;
+        height: 1.2rem;
+        left: 409px;
+        top: 450px;
+        background: #ffffff;
+        border: 5px solid #F0F0F0;
+        box-sizing: border-box;
+        margin-right: 1em;
+    }
+    .ui-check {
+        border-radius: 3px;
+    }
+    .ui-radio {
+        border-radius: 50%;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        &:checked + label {
+            .ui-radio,
+            .ui-check {
+                padding: 1px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                border: 5px solid #F0F0F0;
+                background: #6cd33b;
+                &::before {
+                    // @include mixins.before("\f00c", 12px);
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+}

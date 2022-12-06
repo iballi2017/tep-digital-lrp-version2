@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './services/auth.guard';
 import { HomeComponent } from './views/home/home.component';
 
 const routes: Routes = [
@@ -12,10 +13,18 @@ const routes: Routes = [
         (m) => m.AuthenticationModule
       ),
   },
+  {
+    path: 'program-starter',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./views/program-starter/program-starter.module').then(
+        (m) => m.ProgramStarterModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

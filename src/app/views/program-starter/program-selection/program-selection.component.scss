@@ -1,0 +1,195 @@
+@use "../../../../sass/_partials/mixins";
+@use "../../../../sass/_abstracts/typography";
+
+#program-selection-page {
+    #toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .title {
+            font-family: "Montserrat Subrayada", sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 2rem;
+            color: #ffffff;
+            // margin: 0 auto;
+            // text-align: center;
+            // margin-top: 0.5em;
+            //
+            font-size: 40px;
+            line-height: 49px;
+            color: #ffffff;
+        }
+
+        .account-link {
+            #user-account-avatar .image-wrapper {
+                max-width: 80px;
+            }
+            p {
+                font-family: "Open Sans";
+                font-style: normal;
+                text-transform: capitalize;
+                color: #ffffff;
+                //
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 27px;
+            }
+        }
+    }
+
+    #content {
+        #content-card {
+            max-width: 1128px;
+            margin: 0 auto;
+            background: #1d1d1d;
+            border-radius: 20px;
+            padding: 2em 1.5em;
+
+            .card-header {
+                background: #000000;
+                border-bottom: 7px solid #6cd33b;
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;
+                border-radius: 20px 20px 0px 0px;
+                text-align: center;
+                letter-spacing: 0.105em;
+                text-transform: capitalize;
+                color: #ffffff;
+                font-family: "Open Sans";
+                font-style: normal;
+                font-weight: 800;
+                font-size: 1.9rem;
+                line-height: 167.68%;
+            }
+        }
+    }
+
+    @include mixins.maxmq(768px) {
+        #toolbar {
+            .title {
+                font-size: 1.3rem;
+            }
+
+            .account-link {
+                #user-account-avatar .image-wrapper {
+                    max-width: 40px;
+                }
+                p {
+                    font-weight: 500;
+                    font-size: 12px;
+                }
+            }
+        }
+        #content {
+            #content-card {
+                border-radius: 10px;
+                .card-header {
+                    border-bottom: 4px solid #6cd33b;
+                    border-radius: 10px 10px 0px 0px;
+                    // padding-top: 0.6em;
+                    // padding-bottom: 0.6em;
+                    letter-spacing: 0.105em;
+                    font-weight: 800;
+                    font-size: 1.2rem;
+                }
+
+                //
+            }
+        }
+    }
+}
+
+#program-selection-page {
+    .type-option {
+        // display: flex;
+        // align-items: flex-start;
+        // justify-content: space-between;
+        // max-width: 90%;
+        // margin: 3em auto;
+        li {
+            // max-width: calc(100% / 3.1);
+            input[type="radio"]:checked {
+                + .card {
+                    @include mixins.transform(scale(1.08));
+                }
+            }
+            .card {
+                // max-width: 330px;
+                // height: 316px;
+                border: 7px solid #e4e4e4;
+                border-radius: 10px;
+                cursor: pointer;
+                .card-text {
+                    font-family: "Roboto";
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 24px;
+                    line-height: 28px;
+                    letter-spacing: 0.1em;
+                    text-transform: capitalize;
+                    color: #1e1e1e;
+                }
+                @include mixins.transition(300ms ease-in-out);
+                &:hover {
+                    @include mixins.transform(scale(1.08));
+                }
+            }
+        }
+    }
+    @include mixins.minmq(768px) {
+        .type-option {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            // margin-top: 3em;
+            li {
+                // max-width: calc(100% / 3.1);
+                input[type="radio"]:checked {
+                    + .card {
+                        @include mixins.transform(scale(1.08));
+                    }
+                }
+                .card {
+                    // max-width: 330px;
+                    // height: 316px;
+                    border: 7px solid #e4e4e4;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    .card-text {
+                        font-family: "Roboto";
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 24px;
+                        line-height: 28px;
+                        letter-spacing: 0.1em;
+                        text-transform: capitalize;
+                        color: #1e1e1e;
+                    }
+                    @include mixins.transition(300ms ease-in-out);
+                    &:hover {
+                        @include mixins.transform(scale(1.08));
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+// UPDATING THE FORM CONTROL GRID
+.wide-form-controls-grid {
+    @media (min-width: 768px) {
+        // # Customize grid gap for form grig system
+        .form-row > .col,
+        .form-row {
+            margin-right: -50px;
+            margin-left: -50px;
+            & > [class*="col-"] {
+                padding-right: 50px;
+                padding-left: 50px;
+            }
+        }
+    }
+}

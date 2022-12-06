@@ -32,7 +32,7 @@ export class Snackbar {
     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom',
+      verticalPosition: 'top',
       data: this.text,
     });
   }

@@ -1,0 +1,57 @@
+<!-- <p>program-selection works!</p> -->
+<div id="program-selection-page">
+    <div class="page-wrapper school-bg py-3 py-xl-5 pb-3">
+        <div class="inner container-fluid">
+
+            <div id="toolbar">
+                <h1 class="title text-uppercase">Digital LRP</h1>
+                <div class="account-link">
+                    <div id="user-account-avatar" class="cursor-pointer" [routerLink]="['/account']">
+                        <div class="image-wrapper mx-auto">
+                            <img src="../assets/images/material-symbols_account-box.svg" alt="" class="img-fluid">
+                        </div>
+                        <p class=" mx-auto">ACCOUNT</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="content">
+                <div id="content-card" class="card">
+                    <div class="card-header">
+                        CHOOSE PROGRAM
+                    </div>
+                    <div class="card-body">
+
+                        <form [formGroup]="QuestionCategoryForm" class="wide-form-controls-grid">
+                            <ul class="type-option_ row list-style-none">
+                                <li class="col-6">
+                                    <input hidden type="radio" id="Literacy" [value]="LiteracyGameType"
+                                        formControlName="QuestionCategory" (change)="onSubmit(QuestionCategoryForm)">
+                                    <label for="Literacy" class="card">
+                                        <img src="../assets/images/literacy-featured-image.png" class="card-img-top"
+                                            alt="literacy featured image">
+                                        <div class="card-body text-center">
+                                            <p class="card-text">Literacy</p>
+                                        </div>
+                                    </label>
+                                </li>
+                                <li class="col-6">
+                                    <input hidden type="radio" id="Numeracy" [value]="NumeracyGameType"
+                                        formControlName="QuestionCategory" (change)="onSubmit(QuestionCategoryForm)">
+                                    <label for="Numeracy" class="card">
+                                        <img src="../assets/images/numeracy-featured-image.png" class="card-img-top"
+                                            alt="numeracy featured image">
+                                        <div class="card-body text-center">
+                                            <p class="card-text">Numeracy</p>
+                                        </div>
+                                    </label>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
