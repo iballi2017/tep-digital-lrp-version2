@@ -11,15 +11,15 @@ import { UserAccountComponent } from './views/user-account/user-account.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ToastModule } from 'ng2-toastr';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+// import { ToastNoAnimationModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     HomeComponent,
-    UserAccountComponent
+    UserAccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,10 +30,11 @@ import { ToastModule } from 'ng2-toastr';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    FontAwesomeModule,
-    ToastModule.forRoot()
+    // ToastNoAnimationModule.forRoot(),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    // { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }, //override global duration for snackbar
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

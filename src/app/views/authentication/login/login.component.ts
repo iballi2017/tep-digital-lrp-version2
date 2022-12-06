@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Snackbar } from 'src/app/models/class/snackbar';
+// import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { SuccessSnackbarComponent } from 'src/app/shared/snackbar/success-snackbar/success-snackbar.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   submitBtnLabel: string = 'Enter';
@@ -14,13 +18,15 @@ export class LoginComponent implements OnInit {
   // @select((s) => s.LoginUser.isLoading) isLoading: any;
   // @select((s) => s.LoginUser.error) error$: any;
   isLogging: boolean = false;
+  durationInSeconds = 500000000000000;
   constructor(
     private _fb: FormBuilder,
     private _authSvc: AuthenticationService,
     // private ngRedux: NgRedux<IAppState>,
     private _router: Router,
-    // private toastr: ToastrService
-  ) { }
+    // private toastr: ToastrService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -28,8 +34,8 @@ export class LoginComponent implements OnInit {
 
   buildForm() {
     this.LoginUserForm = this._fb.group({
-      Email: ['', [Validators.required, Validators.email]],
-      Password: ['', [Validators.required]],
+      Email: ['test@test.com', [Validators.required, Validators.email]],
+      Password: ['test', [Validators.required]],
     });
   }
 
@@ -45,6 +51,7 @@ export class LoginComponent implements OnInit {
         next: (response: any) => {
           if (response) {
             this.isLogging = false;
+            this.openSnackBar(response?.message);
             // setTimeout(() => {
             // this.ngRedux.dispatch({
             //   type: ADD_LOGINUSER_SUCCESS,
@@ -55,8 +62,12 @@ export class LoginComponent implements OnInit {
         },
         error: (err: any) => {
           if (err) {
+            console.warn('Error: ', err);
+            const errorResponse = err?.error?.message;
             // this.toastr.error(err.message)
             this.isLogging = false;
+            const x = new Snackbar(errorResponse, this._snackBar);
+            x.errorSnackbar();
           }
           // this.ngRedux.dispatch({
           //   type: ADD_LOGINUSER_FAILURE,
@@ -65,5 +76,11 @@ export class LoginComponent implements OnInit {
         },
       });
     }
+  }
+
+  openSnackBar(Data: any) {
+    const x = new Snackbar(Data, this._snackBar);
+    // x.openTextSnackBar();
+    x.successSnackbar();
   }
 }

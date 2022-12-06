@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, map, Observable, tap } from 'rxjs';
 import { baseUrl } from '../config/api';
 import { handleError } from '../helpers/errorHandler';
-import { UserLogin, UserRegister, UserTokenModel } from '../models/user';
+import { UserLogin, UserRegister, UserTokenModel } from '../models/interface/user';
 import jwt_decode from 'jwt-decode';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class AuthenticationService {
     return this._http.post<any>(this.LoginUserUrl, Payload).pipe(
       tap((res: any) => {
         if (res) {
-          this._router.navigate([`/test-onboarding`]);
+          // this._router.navigate([`/test-onboarding`]);
         }
       }),
       map((response: any) => {
