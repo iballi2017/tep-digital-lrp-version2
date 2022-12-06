@@ -1,0 +1,33 @@
+@use "../../sass/_abstracts/colors";
+@use "../../sass/_partials/mixins";
+
+.btn {
+    border: none;
+    border-radius: 10px !important;
+    @include mixins.transition(all 300ms ease-in-out);
+    &:focus {
+        // border: none !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+    }
+}
+.primary-btn {
+    background-color: colors.$primaryColor !important;
+    color: #ffffff !important;
+
+    &:hover {
+        color: #ffffff !important;
+        background-color: colors.$primaryColorDark !important;
+    }
+}
+
+.form-btn {
+    height: 45px;
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    padding-right: 1.3em !important;
+    padding-left: 1.3em !important;
+}

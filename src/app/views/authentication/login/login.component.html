@@ -1,0 +1,60 @@
+<!-- <p>login works!</p> -->
+
+<div id="login-page">
+    <div class="page-wrapper school-bg pt-5 pb-3">
+        <div class="inner container-fluid">
+            <div class="title-image-wrapper">
+                <img src="../assets/images/TEP-school-custom-title-image.png" alt="" class="img-fluid">
+            </div>
+            <div class="form-wrapper">
+                <div class="form-card mb-4">
+                    <div class="text-center">
+                        <h5 class="text-uppercase title">Login</h5>
+                    </div>
+                    <!-- <ng-container>
+                        <div class="alert alert-danger text-center" *ngIf="(error$ | async)">
+                            <small>{{error$ | async}}</small>
+                        </div>
+                    </ng-container> -->
+                    <form [formGroup]="LoginUserForm" (ngSubmit)="onSubmit()" novalidate>
+                        <div class="form-group">
+                            <label for="Email" class="form-label text-uppercase">User Id / Email Address</label>
+                            <input type="email" id="Email" class="form-control" formControlName="Email" required
+                                [ngClass]="{'is-invalid': LoginUserForm.get('Email')?.touched && LoginUserForm.get('Email')?.invalid}">
+                            <span class="invalid-feedback">
+                                <small class="form-text text-danger"
+                                    *ngIf="LoginUserForm.get('Email')?.hasError('required')">Email is
+                                    required.
+                                </small>
+                                <small class="form-text text-danger"
+                                    *ngIf="LoginUserForm.get('Email')?.hasError('Email')">You entered an
+                                    invalid
+                                    Email.
+                                </small>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password" class="form-label text-uppercase">Password</label>
+                            <input type="password" id="Password" class="form-control" formControlName="Password">
+                            <aside>
+                                <a [routerLink]="['/auth/forgot-password']" class="forgot-password-link">Forgot
+                                    password?</a>
+                            </aside>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button mat-raised-button class="btn primary-btn btn-block text-uppercase form-btn"
+                                [disabled]="LoginUserForm.invalid || isLogging">
+                                <span *ngIf="!isLogging">{{submitBtnLabel}}</span>
+                                <span *ngIf="isLogging">Logging...</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="text-center text-bold text-white">
+                    If you don’t have an account <a [routerLink]="['/auth/register']" class="text-link">REGISTER</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

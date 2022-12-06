@@ -1,0 +1,38 @@
+#login-page {
+    .page-wrapper {
+        min-height: 100vh;
+        width: 100%;
+        .inner {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    }
+}
+.title-image-wrapper {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 3em;
+}
+.form-wrapper {
+    width: 100%;
+    max-width: 400px;
+    // margin: 0 auto;
+}
+
+.forgot-password-link {
+    text-decoration: none;
+    font-family: "Roboto";
+    font-style: italic;
+    font-weight: 500;
+    font-size: .85rem;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    color: #009cf3;
+    margin-top: .4em;
+}
