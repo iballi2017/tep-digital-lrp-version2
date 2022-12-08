@@ -44,7 +44,7 @@
             margin: 0 auto;
             background: #1d1d1d;
             border-radius: 20px;
-            padding: 2em 1.5em;
+            // padding: 2em 1.5em;
 
             .card-header {
                 background: #000000;
@@ -115,8 +115,9 @@
                 }
             }
             .card {
-                // max-width: 330px;
+                max-width: 330px;
                 // height: 316px;
+                margin: 0 auto;
                 border: 7px solid #e4e4e4;
                 border-radius: 10px;
                 cursor: pointer;

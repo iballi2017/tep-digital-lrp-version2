@@ -21,11 +21,15 @@
                     <div class="card-header">
                         CHOOSE PROGRAM
                     </div>
-                    <div class="card-body">
+                    <div class="card-body py-5">
 
                         <form [formGroup]="QuestionCategoryForm" class="wide-form-controls-grid">
                             <ul class="type-option row list-style-none">
+<<<<<<< HEAD
                                 <li class="col-6">
+=======
+                                <li class="col-12 col-md-6 py-2">
+>>>>>>> f1ec720e65369e3bd3986fcadafc2e51553e4c5d
                                     <input hidden type="radio" id="Literacy" [value]="LiteracyGameType"
                                         formControlName="QuestionCategory" (change)="onSubmit(QuestionCategoryForm)">
                                     <label for="Literacy" class="card">
@@ -36,7 +40,7 @@
                                         </div>
                                     </label>
                                 </li>
-                                <li class="col-6">
+                                <li class="col-12 col-md-6 py-2">
                                     <input hidden type="radio" id="Numeracy" [value]="NumeracyGameType"
                                         formControlName="QuestionCategory" (change)="onSubmit(QuestionCategoryForm)">
                                     <label for="Numeracy" class="card">

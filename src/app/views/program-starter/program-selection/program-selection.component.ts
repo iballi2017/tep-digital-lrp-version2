@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { GameType } from 'src/app/models/interface/game-type';
+import { TestOccupantSelectionComponent } from '../components/test-occupant-selection/test-occupant-selection.component';
 
 @Component({
   selector: 'app-program-selection',
@@ -32,17 +33,17 @@ export class ProgramSelectionComponent implements OnInit {
     //     QuestionCategory: QuestionCategory,
     //   },
     // });
-    // const dialogRef = this.dialog.open(TestRespondentSelectionComponent, {
-    //   // width: '100%',
-    //   // maxWidth: '500px',
-    //   data: {
-    //     QuestionCategory: QuestionCategory,
-    //   },
-    // });
+    const dialogRef = this.dialog.open(TestOccupantSelectionComponent, {
+      // width: '100%',
+      // maxWidth: '500px',
+      data: {
+        QuestionCategory: QuestionCategory,
+      },
+    });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   this.QuestionCategoryForm?.reset();
-    // });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.QuestionCategoryForm?.reset();
+    });
   }
 
   onSubmit(QuestionCategoryForm: any) {
