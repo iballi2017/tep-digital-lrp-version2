@@ -20,6 +20,38 @@
         background-color: colors.$primaryColorDark !important;
     }
 }
+.primary-btn-reverse {
+    color: colors.$primaryColor !important;
+    background-color: #ffffff !important;
+    border: 1px solid colors.$primaryColor !important;
+
+    &:hover {
+        background-color: #ffffff !important;
+        color: colors.$primaryColorDark !important;
+    }
+}
+
+.danger-btn{
+    background-color: colors.$dangerColor !important;
+    color: #ffffff !important;
+    border: 1px solid colors.$dangerColor !important;
+
+    &:hover {
+        color: #ffffff !important;
+        background-color: colors.$dangerColorDark !important;
+    }
+}
+
+.danger-btn-reverse{
+    color: colors.$dangerColor !important;
+    background-color: #ffffff !important;
+    border: 1px solid colors.$dangerColor !important;
+
+    &:hover {
+        background-color: #ffffff !important;
+        color: colors.$dangerColorDark !important;
+    }
+}
 
 .form-btn {
     height: 45px;

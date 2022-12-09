@@ -6,6 +6,7 @@ import { ProgramStarterComponent } from './program-starter.component';
 import { ProgramSelectionComponent } from './program-selection/program-selection.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestOccupantSelectionComponent } from './components/test-occupant-selection/test-occupant-selection.component';
+import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
 
 @NgModule({
   declarations: [ProgramStarterComponent, ProgramSelectionComponent, TestOccupantSelectionComponent],
@@ -14,6 +15,7 @@ import { TestOccupantSelectionComponent } from './components/test-occupant-selec
     ProgramStarterRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgMaterialModule
   ],
 })
 export class ProgramStarterModule {}

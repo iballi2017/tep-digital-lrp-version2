@@ -21,6 +21,30 @@ const routes: Routes = [
         (m) => m.ProgramStarterModule
       ),
   },
+  {
+    path: 'account',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./views/user-account/user-account.module').then(
+        (m) => m.UserAccountModule
+      ),
+  },
+  {
+    path: 'literacy',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./views/literacy-test/literacy-test.module').then(
+        (m) => m.LiteracyTestModule
+      ),
+  },
+  {
+    path: 'numeracy',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./views/numeracy-test/numeracy-test.module').then(
+        (m) => m.NumeracyTestModule
+      ),
+  },
 ];
 
 @NgModule({

@@ -86,3 +86,37 @@ body {
   // color: #ff4081;
   color: yellow;
 }
+
+// CUSTOM STYLE CORRECTIONS
+.mat-dialog-container {
+  box-shadow: unset !important;
+  background: unset !important;
+  padding: 0 !important;
+}
+.mat-snack-bar-container {
+  color: #202020;
+  background: #ffffff;
+}
+
+.mat-select-arrow {
+  color: #73cf48;
+}
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: #73cf48;
+}
+.mat-form-field .mat-form-field-label {
+  color: #73cf48;
+}
+.mat-form-field-label{
+  color: #73cf48 !important;
+}
+.mat-form-field.mat-form-field-invalid .mat-form-field-label {
+  color: #f44336 !important;
+}
+.mat-form-field-ripple {
+  background-color: #73cf48 !important;
+}
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple,
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent {
+  background-color: #f44336 !important;
+}

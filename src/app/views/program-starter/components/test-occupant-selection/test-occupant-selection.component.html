@@ -1,1 +1,43 @@
-<p>test-occupant-selection works!</p>
+<!-- <p>test-occupant-selection works!</p> -->
+<div id="occupant-selection-dialog" class="container-fluid">
+    <form [formGroup]="OccupantSelectionForm" (ngSubmit)="onSubmit()">
+        <div class="card shadow">
+            <div class="card-header">
+                <h5>{{title}}</h5>
+            </div>
+            <div class="card-body pb-0">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Select occupant</mat-label>
+                    <mat-select name="RespondentId" formControlName="RespondentId">
+                        <mat-option *ngFor="let occupant of occupantsList" [value]="occupant?.usr_id">
+                            {{occupant?.occ_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div id="add-new-occupant-btn" class="mb-4">
+                    <div class="d-grid gap-2">
+                        <button mat-stroked-button type="button"
+                            class="py-2 border-radius-10 primary-btn-reverse">{{newOccupantBtnLabel |
+                            uppercase}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer pt-0 bg-none">
+                <div class="d-grid gap-2 mt-4">
+                    <button mat-stroked-button type="submit" class="py-2 border-radius-10 primary-btn"
+                        [disabled]="OccupantSelectionForm.invalid || isStatingTest">
+                        <ng-container *ngIf="isStatingTest">Starting...</ng-container>
+                        <ng-container *ngIf="!isStatingTest">{{continueBtnLabel |
+                            uppercase}}</ng-container>
+                    </button>
+                </div>
+                <div class="my-3">
+                </div>
+                <div class="d-grid gap-2">
+                    <button mat-stroked-button type="button" class="py-2 border-radius-10 danger-btn" (click)="closeDialog()">{{cancelBtnLabel |
+                        uppercase}}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

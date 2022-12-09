@@ -1,0 +1,38 @@
+#occupant-selection-dialog {
+    .card {
+        border: none;
+        .card-header {
+            padding-top: 1.2em;
+            padding-bottom: 1.2em;
+            background: #444444;
+            h5 {
+                margin: 0;
+                font-family: "Roboto";
+                font-style: normal;
+                font-weight: 800;
+                font-size: 1.12rem;
+                line-height: 36px;
+                text-align: center;
+                text-transform: capitalize;
+                color: #ffffff;
+                text-align: center;
+            }
+        }
+
+        .card-footer{
+            background-color: unset !important;
+            border: 1px solid #AEAEAE !important;
+        }
+    }
+}
+#add-new-occupant-btn {
+    max-width: 150px;
+    margin: 0 auto;
+}
+
+button {
+    font-family: "Open Sans" !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+}

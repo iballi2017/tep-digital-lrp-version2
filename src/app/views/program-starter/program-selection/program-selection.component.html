@@ -5,7 +5,7 @@
 
             <div id="toolbar">
                 <h1 class="title text-uppercase cursor-pointer" [routerLink]="['/']">Digital LRP</h1>
-                <div class="account-link">
+                <div class="account-link" [routerLink]="['/account']">
                     <div id="user-account-avatar" class="cursor-pointer" [routerLink]="['/account']">
                         <div class="image-wrapper mx-auto">
                             <img src="../assets/images/material-symbols_account-box.svg" alt="" class="img-fluid">
@@ -24,12 +24,8 @@
                     <div class="card-body py-5">
 
                         <form [formGroup]="QuestionCategoryForm" class="wide-form-controls-grid">
-                            <ul class="type-option row list-style-none">
-<<<<<<< HEAD
-                                <li class="col-6">
-=======
+                            <ul class="type-option row list-style-none ps-0">
                                 <li class="col-12 col-md-6 py-2">
->>>>>>> f1ec720e65369e3bd3986fcadafc2e51553e4c5d
                                     <input hidden type="radio" id="Literacy" [value]="LiteracyGameType"
                                         formControlName="QuestionCategory" (change)="onSubmit(QuestionCategoryForm)">
                                     <label for="Literacy" class="card">

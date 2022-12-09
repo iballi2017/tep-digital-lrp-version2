@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserAccountComponent implements OnInit {
 
+  title = 'LITERACY';
+  literacyTestSideNavTitle = 'Level';
+  
+  menuList = [
+    {
+      title: 'ACCOUNT',
+    },
+  ];
   constructor() { }
 
   ngOnInit(): void {

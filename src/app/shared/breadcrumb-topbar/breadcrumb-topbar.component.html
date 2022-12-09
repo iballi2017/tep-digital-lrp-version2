@@ -1,0 +1,19 @@
+<!-- <p>breadcrumb-topbar works!</p> -->
+<div id="breadcrumb-topbar">
+    <div id="breadcrumb">
+        <div class="back-btn-wrapper">
+            <button class="btn" id="back-btn" (click)="back()"> </button>
+            <div>Back</div>
+        </div>
+        <ul id="pages" class="list-style-none ps-0 mb-0" [ngClass]="{'pd-left': menuList?.length > 1}">
+            <li class="page" *ngFor="let item of menuList">{{item?.title}}</li>
+        </ul>
+        <!-- <div id="title-bar">
+            <h1>{{title}}</h1>
+        </div> -->
+        <div class="back-btn-wrapper">
+            <button class="btn" id="close-btn" (click)="closePage()"> </button>
+            <div>Close</div>
+        </div>
+    </div>
+</div>

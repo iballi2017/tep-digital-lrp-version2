@@ -34,8 +34,8 @@ export class ProgramSelectionComponent implements OnInit {
     //   },
     // });
     const dialogRef = this.dialog.open(TestOccupantSelectionComponent, {
-      // width: '100%',
-      // maxWidth: '500px',
+      width: '100%',
+      maxWidth: '550px',
       data: {
         QuestionCategory: QuestionCategory,
       },

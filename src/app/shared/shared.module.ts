@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ErrorSnackbarComponent } from './snackbar/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from './snackbar/success-snackbar/success-snackbar.component';
 import { NotificationSnackbarComponent } from './snackbar/notification-snackbar/notification-snackbar.component';
+import { BreadcrumbTopbarComponent } from './breadcrumb-topbar/breadcrumb-topbar.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 
@@ -11,7 +12,8 @@ import { NotificationSnackbarComponent } from './snackbar/notification-snackbar/
   declarations: [
     ErrorSnackbarComponent,
     SuccessSnackbarComponent,
-    NotificationSnackbarComponent
+    NotificationSnackbarComponent,
+    BreadcrumbTopbarComponent
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,7 @@ import { NotificationSnackbarComponent } from './snackbar/notification-snackbar/
   ],
   exports: [
     // ToastrModule
+    BreadcrumbTopbarComponent
   ]
 })
 export class SharedModule { }

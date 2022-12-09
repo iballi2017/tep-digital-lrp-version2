@@ -21,24 +21,26 @@ export class OccupantService {
 
   LoadOccupants() {
     // this.ngRedux.dispatch({ type: FETCH_OCCUPANTS_LIST });
-    this._http.get(this.GetOccupantUrl).subscribe({
-      next: (response: any) => {
-        if (response) {
+    return this._http.get(this.GetOccupantUrl);
+    
+    // .subscribe({
+    //   next: (response: any) => {
+    //     if (response) {
 
-          // this.ngRedux.dispatch({
-          //   type: FETCH_OCCUPANTS_LIST_SUCCESS,
-          //   payload: response.data,
-          // });
-        }
-      },
-      error: (err: any) => {
-        console.warn('Error: ', err);
-        // this.ngRedux.dispatch({
-        //   type: FETCH_OCCUPANTS_LIST_ERROR,
-        //   payload: err,
-        // });
-      },
-    });
+    //       // this.ngRedux.dispatch({
+    //       //   type: FETCH_OCCUPANTS_LIST_SUCCESS,
+    //       //   payload: response.data,
+    //       // });
+    //     }
+    //   },
+    //   error: (err: any) => {
+    //     console.warn('Error: ', err);
+    //     // this.ngRedux.dispatch({
+    //     //   type: FETCH_OCCUPANTS_LIST_ERROR,
+    //     //   payload: err,
+    //     // });
+    //   },
+    // });
   }
 
   AddOccupant(Occupant: Occupant) {
