@@ -45,6 +45,14 @@ const routes: Routes = [
         (m) => m.NumeracyTestModule
       ),
   },
+  {
+    path: 'component-storage',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('src/app/ui-component-storage/ui-component-storage.module').then(
+        (m) => m.UiComponentStorageModule
+      ),
+  },
 ];
 
 @NgModule({

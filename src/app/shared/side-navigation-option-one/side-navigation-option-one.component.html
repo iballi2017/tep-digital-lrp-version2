@@ -1,0 +1,24 @@
+<!-- <p>side-navigation-option-one works!</p> -->
+<nav>
+    <!-- Levels Navigation -->
+    <!-- <?php include "../components/levels-navigation.php"; ?> -->
+    <div id="levels-navigation">
+        <div class="main-wrapper">
+            <div class="title text-center mb-4">{{title}}</div>
+            <ul id="navigation-items">
+                <li *ngFor="let item of navItemList">
+                    <a [routerLink]="[item?.url]" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:
+                        true}">
+                        {{item?.name}}
+                    </a>
+                </li>
+                <li *ngIf="logout">
+                    <a id="logout-trigger" class="cursor-pointer" (click)="logoutUser()">
+                      Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--  -->
+</nav>

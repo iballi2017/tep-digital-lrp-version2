@@ -3,7 +3,46 @@
     <div class="page-wrapper school-bg py-5 pb-3">
         <div class="inner container-fluid">
             <app-breadcrumb-topbar [title]="title" [menuList]="menuList"></app-breadcrumb-topbar>
-            <router-outlet></router-outlet>
+            <div class="row">
+                <div class="col-12 col-xl-3 d-none d-xl-block">
+                    <!-- Side Navigation -->
+                    <div class="d-none d-xl-block">
+                        <app-side-navigation-option-one [title]="literacyTestSideNavTitle" [navItemList]="navItemList"
+                            [logout]="logout"></app-side-navigation-option-one>
+                        <!-- <app-literacy-test-side-navigation [title]="literacyTestSideNavTitle"
+                            [navItemList]="navItemList" [logout]="logout"></app-literacy-test-side-navigation> -->
+                    </div>
+                </div>
+                <div class="col-12 col-xl-9">
+                    <main>
+                        <mat-drawer-container class="example-container" hasBackdrop="true">
+                            <mat-drawer #drawer class="example-sidenav" mode="over">
+                                <app-side-navigation-option-one [title]="literacyTestSideNavTitle"
+                                    [navItemList]="navItemList" [logout]="logout"></app-side-navigation-option-one>
+                            </mat-drawer>
+
+                            <div class="example-sidenav-content">
+                                <div class="d-block d-xl-none">
+                                    <mat-toolbar>
+                                        <button mat-icon-button class="example-icon"
+                                            aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+                                            <mat-icon>menu</mat-icon>
+                                        </button>
+                                    </mat-toolbar>
+                                </div>
+                                <router-outlet></router-outlet>
+                            </div>
+
+                        </mat-drawer-container>
+
+                        <!-- <div class="row">
+                            <div class="col-12"> -->
+                        <router-outlet></router-outlet>
+                        <!-- </div>
+                        </div> -->
+                    </main>
+                </div>
+            </div>
         </div>
     </div>
 </div>

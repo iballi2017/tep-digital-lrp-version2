@@ -1,0 +1,94 @@
+#levels-navigation {
+    background: #1e2b19;
+    border-radius: 10px;
+    // padding: 0.95em 1.2em;
+    padding: 17px 18px;
+
+    .title {
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 800;
+        font-size: 1.5rem;
+        text-transform: capitalize;
+        color: #ffffff;
+    }
+
+    #navigation-items {
+        background-color: #ffffff;
+        list-style: none;
+        padding-left: 0;
+        border-radius: 10px;
+        li {
+            &:first-child {
+                a {
+                    border-top-right-radius: 10px;
+                    border-top-left-radius: 10px;
+                }
+            }
+            &:last-child {
+                a {
+                    border-bottom-right-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                }
+            }
+            a {
+                display: block;
+                background: rgba(255, 255, 255, 0.5);
+                border: 1px solid #9d9d9d;
+                font-family: "Open Sans";
+                font-style: normal;
+                font-weight: 600;
+                font-size: 1.1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-transform: uppercase;
+                color: #9d9d9d;
+                text-decoration: none;
+                height: 78px;
+                font-weight: 800;
+                padding-right: .3em;
+                padding-left: .3em;
+            }
+
+            .router-link-active {
+                background-color: red;
+                background: #73cf48;
+                border: 6px solid #fbff45;
+                font-family: "Open Sans";
+                font-style: normal;
+                font-weight: 800;
+                display: flex;
+                align-items: center;
+                color: #ffffff;
+            }
+            // &.active,
+            &:hover {
+                a {
+                    background: #73cf48;
+                    border: 6px solid #fbff45;
+                    display: flex;
+                    align-items: center;
+                    color: #ffffff;
+                }
+
+                &:first-child {
+                    a {
+                        border-top-right-radius: 10px;
+                        border-top-left-radius: 10px;
+                    }
+                }
+                &:last-child {
+                    a {
+                        border-bottom-right-radius: 10px;
+                        border-bottom-left-radius: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+#logout-trigger {
+    font-weight: 700;
+    color: #d93333 !important;
+}

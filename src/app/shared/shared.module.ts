@@ -4,24 +4,29 @@ import { ErrorSnackbarComponent } from './snackbar/error-snackbar/error-snackbar
 import { SuccessSnackbarComponent } from './snackbar/success-snackbar/success-snackbar.component';
 import { NotificationSnackbarComponent } from './snackbar/notification-snackbar/notification-snackbar.component';
 import { BreadcrumbTopbarComponent } from './breadcrumb-topbar/breadcrumb-topbar.component';
+import { SideNavigationOptionOneComponent } from './side-navigation-option-one/side-navigation-option-one.component';
+import { SharedRoutingModule } from './shared.routing.module';
+import { NgMaterialModule } from '../ng-material/ng-material.module';
 // import { ToastrModule } from 'ngx-toastr';
-
-
 
 @NgModule({
   declarations: [
     ErrorSnackbarComponent,
     SuccessSnackbarComponent,
     NotificationSnackbarComponent,
-    BreadcrumbTopbarComponent
+    BreadcrumbTopbarComponent,
+    SideNavigationOptionOneComponent,
   ],
   imports: [
     CommonModule,
     // ToastrModule.forRoot(),
+    SharedRoutingModule,
+    NgMaterialModule
   ],
   exports: [
     // ToastrModule
-    BreadcrumbTopbarComponent
-  ]
+    BreadcrumbTopbarComponent,
+    SideNavigationOptionOneComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}
