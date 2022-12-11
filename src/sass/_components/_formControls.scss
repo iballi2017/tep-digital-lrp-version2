@@ -1,5 +1,6 @@
 @use "../../sass/_abstracts/colors";
 @use "../../sass/_partials/mixins";
+
 input[type="text"],
 input[type="password"],
 input[type="number"],
@@ -7,18 +8,21 @@ input[type="email"],
 input[type="search"],
 select.form-control,
 select.form-select {
+
     &.form-control,
     &.form-select {
         // border: none;
         // background: #f0f0f0;
         border-radius: 10px;
         height: 45px;
+
         &:focus {
             outline: 0;
             box-shadow: none;
             // border: 1px solid colors.$successColor;
         }
     }
+
     &.form-select {
         padding-right: calc(1.5em + 0.75rem) !important;
         // background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e") !important;
@@ -30,6 +34,7 @@ select.form-select {
         cursor: pointer;
     }
 }
+
 input[type="search"] {
     &.form-control {
         background: unset;
@@ -37,10 +42,18 @@ input[type="search"] {
     }
 }
 
+.grey-control {
+    background: #f0f0f0 !important;
+    // border: none !important;
+}
+
+
+
 .custom-drop {
     // display: flex;
     // align-items: center;
     position: relative;
+
     &::after {
         content: "";
         display: block;
@@ -57,12 +70,14 @@ input[type="search"] {
 }
 
 select {
+
     // @include mixins.appearance(none);
     option {
         margin: 5em;
         line-height: 2;
         font: inherit;
     }
+
     &::after {
         content: "hhhhh";
     }
@@ -71,9 +86,11 @@ select {
 .select-drop-wrapper {
     position: relative;
     height: 45px;
+
     * {
         cursor: pointer;
     }
+
     &::after {
         // @include after('\f0d7', 20px);
         @include mixins.after("\f0dd", 20px);
@@ -102,6 +119,7 @@ select {
     align-items: center;
     justify-content: center;
     background: #f0f0f0;
+
     &::after {
         content: "";
         display: block;
@@ -113,15 +131,18 @@ select {
 }
 
 
-#passsword-toggle-field{
+#passsword-toggle-field {
     position: relative;
-    #inputTypeToggler{
+
+    #inputTypeToggler {
         border: none;
         background-color: unset;
         bottom: 30%;
-        &:focus{
+
+        &:focus {
             outline: 0;
         }
+
         position: absolute;
         right: 0;
     }

@@ -7,6 +7,9 @@ import { BreadcrumbTopbarComponent } from './breadcrumb-topbar/breadcrumb-topbar
 import { SideNavigationOptionOneComponent } from './side-navigation-option-one/side-navigation-option-one.component';
 import { SharedRoutingModule } from './shared.routing.module';
 import { NgMaterialModule } from '../ng-material/ng-material.module';
+import { PrimaryButtonComponent } from './primary-button/primary-button.component';
+import { DangerButtonComponent } from './danger-button/danger-button.component';
+import { DefaultButtonComponent } from './default-button/default-button.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -16,6 +19,9 @@ import { NgMaterialModule } from '../ng-material/ng-material.module';
     NotificationSnackbarComponent,
     BreadcrumbTopbarComponent,
     SideNavigationOptionOneComponent,
+    PrimaryButtonComponent,
+    DangerButtonComponent,
+    DefaultButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +33,7 @@ import { NgMaterialModule } from '../ng-material/ng-material.module';
     // ToastrModule
     BreadcrumbTopbarComponent,
     SideNavigationOptionOneComponent,
+    PrimaryButtonComponent
   ],
 })
 export class SharedModule {}

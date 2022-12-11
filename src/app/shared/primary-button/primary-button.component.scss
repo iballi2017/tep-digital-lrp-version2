@@ -1,0 +1,27 @@
+@use "../../../sass/_abstracts/colors";
+@use "../../../sass/_partials/mixins";
+
+button {
+    // background: #73CF48;
+    background: colors.$primaryColor;
+    border-radius: 10px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    text-transform: capitalize;
+    color: #FFFFFF;
+
+    &:hover,
+    &:focus {
+        background: colors.$primaryColorDark;
+        color: #FFFFFF;
+    }
+
+    @include mixins.maxmq(768px){
+        border-radius: 5px !important;
+        font-weight: 600;
+        font-size: 14px;
+    }
+}

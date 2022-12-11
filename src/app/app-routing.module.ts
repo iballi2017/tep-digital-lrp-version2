@@ -46,6 +46,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'practicals',
+    loadChildren: () =>
+      import('./practicals/practicals.module').then(
+        (m) => m.PracticalsModule
+      ),
+  },
+  {
     path: 'component-storage',
     canActivate: [AuthGuard],
     loadChildren: () =>

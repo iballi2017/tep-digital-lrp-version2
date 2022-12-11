@@ -1,0 +1,96 @@
+<!-- <p>update-personal-information works!</p> -->
+
+<div id="personal-information-page">
+    <div class="details-card-1">
+        <div class="title-wrapper">
+            <div class="d-flex align-items-center">
+                <button class="btn back-btn pl-0" (click)="back()"></button>
+                <h2 class="title">PERSONAL DETAILS</h2>
+            </div>
+        </div>
+
+        <form [formGroup]="UpdatePersonalDetailsForm" (ngSubmit)="onSubmit()">
+            <div class="body-wrapper">
+                <div class="row g-3">
+                    <div class="mb-3 col-12 col-md-6">
+                        <label for="FullName" class="form-label text-uppercase">Full Name</label>
+                        <input type="text" id="FullName" class="form-control grey-control" formControlName="FullName"
+                            [ngClass]="{'is-invalid': UpdatePersonalDetailsForm.get('FullName')?.touched && UpdatePersonalDetailsForm.get('FullName')?.invalid}"
+                            required>
+                        <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Name
+                            is
+                            required.</small>
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label for="EmailAddress" class="form-label text-uppercase">Email Address</label>
+                        <input type="text" id="EmailAddress" class="form-control grey-control" formControlName="EmailAddress"
+                            readonly>
+
+
+                        <span class="invalid-feedback">
+                            <small class="form-text text-danger"
+                                *ngIf="UpdatePersonalDetailsForm.get('EmailAddress')?.hasError('required')">Email is
+                                required.
+                            </small>
+                            <small class="form-text text-danger"
+                                *ngIf="UpdatePersonalDetailsForm.get('EmailAddress')?.hasError('email')">You entered an
+                                invalid
+                                Email.
+                            </small>
+                        </span>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="mb-3 col-12 col-md-6">
+                        <label for="Party" class="form-label text-uppercase">Select Party</label>
+                        <div class="d-flex flex-wrap">
+                            <div class="custom-check me-4">
+                                <input type="radio" id="Operator" value="Operator" name="Party" formControlName="Party">
+                                <label for="Operator" class="check-label">
+                                    <span class="ui-radio"></span>
+                                    Operator
+                                </label>
+                            </div>
+
+                            <div class="custom-check">
+                                <input type="radio" id="ParentGuardian" value="Parent/Guardian" name="Party"
+                                    formControlName="Party">
+                                <label for="ParentGuardian" class="check-label">
+                                    <span class="ui-radio"></span>
+                                    Parent/Guardian
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label for="Gender" class="form-label text-uppercase">Gender</label>
+                        <div class="select-drop-wrapper_">
+                            <select id="Gender" class="form-select" formControlName="Gender"
+                                [ngClass]="{'is-invalid': UpdatePersonalDetailsForm.get('Gender')?.touched && UpdatePersonalDetailsForm.get('Gender')?.invalid}"
+                                required>
+                                <option value="male">Male</option>
+                                <option value="femail">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Gender
+                            is
+                            required.</small>
+                    </div>
+                </div>
+                <!-- <button class="btn btn-block text-uppercase form-btn"
+            [ngClass]="{'primary-btn': UpdatePersonalDetailsForm.valid && !(isLoading | async)}"
+            [disabled]="UpdatePersonalDetailsForm.invalid || (isLoading | async)">
+            <span *ngIf="!(isLoading | async)">{{submitBtnLabel}}</span>
+            <span *ngIf="(isLoading | async)">Sending...</span>
+        </button> -->
+            </div>
+            <div class="footer-wrapper">
+                <!-- <button class="btn primary-btn text-uppercase form-btn" [disabled]="(isLoading | async)">
+                    {{submitBtnLabel}}
+                </button> -->
+            </div>
+        </form>
+
+    </div>
+</div>

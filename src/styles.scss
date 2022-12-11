@@ -23,15 +23,11 @@ $tep-digital-lrp-v2-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$tep-digital-lrp-v2-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $tep-digital-lrp-v2-primary,
-      accent: $tep-digital-lrp-v2-accent,
-      warn: $tep-digital-lrp-v2-warn,
-    ),
-  )
-);
+$tep-digital-lrp-v2-theme: mat.define-light-theme((color: (primary: $tep-digital-lrp-v2-primary,
+        accent: $tep-digital-lrp-v2-accent,
+        warn: $tep-digital-lrp-v2-warn,
+      ),
+    ));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -44,6 +40,7 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -93,6 +90,7 @@ body {
   background: unset !important;
   padding: 0 !important;
 }
+
 .mat-snack-bar-container {
   color: #202020;
   background: #ffffff;
@@ -101,29 +99,41 @@ body {
 .mat-select-arrow {
   color: #73cf48;
 }
+
 .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
   color: #73cf48;
 }
+
 .mat-form-field .mat-form-field-label {
   color: #73cf48;
 }
+
 .mat-form-field-label {
   color: #73cf48 !important;
 }
+
 .mat-form-field.mat-form-field-invalid .mat-form-field-label {
   color: #f44336 !important;
 }
+
 .mat-form-field-ripple {
   background-color: #73cf48 !important;
 }
+
 .mat-form-field.mat-form-field-invalid .mat-form-field-ripple,
 .mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent {
   background-color: #f44336 !important;
 }
+
 .mat-drawer-container {
   background-color: unset;
   color: inherit;
 }
+
 .mat-toolbar {
   background: inherit !important;
+}
+
+.example-container {
+  border: none !important;
 }

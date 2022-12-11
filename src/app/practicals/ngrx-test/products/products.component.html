@@ -1,0 +1,17 @@
+<p>products works!</p>
+<!-- {{list}} -->
+
+<!-- <div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-3" *ngFor="let item of list; let i = index">
+            Product {{i + 1}}
+        </div>
+    </div>
+</div> -->
+<div class="container-fluid">
+    <ul>
+        <li *ngFor="let product of list">
+            {{product?.title}}
+        </li>
+    </ul>
+</div>

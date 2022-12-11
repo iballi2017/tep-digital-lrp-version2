@@ -1,1 +1,55 @@
-<p>profile-information works!</p>
+<!-- <p>profile-information works!</p> -->
+<div id="account-page">
+    <div class="details-card-2">
+        <div class="title-wrapper">
+            <h2 class="title">{{title | uppercase}}</h2>
+        </div>
+        <div class="body-wrapper">
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="heading">{{heading | uppercase}}</h3>
+                </div>
+                <div class="item-card-body">
+                    <!-- {{userData | json}} -->
+                    <ul class="row list-style-none mb-0 ps-0" id="personal-details">
+                        <li class="col-12 col-md-6 order-md-1">
+                            <div class="_key">FULL NAME:</div>
+                            <div class="_value">{{userData?.usr_fullname}}</div>
+                        </li>
+                        <li class="col-12 col-md-6 order-md-3">
+                            <div class="_key">GENDER:</div>
+                            <div class="_value">{{userData?.usr_gender}}</div>
+                        </li>
+                        <li class="col-12 col-md-6 order-md-2">
+                            <div class="_key">EMAIL ADDRESS:</div>
+                            <div class="_value email">{{userData?.usr_email}}</div>
+                        </li>
+                        <li class="col-12 col-md-6 order-md-4">
+                            <div class="_key">SELECTED PARTY:</div>
+                            <div class="_value selected-party">{{userData?.usr_party}}</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="item-card-footer">
+                    <app-primary-button [btnTitle]="'Edit'" (onClickEvent)="onEditPersonalDetails(userData)"></app-primary-button>
+                </div>
+            </div>
+            <!--  -->
+            <div class="item-card">
+                <div class="item-card-header">
+                    <h3 class="heading">SECURITY</h3>
+                </div>
+                <div class="item-card-footer">
+                    <!-- <button class="btn text-uppercase primary-btn" [routerLink]="['/account/update-password']">EDIT
+                        PASSWORD</button> -->
+                    <!-- <app-button [btnTitle]="editPasswordBtnLabel" [btnType]="editPasswordBtnType"
+                        [btnClasses]="editPasswordBtnClasses" [routerLink]="['/account/update-password']"></app-button> -->
+
+                    <app-primary-button [btnTitle]="'EDIT PASSWORD'" [routerLink]="['/account/update-password']"></app-primary-button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

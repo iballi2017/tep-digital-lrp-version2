@@ -14,6 +14,10 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { AuthGuard } from './services/auth.guard';
 import { AuthInterceptor } from './helpers/auth.interceptor';
 import { TokenInterceptor } from './helpers/token.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { metaReducers, reducers } from './store/reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 // import { ToastNoAnimationModule } from 'ngx-toastr';
 
 @NgModule({
@@ -31,7 +35,16 @@ import { TokenInterceptor } from './helpers/token.interceptor';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    // StoreModule.forRoot({}, {}),
     // ToastNoAnimationModule.forRoot(),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [
     AuthGuard,
@@ -41,4 +54,4 @@ import { TokenInterceptor } from './helpers/token.interceptor';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

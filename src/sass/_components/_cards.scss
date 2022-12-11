@@ -181,6 +181,9 @@
     }
 
     @include mixins.maxmq(768px) {
+        .title-wrapper {
+            border-radius: 5px 5px 0px 0px;
+        }
         .title-wrapper,
         .body-wrapper {
             padding: 0.8em 0.8em;
