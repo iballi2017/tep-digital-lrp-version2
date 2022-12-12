@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Product } from '../products/store/product.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-  BaseUrl = "http://localhost:3000";
-  ProductUrl = this.BaseUrl + '/Products'
+  BaseUrl = 'http://localhost:3000';
+  ProductUrl = this.BaseUrl + '/Products';
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
   GetProducts(): Observable<Product[]> {
     return this._http.get<Product[]>(this.ProductUrl);
 
@@ -27,11 +28,16 @@ export class ProductService {
     //     }
     //   })
   }
-}
 
+  GetSingleProduct(id:any): Observable<Product> {
+    return this._http.get<Product>(`${this.ProductUrl}/${id}`);
+  }
 
-export interface Product {
-  id?: number,
-  title: string,
-  price: string | number
+  CreateProduct(payload: Product): Observable<Product> {
+    return this._http.post<Product>(this.ProductUrl, payload);
+  }
+
+  DeleteProduct(ProductId: string) {
+    return this._http.delete(`${this.ProductUrl}/${ProductId}`);
+  }
 }

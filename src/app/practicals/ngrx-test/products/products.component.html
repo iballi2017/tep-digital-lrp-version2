@@ -9,9 +9,46 @@
     </div>
 </div> -->
 <div class="container-fluid">
+    <form [formGroup]="createProductForm" novalidate (ngSubmit)="onAddProduct()">
+        <div class="mb-3">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" formControlName="title">
+        </div>
+        <div class="mb-3">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" formControlName="price">
+        </div>
+        <button mat-raised-button color="primary">Add Product</button>
+    </form>
     <ul>
-        <li *ngFor="let product of list">
+        <!-- <li *ngFor="let product of list">
+            {{product?.title}}
+        </li> -->
+        
+        <li *ngFor="let product of (products$ | async)">
             {{product?.title}}
         </li>
     </ul>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">S/N</th>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of (products$ | async); let i = index">
+            <th scope="row">{{i + 1}}</th>
+            <td> {{product?.title}}</td>
+            <td> {{product?.price}}</td>
+            <td>
+                <button mat-button color="warn" (click)="onDelete(product?.id)">Delete</button>
+            </td>
+          </tr>
+          <tr>
+        </tbody>
+      </table>
 </div>

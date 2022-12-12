@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LetterComponent } from './levels/letter/letter.component';
+import { ParagraphComponent } from './levels/paragraph/paragraph.component';
+import { StoryComponent } from './levels/story/story.component';
+import { WordComponent } from './levels/word/word.component';
 import { LiteracyTestComponent } from './literacy-test.component';
 
 const routes: Routes = [
@@ -10,9 +13,9 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'levels/letter' },
       { path: 'levels/letter', component: LetterComponent },
-      // { path: 'levels/paragraph', component: ParagraphComponent },
-      // { path: 'levels/word', component: WordComponent },
-      // { path: 'levels/story', component: StoryComponent },
+      { path: 'levels/paragraph', component: ParagraphComponent },
+      { path: 'levels/word', component: WordComponent },
+      { path: 'levels/story', component: StoryComponent },
     ],
   },
 ];

@@ -5,17 +5,25 @@ import { LiteracyTestRoutingModule } from './literacy-test-routing.module';
 import { LetterComponent } from './levels/letter/letter.component';
 import { LiteracyTestComponent } from './literacy-test.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ParagraphComponent } from './levels/paragraph/paragraph.component';
+import { WordComponent } from './levels/word/word.component';
+import { StoryComponent } from './levels/story/story.component';
+import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
 
 
 @NgModule({
   declarations: [
     LiteracyTestComponent,
-    LetterComponent
+    LetterComponent,
+    ParagraphComponent,
+    WordComponent,
+    StoryComponent
   ],
   imports: [
     CommonModule,
     LiteracyTestRoutingModule,
-    SharedModule
+    SharedModule,
+    NgMaterialModule,
   ]
 })
 export class LiteracyTestModule { }
