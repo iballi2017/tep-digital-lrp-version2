@@ -6,7 +6,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { StartGame } from 'src/app/models/interface/game';
+import { GameSessionData, StartGame } from 'src/app/models/interface/game';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { OccupantService } from 'src/app/services/occupant.service';
@@ -99,6 +99,19 @@ export class TestOccupantSelectionComponent implements OnInit {
           //   payload: response,
           // });
           // this._router.navigate(['/literacy/levels/lettering']);
+
+          var newGameSession = {
+            // id: state.reportsList?.length + 1,
+            id: new Date().getTime().toString(),
+            ...response,
+          };
+          let sessionData = JSON.stringify(newGameSession);
+          localStorage.setItem(GameSessionData.name, sessionData);
+          const gameResult = {};
+          let result = JSON.stringify(gameResult);
+          localStorage.setItem(GameSessionData.result, result);
+
+
           this.routeToGame(Payload.game_type.toLowerCase());
           this.closeDialog();
         }

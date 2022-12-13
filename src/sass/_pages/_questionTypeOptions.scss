@@ -1,0 +1,283 @@
+@use "../../sass/_partials/mixins";
+@use "../../sass/_abstracts/typography";
+
+#question-type-options-page {
+    #toolbar {
+        .inner-wrapper {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            li {
+                &.social-icons-wrapper {
+                    flex-basis: 50%;
+                    text-align: left;
+                    order: 1;
+                }
+
+                &.account-link {
+                    flex-basis: 50%;
+                    text-align: right;
+                    order: 2;
+                }
+
+                &.title-wrapper {
+                    text-align: center;
+                    flex-basis: 100%;
+                    order: 3;
+                }
+            }
+        }
+    }
+    #social-handles {
+        display: flex;
+        align-items: center;
+        li {
+            margin-right: 1em;
+            max-width: 30px;
+            a {
+                display: block;
+                @include mixins.transition(300ms ease-in-out);
+                &:hover {
+                    @include mixins.transform(scale(1.08));
+                }
+            }
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+    h1 {
+        font-family: typography.$titleFontFamily;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 2rem;
+        color: #ffffff;
+        margin: 0 auto;
+        text-align: center;
+        margin-top: 0.5em;
+    }
+    .account-link {
+        #user-account-avatar {
+            // background-color: red;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            .image-wrapper {
+                max-width: 40px;
+                // margin-right: 0 auto;
+                // float: right;
+            }
+        }
+        p {
+            font-family: "Open Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            color: #ffffff;
+            margin-bottom: 0;
+            display: none;
+        }
+    }
+
+    #content {
+        .content-wrapper {
+            background: #1d1d1d;
+            border: 15px solid #4a4a4a;
+            border-radius: 20px;
+            padding: 2em;
+            max-width: 1128px;
+            margin: 0 auto;
+            position: relative;
+            margin-top: 8em;
+        }
+
+        .content-label {
+            max-width: 318px;
+            margin: 0 auto;
+            background: #000000;
+            border: 7px solid #6cd33b;
+            border-radius: 10px;
+            padding: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: -6em;
+
+            h2 {
+                color: #ffffff;
+                font-family: "Open Sans";
+                font-style: normal;
+                font-weight: 800;
+                font-size: 1.2rem;
+                letter-spacing: 0.105em;
+                line-height: 167.68%;
+                text-transform: capitalize;
+                margin-bottom: 0;
+            }
+        }
+        .type-option {
+            // display: flex;
+            // align-items: flex-start;
+            // justify-content: space-between;
+            margin-top: 3em;
+            li {
+                // max-width: calc(100% / 3.1);
+                input[type="radio"]:checked {
+                    + .card {
+                        @include mixins.transform(scale(1.08));
+                    }
+                }
+                .card {
+                    // max-width: 330px;
+                    // height: 316px;
+                    border: 7px solid #e4e4e4;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    .card-text {
+                        font-family: "Roboto";
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 24px;
+                        line-height: 28px;
+                        letter-spacing: 0.1em;
+                        text-transform: capitalize;
+                        color: #1e1e1e;
+                    }
+                    @include mixins.transition(300ms ease-in-out);
+                    &:hover {
+                        @include mixins.transform(scale(1.08));
+                    }
+                }
+            }
+        }
+    }
+
+    @include mixins.minmq(768px) {
+        #social-handles {
+            li {
+                margin-right: 1em;
+                max-width: 80px;
+            }
+        }
+        #toolbar {
+            .inner-wrapper {
+                align-items: center;
+                li {
+                    &.social-icons-wrapper {
+                        flex-basis: calc(100% / 3);
+                        text-align: left;
+                        order: 1;
+                    }
+
+                    &.account-link {
+                        flex-basis: calc(100% / 3);
+                        text-align: right;
+                        order: 3;
+                    }
+
+                    &.title-wrapper {
+                        text-align: center;
+                        flex-basis: auto;
+                        order: 2;
+                    }
+                }
+            }
+        }
+        h1 {
+            font-size: 40px;
+            line-height: 49px;
+            color: #ffffff;
+            margin: 0 auto;
+            margin-top: 0;
+        }
+
+        .account-link {
+            #user-account-avatar {
+                // background-color: red;
+                display: inline-flex;
+                flex-direction: column;
+                align-items: flex-end;
+                justify-content: center;
+                .image-wrapper {
+                    max-width: 80px;
+                    // margin-right: 0 auto;
+                    // float: right;
+                }
+            }
+            p {
+                font-family: "Open Sans";
+                font-style: normal;
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 27px;
+                text-transform: capitalize;
+
+                color: #ffffff;
+            }
+        }
+
+        #content {
+            .content-wrapper {
+                // background: #1d1d1d;
+                // border: 15px solid #4a4a4a;
+                // border-radius: 20px;
+                padding: 4em;
+                // max-width: 1128px;
+                // margin: 0 auto;
+                // position: relative;
+                // margin-top: 8em;
+            }
+
+            .content-label {
+                margin-top: -8em;
+
+                h2 {
+                    font-size: 24px;
+                    letter-spacing: 0.105em;
+                    line-height: 167.68%;
+                    text-transform: capitalize;
+                }
+            }
+            .type-option {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                // margin-top: 3em;
+                li {
+                    // max-width: calc(100% / 3.1);
+                    input[type="radio"]:checked {
+                        + .card {
+                            @include mixins.transform(scale(1.08));
+                        }
+                    }
+                    .card {
+                        // max-width: 330px;
+                        // height: 316px;
+                        border: 7px solid #e4e4e4;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        .card-text {
+                            font-family: "Roboto";
+                            font-style: normal;
+                            font-weight: 400;
+                            font-size: 24px;
+                            line-height: 28px;
+                            letter-spacing: 0.1em;
+                            text-transform: capitalize;
+                            color: #1e1e1e;
+                        }
+                        @include mixins.transition(300ms ease-in-out);
+                        &:hover {
+                            @include mixins.transform(scale(1.08));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+.stage-card{
+    margin-bottom: 10px;
+}
+
+.stage-star-rating{
+    display: flex;
+    justify-content: center;
+    li{
+        margin-right: 7px;
+        width: 40px;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+}

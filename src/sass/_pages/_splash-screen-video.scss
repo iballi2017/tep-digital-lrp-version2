@@ -1,0 +1,32 @@
+#instructional-video-screen {
+    position: relative;
+    // background-color: red;
+    max-width: 850px;
+    margin: 0 auto;
+    .btn-wrapper{
+        position: absolute;
+        bottom: 4em;
+        width: 100%;
+        // background-color: lightblue;
+        text-align: center;
+        .instructional-video-continue-btn {
+            // max-width: 380px;
+            width: 100%;
+            max-width: calc(100% / 3);
+            margin: 0 auto;
+            // height: 65px;
+            height: 4rem;
+            background: #73cf48;
+            border-radius: 10px;
+            font-family: "Open Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 22px;
+            // display: flex;
+            // align-items: center;
+            text-transform: capitalize;
+            color: #ffffff;
+        }
+    }
+}

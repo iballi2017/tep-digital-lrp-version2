@@ -17,7 +17,7 @@ export class LiteracyTestComponent implements OnInit {
   navItemList: navItem[] = [
     {
       name: 'Letter',
-      url: '/literacy/levels/lettering',
+      url: '/literacy/levels/letter',
     },
     {
       name: 'Word',

@@ -1,0 +1,113 @@
+@use "../../sass/_partials/mixins";
+
+#candidate-selection-count-page {
+    .card {
+        width: 100%;
+        // max-width: 300px;
+        margin: 5em auto;
+        border: none;
+        border-radius: 10px;
+    }
+    .card-header {
+        background-color: #444444;
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: 800;
+        font-size: 20px;
+        line-height: 36px;
+        text-transform: capitalize;
+        color: #ffffff;
+        // border-radius: 10px 10px 0 0;
+    }
+
+    #count-control {
+        // background-color: lightcoral;
+        justify-content: center;
+        margin: 3em auto;
+        #count {
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #d9d9d9;
+            padding-left: 20%;
+            width: calc(85% - 69px);
+            &:focus {
+                border: 1px solid #d9d9d9;
+                outline: 0;
+                box-shadow: none;
+            }
+        }
+    }
+
+    #controller {
+        display: flex;
+        flex-direction: column;
+        .btn {
+            width: 69px;
+            height: 34px;
+        }
+        .arrow-up-btn,
+        .arrow-down-btn {
+            border: 1px solid #d9d9d9;
+            border-left: none;
+        }
+        .arrow-up-btn {
+            // border-bottom: none;
+            border-radius: 0 5px 0 0;
+            &::before {
+                content: url(../../assets/images/icons/caret-up-green-icon.svg);
+                color: #ffffff;
+                width: 5px;
+            }
+        }
+        .arrow-down-btn {
+            border-top: none;
+            border-radius: 0 0 5px 0;
+            &::before {
+                content: url(../../assets/images/icons/caret-down-green-icon.svg);
+            }
+        }
+    }
+
+    #action-btn {
+        display: flex;
+        flex-direction: column;
+        button {
+            height: 65px;
+            color: #ffffff;
+            border-radius: 10px;
+            font-family: "Open Sans";
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 22px;
+            text-transform: capitalize;
+
+            color: #ffffff;
+        }
+        button[type="submit"] {
+            // background: #73cf48;
+            background: rgb(115, 207, 72);
+            margin-bottom: 1.15em;
+            &:hover{
+                background: rgb(115, 207, 72, .8);}
+        }
+        button[type="button"] {
+            height: 65px;
+            // background: #d93333;
+            background: rgb(217, 51, 51);
+            &:hover{
+                background: rgb(217, 51, 51, .8);}
+        }
+    }
+
+    
+    @include mixins.minmq(768px) {
+        .card {
+            max-width: 300px;
+            margin: 5em auto;
+            border: none;
+            border-radius: 10px;
+        }
+
+
+    }
+}

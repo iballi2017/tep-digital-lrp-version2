@@ -1,0 +1,79 @@
+@use "../_partials/mixins";
+
+.content-wrapper {
+    .controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    @include mixins.minmq(768px) {
+        position: relative;
+        // .content-wrapper {
+        // height: 64vh;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        // }
+        .nav-left,
+        .nav-right {
+            position: absolute;
+            top: 40%;
+        }
+        .nav-left {
+            left: 0;
+        }
+        .nav-right {
+            right: 0;
+        }
+
+        #replay-voice-btn{
+            position: absolute;
+            bottom: 15%;
+            left: 0;
+        }
+    }
+}
+
+#splash-screen {
+    .image-wrapper {
+        max-width: 650px;
+        padding-top: 3em;
+        position: relative;
+        top: 0;
+        margin: 0 auto;
+    }
+}
+
+.next-btn,
+.previous-btn {
+    opacity: .2;
+    @include mixins.transform(scale(1));
+    @include mixins.transition(all 300ms ease-in-out !important);
+    &::after {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 70px;
+        width: 80px;
+    }
+    &:hover {
+        opacity: .6;
+        @include mixins.transform(scale(1.08));
+        @include mixins.transition(all 300ms ease-in-out !important);
+    }
+}
+
+.previous-btn {
+    &::after {
+        background-image: url(../../assets/images/icons/carbon_arrow-shift-left.svg);
+        // background-image: url(../../../../../../../../assets/images/icons/carbon_arrow-shift-left.svg);
+    }
+}
+
+.next-btn {
+    &::after {
+        background-image: url(../../assets/images/icons/carbon_arrow-shift-right.svg);
+        // background-image: url(../../../../../../../../assets/images/icons/carbon_arrow-shift-right.svg);
+    }
+}

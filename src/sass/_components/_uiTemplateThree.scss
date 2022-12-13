@@ -1,0 +1,123 @@
+@use "../_partials/mixins";
+
+
+#ui-template-sample-three {
+    > .inner {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        height: 100vh;
+        max-height: 730px;
+        overflow: hidden;
+        position: relative;
+        padding-bottom: 1em;
+        .template-content {
+            height: 100%;
+            text-align: center;
+            padding-top: 7.5em;
+            h1 {
+                font-size: 20rem;
+                line-height: 240px;
+                color: #ffffff;
+            }
+
+            .object-image{
+                max-width: 600px;
+                // background-color: lightcoral;
+                margin: 0 auto;
+                display: inline-flex;
+            }
+        }
+
+        #replay-voice-btn {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 2;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+    }
+
+    .controls {
+        .nav-right,
+        .nav-left {
+            position: absolute;
+            // bottom: 46.5%;
+            bottom: 40%;
+        }
+        .nav-right {
+            right: 0;
+        }
+        .nav-left {
+            left: 0;
+        }
+    }
+
+    .mark-control {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 20px;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    @include mixins.maxmq(500px) {
+        .inner {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            height: 100vh;
+            max-height: 730px;
+            overflow: hidden;
+            position: relative;
+            .template-content {
+                // height: 100%;
+                // transform: translate(0, 190px);
+                text-align: center;
+                h1 {
+                    font-size: 10rem;
+                    // line-height: 240px;
+                    // color: #ffffff;
+                }
+            }
+
+            #replay-voice-btn {
+                // position: absolute;
+                // bottom: 0;
+                // left: 0;
+            }
+            .controls {
+                .nav-right,
+                .nav-left {
+                    bottom: 46.5%;
+                }
+                .nav-right {
+                    right: 0;
+                }
+                .nav-left {
+                    left: 0;
+                }
+
+                .next-btn::after,
+                .previous-btn::after {
+                    content: "";
+                    display: block;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    height: 40px;
+                    width: 45px;
+                }
+            }
+            .mark-control {
+                justify-content: flex-end;
+            }
+        
+        }
+    }
+}

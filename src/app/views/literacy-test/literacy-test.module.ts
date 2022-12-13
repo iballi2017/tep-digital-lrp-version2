@@ -9,6 +9,7 @@ import { ParagraphComponent } from './levels/paragraph/paragraph.component';
 import { WordComponent } from './levels/word/word.component';
 import { StoryComponent } from './levels/story/story.component';
 import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
+import { LetterModule } from './levels/letter/letter.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
     LiteracyTestRoutingModule,
     SharedModule,
     NgMaterialModule,
+    LetterModule
   ]
 })
 export class LiteracyTestModule { }

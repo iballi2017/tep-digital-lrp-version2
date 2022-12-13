@@ -39,12 +39,13 @@ export class GameService {
     if (sessionData) {
       let x = JSON.parse(sessionData);
       // this.ngRedux.dispatch({ type: FETCH_GAME_SESSION_SUCCESS, payload: x });
+      return x
     } else {
       // this.ngRedux.dispatch({
       //   type: FETCH_GAME_SESSION_ERROR,
       //   payload: 'No Session stored',
       // });
-      this._router.navigate(['/test-onboarding']);
+      this._router.navigate(['/program-starter']);
     }
   }
 

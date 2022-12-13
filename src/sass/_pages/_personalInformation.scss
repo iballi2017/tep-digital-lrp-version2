@@ -1,0 +1,30 @@
+#personal-information-page {
+
+    // .card-body,
+    // .card-header {
+    //     padding: 17px 25px;
+    // }
+    // .card-header {
+    //     background-color: unset;
+    //     border: none;
+    //     .inner {
+    //         display: flex;
+    //         .card-title {
+    //             font-family: "Open Sans";
+    //             font-style: normal;
+    //             font-weight: 800;
+    //             font-size: 25px;
+    //             line-height: 34px;
+    //             display: flex;
+    //             align-items: center;
+    //             color: #1e1e1e;
+    //         }
+    //     }
+    // }
+    .back-btn {
+        &::before {
+            height: 25px;
+            width: 25px;
+        }
+    }
+}

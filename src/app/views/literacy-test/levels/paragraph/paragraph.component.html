@@ -1,1 +1,28 @@
-<p>paragraph works!</p>
+<!-- <p>paragraph works!</p> -->
+
+<div>
+    <ng-container *ngIf="isLoadingStarCards">
+        <div class="text-info text-bold">Loading...</div>
+    </ng-container>
+    <ul class="stage-status list-style-none ps-0">
+        <li class="cursor-pointer" *ngFor="let item of testStageStars; let i = index"
+            [routerLink]="['/literacy/letter/', item?.title, 'lettering-splash']">
+            <div class="stage-card">
+                <p>{{i + 1}}</p>
+            </div>
+            <ul class="stage-star-rating list-style-none ps-0">
+                <li *ngFor="let stageStar of item?.starArray">
+                    <div *ngIf="stageStar?.isDone">
+                        <img src="../../../../assets/images/icons/yellow-black-bordered-star.svg" alt=""
+                            class="img-fluid">
+                    </div>
+                    <div *ngIf="!stageStar?.isDone">
+                        <img src="../../../../assets/images/icons/white-grey-bordered-star..svg" alt=""
+                            class="img-fluid">
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
