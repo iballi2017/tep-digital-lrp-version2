@@ -19,7 +19,7 @@
                     <form [formGroup]="LoginUserForm" (ngSubmit)="onSubmit()" novalidate>
                         <div class="form-group">
                             <label for="Email" class="form-label text-uppercase">User Id / Email Address</label>
-                            <input type="email" id="Email" class="form-control" formControlName="Email" required
+                            <input type="email" id="Email" class="form-control grey-control" formControlName="Email" required
                                 [ngClass]="{'is-invalid': LoginUserForm.get('Email')?.touched && LoginUserForm.get('Email')?.invalid}">
                             <span class="invalid-feedback">
                                 <small class="form-text text-danger"
@@ -35,7 +35,7 @@
                         </div>
                         <div class="form-group">
                             <label for="Password" class="form-label text-uppercase">Password</label>
-                            <input type="password" id="Password" class="form-control" formControlName="Password">
+                            <input type="password" id="Password" class="form-control grey-control" formControlName="Password">
                             <aside>
                                 <a [routerLink]="['/auth/forgot-password']" class="forgot-password-link">Forgot
                                     password?</a>

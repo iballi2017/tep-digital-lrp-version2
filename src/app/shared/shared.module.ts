@@ -10,6 +10,7 @@ import { NgMaterialModule } from '../ng-material/ng-material.module';
 import { PrimaryButtonComponent } from './primary-button/primary-button.component';
 import { DangerButtonComponent } from './danger-button/danger-button.component';
 import { DefaultButtonComponent } from './default-button/default-button.component';
+import { BooleanAlertDialogComponent } from './boolean-alert-dialog/boolean-alert-dialog.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { DefaultButtonComponent } from './default-button/default-button.componen
     PrimaryButtonComponent,
     DangerButtonComponent,
     DefaultButtonComponent,
+    BooleanAlertDialogComponent,
   ],
   imports: [
     CommonModule,

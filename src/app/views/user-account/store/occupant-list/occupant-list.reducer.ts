@@ -1,18 +1,18 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { OccupantList } from './occupant-list.model';
+import { Occupant } from './occupant-list.model';
 import * as OccupantListActions from './occupant-list.actions';
 
 export const occupantListFeatureKey = 'occupantLists';
 
-export interface OccupantListState extends EntityState<OccupantList> {
+export interface OccupantListState extends EntityState<Occupant> {
   // additional entities state properties
   occupantList: any[] | any;
   selectedOccupant: any;
   error: any
 }
 
-export const adapter: EntityAdapter<OccupantList> = createEntityAdapter<OccupantList>();
+export const adapter: EntityAdapter<Occupant> = createEntityAdapter<Occupant>();
 
 export const initialState: OccupantListState = adapter.getInitialState({
   // additional entity state properties
@@ -43,6 +43,19 @@ export const reducer = createReducer(
   ),
 
 
+  // LOAD SINGLE OCCUPANT
+  on(OccupantListActions.loadSingleOccupantSuccess, (state, action) => {
+    return {
+      ...state,
+      selectedOccupant: action.selectedOccupant,
+    };
+  }),
+  on(OccupantListActions.loadSingleOccupantFailure, (state, action) => {
+    return {
+      ...state,
+      error: action.error,
+    };
+  }),
 
   // on(OccupantListActions.addOccupantList,
   //   (state, action) => adapter.addOne(action.occupantList, state)

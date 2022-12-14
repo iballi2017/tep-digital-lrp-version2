@@ -1,0 +1,49 @@
+.card-header {
+    background-color: #444444;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 36px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #ffffff;
+}
+
+p {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    text-transform: capitalize;
+    color: #1e1e1e;
+    text-align: center;
+}
+.card-body{
+    padding-top: 2em;
+    padding-bottom: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p{
+        margin-bottom: 0;
+    }
+}
+.card-footer {
+    background-color: unset;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    .action-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .btn-block + .btn-block {
+            margin-top: 0;
+        }
+        button{
+            max-width: 48%;
+            height: 50px;
+        }
+    }
+}

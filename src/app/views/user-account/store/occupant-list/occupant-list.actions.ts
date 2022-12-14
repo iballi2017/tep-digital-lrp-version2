@@ -1,8 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
-import { OccupantList } from './occupant-list.model';
+import { Occupant } from './occupant-list.model';
 
+// LOAD OCCUPANT LIST ENDS
 export const loadOccupantList = createAction(
   '[OccupantList/API] Load OccupantList'
 );
@@ -15,6 +16,29 @@ export const loadOccupantListFailure = createAction(
   '[OccupantList Effect] Load OccupantList Failure',
   props<{ error: any }>()
 );
+
+// LOAD OCCUPANT LIST ENDS
+
+
+// LOAD SINGLE OCCUPANT BEGINS
+export const loadSingleOccupant = createAction(
+  '[Single Occupant Component] Load Occupants',
+  props<{ id: string }>()
+);
+
+export const loadSingleOccupantSuccess = createAction(
+  '[Single Product Load Effect] Load Single Product Success',
+  props<{ selectedOccupant: Occupant }>()
+);
+
+export const loadSingleOccupantFailure = createAction(
+  '[Single Occupant Load Effect] Load Single Occupant Failure',
+  props<{ error: any }>()
+);
+
+// LOAD SINGLE OCCUPANT ENDS
+
+
 
 // export const addOccupantList = createAction(
 //   '[OccupantList/API] Add OccupantList',

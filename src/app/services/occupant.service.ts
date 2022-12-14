@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Subscription } from 'rxjs';
 import { baseUrl } from '../config/api';
 import { handleError } from '../helpers/errorHandler';
+import { IOccupant } from '../models/interface/occupant';
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +72,12 @@ export class OccupantService {
     this.Subscriptions.push(subscription);
   }
 
-  UpdateOccupantDetails(Occupant: Occupant) {
+
+  GetSingleOccupant(OccupantId:string){
+    return this._http.get(`${this.FetchOccupantUrl}/${OccupantId}`)
+  }
+
+  UpdateOccupantDetails(Occupant: IOccupant) {
     // UpdateOccupantAccountUrl
     return this._http.post(this.UpdateOccupantAccountUrl, Occupant)
       .pipe(catchError(handleError));

@@ -22,6 +22,7 @@ import { OccupantListComponent } from './profile-information/occupant-list/occup
 import * as fromOccupantList from './store/occupant-list/occupant-list.reducer';
 import { OccupantListEffects } from './store/occupant-list/occupant-list.effects';
 import { OccupantDetailsComponent } from './profile-information/occupant-details/occupant-details.component';
+import { AddNewOccupantComponent } from './profile-information/add-new-occupant/add-new-occupant.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { OccupantDetailsComponent } from './profile-information/occupant-details
     UpdatePersonalInformationComponent,
     OccupantListComponent,
     OccupantDetailsComponent,
+    AddNewOccupantComponent,
   ],
   imports: [
     CommonModule,

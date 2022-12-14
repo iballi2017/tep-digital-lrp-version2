@@ -22,11 +22,11 @@
                     <td>{{item?.occ_age}}</td>
                     <td>{{item?.occ_gender}}</td>
                     <td>{{item?.occ_state}}</td>
-                    <td class="text-right">
+                    <td class="text-end">
                         <div class="d-flex justify-content-end">
                             <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses" (onClickButton)="onViewRespondentDetails(item)"></app-primary-button>
                             <div class="mx-1"></div>
-                            <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses"></app-danger-button>
+                            <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses" (onClickEvent)="onRemove(item?.occ_id)"></app-danger-button>
                         </div>
                         <!-- <app-table-column-action-buttons (remove)="onRemove(item)"
                             (edit)="onViewRespondentDetails(item)" [primaryBtnTitle]="primaryBtnTitle" [dangerBtnTitle]="dangerBtnTitle"></app-table-column-action-buttons> -->

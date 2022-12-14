@@ -21,7 +21,7 @@
                         <form [formGroup]="RegisterUserForm" (ngSubmit)="onSubmit()">
                             <div class="form-group">
                                 <label for="FullName" class="form-label text-uppercase">Full Name</label>
-                                <input type="text" id="FullName" class="form-control" formControlName="FullName"
+                                <input type="text" id="FullName" class="form-control grey-control" formControlName="FullName"
                                     [ngClass]="{'is-invalid': RegisterUserForm.get('FullName')?.touched && RegisterUserForm.get('FullName')?.invalid}"
                                     required>
                                 <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Name
@@ -30,7 +30,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="EmailAddress" class="form-label text-uppercase">Email Address</label>
-                                <input type="email" id="EmailAddress" class="form-control"
+                                <input type="email" id="EmailAddress" class="form-control grey-control"
                                     formControlName="EmailAddress"
                                     [ngClass]="{'is-invalid': RegisterUserForm.get('EmailAddress')?.touched && RegisterUserForm.get('EmailAddress')?.invalid}"
                                     required>
@@ -73,17 +73,15 @@
                             <div class="form-group">
                                 <label for="Gender" class="form-label text-uppercase">Gender</label>
                                 <div class="select-drop-wrapper_">
-                                    <select id="Gender" class="form-select" formControlName="Gender"
+                                    <select id="Gender" class="form-select grey-control" formControlName="Gender"
                                         [ngClass]="{'is-invalid': RegisterUserForm.get('Gender')?.touched && RegisterUserForm.get('Gender')?.invalid}"
                                         required>
                                         <option value="male">Male</option>
-                                        <option value="femail">Female</option>
+                                        <option value="female">Female</option>
                                         <option value="other">Other</option>
                                     </select>
+                                    <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Select gender.</small>
                                 </div>
-                                <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Gender
-                                    is
-                                    required.</small>
                             </div>
                             <div class="form-group">
                                 <label for="Password" class="form-label text-uppercase">Password</label>
@@ -98,7 +96,7 @@
                                     </div>
                                 </div> -->
                                 <div id="passsword-toggle-field">
-                                    <input [type]="!fieldType ? 'password': 'text'" id="Password" class="form-control" formControlName="Password" #Password
+                                    <input [type]="!fieldType ? 'password': 'text'" id="Password" class="form-control grey-control" formControlName="Password" #Password
                                         [ngClass]="{'is-invalid': RegisterUserForm.get('Password')?.touched && RegisterUserForm.get('Password')?.invalid}"
                                         required>
                                         <button type="button" id="inputTypeToggler"(click)="toggleFieldAttr()"></button>

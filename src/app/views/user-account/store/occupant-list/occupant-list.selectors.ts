@@ -6,3 +6,8 @@ export const selectOccupantListState =
 
 export const selectOccupants = createSelector(selectOccupantListState,
     (state: OccupantListState) => state.occupantList);
+    
+export const selectedOccupant = createSelector(
+    selectOccupantListState,
+    (state: OccupantListState) => state.selectedOccupant
+  );
