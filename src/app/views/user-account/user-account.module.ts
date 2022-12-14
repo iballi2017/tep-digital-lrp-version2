@@ -12,6 +12,12 @@ import { AboutTheAppComponent } from './about-the-app/about-the-app.component';
 import { UpdatePasswordComponent } from './profile-information/update-password/update-password.component';
 import { UpdatePersonalInformationComponent } from './profile-information/update-personal-information/update-personal-information.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import * as fromProfileInformation from './store/profile-information/profile-information.reducer';
+import * as fromReports from './store/reports/reports.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProfileInformationEffects } from './store/profile-information/profile-information.effects';
+import { ReportsEffects } from './store/reports/reports.effects';
 
 
 @NgModule({
@@ -30,7 +36,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     NgMaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature(fromProfileInformation.profileInformationsFeatureKey, fromProfileInformation.reducer),
+    StoreModule.forFeature(fromReports.reportsesFeatureKey, fromReports.reducer),
+    EffectsModule.forFeature([ProfileInformationEffects, ReportsEffects]),
   ]
 })
 export class UserAccountModule { }

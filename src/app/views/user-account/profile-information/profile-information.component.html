@@ -4,11 +4,12 @@
         <div class="title-wrapper">
             <h2 class="title">{{title | uppercase}}</h2>
         </div>
-        <div class="body-wrapper">
+        <div class="body-wrapper" *ngIf="(userData$ | async ) as userData">
             <div class="item-card">
                 <div class="item-card-header">
                     <h3 class="heading">{{heading | uppercase}}</h3>
                 </div>
+                <!-- ==> {{userData$ | async | json}} -->
                 <div class="item-card-body">
                     <!-- {{userData | json}} -->
                     <ul class="row list-style-none mb-0 ps-0" id="personal-details">
@@ -31,7 +32,8 @@
                     </ul>
                 </div>
                 <div class="item-card-footer">
-                    <app-primary-button [btnTitle]="'Edit'" (onClickEvent)="onEditPersonalDetails(userData)"></app-primary-button>
+                    <app-primary-button [btnTitle]="'Edit'"
+                        (onClickEvent)="onEditPersonalDetails(userData)"></app-primary-button>
                 </div>
             </div>
             <!--  -->
@@ -45,7 +47,8 @@
                     <!-- <app-button [btnTitle]="editPasswordBtnLabel" [btnType]="editPasswordBtnType"
                         [btnClasses]="editPasswordBtnClasses" [routerLink]="['/account/update-password']"></app-button> -->
 
-                    <app-primary-button [btnTitle]="'EDIT PASSWORD'" [routerLink]="['/account/update-password']"></app-primary-button>
+                    <app-primary-button [btnTitle]="'EDIT PASSWORD'"
+                        [routerLink]="['/account/update-password']"></app-primary-button>
                 </div>
             </div>
 
