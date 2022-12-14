@@ -10,7 +10,7 @@ export class PrimaryButtonComponent implements OnInit {
   @Input("btnType") btnType!: string;
   @Input("btnClasses") btnClasses!: string;
   @Input("btnTitle") btnTitle!: string;
-  @Output() onClickEvent = new EventEmitter();
+  @Output() onClickButton = new EventEmitter();
 
   constructor() { }
 
@@ -18,7 +18,7 @@ export class PrimaryButtonComponent implements OnInit {
   }
 
   onClickBtn() {
-    this.onClickEvent.emit();
+    this.onClickButton.emit();
   }
 
 }

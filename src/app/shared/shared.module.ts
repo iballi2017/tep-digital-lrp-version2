@@ -33,7 +33,9 @@ import { DefaultButtonComponent } from './default-button/default-button.componen
     // ToastrModule
     BreadcrumbTopbarComponent,
     SideNavigationOptionOneComponent,
-    PrimaryButtonComponent
+    DangerButtonComponent,
+    PrimaryButtonComponent,
+    DefaultButtonComponent
   ],
 })
 export class SharedModule {}

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IdentityService } from 'src/app/services/identity.service';
+import { OccupantService } from 'src/app/services/occupant.service';
 import { loadProfileInformations } from '../store/profile-information/profile-information.actions';
 import { ProfileInformationState } from '../store/profile-information/profile-information.reducer';
 import { profileInformation } from '../store/profile-information/profile-information.selectors';
@@ -12,11 +13,16 @@ import { profileInformation } from '../store/profile-information/profile-informa
   templateUrl: './profile-information.component.html',
   styleUrls: ['./profile-information.component.scss']
 })
-export class ProfileInformationComponent implements OnInit {
+export class ProfileInformationComponent implements OnInit, OnDestroy {
   title: string = "My Information";
   heading: string = "PERSONAL DETAILS"
   userData!: any;
   userData$!: Observable<any>
+  Subscriptions: Subscription[] = [];
+  btnClasses:string = "btn-40-height";  
+  addNewOccupantBtnLabel="Add New";
+  addNewOccupantBtnType = "button";
+  addNewOccupantBtnClasses="btn primary-bordered-btn test-strong text-uppercase d-none d-lg-block";
   constructor(private _identitySvc: IdentityService, private _router: Router,
     private store: Store<ProfileInformationState>) { }
 
@@ -47,4 +53,16 @@ export class ProfileInformationComponent implements OnInit {
     ]);
   }
 
+  openRespondentListDialog(){
+
+  }
+
+  ngOnDestroy(): void {
+
+    this.Subscriptions.forEach((x) => {
+      if (!x.closed) {
+        x.unsubscribe();
+      }
+    });
+  }
 }

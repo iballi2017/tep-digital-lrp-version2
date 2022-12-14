@@ -18,6 +18,10 @@ import * as fromReports from './store/reports/reports.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProfileInformationEffects } from './store/profile-information/profile-information.effects';
 import { ReportsEffects } from './store/reports/reports.effects';
+import { OccupantListComponent } from './profile-information/occupant-list/occupant-list.component';
+import * as fromOccupantList from './store/occupant-list/occupant-list.reducer';
+import { OccupantListEffects } from './store/occupant-list/occupant-list.effects';
+import { OccupantDetailsComponent } from './profile-information/occupant-details/occupant-details.component';
 
 
 @NgModule({
@@ -29,6 +33,8 @@ import { ReportsEffects } from './store/reports/reports.effects';
     AboutTheAppComponent,
     UpdatePasswordComponent,
     UpdatePersonalInformationComponent,
+    OccupantListComponent,
+    OccupantDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +45,8 @@ import { ReportsEffects } from './store/reports/reports.effects';
     ReactiveFormsModule,
     StoreModule.forFeature(fromProfileInformation.profileInformationsFeatureKey, fromProfileInformation.reducer),
     StoreModule.forFeature(fromReports.reportsesFeatureKey, fromReports.reducer),
-    EffectsModule.forFeature([ProfileInformationEffects, ReportsEffects]),
+    StoreModule.forFeature(fromOccupantList.occupantListFeatureKey, fromOccupantList.reducer),
+    EffectsModule.forFeature([ProfileInformationEffects, ReportsEffects, OccupantListEffects]),
   ]
 })
 export class UserAccountModule { }

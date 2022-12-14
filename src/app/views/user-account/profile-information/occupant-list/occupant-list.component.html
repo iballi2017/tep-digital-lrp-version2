@@ -1,0 +1,39 @@
+<!-- <p>occupant-list works!</p> -->
+
+<div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">S/N</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">AGE</th>
+                    <th scope="col">GENDER</th>
+                    <th scope="col">STATE</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of (occupantList$ | async); let i = index">
+                    <th scope="row">
+                        {{i + 1}}
+                    </th>
+                    <td>{{item?.occ_name}}</td>
+                    <td>{{item?.occ_age}}</td>
+                    <td>{{item?.occ_gender}}</td>
+                    <td>{{item?.occ_state}}</td>
+                    <td class="text-right">
+                        <div class="d-flex justify-content-end">
+                            <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses" (onClickButton)="onViewRespondentDetails(item)"></app-primary-button>
+                            <div class="mx-1"></div>
+                            <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses"></app-danger-button>
+                        </div>
+                        <!-- <app-table-column-action-buttons (remove)="onRemove(item)"
+                            (edit)="onViewRespondentDetails(item)" [primaryBtnTitle]="primaryBtnTitle" [dangerBtnTitle]="dangerBtnTitle"></app-table-column-action-buttons> -->
+                        <!--  -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

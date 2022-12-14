@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Snackbar } from 'src/app/models/class/snackbar';
+import { PersonalInformation } from 'src/app/models/class/user';
 import { UpdateUserModel } from 'src/app/models/interface/user';
 import { IdentityService } from 'src/app/services/identity.service';
 import { loadProfileInformations, updateProfileInformation } from '../../store/profile-information/profile-information.actions';
@@ -57,12 +58,19 @@ export class UpdatePersonalInformationComponent implements OnInit {
 
   getUserPersonalInformation() {
     this.store.dispatch(loadProfileInformations());
-    let userData$ = this.store.pipe(select(profileInformation));
-    userData$.subscribe((data: any) => {
-      if (data) {
-        this.getUserData(data)
+    // let userData$ = this.store.pipe(select(profileInformation));
+    // userData$.subscribe((data: any) => {
+    //   if (data) {
+    //     this.getUserData(data)
+    //   }
+    // })
+
+    this.store.pipe(select(profileInformation)).subscribe(
+      data => {
+        let userData$ = Object.assign(new PersonalInformation(), data);
+        this.getUserData(userData$);
       }
-    })
+    );
   }
 
   buildForm() {
@@ -100,10 +108,27 @@ export class UpdatePersonalInformationComponent implements OnInit {
       this.processData(Payload);
     }
 
+    
+    // const Payload: UpdateUserModel = {
+    //   usr_fullname: this.UpdatePersonalDetailsForm.value.FullName,
+    //   usr_gender: this.UpdatePersonalDetailsForm.value.Gender,
+    // };
+
+    // const update: Update<PersonalInformation> = {
+    //   id: this.model.usr_id,
+    //   changes: Payload
+    // }
+
+    // if (this.UpdatePersonalDetailsForm.invalid) {
+    //   return
+    // } else {
+    //   this.processData({ profileInformation: update });
+    // }
+
   }
 
   processData(Payload: any) {
-    this.store.dispatch(updateProfileInformation({profileInformation: Payload}))
+    this.store.dispatch(updateProfileInformation({ profileInformation: Payload }))
     // let subscription = this._identitySvc.UpdateUserDetails(Payload).subscribe({
     //   next: (response: any) => {
     //     if (response) {
