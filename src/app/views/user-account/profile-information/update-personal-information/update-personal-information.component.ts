@@ -8,7 +8,7 @@ import { IdentityService } from 'src/app/services/identity.service';
 @Component({
   selector: 'app-update-personal-information',
   templateUrl: './update-personal-information.component.html',
-  styleUrls: ['./update-personal-information.component.scss']
+  styleUrls: ['./update-personal-information.component.scss'],
 })
 export class UpdatePersonalInformationComponent implements OnInit {
   // @select((s) => s.userDetails.userDetails) userDetails$: any;
@@ -17,6 +17,7 @@ export class UpdatePersonalInformationComponent implements OnInit {
   submitBtnLabel: string = 'Save';
   UpdatePersonalDetailsForm!: FormGroup;
   Subscriptions: Subscription[] = [];
+  userId: any;
 
   constructor(
     private _identitySvc: IdentityService,
@@ -24,11 +25,12 @@ export class UpdatePersonalInformationComponent implements OnInit {
     private _route: ActivatedRoute,
     // private ngRedux: NgRedux<IAppState>,
     private _router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
-    // this.onGetParams();
+    this.onGetParams();
+    this.getUserDetails();
 
     // let subscription = this.isLoading.subscribe((l: boolean) => {
     //   if (l) {
@@ -54,6 +56,30 @@ export class UpdatePersonalInformationComponent implements OnInit {
     });
   }
 
+  onGetParams() {
+    this._route.paramMap.subscribe((params: any) => {
+      if (params) {
+        console.warn('params: ', params);
+        this.userId = params.get('userId');
+      }
+    });
+  }
+
+  getUserDetails() {
+    this._identitySvc.getUserById().subscribe({
+      next: (response) => {
+        if (response) {
+          console.group('user details: ', response);
+        }
+      },
+      error: (err: any) => {
+        if (err) {
+          console.warn('Error: ', err);
+        }
+      },
+    });
+  }
+
   getUserData(data: any) {
     this.UpdatePersonalDetailsForm.controls['FullName'].setValue(
       data?.usr_fullname
@@ -76,7 +102,6 @@ export class UpdatePersonalInformationComponent implements OnInit {
     let subscription = this._identitySvc.UpdateUserDetails(Payload).subscribe({
       next: (response: any) => {
         if (response) {
-
           // this.ngRedux.dispatch({
           //   type: UPDATE_USER_DETAILS_SUCCESS,
           //   payload: {
@@ -85,7 +110,6 @@ export class UpdatePersonalInformationComponent implements OnInit {
           //   },
           // });
           this._router.navigate(['/account']);
-
         }
       },
       error: (err: any) => {
@@ -105,14 +129,11 @@ export class UpdatePersonalInformationComponent implements OnInit {
     history.back();
   }
 
-
   ngOnDestroy(): void {
-
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();
       }
     });
   }
-
 }
