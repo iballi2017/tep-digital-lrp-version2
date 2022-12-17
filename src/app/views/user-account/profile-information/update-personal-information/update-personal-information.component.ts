@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { Snackbar } from 'src/app/models/class/snackbar';
+import { PersonalInformation } from 'src/app/models/class/user';
 import { UpdateUserModel } from 'src/app/models/interface/user';
 import { IdentityService } from 'src/app/services/identity.service';
+import {
+  loadProfileInformations,
+  updateProfileInformation,
+} from '../../store/profile-information/profile-information.actions';
+import { ProfileInformationState } from '../../store/profile-information/profile-information.reducer';
+import { profileInformation } from '../../store/profile-information/profile-information.selectors';
 
 @Component({
   selector: 'app-update-personal-information',
@@ -18,19 +28,22 @@ export class UpdatePersonalInformationComponent implements OnInit {
   UpdatePersonalDetailsForm!: FormGroup;
   Subscriptions: Subscription[] = [];
   userId: any;
-
+  btnClasses: string = 'btn-40-height px-4';
+  gender = ['male', 'female', 'other'];
   constructor(
     private _identitySvc: IdentityService,
     private _fb: FormBuilder,
     private _route: ActivatedRoute,
     // private ngRedux: NgRedux<IAppState>,
-    private _router: Router
+    private _router: Router,
+    private store: Store<ProfileInformationState>,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.onGetParams();
-    this.getUserDetails();
+    this.getUserPersonalInformation();
+    // this.onGetParams();
 
     // let subscription = this.isLoading.subscribe((l: boolean) => {
     //   if (l) {
@@ -45,6 +58,21 @@ export class UpdatePersonalInformationComponent implements OnInit {
     //   this.getUserData(e);
     // });
     // this.Subscriptions.push(subscription);
+  }
+
+  getUserPersonalInformation() {
+    this.store.dispatch(loadProfileInformations());
+    // let userData$ = this.store.pipe(select(profileInformation));
+    // userData$.subscribe((data: any) => {
+    //   if (data) {
+    //     this.getUserData(data)
+    //   }
+    // })
+
+    this.store.pipe(select(profileInformation)).subscribe((data) => {
+      let userData$ = Object.assign(new PersonalInformation(), data);
+      this.getUserData(userData$);
+    });
   }
 
   buildForm() {
@@ -99,30 +127,65 @@ export class UpdatePersonalInformationComponent implements OnInit {
       usr_fullname: this.UpdatePersonalDetailsForm.value.FullName,
       usr_gender: this.UpdatePersonalDetailsForm.value.Gender,
     };
-    let subscription = this._identitySvc.UpdateUserDetails(Payload).subscribe({
-      next: (response: any) => {
-        if (response) {
-          // this.ngRedux.dispatch({
-          //   type: UPDATE_USER_DETAILS_SUCCESS,
-          //   payload: {
-          //     response: response,
-          //     data: Payload,
-          //   },
-          // });
-          this._router.navigate(['/account']);
-        }
-      },
-      error: (err: any) => {
-        if (err) {
-          console.warn('Error: ', err);
-          // this.ngRedux.dispatch({
-          //   type: UPDATE_USER_DETAILS_ERROR,
-          //   payload: err,
-          // });
-        }
-      },
-    });
-    this.Subscriptions.push(subscription);
+
+    if (this.UpdatePersonalDetailsForm.invalid) {
+      return;
+    } else {
+      this.processData(Payload);
+    }
+
+    // const Payload: UpdateUserModel = {
+    //   usr_fullname: this.UpdatePersonalDetailsForm.value.FullName,
+    //   usr_gender: this.UpdatePersonalDetailsForm.value.Gender,
+    // };
+
+    // const update: Update<PersonalInformation> = {
+    //   id: this.model.usr_id,
+    //   changes: Payload
+    // }
+
+    // if (this.UpdatePersonalDetailsForm.invalid) {
+    //   return
+    // } else {
+    //   this.processData({ profileInformation: update });
+    // }
+  }
+
+  processData(Payload: any) {
+    this.store.dispatch(
+      updateProfileInformation({ profileInformation: Payload })
+    );
+    // let subscription = this._identitySvc.UpdateUserDetails(Payload).subscribe({
+    //   next: (response: any) => {
+    //     if (response) {
+    //       console.warn("response: ", response)
+    //       const successResponse = response?.message;
+    //       // const x = new Snackbar(successResponse, this._snackBar);
+    //       const x = new Snackbar("Personal information updated!", this._snackBar);
+    //       // x.openTextSnackBar();
+    //       x.successSnackbar();
+    //       // this.ngRedux.dispatch({
+    //       //   type: UPDATE_USER_DETAILS_SUCCESS,
+    //       //   payload: {
+    //       //     response: response,
+    //       //     data: Payload,
+    //       //   },
+    //       // });
+    //       this._router.navigate(['/account']);
+
+    //     }
+    //   },
+    //   error: (err: any) => {
+    //     if (err) {
+    //       console.warn('Error: ', err);
+    //       // this.ngRedux.dispatch({
+    //       //   type: UPDATE_USER_DETAILS_ERROR,
+    //       //   payload: err,
+    //       // });
+    //     }
+    //   },
+    // });
+    // this.Subscriptions.push(subscription);
   }
 
   back() {

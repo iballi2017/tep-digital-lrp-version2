@@ -1,0 +1,78 @@
+<!-- <p>add-new-occupant works!</p> -->
+<div class="card">
+    <div class="card-body">
+        <div class="text-end">
+            <button class="btn btn-sm text-danger" (click)="closeDialog()">
+                <img src="../../../../../assets/images/icons/times.png" alt="" class="img-fluid">
+            </button>
+        </div>
+        <!-- <ng-container *ngIf="error$ | async">
+            <small class="text-danger text-center d-block">{{errorMsg}}</small>
+        </ng-container> -->
+        <ng-container *ngIf="responseMessage">
+            <small class="text-info text-center d-block">{{responseMessage}}</small>
+        </ng-container>
+        <form [formGroup]="AddRespondentForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label for="FullName" class="form-label">Full Name</label>
+                <input type="text" class="form-control grey-control" id="FullName" formControlName="FullName"
+                    [ngClass]="{'is-invalid': AddRespondentForm.get('FullName')?.touched && AddRespondentForm.get('FullName')?.invalid}"
+                    required>
+                <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Name
+                    is
+                    required.</small>
+            </div>
+            <div class="row g-3">
+                <div class="mb-3 col-6">
+                    <label for="Gender" class="form-label">Gender</label>
+                    <!-- <input type="text" class="form-control" id="Gender"> -->
+                    <div class="select-drop-wrapper_">
+                        <select name="Gender" id="Gender" class="form-select grey-control" formControlName="Gender"
+                            [ngClass]="{'is-invalid': AddRespondentForm.get('Gender')?.touched && AddRespondentForm.get('Gender')?.invalid}"
+                            required>
+                            <option value="Male" selected="selected">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Gender
+                            is
+                            required.</small>
+                    </div>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="Age" class="form-label">Age</label>
+                    <!-- <input type="number" class="form-control" id="Age" formControlName="Age"> -->
+                    <div class="select-drop-wrapper_">
+                        <select name="Age" id="Age" class="form-select grey-control" formControlName="Age"
+                            [ngClass]="{'is-invalid': AddRespondentForm.get('Age')?.touched && AddRespondentForm.get('Age')?.invalid}"
+                            required>
+                            <option value="{{age}}" *ngFor="let age of agesList">{{age}}</option>
+                        </select>
+                        <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Age
+                            is
+                            required.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="Location" class="form-label">Location</label>
+                <!-- <input type="text" class="form-control" id="Location"> -->
+                <div class="select-drop-wrapper_">
+                    <select name="Location" id="Location" class="form-select grey-control" formControlName="Location"
+                        [ngClass]="{'is-invalid': AddRespondentForm.get('Location')?.touched && AddRespondentForm.get('Location')?.invalid}">
+                        <option value="" selected="selected">Select location</option>
+                        <option value="{{item}}" *ngFor="let item of nigerianStateList">{{item}}</option>
+                    </select>
+                    <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Select a location.</small>
+                </div>
+            </div>
+            <button mat-button class="btn primary-btn btn-40-height"
+                [disabled]="AddRespondentForm.invalid || (occupantStateIsLoading$ | async)">
+                <ng-container *ngIf="(occupantStateIsLoading$ | async)">Sending...</ng-container>
+                <ng-container *ngIf="!(occupantStateIsLoading$ | async)">
+                    {{submitBtnLabel}}
+                </ng-container>
+            </button>
+        </form>
+    </div>
+</div>

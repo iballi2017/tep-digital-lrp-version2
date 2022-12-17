@@ -1,0 +1,66 @@
+<!-- <p>occupant-details works!</p> -->
+
+
+<div id="personal-information-page">
+    <div class="details-card-1">
+        <div class="title-wrapper">
+            <div class="d-flex align-items-center">
+                <button class="btn back-btn ps-0" (click)="back()"></button>
+                <h2 class="title">{{title}}</h2>
+            </div>
+        </div>
+
+
+        <form [formGroup]="UpdateRespondentDetailsForm" (ngSubmit)="onSubmit()">
+            <div class="body-wrapper">
+                <div class="row">
+                    <div class="form-group col-12 col-md-6">
+                        <label for="FullName" class="form-label text-uppercase">Full Name</label>
+                        <input type="text" id="FullName" class="form-control" formControlName="FullName"
+                            [ngClass]="{'is-invalid': UpdateRespondentDetailsForm.get('FullName')?.touched && UpdateRespondentDetailsForm.get('FullName')?.invalid}"
+                            required formControlName="FullName">
+                        <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Name
+                            is
+                            required.</small>
+                    </div>
+                    <div class="mb-3 col-12 col-md-6">
+                        <label for="Location" class="form-label text-uppercase">Location</label>
+                        <div class="select-drop-wrapper_">
+                            <select name="Location" id="Location" class="form-select" formControlName="Location">
+                                <option value="" selected="selected">Select location</option>
+                                <option value="{{item}}" *ngFor="let item of nigerianStateList">{{item}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="Age" class="form-label text-uppercase">Age</label>
+                        <div class="select-drop-wrapper_">
+                            <select name="Age" id="Age" class="form-select" formControlName="Age">
+                                <option value="{{age}}" *ngFor="let age of agesList">{{age}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="Gender" class="form-label text-uppercase">Gender</label>
+                        <div class="select-drop-wrapper_">
+                            <select name="Gender" id="Gender" class="form-select" formControlName="Gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-wrapper">
+                <!--  -->
+                <app-primary-button [btnTitle]="submitBtnLabel" [btnType]="SaveBtnType"
+                    [btnClasses]="btnClasses"></app-primary-button>
+                    <span class="mx-1"></span>
+                    <app-danger-button [btnTitle]="deleteBtnLabel" [btnType]="deleteBtnType" [btnClasses]="btnClasses" 
+                    (onClickEvent)="onRemove(occupantId)"></app-danger-button>
+            </div>
+        </form>
+    </div>
+</div>

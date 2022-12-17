@@ -4,9 +4,7 @@
     <div class="details-card-1">
         <div class="title-wrapper">
             <div class="d-flex align-items-center">
-                <button class="btn back-btn pl-0" (click)="back()">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
+                <button class="btn back-btn ps-0" (click)="back()"></button>
                 <h2 class="title">PERSONAL DETAILS</h2>
             </div>
         </div>
@@ -70,9 +68,7 @@
                             <select id="Gender" class="form-select" formControlName="Gender"
                                 [ngClass]="{'is-invalid': UpdatePersonalDetailsForm.get('Gender')?.touched && UpdatePersonalDetailsForm.get('Gender')?.invalid}"
                                 required>
-                                <option value="male">Male</option>
-                                <option value="femail">Female</option>
-                                <option value="other">Other</option>
+                                <option [value]="gender | lowercase" *ngFor="let gender of gender">{{gender | titlecase}}</option>
                             </select>
                         </div>
                         <small id="nameErrorMsg" class="form-text text-danger invalid-feedback">Gender
@@ -88,6 +84,7 @@
         </button> -->
             </div>
             <div class="footer-wrapper">
+                <app-primary-button [btnTitle]="'Save'" [btnClasses]="btnClasses"></app-primary-button>
                 <!-- <button class="btn primary-btn text-uppercase form-btn" [disabled]="(isLoading | async)">
                     {{submitBtnLabel}}
                 </button> -->

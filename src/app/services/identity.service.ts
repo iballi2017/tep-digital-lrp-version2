@@ -74,7 +74,6 @@ export class IdentityService {
 
 
   UpdateUserDetails(payload: UpdateUserModel) {
-
     return this._http.post(this.UpdateUserUrl, payload)
       .pipe(catchError(handleError));
   }

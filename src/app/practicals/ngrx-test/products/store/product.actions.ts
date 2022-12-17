@@ -83,12 +83,12 @@ export const deleteProduct = createAction(
 );
 
 export const deleteProductSuccess = createAction(
-  '[Product Delete Effect] Delete Product',
+  '[Product Delete Effect] Delete Product Success',
   props<{ id: string }>()
 );
 
 export const deleteProductFailure = createAction(
-  '[Product Delete Effect] Delete Product',
+  '[Product Delete Effect] Delete Product Failure',
   props<{ error: any }>()
 );
 // DELETE PRODUCT ENDS

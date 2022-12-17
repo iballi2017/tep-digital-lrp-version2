@@ -29,9 +29,10 @@ export class ProductEffects {
       ofType(fromProductActions.loadProducts),
       mergeMap((action: any) =>
         this._productSvc.GetProducts().pipe(
-          map((products: any) =>
-            fromProductActions.loadProductsSuccess({ products })
-          ),
+          map((products: any) => {
+            console.group("products effect: ", products)
+            return fromProductActions.loadProductsSuccess({ products });
+          }),
           catchError((error: any) =>
             of(fromProductActions.loadProductsFailure({ error }))
           )

@@ -7,8 +7,8 @@ button {
     border-radius: 10px;
     font-family: 'Open Sans';
     font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
+    font-weight: 600;
+    font-size: 1rem;
     line-height: 27px;
     text-transform: capitalize;
     color: #FFFFFF;
@@ -21,7 +21,7 @@ button {
 
     @include mixins.maxmq(768px){
         border-radius: 5px !important;
-        font-weight: 600;
-        font-size: 14px;
+        font-weight: 500;
+        font-size: .95;
     }
 }

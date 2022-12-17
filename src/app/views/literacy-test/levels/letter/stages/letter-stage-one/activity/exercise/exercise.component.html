@@ -6,4 +6,11 @@
         </div>
         <div class="inner"></div>
     </div>
+    <div id="activity-keypad">
+        <ul class="key-list ps-0 list-style-none">
+            <li *ngFor="let key of keyList">
+                <button class="btn">{{key}}</button>
+            </li>
+        </ul>
+    </div>
 </div>

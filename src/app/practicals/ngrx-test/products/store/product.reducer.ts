@@ -22,7 +22,12 @@ export const initialState: ProductState = adapter.getInitialState({
 export const reducer = createReducer(
   initialState,
   on(ProductActions.addProductSuccess, (state, action) =>
-    adapter.addOne(action.product, state)
+    // adapter.addOne(action.product, state)
+     {
+      console.group('action***: ', action);
+      console.info('state***: ', state);
+      return adapter.addOne(action.product, state);
+    }
   ),
   // on(ProductActions.addProductFailure,
   //   (state, action) => adapter.addOne(action.error, state)
