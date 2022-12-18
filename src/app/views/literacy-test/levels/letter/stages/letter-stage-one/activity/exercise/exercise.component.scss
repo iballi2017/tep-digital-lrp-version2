@@ -1,3 +1,6 @@
+#activity-canvas {
+    position: relative;
+}
 #blue-board {
     max-width: 700px;
     margin: 0 auto;
@@ -139,7 +142,32 @@
                 // align-items: center;
                 // text-align: center;
                 color: #000000;
+                &.is-right {
+                    &:focus {
+                        background-color: #73cf48;
+                        border: 7px solid #ffffff;
+                    }
+                }
+                &.is-wrong {
+                    &:focus {
+                        border: 7px solid #d93333;
+                    }
+                }
             }
         }
+    }
+}
+
+#replay-voice-btn-wrapper,
+#activity-hint-btn {
+    text-align: center;
+    p {
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 27px;
+        text-transform: capitalize;
+        color: #ffffff;
     }
 }

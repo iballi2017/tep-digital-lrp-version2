@@ -15,7 +15,6 @@
     &.btn-40-height {
         height: 40px;
     }
-    
 }
 
 .primary-btn {
@@ -87,7 +86,6 @@
     }
 }
 
-
 .primary-bordered-btn {
     background-color: #ffffff !important;
     color: colors.$primaryColor !important;
@@ -95,5 +93,50 @@
     &:hover {
         background-color: #fafef8 !important;
         color: colors.$primaryColor !important;
+    }
+}
+
+#activity-hint-btn{
+    padding: 0 !important;filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.5));
+    &::before {
+        content: "";
+        display: block;
+        // height: 70px;
+        // width: 70px;
+        height: 4rem;
+        width: 4rem;
+        background-image: url(../../assets/images/icons/hint-icon.svg);
+        background-size: cover;
+        // background-size: auto;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 7px;
+    }
+}
+#replay-voice-btn {
+    // display: flex;
+    // align-items: center;
+    padding: 0 !important;filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.5));
+    &::before {
+        content: "";
+        display: block;
+        // height: 70px;
+        // width: 70px;
+        height: 4rem;
+        width: 4rem;
+        background-image: url(../../assets/images/icons/replay-icon.svg);
+        background-size: cover;
+        // background-size: auto;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 7px;
+    }
+    @include mixins.maxmq(500px) {
+        &::before {
+            // height: 40px;
+            // width: 40px;
+            height: 2rem;
+            width: 2rem;
+        }
     }
 }
