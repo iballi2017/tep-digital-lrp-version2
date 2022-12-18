@@ -1,1 +1,22 @@
-<p>contact-us works!</p>
+<!-- <p>contact-us works!</p> -->
+<div id="contact-us-page">
+    <div class="details-card-2">
+        <div class="title-wrapper">
+            <div class="d-flex align-items-center">
+                <h2 class="title">
+                    CONTACT
+                </h2>
+            </div>
+        </div>
+        <div class="body-wrapper">
+            <div class="item-card">
+                <ul class="contact-list list-style-none mb-0 pl-0">
+                    <li class="contact" *ngFor="let item of contactDetailsList">
+                        <div class="contact-title">{{item?.title | uppercase}}</div>
+                        <div class="contact-body">{{item?.body}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+Sample command to create entity
+ng generate entity store/product --module=/src/app/practicals/ngrx-test/products/store/products.module.ts
+ng generate entity store/word-level-result/word-level-result --module=../../literacy-test.module.ts

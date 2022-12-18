@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { ModifyStageArrayData } from 'src/app/models/class/modify-stage-array-data';
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
 import { GameService } from 'src/app/services/game.service';
+import { loadLetterLevelResults } from '../../store/letter-level-result/letter-level-result.actions';
+import { LetterLevelResultState } from '../../store/letter-level-result/letter-level-result.reducer';
+import { selectLetterLevelResults } from '../../store/letter-level-result/letter-level-result.selectors';
 
 @Component({
   selector: 'app-letter',
@@ -33,11 +37,13 @@ export class LetterComponent implements OnInit {
   Subscriptions: Subscription[] = [];
   gameLevelResultAndRating: any;
   gameSessionId: any;
-  isLoadingStarCards:boolean = false;
+  isLoadingStarCards: boolean = false;
+  userData$!: Observable<any>;
   constructor(
     private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService,
     private _gameSvc: GameService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private store: Store<LetterLevelResultState>
   ) {}
 
   ngOnInit(): void {
@@ -46,26 +52,28 @@ export class LetterComponent implements OnInit {
   }
 
   onGetLevelGameResult(GameSessionId: string) {
-    this.isLoadingStarCards = true;
-    let subscription = this._gameLevelResultAndRatingSvc
-      .LoadLetteringGameResultAndRating(GameSessionId)
-      .subscribe({
-        next: (response: any) => {
-          if (response) {
-            // console.log('LoadLetter response>>>: ', response);
-            this.gameLevelResultAndRating = response;
-            this.modifyStageArray();
-            this.isLoadingStarCards = false;
-          }
-        },
-        error: (err: any) => {
-          if (err) {
-            console.warn('Error**: ', err);
-            this.isLoadingStarCards = false;
-            new Snackbar("Failed to load stages, please refresh", this._snackBar).errorSnackbar();
-          }
-        },
-      });
+    this.store.dispatch(loadLetterLevelResults({ session_id: GameSessionId }));
+    this.userData$ = this.store.pipe(select(selectLetterLevelResults));
+    let subscription = this.userData$.subscribe({
+      next: (response: any) => {
+        if (response) {
+          // console.log('LoadLetter response>>>: ', response);
+          this.gameLevelResultAndRating = response;
+          this.modifyStageArray();
+          this.isLoadingStarCards = false;
+        }
+      },
+      error: (err: any) => {
+        if (err) {
+          console.warn('Error**: ', err);
+          this.isLoadingStarCards = false;
+          new Snackbar(
+            'Failed to load stages, please refresh',
+            this._snackBar
+          ).errorSnackbar();
+        }
+      },
+    });
     this.Subscriptions.push(subscription);
   }
 
@@ -77,7 +85,7 @@ export class LetterComponent implements OnInit {
   }
 
   modifyStageArray() {
-    if(this.gameLevelResultAndRating){
+    if (this.gameLevelResultAndRating) {
       let x = new ModifyStageArrayData(this.gameLevelResultAndRating);
       this.testStageStars = x.modifyStageArray();
     }

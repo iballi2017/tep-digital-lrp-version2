@@ -35,7 +35,7 @@ export class GameLevelResultAndRatingService {
 
 
   // LETERACY
-  LoadLetteringGameResultAndRating(SessionId: string) {
+  LoadLetterGameResultAndRating(SessionId: string) {
     return this._http.get(`${this.LetterLevelGameResult_Url}/${SessionId}`).pipe(
       map((response: any) => {
         return response?.letterData;

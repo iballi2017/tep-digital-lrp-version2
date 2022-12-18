@@ -1,3 +1,3 @@
-export interface Reports {
+export interface Report {
   id: string;
 }

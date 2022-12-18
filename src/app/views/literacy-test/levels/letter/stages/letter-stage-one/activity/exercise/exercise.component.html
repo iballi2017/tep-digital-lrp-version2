@@ -4,12 +4,28 @@
         <div id="board-activity-hint">
             <p class="my-0">{{boardActivityHint}}</p>
         </div>
-        <div class="inner"></div>
+        <div class="inner">
+            <div id="result-item-list">
+                <ul class="item-list">
+                    <li *ngFor="let item of resultItemList">{{item}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="key-selection-preview-block">
+        <!-- <ul class="preview-list">
+            <li *ngFor="let item of previewList">
+                {{item}}
+            </li>
+        </ul> -->
+        <div class="preview-text" *ngIf="previewText">
+            {{previewText}}
+        </div>
     </div>
     <div id="activity-keypad">
         <ul class="key-list ps-0 list-style-none">
             <li *ngFor="let key of keyList">
-                <button class="btn">{{key}}</button>
+                <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
             </li>
         </ul>
     </div>

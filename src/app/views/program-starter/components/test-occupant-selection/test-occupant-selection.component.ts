@@ -10,6 +10,7 @@ import { GameSessionData, StartGame } from 'src/app/models/interface/game';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { OccupantService } from 'src/app/services/occupant.service';
+import { AddNewOccupantComponent } from 'src/app/views/user-account/profile-information/add-new-occupant/add-new-occupant.component';
 
 @Component({
   selector: 'app-test-occupant-selection',
@@ -146,13 +147,13 @@ export class TestOccupantSelectionComponent implements OnInit {
     this.dialogRef.close('dialod closed!');
   }
 
-  openAddNewRespondentDialog() {
-    // this.dialogRef.close('dialod closed!');
-    // const dialogRef = this.dialog.open(AddRespondentComponent, {
-    //   width: '100%',
-    //   maxWidth: '500px',
-    // });
-    // dialogRef.afterClosed().subscribe((result) => {
-    // });
+  openAddNewOccupantDialog() {
+    this.dialogRef.close('dialod closed!');
+    const dialogRef = this.dialog.open(AddNewOccupantComponent, {
+      width: '100%',
+      maxWidth: '500px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+    });
   }
 }

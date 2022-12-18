@@ -6,7 +6,6 @@ import { OccupantDetailsComponent } from './profile-information/occupant-details
 import { ProfileInformationComponent } from './profile-information/profile-information.component';
 import { UpdatePasswordComponent } from './profile-information/update-password/update-password.component';
 import { UpdatePersonalInformationComponent } from './profile-information/update-personal-information/update-personal-information.component';
-import { ReportsComponent } from './reports/reports.component';
 import { UserAccountComponent } from './user-account.component';
 
 const routes: Routes = [
@@ -29,14 +28,22 @@ const routes: Routes = [
         path: 'occupant-details/:occupantId',
         component: OccupantDetailsComponent,
       },
-      {
-        path: 'reports',
-        component: ReportsComponent,
+      // {
+      //   path: 'reports',
+      //   component: ReportsComponent,
         // children: [
         //   { path: '', component: ReportListComponent },
         //   { path: 'report-list', component: ReportListComponent },
         //   { path: 'details/:sessionId', component: ReportDetailsComponent },
         // ],
+      // },
+      {
+        path: 'reports',
+        // canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./reports/report.module').then(
+            (m) => m.ReportModule
+          ),
       },
       { path: 'about-the-app', component: AboutTheAppComponent },
       { path: 'contact-us', component: ContactUsComponent },

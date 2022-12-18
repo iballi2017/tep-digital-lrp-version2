@@ -6,7 +6,7 @@ import { ProfileInformationComponent } from './profile-information/profile-infor
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UserAccountComponent } from './user-account.component';
 import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
-import { ReportsComponent } from './reports/reports.component';
+// import { ReportsComponent } from './reports/reports.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { AboutTheAppComponent } from './about-the-app/about-the-app.component';
 import { UpdatePasswordComponent } from './profile-information/update-password/update-password.component';
@@ -29,7 +29,7 @@ import { AddNewOccupantComponent } from './profile-information/add-new-occupant/
   declarations: [
     ProfileInformationComponent,
     UserAccountComponent,
-    ReportsComponent,
+    // ReportsComponent,
     ContactUsComponent,
     AboutTheAppComponent,
     UpdatePasswordComponent,
@@ -46,7 +46,7 @@ import { AddNewOccupantComponent } from './profile-information/add-new-occupant/
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forFeature(fromProfileInformation.profileInformationsFeatureKey, fromProfileInformation.reducer),
-    StoreModule.forFeature(fromReports.reportsesFeatureKey, fromReports.reducer),
+    StoreModule.forFeature(fromReports.reportsFeatureKey, fromReports.reducer),
     StoreModule.forFeature(fromOccupantList.occupantListFeatureKey, fromOccupantList.reducer),
     EffectsModule.forFeature([ProfileInformationEffects, ReportsEffects, OccupantListEffects]),
   ]

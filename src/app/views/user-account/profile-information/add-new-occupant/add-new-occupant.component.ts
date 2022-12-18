@@ -70,6 +70,7 @@ export class AddNewOccupantComponent implements OnInit, OnDestroy {
       occ_age: this.AddRespondentForm.value.Age,
       occ_gender: this.AddRespondentForm.value.Gender,
     };
+    console.log('Payload: ', Payload);
     this.store.dispatch(addOccupant({ occupant: Payload }));
     this._occupantMessengerSvc.addOccupantBehaviour.subscribe((msg: any) => {
       if (msg) {

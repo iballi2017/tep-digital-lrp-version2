@@ -1,9 +1,9 @@
 <!-- <p>paragraph works!</p> -->
 
 <div>
-    <ng-container *ngIf="isLoadingStarCards">
+    <!-- <ng-container *ngIf="isLoadingStarCards">
         <div class="text-info text-bold">Loading...</div>
-    </ng-container>
+    </ng-container> -->
     <ul class="stage-status list-style-none ps-0">
         <li class="cursor-pointer" *ngFor="let item of testStageStars; let i = index"
             [routerLink]="['/literacy/letter/', item?.title, 'lettering-splash']">

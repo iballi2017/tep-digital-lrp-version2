@@ -1,0 +1,41 @@
+@use "../../../../sass/_partials/mixins";
+.item-card {
+    font-family: "Open Sans";
+    font-style: normal;
+    color: #1e1e1e;
+
+    .contact-title {
+        font-size: 15px;
+        line-height: 20px;
+        font-weight: 700;
+    }
+
+    .contact-body {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 27px;
+    }
+}
+
+.contact-list {
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    // grid-gap: 30px;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    li {
+        flex-basis: 50%;
+        padding-right: 2em;
+        margin-bottom: 2em;
+        &:last-child {
+            padding-right: 0;
+            margin-bottom: 0;
+        }
+    }
+    @include mixins.maxmq(768px) {
+        li {
+            flex-basis: 100%;
+        }
+    }
+}

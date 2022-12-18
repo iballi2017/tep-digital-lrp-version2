@@ -52,7 +52,7 @@ export const reducer = createReducer(
     };
   }),
 
-  // LOAD OCCUPANT
+  // LOAD OCCUPANTS
   on(OccupantListActions.loadOccupantListSuccess, (state, action: any) =>
     // {
     //   return {
