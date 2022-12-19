@@ -11,6 +11,7 @@ import { PrimaryButtonComponent } from './primary-button/primary-button.componen
 import { DangerButtonComponent } from './danger-button/danger-button.component';
 import { DefaultButtonComponent } from './default-button/default-button.component';
 import { BooleanAlertDialogComponent } from './boolean-alert-dialog/boolean-alert-dialog.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { BooleanAlertDialogComponent } from './boolean-alert-dialog/boolean-aler
     DangerButtonComponent,
     DefaultButtonComponent,
     BooleanAlertDialogComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     CommonModule,
