@@ -1,5 +1,5 @@
-import { ErrorSnackbarComponent } from 'src/app/shared/snackbar/error-snackbar/error-snackbar.component';
-import { SuccessSnackbarComponent } from 'src/app/shared/snackbar/success-snackbar/success-snackbar.component';
+import { ErrorSnackbarComponent } from 'src/app/shared/shared.components/snackbar/error-snackbar/error-snackbar.component';
+import { SuccessSnackbarComponent } from 'src/app/shared/shared.components/snackbar/success-snackbar/success-snackbar.component';
 
 export class Snackbar {
   snackBar: any;

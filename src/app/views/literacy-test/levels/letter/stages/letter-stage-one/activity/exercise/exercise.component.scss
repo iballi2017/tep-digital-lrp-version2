@@ -1,12 +1,15 @@
+@use "../../../../../../../../../sass/_partials/mixins";
+
 #activity-canvas {
     position: relative;
 }
+
 #blue-board {
     max-width: 700px;
     margin: 0 auto;
     text-align: center;
 
-    > .inner {
+    >.inner {
         min-height: 300px;
         padding: 0.5em;
         background: #4a3d96;
@@ -15,12 +18,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
         #result-item-list {
+
             // width: 100%;
             .item-list {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
                 // width: 100%;
                 li {
                     height: 90px;
@@ -59,6 +65,12 @@
             line-height: 27px;
             color: #ffffff;
         }
+
+        @include mixins.maxmq(500px) {
+            p {
+                font-size: 1rem;
+            }
+        }
     }
 }
 
@@ -66,6 +78,7 @@
     max-width: 300px;
     margin: 0 auto;
     height: 80px;
+
     .preview-text {
         height: 100%;
         // flex-basis: calc((100% - 40px) / 3);
@@ -83,6 +96,7 @@
         color: #ffffff;
         margin: 0 auto;
     }
+
     .preview-list {
         list-style: none;
         padding-left: 0;
@@ -91,6 +105,7 @@
         align-items: center;
         justify-content: center;
         height: 100%;
+
         li {
             height: 100%;
             // flex-basis: calc((100% - 40px) / 3);
@@ -142,12 +157,14 @@
                 // align-items: center;
                 // text-align: center;
                 color: #000000;
+
                 &.is-right {
                     &:focus {
                         background-color: #73cf48;
                         border: 7px solid #ffffff;
                     }
                 }
+
                 &.is-wrong {
                     &:focus {
                         border: 7px solid #d93333;
@@ -156,18 +173,8 @@
             }
         }
     }
-}
 
-#replay-voice-btn-wrapper,
-#activity-hint-btn {
-    text-align: center;
-    p {
-        font-family: "Open Sans";
-        font-style: normal;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 27px;
-        text-transform: capitalize;
-        color: #ffffff;
+    @include mixins.maxmq(500px) {
+        margin-bottom: 2em;
     }
 }

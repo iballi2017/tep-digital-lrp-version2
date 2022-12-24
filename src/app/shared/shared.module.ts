@@ -1,17 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ErrorSnackbarComponent } from './snackbar/error-snackbar/error-snackbar.component';
-import { SuccessSnackbarComponent } from './snackbar/success-snackbar/success-snackbar.component';
-import { NotificationSnackbarComponent } from './snackbar/notification-snackbar/notification-snackbar.component';
-import { BreadcrumbTopbarComponent } from './breadcrumb-topbar/breadcrumb-topbar.component';
-import { SideNavigationOptionOneComponent } from './side-navigation-option-one/side-navigation-option-one.component';
+import { ErrorSnackbarComponent } from './shared.components/snackbar/error-snackbar/error-snackbar.component';
+import { SuccessSnackbarComponent } from './shared.components/snackbar/success-snackbar/success-snackbar.component';
+// import { NotificationSnackbarComponent } from './shared.components/snackbar/notification-snackbar/notification-snackbar.component';
+// import { BreadcrumbTopbarComponent } from './breadcrumb-topbar/breadcrumb-topbar.component';
+// import { SideNavigationOptionOneComponent } from './side-navigation-option-one/side-navigation-option-one.component';
 import { SharedRoutingModule } from './shared.routing.module';
 import { NgMaterialModule } from '../ng-material/ng-material.module';
-import { PrimaryButtonComponent } from './primary-button/primary-button.component';
-import { DangerButtonComponent } from './danger-button/danger-button.component';
-import { DefaultButtonComponent } from './default-button/default-button.component';
-import { BooleanAlertDialogComponent } from './boolean-alert-dialog/boolean-alert-dialog.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PrimaryButtonComponent } from './shared.components/primary-button/primary-button.component';
+import { DangerButtonComponent } from './shared.components/danger-button/danger-button.component';
+import { DefaultButtonComponent } from './shared.components/default-button/default-button.component';
+import { BooleanAlertDialogComponent } from './shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
+import { PageNotFoundComponent } from './shared.views/page-not-found/page-not-found.component';
+import { ActivityHintDialogComponent } from './shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { LevelCompletionComponent } from './shared.views/level-completion/level-completion.component';
+import { StageCompletionComponent } from './shared.views/stage-completion/stage-completion.component';
+import { ProgramCompletionComponent } from './shared.views/program-completion/program-completion.component';
+import { BreadcrumbTopbarComponent } from './shared.components/breadcrumb-topbar/breadcrumb-topbar.component';
+import { SideNavigationOptionOneComponent } from './shared.components/side-navigation-option-one/side-navigation-option-one.component';
+import { NotificationSnackbarComponent } from './shared.components/snackbar/notification-snackbar/notification-snackbar.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -26,6 +33,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     DefaultButtonComponent,
     BooleanAlertDialogComponent,
     PageNotFoundComponent,
+    ActivityHintDialogComponent,
+    LevelCompletionComponent,
+    StageCompletionComponent,
+    ProgramCompletionComponent,
   ],
   imports: [
     CommonModule,

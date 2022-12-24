@@ -6,7 +6,7 @@
         </div>
         <div class="inner">
             <div id="result-item-list">
-                <ul class="item-list">
+                <ul class="item-list ps-0 mb-0">
                     <li *ngFor="let item of resultItemList">{{item?.name}}</li>
                 </ul>
             </div>
@@ -33,7 +33,7 @@
 
     <div id="utility-controls">
         <div id="activity-hint-btn-wrapper">
-            <button class="btn" id="activity-hint-btn">
+            <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
             </button>
             <p>Hint</p>
         </div>

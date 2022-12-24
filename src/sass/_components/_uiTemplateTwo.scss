@@ -1,7 +1,7 @@
 @use "../_partials/mixins";
 
 #ui-template-sample-two {
-    > .inner {
+    >.inner {
         width: 100%;
         max-width: 1440px;
         margin: 0 auto;
@@ -10,10 +10,12 @@
         // overflow: hidden;
         // position: relative;
         overflow-y: auto;
+
         .template-content {
             height: 100%;
             text-align: center;
             padding-top: 3em;
+
             h1 {
                 font-size: 20rem;
                 line-height: 240px;
@@ -21,8 +23,7 @@
             }
         }
 
-        #replay-voice-btn {
-        }
+        #replay-voice-btn {}
 
         #utility-controls {
             position: absolute;
@@ -31,14 +32,21 @@
             z-index: 2;
             margin-bottom: 20px;
             margin-left: 20px;
+            @include mixins.maxmq(500px) {
+                margin-left: 0;
+            }
         }
 
         #replay-voice-btn-wrapper,
         #activity-hint-btn-wrapper {
-            #activity-hint-btn, #replay-voice-btn {
+
+            #activity-hint-btn,
+            #replay-voice-btn {
                 margin-bottom: 0.5em;
             }
+
             text-align: center;
+
             // position: absolute;
             // bottom: 0;
             // left: 0;
@@ -53,6 +61,24 @@
                 line-height: 27px;
                 text-transform: capitalize;
                 color: #ffffff;
+            }
+
+            @include mixins.maxmq(500px) {
+                #activity-hint-btn,
+                #replay-voice-btn {
+                    &::before {
+                        // height: 40px;
+                        // width: 40px;
+                        height: 2rem;
+                        width: 2rem;
+                    }
+                }
+
+                p {
+                    font-weight: 600;
+                    font-size: 1.2rem;
+                }
+
             }
         }
 
@@ -77,15 +103,18 @@
     }
 
     .controls {
+
         .nav-right,
         .nav-left {
             position: absolute;
             // bottom: 46.5%;
             bottom: 40%;
         }
+
         .nav-right {
             right: 0;
         }
+
         .nav-left {
             left: 0;
         }
@@ -109,6 +138,7 @@
             width: 100%;
             max-width: 1440px;
             margin: 0 auto;
+
             // height: 100vh;
             // max-height: 730px;
             // overflow: hidden;
@@ -117,6 +147,7 @@
                 // height: 100%;
                 // transform: translate(0, 190px);
                 text-align: center;
+
                 h1 {
                     font-size: 10rem;
                     // line-height: 240px;
@@ -129,14 +160,18 @@
                 // bottom: 0;
                 // left: 0;
             }
+
             .controls {
+
                 .nav-right,
                 .nav-left {
                     bottom: 46.5%;
                 }
+
                 .nav-right {
                     right: 0;
                 }
+
                 .nav-left {
                     left: 0;
                 }
@@ -151,6 +186,7 @@
                     width: 45px;
                 }
             }
+
             .mark-control {
                 justify-content: flex-end;
             }

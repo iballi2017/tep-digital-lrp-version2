@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 import { GameType } from 'src/app/models/interface/game-type';
 import { TestOccupantSelectionComponent } from '../components/test-occupant-selection/test-occupant-selection.component';
 
@@ -26,13 +27,6 @@ export class ProgramSelectionComponent implements OnInit {
   }
 
   openNumberOfUsersInputDialog(QuestionCategory: string) {
-    // const dialogRef = this.dialog.open(NumberOfUsersInputDialogComponent, {
-    //   width: '100%',
-    //   // maxWidth: '500px',
-    //   data: {
-    //     QuestionCategory: QuestionCategory,
-    //   },
-    // });
     const dialogRef = this.dialog.open(TestOccupantSelectionComponent, {
       width: '100%',
       maxWidth: '550px',

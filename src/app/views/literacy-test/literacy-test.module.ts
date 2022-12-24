@@ -20,6 +20,9 @@ import { LetterLevelResultEffects } from './store/letter-level-result/letter-lev
 import { ParagraphLevelResultEffects } from './store/paragraph-level-result/paragraph-level-result.effects';
 import { StoryLevelResultEffects } from './store/story-level-result/story-level-result.effects';
 import { WordLevelResultEffects } from './store/word-level-result/word-level-result.effects';
+import { LiteracyLevelCompletionComponent } from './completion/literacy-level-completion/literacy-level-completion.component';
+import { LiteracyStageCompletionComponent } from './completion/literacy-stage-completion/literacy-stage-completion.component';
+import { LiteracyProgramCompletionComponent } from './completion/literacy-program-completion/literacy-program-completion.component';
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import { WordLevelResultEffects } from './store/word-level-result/word-level-res
     LetterComponent,
     ParagraphComponent,
     WordComponent,
-    StoryComponent
+    StoryComponent,
+    LiteracyLevelCompletionComponent,
+    LiteracyStageCompletionComponent,
+    LiteracyProgramCompletionComponent
   ],
   imports: [
     CommonModule,

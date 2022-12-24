@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { SessionId } from 'src/app/models/interface/game-report';
 import { GameType } from 'src/app/models/interface/game-type';
 import { ReportService } from 'src/app/services/report.service';
-import { BooleanAlertDialogComponent } from 'src/app/shared/boolean-alert-dialog/boolean-alert-dialog.component';
+import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 import { selectedReport } from '../../store/reports/report.selectors';
 import { loadSingleReport } from '../../store/reports/reports.actions';
 import { ReportState } from '../../store/reports/reports.reducer';

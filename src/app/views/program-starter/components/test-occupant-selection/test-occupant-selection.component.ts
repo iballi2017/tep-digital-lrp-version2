@@ -6,11 +6,16 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { GameSessionData, StartGame } from 'src/app/models/interface/game';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { OccupantService } from 'src/app/services/occupant.service';
 import { AddNewOccupantComponent } from 'src/app/views/user-account/profile-information/add-new-occupant/add-new-occupant.component';
+import { loadOccupantList } from 'src/app/views/user-account/store/occupant-list/occupant-list.actions';
+import { OccupantListState } from 'src/app/views/user-account/store/occupant-list/occupant-list.reducer';
+import { selectOccupants } from 'src/app/views/user-account/store/occupant-list/occupant-list.selectors';
 
 @Component({
   selector: 'app-test-occupant-selection',
@@ -28,18 +33,16 @@ export class TestOccupantSelectionComponent implements OnInit {
   continueBtnLabel: string = 'Continue';
   cancelBtnLabel: string = 'Cancel';
   isStatingTest:boolean = false;
+  occupantList$!: Observable<any[]>;
 
   constructor(
     public dialogRef: MatDialogRef<TestOccupantSelectionComponent>,
     public dialog: MatDialog,
-    // private _occupantSvc: OccupantService,
     private _fb: FormBuilder,
-    // private _gameSvc: GameService,
-    // private ngRedux: NgRedux<IAppState>,
     private _router: Router,
     @Inject(MAT_DIALOG_DATA) public data: { QuestionCategory: any },
     private _gameSvc: GameService,
-    private _occupantSvc: OccupantService
+    private store: Store<OccupantListState>,
   ) {}
 
   ngOnInit(): void {
@@ -49,27 +52,8 @@ export class TestOccupantSelectionComponent implements OnInit {
     let isGame = this._gameSvc.IsGame();
   }
   getOccupantList() {
-    this._occupantSvc.LoadOccupants().subscribe({
-      next: (response: any) => {
-        if (response) {
-          if (response) {
-            console.log('response: ', response);
-            this.occupantsList = response?.data;
-            // this.ngRedux.dispatch({
-            //   type: FETCH_OCCUPANTS_LIST_SUCCESS,
-            //   payload: response.data,
-            // });
-          }
-        }
-      },
-      error: (err: any) => {
-        console.warn('Error: ', err);
-        // this.ngRedux.dispatch({
-        //   type: FETCH_OCCUPANTS_LIST_ERROR,
-        //   payload: err,
-        // });
-      },
-    });
+    this.store.dispatch(loadOccupantList());
+    this.occupantList$ = this.store.pipe(select(selectOccupants));
   }
 
   buildForm() {
@@ -79,7 +63,6 @@ export class TestOccupantSelectionComponent implements OnInit {
   }
   onSubmit() {
     // this.ngRedux.dispatch({ type: ADD_GAME_SESSION });
-
     const Payload: StartGame = {
       occ_id: this.OccupantSelectionForm.value.RespondentId,
       // game_type: GameType.Literacy,

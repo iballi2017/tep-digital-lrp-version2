@@ -7,6 +7,10 @@ import { ProgramSelectionComponent } from './program-selection/program-selection
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestOccupantSelectionComponent } from './components/test-occupant-selection/test-occupant-selection.component';
 import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { OccupantListEffects } from '../user-account/store/occupant-list/occupant-list.effects';
+import * as fromOccupantList from '../user-account/store/occupant-list/occupant-list.reducer';
 
 @NgModule({
   declarations: [ProgramStarterComponent, ProgramSelectionComponent, TestOccupantSelectionComponent],
@@ -15,7 +19,9 @@ import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
     ProgramStarterRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgMaterialModule
+    NgMaterialModule,
+    EffectsModule.forFeature([OccupantListEffects]),
+    StoreModule.forFeature(fromOccupantList.occupantListFeatureKey, fromOccupantList.reducer),
   ],
 })
-export class ProgramStarterModule {}
+export class ProgramStarterModule { }

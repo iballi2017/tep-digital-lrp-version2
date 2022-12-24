@@ -44,7 +44,7 @@ export class LetterComponent implements OnInit {
     private _gameSvc: GameService,
     private _snackBar: MatSnackBar,
     private store: Store<LetterLevelResultState>
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.modifyStageArray();
@@ -78,10 +78,12 @@ export class LetterComponent implements OnInit {
   }
 
   onGetGameSessionId() {
-    let data: any = this._gameSvc.LoadGameSession();
-    console.group('data: ', data);
-    this.gameSessionId = data?.session_id;
-    this.onGetLevelGameResult(this.gameSessionId);
+    this._gameSvc.LoadGameSession();
+    this._gameSvc.gameSessionBehaviorSubject.subscribe((msg: any) => {
+      // console.log("msg: ", msg)
+      this.gameSessionId = msg.session_id
+      this.onGetLevelGameResult(this.gameSessionId);
+    })
   }
 
   modifyStageArray() {

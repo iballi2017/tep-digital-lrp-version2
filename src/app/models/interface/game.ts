@@ -1,4 +1,4 @@
-export interface Game {}
+export interface Game { }
 
 export interface StartGame {
   occ_id: string;
@@ -19,8 +19,8 @@ export interface GameStageResult {
   result: any;
 }
 
-export interface LetteringStageOneResult {
+export interface ActivityAnswer {
   session_id: string;
   answer: string;
-  data: [];
+  data: any;
 }

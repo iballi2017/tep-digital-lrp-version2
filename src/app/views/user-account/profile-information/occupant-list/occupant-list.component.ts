@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IDeleteOccupant } from 'src/app/models/interface/occupant';
 import { OccupantService } from 'src/app/services/occupant.service';
-import { BooleanAlertDialogComponent } from 'src/app/shared/boolean-alert-dialog/boolean-alert-dialog.component';
+import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 import {
   deleteOccupant,
   deleteOccupantFailure,

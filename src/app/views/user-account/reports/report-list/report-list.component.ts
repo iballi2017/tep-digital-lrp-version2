@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { SessionId } from 'src/app/models/interface/game-report';
 import { ReportService } from 'src/app/services/report.service';
-import { BooleanAlertDialogComponent } from 'src/app/shared/boolean-alert-dialog/boolean-alert-dialog.component';
+import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 import { selectReports } from '../../store/reports/report.selectors';
 import { loadReports } from '../../store/reports/reports.actions';
 import { ReportState } from '../../store/reports/reports.reducer';

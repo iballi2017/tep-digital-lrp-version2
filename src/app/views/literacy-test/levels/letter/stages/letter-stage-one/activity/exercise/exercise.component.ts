@@ -1,12 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { AlphabetType } from 'src/app/models/interface/alphabet-type';
+import { ActivityAnswer } from 'src/app/models/interface/game';
+import { GameService } from 'src/app/services/game.service';
+import { LetterStageOneService } from 'src/app/services/letter/letter-stage-one.service';
+import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { addLetterLevelResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
+import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Reveal the hidden vowel letters';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
@@ -105,11 +114,17 @@ export class ExerciseComponent implements OnInit {
   previewList: string[] = [];
   resultItemList: any[] = [];
   previewText: string = '';
-  constructor() {}
+  activityHint: any = "Fill out the vowel letters in yellow boxes above by selecting the right letters in the green boxes below";
+
+  Subscriptions: Subscription[] = [];
+  gameSessionId!: string;
+  constructor(private _gameSvc: GameService, public dialog: MatDialog, private _letterStageOneSvc: LetterStageOneService,
+    private store: Store<LetterLevelResultState>) { }
 
   ngOnInit(): void {
     this.onReplceKeyList();
     this.onCheckTestCompletion();
+    this.onGetGameSessionId();
   }
 
   onCheckTestCompletion() {
@@ -164,16 +179,59 @@ export class ExerciseComponent implements OnInit {
     }
   }
 
+
+  onGetGameSessionId() {
+    this._gameSvc.LoadGameSession();
+    this._gameSvc.gameSessionBehaviorSubject.subscribe({
+      next: (msg: any) => {
+        console.log("msg$$$$: ", msg);
+        this.gameSessionId = msg?.id
+      }
+    })
+  }
+
+
   testGameCompletion() {
     this.onCheckTestCompletion();
     if (this.checkTestCompletion.length == this.testList.length) {
-      setTimeout(() => {
-        alert('Complete!');
-      }, 1500);
+      const Payload: ActivityAnswer = {
+        session_id: this.gameSessionId,
+        answer: '1',
+        data: [...this.checkTestCompletion],
+      };
+      this.store.dispatch(addLetterLevelResult({ payload: Payload }));
+
+      this._letterStageOneSvc.addLetterLevelResultBehaviour.subscribe((msg: any) => {
+        if (msg) {
+          console.log("msg: ", msg)
+        }
+      });
     }
     return;
   }
 
-  refreshGame() {}
-  hint() {}
+
+  onReadHint() {
+    this.dialog.open(ActivityHintDialogComponent, {
+      width: '100%',
+      maxWidth: '445px',
+      data: {
+        hint: this.activityHint,
+      },
+    });
+  }
+
+  refreshGame() { }
+  hint() { }
+
+
+
+
+  ngOnDestroy(): void {
+    this.Subscriptions.forEach((x) => {
+      if (!x.closed) {
+        x.unsubscribe();
+      }
+    });
+  }
 }

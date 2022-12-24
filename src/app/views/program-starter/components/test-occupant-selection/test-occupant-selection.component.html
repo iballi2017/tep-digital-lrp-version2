@@ -9,15 +9,15 @@
                 <mat-form-field appearance="fill" class="w-100">
                     <mat-label>Select occupant</mat-label>
                     <mat-select name="RespondentId" formControlName="RespondentId">
-                        <mat-option *ngFor="let occupant of occupantsList" [value]="occupant?.usr_id">
+                        <mat-option *ngFor="let occupant of (occupantList$ | async)" [value]="occupant?.usr_id">
                             {{occupant?.occ_name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div id="add-new-occupant-btn" class="mb-4">
                     <div class="d-grid gap-2">
-                        <button mat-stroked-button type="button"
-                            class="py-2 border-radius-10 primary-btn-reverse" (click)="openAddNewOccupantDialog()">{{newOccupantBtnLabel |
+                        <button mat-stroked-button type="button" class="py-2 border-radius-10 primary-btn-reverse"
+                            (click)="openAddNewOccupantDialog()">{{newOccupantBtnLabel |
                             uppercase}}</button>
                     </div>
                 </div>
@@ -34,7 +34,8 @@
                 <div class="my-3">
                 </div>
                 <div class="d-grid gap-2">
-                    <button mat-stroked-button type="button" class="py-2 border-radius-10 danger-btn" (click)="closeDialog()">{{cancelBtnLabel |
+                    <button mat-stroked-button type="button" class="py-2 border-radius-10 danger-btn"
+                        (click)="closeDialog()">{{cancelBtnLabel |
                         uppercase}}</button>
                 </div>
             </div>

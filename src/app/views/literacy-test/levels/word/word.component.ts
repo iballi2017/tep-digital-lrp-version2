@@ -77,13 +77,14 @@ export class WordComponent implements OnInit {
     });
     this.Subscriptions.push(subscription);
   }
-
   onGetGameSessionId() {
-    let data: any = this._gameSvc.LoadGameSession();
-    console.group('data: ', data);
-    this.gameSessionId = data?.session_id;
-    this.onGetLevelGameResult(this.gameSessionId);
+    this._gameSvc.LoadGameSession();
+    this._gameSvc.gameSessionBehaviorSubject.subscribe((msg: any) => {
+      this.gameSessionId = msg.session_id
+      this.onGetLevelGameResult(this.gameSessionId);
+    })
   }
+
 
   modifyStageArray() {
     if (this.gameLevelResultAndRating) {

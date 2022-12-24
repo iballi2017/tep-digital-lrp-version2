@@ -8,7 +8,7 @@ export class ModifyStageArrayData {
 
     modifyStageArray() {
         if (this.gameLevelResultAndRating) {
-            console.log("this.gameLevelResultAndRating: ", this.gameLevelResultAndRating)
+            // console.log("this.gameLevelResultAndRating: ", this.gameLevelResultAndRating)
             this.gameLevelResultAndRating.forEach((stage: any) => {
                 let starArray: any[] = [];
                 let rating = Math.round(stage.rating)
@@ -22,7 +22,7 @@ export class ModifyStageArrayData {
                 this.testStageStars.push(x);
             });
         }
-        console.log("return this.testStageStars: ", this.testStageStars)
+        // console.log("return this.testStageStars: ", this.testStageStars)
         return this.testStageStars;
     }
 }

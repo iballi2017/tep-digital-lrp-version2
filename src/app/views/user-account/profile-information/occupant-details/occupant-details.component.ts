@@ -8,7 +8,7 @@ import { Occupant } from 'src/app/models/class/occupant';
 import { IDeleteOccupant, IOccupant } from 'src/app/models/interface/occupant';
 import { LocationService } from 'src/app/services/location.service';
 import { OccupantService } from 'src/app/services/occupant.service';
-import { BooleanAlertDialogComponent } from 'src/app/shared/boolean-alert-dialog/boolean-alert-dialog.component';
+import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 import { deleteOccupant, loadSingleOccupant } from '../../store/occupant-list/occupant-list.actions';
 import { OccupantListState } from '../../store/occupant-list/occupant-list.reducer';
 import { selectedOccupant } from '../../store/occupant-list/occupant-list.selectors';

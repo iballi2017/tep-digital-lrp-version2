@@ -18,10 +18,11 @@ export class GameService {
   SubmitGameStage_3_Url = baseUrl + '/submit-letter-stage-3';
   isCorrectAnswerBehaviorSubject: BehaviorSubject<any> =
     new BehaviorSubject<any>(null);
+  gameSessionBehaviorSubject: BehaviorSubject<any> =
+    new BehaviorSubject<any>(null);
 
   constructor(
     private _http: HttpClient,
-    // private ngRedux: NgRedux<IAppState>,
     private _router: Router
   ) { }
 
@@ -34,17 +35,13 @@ export class GameService {
   }
 
   LoadGameSession() {
-    // this.ngRedux.dispatch({ type: FETCH_GAME_SESSION });
+    let x;
     let sessionData = localStorage.getItem(GameSessionData.name);
     if (sessionData) {
-      let x = JSON.parse(sessionData);
-      // this.ngRedux.dispatch({ type: FETCH_GAME_SESSION_SUCCESS, payload: x });
-      return x
+      x = JSON.parse(sessionData);
+      return this.gameSessionBehaviorSubject.next(x);
     } else {
-      // this.ngRedux.dispatch({
-      //   type: FETCH_GAME_SESSION_ERROR,
-      //   payload: 'No Session stored',
-      // });
+      console.error("Error: ", 'No Session stored')
       this._router.navigate(['/program-starter']);
     }
   }

@@ -13,8 +13,9 @@ export class OccupantListEffects {
   createOccupantList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromOccupantListActions.addOccupant),
-      mergeMap((action: any) =>
-        this._occupantSvc.AddOccupant(action.occupant).pipe(
+      mergeMap((action: any) => {
+        console.group("action: ", action)
+        return this._occupantSvc.AddOccupant(action.occupant).pipe(
           map((response: any) => {
             if (response) {
               const successResponse = response?.message;
@@ -46,6 +47,7 @@ export class OccupantListEffects {
             );
           })
         )
+      }
       )
       // tap(() => this._router.navigate(['']))
     );
@@ -54,26 +56,28 @@ export class OccupantListEffects {
   loadOccupantList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromOccupantListActions.loadOccupantList),
-      mergeMap((action: any) =>
-        this._occupantSvc.LoadOccupants().pipe(
+      mergeMap((action: any) => {
+        console.log("action: ", action)
+        return this._occupantSvc.LoadOccupants().pipe(
           map((occupantListArray: any) =>
-            // fromOccupantListActions.loadOccupantListSuccess({ occupantList })
-            {
-              let occupantList = occupantListArray?.data.map((item: any) => {
-                return {
-                  ...item,
-                  id: item.occ_id,
-                };
-              });
-              return fromOccupantListActions.loadOccupantListSuccess({
-                occupantList,
-              });
-            }
+          // fromOccupantListActions.loadOccupantListSuccess({ occupantList })
+          {
+            let occupantList = occupantListArray?.data.map((item: any) => {
+              return {
+                ...item,
+                id: item.occ_id,
+              };
+            });
+            return fromOccupantListActions.loadOccupantListSuccess({
+              occupantList,
+            });
+          }
           ),
           catchError((error: any) =>
             of(fromOccupantListActions.loadOccupantListFailure({ error }))
           )
         )
+      }
       )
       // tap(() => this._router.navigate(['/practicals/ngrx/products']))
     );
@@ -126,5 +130,5 @@ export class OccupantListEffects {
     private _router: Router,
     private _occupantMessengerSvc: OccupantMessengerService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 }

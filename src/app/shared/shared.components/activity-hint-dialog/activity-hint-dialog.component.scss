@@ -1,0 +1,44 @@
+.card {
+    background-color: unset;
+    border: none;
+}
+
+.card-header {
+    background: #000000;
+    color: #ffffff;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.7rem;
+    line-height: 44px;
+    border-radius: 20px 20px 0px 0px;
+    text-align: center;
+}
+
+.card-body {
+    background: #FFFFFF;
+    border-radius: 0px 0px 20px 20px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.14rem;
+    line-height: 27px;
+    color: #000000;
+    text-align: center;
+    // padding-top: 2em;
+    // padding-bottom: 2em;
+    padding: 2em 1.8em;
+
+    p {
+        margin-bottom: 1.3em;
+    }
+
+    button {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 1rem;
+        line-height: 22px;
+        color: #FFFFFF;
+    }
+}

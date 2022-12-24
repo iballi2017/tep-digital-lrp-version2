@@ -132,11 +132,27 @@
         border-radius: 7px;
     }
     @include mixins.maxmq(500px) {
-        &::before {
-            // height: 40px;
-            // width: 40px;
-            height: 2rem;
-            width: 2rem;
-        }
+        // &::before {
+        //     height: 2rem;
+        //     width: 2rem;
+        // }
+        // p {
+        //     font-weight: 600;
+        //     font-size: 1.2rem;
+        // }
+    }
+}
+
+#replay-voice-btn-wrapper,
+#activity-hint-btn {
+    text-align: center;
+    p {
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 27px;
+        text-transform: capitalize;
+        color: #ffffff;
     }
 }

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Snackbar } from 'src/app/models/class/snackbar';
 // import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { SuccessSnackbarComponent } from 'src/app/shared/snackbar/success-snackbar/success-snackbar.component';
+import { SuccessSnackbarComponent } from 'src/app/shared/shared.components/snackbar/success-snackbar/success-snackbar.component';
 
 @Component({
   selector: 'app-login',
