@@ -19,6 +19,7 @@ import { ProgramCompletionComponent } from './shared.views/program-completion/pr
 import { BreadcrumbTopbarComponent } from './shared.components/breadcrumb-topbar/breadcrumb-topbar.component';
 import { SideNavigationOptionOneComponent } from './shared.components/side-navigation-option-one/side-navigation-option-one.component';
 import { NotificationSnackbarComponent } from './shared.components/snackbar/notification-snackbar/notification-snackbar.component';
+import { LevelLoaderComponent } from './shared.views/level-loader/level-loader.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -37,12 +38,13 @@ import { NotificationSnackbarComponent } from './shared.components/snackbar/noti
     LevelCompletionComponent,
     StageCompletionComponent,
     ProgramCompletionComponent,
+    LevelLoaderComponent,
   ],
   imports: [
     CommonModule,
     // ToastrModule.forRoot(),
     SharedRoutingModule,
-    NgMaterialModule
+    NgMaterialModule,
   ],
   exports: [
     // ToastrModule
@@ -50,7 +52,11 @@ import { NotificationSnackbarComponent } from './shared.components/snackbar/noti
     SideNavigationOptionOneComponent,
     DangerButtonComponent,
     PrimaryButtonComponent,
-    DefaultButtonComponent
+    DefaultButtonComponent,
+    LevelCompletionComponent,
+    StageCompletionComponent,
+    ProgramCompletionComponent,
+    LevelLoaderComponent,
   ],
 })
 export class SharedModule {}

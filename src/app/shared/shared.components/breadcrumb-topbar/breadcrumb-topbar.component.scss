@@ -1,4 +1,4 @@
-@use "../../../sass/_partials/mixins";
+@use "../../../../sass/_partials/mixins";
 
 #breadcrumb-topbar {
     #breadcrumb {
@@ -29,14 +29,14 @@
         background: #444444;
         border-radius: 0;
         &::before {
-            background-image: url(../../../assets/images/icons/left-arrow-white-icon.svg);
+            background-image: url(../../../../assets/images/icons/left-arrow-white-icon.svg);
         }
     }
 
     #close-btn {
         background-color: #d93333;
         &::before {
-            background-image: url(../../../assets/images/icons/times-white-icon.svg);
+            background-image: url(../../../../assets/images/icons/times-white-icon.svg);
         }
     }
 

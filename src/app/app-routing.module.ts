@@ -61,6 +61,12 @@ const routes: Routes = [
         (m) => m.UiComponentStorageModule
       ),
   },
+  {
+    path: 'shared/new-task-loading/:game-level/:stageNumber/:gameType',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./shared/shared.module').then((s) => s.SharedModule),
+  },
   { path: '**', component: PageNotFoundComponent }
 ];
 

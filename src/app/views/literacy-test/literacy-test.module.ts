@@ -42,6 +42,7 @@ import { LiteracyProgramCompletionComponent } from './completion/literacy-progra
     SharedModule,
     NgMaterialModule,
     LetterModule,
+    SharedModule,
     StoreModule.forFeature(fromLetterLevelResult.letterLevelResultsFeatureKey, fromLetterLevelResult.reducer),
     StoreModule.forFeature(fromWordLevelResult.wordLevelResultsFeatureKey, fromWordLevelResult.reducer),
     StoreModule.forFeature(fromParagraphLevelResult.paragraphLevelResultsFeatureKey, fromParagraphLevelResult.reducer),

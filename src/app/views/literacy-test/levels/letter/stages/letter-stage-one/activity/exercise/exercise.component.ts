@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AlphabetType } from 'src/app/models/interface/alphabet-type';
 import { ActivityAnswer } from 'src/app/models/interface/game';
+import { GameLevel } from 'src/app/models/interface/game-level';
+import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { LetterStageOneService } from 'src/app/services/letter/letter-stage-one.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
@@ -114,12 +117,20 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   previewList: string[] = [];
   resultItemList: any[] = [];
   previewText: string = '';
-  activityHint: any = "Fill out the vowel letters in yellow boxes above by selecting the right letters in the green boxes below";
+  activityHint: any =
+    'Fill out the vowel letters in yellow boxes above by selecting the right letters in the green boxes below';
 
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
-  constructor(private _gameSvc: GameService, public dialog: MatDialog, private _letterStageOneSvc: LetterStageOneService,
-    private store: Store<LetterLevelResultState>) { }
+  stageNumber: number = 1;
+  gameLevel = GameLevel.LETTER;
+  constructor(
+    private _gameSvc: GameService,
+    public dialog: MatDialog,
+    private _letterStageOneSvc: LetterStageOneService,
+    private store: Store<LetterLevelResultState>,
+    private _router: Router
+  ) {}
 
   ngOnInit(): void {
     this.onReplceKeyList();
@@ -179,17 +190,15 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     }
   }
 
-
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
     this._gameSvc.gameSessionBehaviorSubject.subscribe({
       next: (msg: any) => {
-        console.log("msg$$$$: ", msg);
-        this.gameSessionId = msg?.id
-      }
-    })
+        console.log('msg$$$$: ', msg);
+        this.gameSessionId = msg?.id;
+      },
+    });
   }
-
 
   testGameCompletion() {
     this.onCheckTestCompletion();
@@ -200,16 +209,19 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         data: [...this.checkTestCompletion],
       };
       this.store.dispatch(addLetterLevelResult({ payload: Payload }));
-
-      this._letterStageOneSvc.addLetterLevelResultBehaviour.subscribe((msg: any) => {
-        if (msg) {
-          console.log("msg: ", msg)
+      this._letterStageOneSvc.addLetterLevelResultBehaviour.subscribe(
+        (msg: any) => {
+          if (msg) {
+            console.log('msg: ', msg);
+            this._router.navigate([
+              `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+            ]);
+          }
         }
-      });
+      );
     }
     return;
   }
-
 
   onReadHint() {
     this.dialog.open(ActivityHintDialogComponent, {
@@ -221,11 +233,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     });
   }
 
-  refreshGame() { }
-  hint() { }
-
-
-
+  refreshGame() {}
+  hint() {}
 
   ngOnDestroy(): void {
     this.Subscriptions.forEach((x) => {

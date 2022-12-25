@@ -1,0 +1,54 @@
+@use "../../../../sass/_partials/mixins";
+
+#stage-completion-page {
+    font-family: "Open Sans";
+    font-style: normal;
+    .inner-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .page-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .page-title {
+            font-weight: 600;
+            font-size: 1.7rem;
+            color: #fbff45;
+        }
+
+        .page-tagline {
+            font-weight: 400;
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 2.5em;
+        }
+
+        .featured-image {
+            margin-bottom: 3em;
+        }
+        .btn-wrapper {
+            max-width: 380px;
+            margin: 0 auto;
+        }
+    }
+    @include mixins.minmq(768px) {
+        .inner-wrapper {
+            .page-title {
+                font-weight: 800;
+                font-size: 40px;
+            }
+            .page-tagline {
+                font-weight: 400;
+                font-size: 20px;
+            }
+    
+        }
+    }
+}
+
+.mat-form-field {
+    margin-right: 8px;
+}

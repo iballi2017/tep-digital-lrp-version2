@@ -33,7 +33,7 @@ export class LetterLevelResultEffects {
             if (err?.error?.message) {
               successResponse = err?.error?.message;
             } else {
-              successResponse = 'Failed to create occupant, please try again';
+              successResponse = 'Test submission failed!, please try again';
             }
             const x = new Snackbar(successResponse, this._snackBar);
             x.errorSnackbar();

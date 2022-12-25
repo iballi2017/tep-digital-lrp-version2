@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-activity',
-  templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.scss']
+  selector: 'app-letter-stage-two-splash',
+  templateUrl: './letter-stage-two-splash.component.html',
+  styleUrls: ['./letter-stage-two-splash.component.scss']
 })
-export class ActivityComponent implements OnInit {
-
+export class LetterStageTwoSplashComponent implements OnInit {
   menuList = [
     {
       title: 'LITERACY',
@@ -16,7 +15,7 @@ export class ActivityComponent implements OnInit {
     },
     {
       title: 'STAGE 2',
-    },
+    }
   ];
   constructor() { }
 

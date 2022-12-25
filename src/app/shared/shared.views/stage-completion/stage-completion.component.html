@@ -1,1 +1,21 @@
-<p>stage-completion works!</p>
+<!-- <p>stage-completion works!</p> -->
+<div id="stage-completion-page">
+    <div class="inner-wrapper star-pattern-bg">
+        <div class="page-content container-fluid">
+            <h1 class="page-title">{{pageTitle}}</h1>
+            <h2 class="page-tagline">LEVEL: {{levelTitle}}, Stage: {{stageNumber}}</h2>
+            <div class="featured-image">
+                <img src="{{pageFeaturedImage}}" alt="Page featured image" class="img-fluid">
+            </div>
+            <div class="btn-wrapper">
+                <div class="d-grid gap-2">
+                    <app-primary-button [btnTitle]="btnTitle" [btnClasses]="btnClasses"
+                        (onClickEvent)="onContinueToNextStage(gameLevel)"></app-primary-button>
+                    <app-danger-button [btnTitle]="btnTitle2" [btnClasses]="btnClasses"
+                        (onClickEvent)="onEndAssessment(gameLevel)"></app-danger-button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
