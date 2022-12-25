@@ -1,1 +1,26 @@
-<p>level-completion works!</p>
+<!-- <p>level-completion works!</p> -->
+
+<div id="level-completion-page">
+    <div class="inner-wrapper">
+        <div class="page-content container-fluid">
+            <h1 class="featured-image text-center">
+                <img src="{{pageFeaturedImage}}" alt="Page featured image" class="img-fluid">
+            </h1>
+            <h2 class="page-tagline">{{pageTitle | titlecase}}</h2>
+            <!-- <div class="btn-wrapper">
+                <app-button [btnTitle]="btnTitle" [btnClasses]="btnClasses"
+                    (onClickEvent)="onContinueToNextStage(gameLevel)"></app-button>
+                <app-button [btnTitle]="btnTitle2" [btnClasses]="btnClasses2" (onClickEvent)="onEndAssessment(gameLevel)"></app-button>
+            </div> -->            
+            <div class="btn-wrapper">
+                <div class="d-grid gap-2">
+                    <app-primary-button [btnTitle]="btnTitle" [btnClasses]="btnClasses"
+                        (onClickEvent)="onContinueToNextStage(gameLevel)"></app-primary-button>
+                    <app-danger-button [btnTitle]="btnTitle2" [btnClasses]="btnClasses"
+                        (onClickEvent)="onEndAssessment(gameLevel)"></app-danger-button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

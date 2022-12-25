@@ -80,6 +80,9 @@ export class ReportListComponent implements OnInit {
     const dialogRef = this.dialog.open(BooleanAlertDialogComponent, {
       width: '100%',
       maxWidth: '500px',
+      data: {
+        textInfo: 'Are you sure you want to delete this Report?',
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       //

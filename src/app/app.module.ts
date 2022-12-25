@@ -19,14 +19,12 @@ import { metaReducers, reducers } from './store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
+import { SharedModule } from './shared/shared.module';
 // import { ToastNoAnimationModule } from 'ngx-toastr';
+import * as fromLetterLevelResult from './views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LayoutComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, LayoutComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,6 +33,11 @@ import { EffectsModule } from '@ngrx/effects';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
+    StoreModule.forFeature(
+      fromLetterLevelResult.letterLevelResultsFeatureKey,
+      fromLetterLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
     NgbModule,
     // StoreModule.forRoot({}, {}),
     // ToastNoAnimationModule.forRoot(),
@@ -42,10 +45,13 @@ import { EffectsModule } from '@ngrx/effects';
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
-        strictActionImmutability: true
-      }
+        strictActionImmutability: true,
+      },
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     EffectsModule.forRoot([]),
   ],
   providers: [
@@ -56,4 +62,4 @@ import { EffectsModule } from '@ngrx/effects';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

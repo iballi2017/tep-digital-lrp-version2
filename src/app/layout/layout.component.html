@@ -1,4 +1,7 @@
 <!-- <p>layout works!</p> -->
 <div id="main-app-wrapper">
+    <div *ngIf="(resultLoading$ | async)">
+        <app-full-page-loader></app-full-page-loader>
+    </div>
     <router-outlet></router-outlet>
 </div>

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
+import { BooleanAlertDialogComponent } from '../../shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 
 @Component({
   selector: 'app-stage-completion',
@@ -27,7 +29,7 @@ export class StageCompletionComponent implements OnInit {
     'btn-block': true,
     'mb-3': true,
     'w-100': true,
-    'py-2': true,
+    'py-3': true,
   };
   btnClasses2 = { 'danger-btn': true, 'btn-block': true };
   btnTitle = 'CONTINUE';
@@ -36,9 +38,17 @@ export class StageCompletionComponent implements OnInit {
   gameSessionId!: string;
   gameResult!: any;
   durationInSeconds = 10;
-  constructor(private _router: Router, private _gameSvc: GameService) {}
+  constructor(
+    private _router: Router,
+    private _gameSvc: GameService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
+    this.gameLevel = {
+      stageNumber: this.stageNumber,
+      levelTitle: this.levelTitle,
+    };
     this.onGetGameSessionId();
   }
   onGetGameSessionId() {
@@ -64,13 +74,42 @@ export class StageCompletionComponent implements OnInit {
   }
 
   onEndAssessment($event: any) {
-    if (!this.gameSessionId) {
-      this._router.navigate(['/']);
-      return;
-    } else {
-      this._router.navigate([
-        `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
-      ]);
-    }
+    // if (!this.gameSessionId) {
+    //   this._router.navigate(['/']);
+    //   return;
+    // } else {
+    //   this._router.navigate([
+    //     `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
+    //   ]);
+    // }
+    this.openDialog(this.gameSessionId);
+  }
+
+  onRemoveReport(sessionId: string) {
+    console.log('sessionId: ', sessionId);
+    this.openDialog(sessionId);
+  }
+
+  openDialog(item: any) {
+    const dialogRef = this.dialog.open(BooleanAlertDialogComponent, {
+      width: '100%',
+      maxWidth: '500px',
+      data: {
+        textInfo: 'Are you sure you want to end assessment?',
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      //
+      if (result) {
+        if (!item) {
+          this._router.navigate(['/']);
+          return;
+        } else {
+          this._router.navigate([
+            `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
+          ]);
+        }
+      }
+    });
   }
 }

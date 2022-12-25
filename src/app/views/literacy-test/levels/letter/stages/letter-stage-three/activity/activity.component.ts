@@ -7,6 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActivityComponent implements OnInit {
 
+  menuList = [
+    {
+      title: 'LITERACY',
+    },
+    {
+      title: 'LETTER',
+    },
+    {
+      title: 'STAGE 3',
+    }
+  ];
   constructor() { }
 
   ngOnInit(): void {

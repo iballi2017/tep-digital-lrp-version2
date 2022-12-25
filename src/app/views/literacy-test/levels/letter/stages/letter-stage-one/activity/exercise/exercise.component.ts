@@ -10,7 +10,7 @@ import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { LetterStageOneService } from 'src/app/services/letter/letter-stage-one.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
-import { addLetterLevelResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
+import { addLetterLevelStageOneResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 
 @Component({
@@ -194,7 +194,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this._gameSvc.LoadGameSession();
     this._gameSvc.gameSessionBehaviorSubject.subscribe({
       next: (msg: any) => {
-        console.log('msg$$$$: ', msg);
         this.gameSessionId = msg?.id;
       },
     });
@@ -208,7 +207,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         answer: '1',
         data: [...this.checkTestCompletion],
       };
-      this.store.dispatch(addLetterLevelResult({ payload: Payload }));
+      this.store.dispatch(addLetterLevelStageOneResult({ payload: Payload }));
       this._letterStageOneSvc.addLetterLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
@@ -233,8 +232,14 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     });
   }
 
-  refreshGame() {}
-  hint() {}
+  refreshGame() {
+    this.resultItemList = [];
+    this.testNumber = 0;
+    this.onReplceKeyList();
+    for (let i = 0; i < this.testList.length; i++) {
+      this.testList[i].isTestComplete = false;
+    }
+  }
 
   ngOnDestroy(): void {
     this.Subscriptions.forEach((x) => {

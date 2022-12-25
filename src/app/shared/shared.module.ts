@@ -20,6 +20,8 @@ import { BreadcrumbTopbarComponent } from './shared.components/breadcrumb-topbar
 import { SideNavigationOptionOneComponent } from './shared.components/side-navigation-option-one/side-navigation-option-one.component';
 import { NotificationSnackbarComponent } from './shared.components/snackbar/notification-snackbar/notification-snackbar.component';
 import { LevelLoaderComponent } from './shared.views/level-loader/level-loader.component';
+import { ActivityKeypadTypeOneComponent } from './shared.components/activity-keypad-type-one/activity-keypad-type-one.component';
+import { FullPageLoaderComponent } from './shared.components/full-page-loader/full-page-loader.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -39,6 +41,8 @@ import { LevelLoaderComponent } from './shared.views/level-loader/level-loader.c
     StageCompletionComponent,
     ProgramCompletionComponent,
     LevelLoaderComponent,
+    ActivityKeypadTypeOneComponent,
+    FullPageLoaderComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +61,8 @@ import { LevelLoaderComponent } from './shared.views/level-loader/level-loader.c
     StageCompletionComponent,
     ProgramCompletionComponent,
     LevelLoaderComponent,
+    ActivityKeypadTypeOneComponent,
+    FullPageLoaderComponent,
   ],
 })
 export class SharedModule {}

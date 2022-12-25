@@ -6,24 +6,23 @@ import * as LetterLevelResultActions from './letter-level-result.actions';
 export const letterLevelResultsFeatureKey = 'letterLevelResults';
 
 export interface LetterLevelResultState extends EntityState<LetterLevelResult> {
-  // additional entities state properties
-  error: any,
-  isLoading: boolean
+  result: any;
+  error: any;
+  isLoading: boolean;
 }
 
 export const adapter: EntityAdapter<LetterLevelResult> =
   createEntityAdapter<LetterLevelResult>();
 
 export const initialState: LetterLevelResultState = adapter.getInitialState({
-  // additional entity state properties
+  result: undefined,
   error: undefined,
   isLoading: false,
 });
 
 export const reducer = createReducer(
   initialState,
-
-  
+  /* LOAD LETTER LEVEL RESULTS WITH RATINGS*/
   on(LetterLevelResultActions.loadLetterLevelResults, (state, action) => {
     return {
       ...state,
@@ -32,20 +31,131 @@ export const reducer = createReducer(
   }),
   on(LetterLevelResultActions.loadLetterLevelResultsSuccess, (state, action) =>
     adapter.setAll(action.letterLevelResults, state)
-  ),  
-  on(LetterLevelResultActions.loadLetterLevelResultsSuccess, (state, action) => {
-    return {
-      ...state,
-      isLoading: false,
-    };
-  }),
-  on(LetterLevelResultActions.loadLetterLevelResults, (state, action:any) => {
+  ),
+  on(
+    LetterLevelResultActions.loadLetterLevelResultsSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(LetterLevelResultActions.loadLetterLevelResults, (state, action: any) => {
     return {
       ...state,
       error: action?.error,
       isLoading: false,
     };
-  })
+  }),
+
+  /* ADD LETTER LEVEL STAGE ONE RESULT */
+  on(LetterLevelResultActions.addLetterLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LetterLevelResultActions.addLetterLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    LetterLevelResultActions.addLetterLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    LetterLevelResultActions.addLetterLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
+
+  /* ADD LETTER LEVEL STAGE TWO RESULT */
+  on(LetterLevelResultActions.addLetterLevelStageTwoResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LetterLevelResultActions.addLetterLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    LetterLevelResultActions.addLetterLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    LetterLevelResultActions.addLetterLevelStageTwoResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
+
+  /* ADD LETTER LEVEL STAGE THREE RESULT */
+  on(LetterLevelResultActions.addLetterLevelStageThreeResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LetterLevelResultActions.addLetterLevelStageThreeResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    LetterLevelResultActions.addLetterLevelStageThreeResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    LetterLevelResultActions.addLetterLevelStageThreeResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  )
 );
 
 export const { selectIds, selectEntities, selectAll, selectTotal } =

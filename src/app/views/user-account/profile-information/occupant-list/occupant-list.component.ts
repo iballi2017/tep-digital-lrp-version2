@@ -56,6 +56,9 @@ export class OccupantListComponent implements OnInit {
     const dialogRef = this.dialog.open(BooleanAlertDialogComponent, {
       width: '100%',
       maxWidth: '500px',
+      data: {
+        textInfo: 'Are you sure you want to delete this Occupant?',
+      },
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
@@ -65,10 +68,10 @@ export class OccupantListComponent implements OnInit {
   }
 
   onDeleteOccupant(occupantId: string) {
-    const Payload:IDeleteOccupant = {
+    const Payload: IDeleteOccupant = {
       occ_id: occupantId,
     };
-    this.store.dispatch(deleteOccupant({occ_id: Payload}));
+    this.store.dispatch(deleteOccupant({ occ_id: Payload }));
     // let subscription = this._occupantSvc.RemoveOccupant(Payload).subscribe({
     //   next: (response: any) => {
     //     if (response) {
