@@ -3,6 +3,8 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { LetterLevelResultState } from '../views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 import { letterLevelResultIsLoading } from '../views/literacy-test/store/letter-level-result/letter-level-result.selectors';
+import { WordLevelResultState } from '../views/literacy-test/store/word-level-result/word-level-result.reducer';
+import { wordLevelResultIsLoading } from '../views/literacy-test/store/word-level-result/word-level-result.selectors';
 
 @Component({
   selector: 'app-layout',
@@ -10,11 +12,14 @@ import { letterLevelResultIsLoading } from '../views/literacy-test/store/letter-
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  resultLoading$!: Observable<any>;
-  constructor(private store: Store<LetterLevelResultState>) {}
+  letterResultLoading$!: Observable<any>;
+  wordResultLoading$!: Observable<any>;
+  constructor(private storeLetter: Store<LetterLevelResultState>,private storeWord: Store<WordLevelResultState>) {}
 
   ngOnInit(): void {
-    this.resultLoading$ = this.store.pipe(select(letterLevelResultIsLoading));
-    console.log('this.resultLoading$: ', this.resultLoading$);
+    this.letterResultLoading$ = this.storeLetter.pipe(
+      select(letterLevelResultIsLoading)
+    );
+    this.wordResultLoading$ = this.storeWord.pipe(select(wordLevelResultIsLoading));
   }
 }

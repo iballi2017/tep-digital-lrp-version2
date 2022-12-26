@@ -22,6 +22,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from './shared/shared.module';
 // import { ToastNoAnimationModule } from 'ngx-toastr';
 import * as fromLetterLevelResult from './views/literacy-test/store/letter-level-result/letter-level-result.reducer';
+import * as fromWordLevelResult from './views/literacy-test/store/word-level-result/word-level-result.reducer';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent, HomeComponent],
@@ -37,6 +38,10 @@ import * as fromLetterLevelResult from './views/literacy-test/store/letter-level
     StoreModule.forFeature(
       fromLetterLevelResult.letterLevelResultFeatureKey,
       fromLetterLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
+    StoreModule.forFeature(
+      fromWordLevelResult.wordLevelResultFeatureKey,
+      fromWordLevelResult.reducer
     ), //add to import this because the letterLevelResult loading stte belongs to another module
     NgbModule,
     // StoreModule.forRoot({}, {}),

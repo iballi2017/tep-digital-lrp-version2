@@ -14,7 +14,7 @@ export const wordLevelResult = createSelector(
   selectWordLevelResultState,
   (state: WordLevelResultState) => state.result
 );
-export const letterLevelResultIsLoading = createSelector(
+export const wordLevelResultIsLoading = createSelector(
   selectWordLevelResultState,
   (state: WordLevelResultState) => state?.isLoading
 );

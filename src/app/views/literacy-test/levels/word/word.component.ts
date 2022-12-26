@@ -6,7 +6,7 @@ import { ModifyStageArrayData } from 'src/app/models/class/modify-stage-array-da
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
 import { GameService } from 'src/app/services/game.service';
-import { selectWordLevelResult } from '../../store/word-level-result/story-level-result.selectors';
+import { selectWordLevelResult } from '../../store/word-level-result/word-level-result.selectors';
 import { loadWordLevelResult } from '../../store/word-level-result/word-level-result.actions';
 import { WordLevelResultState } from '../../store/word-level-result/word-level-result.reducer';
 

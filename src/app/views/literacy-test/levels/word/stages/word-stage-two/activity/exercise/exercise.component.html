@@ -1,6 +1,9 @@
 <!-- <p>exercise works!</p> -->
 
 <div id="activity-canvas">
+    <!-- <div class="text-white">{{testList[0] | json}}</div>
+    <div class="text-primary">{{test | json}}</div> -->
+
     <div id="blue-board">
         <div id="board-activity-hint">
             <p class="my-0">{{boardActivityHint}}</p>
@@ -14,17 +17,30 @@
             <div class="h-100">
                 <div id="mind-map-result-list">
                     <div id="hint-item">
-                        <p class="m-0">Classroom</p>
+                        <p class="m-0">{{test.hint | titlecase}}</p>
                     </div>
                     <div id="left-pole">
                         <div class="item-container">
-                            <div class="item">blackboard</div>
-                            <div class="item">desk</div>
+                            <div class="item">
+                                <span [ngClass]="{'d-none': !test.answer[0].isCorrect}">{{test.answer[0].name |
+                                    titlecase}}</span>
+                            </div>
+                            <div class="item">
+                                <span [ngClass]="{'d-none': !test.answer[1].isCorrect}">{{test.answer[1].name |
+                                    titlecase}}</span>
+                            </div>
                         </div>
                     </div>
                     <div id="right-pole">
-                        <div>
-                            <!-- <div>desk</div> -->
+                        <div class="item-container">
+                            <div class="item">
+                                <span [ngClass]="{'d-none': !test.answer[2].isCorrect}">{{test.answer[2].name |
+                                    titlecase}}</span>
+                            </div>
+                            <div class="item">
+                                <span [ngClass]="{'d-none': !test.answer[3].isCorrect}">{{test.answer[3].name |
+                                    titlecase}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -41,8 +57,9 @@
     </div>
     <div id="activity-keypad">
         <ul class="key-list ps-0 list-style-none">
-            <li *ngFor="let key of keyList">
-                <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name | uppercase}}</button>
+            <li *ngFor="let key of test.keyList">
+                <button class="btn" [ngClass]="{'is-wrong': key.isWrongChoice, '': !key.isWrongChoice}"
+                    (click)="onSelectAlphabet(key)">{{key?.name | uppercase}}</button>
             </li>
         </ul>
     </div>

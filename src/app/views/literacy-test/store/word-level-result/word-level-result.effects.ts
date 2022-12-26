@@ -138,7 +138,7 @@ export class WordLevelResultEffects {
   });
 
   /* LOAD WORD LEVEL RESULTS WITH RATINGS*/
-  loadSwordLevelResults$ = createEffect(() => {
+  loadwordLevelResults$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.loadWordLevelResult),
       mergeMap((action: any) =>

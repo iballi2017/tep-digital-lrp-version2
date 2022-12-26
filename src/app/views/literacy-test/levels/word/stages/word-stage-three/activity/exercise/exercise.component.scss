@@ -1,0 +1,28 @@
+
+#key-selection-preview-block {
+    max-width: auto !important;
+    // margin: 0 auto;
+    // height: 80px;
+    display: flex;
+    .preview-text{
+        width: auto !important;
+        display: inline-flex !important;
+        min-width: 72px;
+    }
+}
+
+
+#activity-keypad {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #242424;
+    border-radius: 22px;
+    padding: 1.5em 1.2em;
+    .key-list {
+        .btn {
+            background: #ffffff;
+            box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 20px !important;
+        }
+    }
+}

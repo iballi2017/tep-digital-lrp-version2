@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
@@ -26,7 +27,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   testList = [
     {
       testName: 'test-1',
-      isTestComplete: false,
+      // isTestComplete: false,
+      hint: 'classroom',
       testKeys: [
         {
           name: 'cocoa',
@@ -53,8 +55,122 @@ export class ExerciseComponent implements OnInit, OnDestroy {
           isWrongChoice: false,
         },
       ],
-
-      answer: ['can', 'pan'],
+      answer: [
+        {
+          name: 'blackboard',
+          isCorrect: false,
+        },
+        {
+          name: 'desk',
+          isCorrect: false,
+        },
+        {
+          name: 'duster',
+          isCorrect: false,
+        },
+        {
+          name: 'chair',
+          isCorrect: false,
+        },
+      ],
+    },
+    {
+      testName: 'test-2',
+      // isTestComplete: false,
+      hint: 'church',
+      testKeys: [
+        {
+          name: 'calabash',
+          isWrongChoice: false,
+        },
+        {
+          name: 'bible',
+          isWrongChoice: false,
+        },
+        {
+          name: 'altar',
+          isWrongChoice: false,
+        },
+        {
+          name: 'dagger',
+          isWrongChoice: false,
+        },
+        {
+          name: 'pulpit',
+          isWrongChoice: false,
+        },
+        {
+          name: 'rosary',
+          isWrongChoice: false,
+        },
+      ],
+      answer: [
+        {
+          name: 'rosary',
+          isCorrect: false,
+        },
+        {
+          name: 'altar',
+          isCorrect: false,
+        },
+        {
+          name: 'pulpit',
+          isCorrect: false,
+        },
+        {
+          name: 'bible',
+          isCorrect: false,
+        },
+      ],
+    },
+    {
+      testName: 'test-3',
+      // isTestComplete: false,
+      hint: 'kitchen',
+      testKeys: [
+        {
+          name: 'knife',
+          isWrongChoice: false,
+        },
+        {
+          name: 'duster',
+          isWrongChoice: false,
+        },
+        {
+          name: 'plate',
+          isWrongChoice: false,
+        },
+        {
+          name: 'pot',
+          isWrongChoice: false,
+        },
+        {
+          name: 'spoon',
+          isWrongChoice: false,
+        },
+        {
+          name: 'cutlas',
+          isWrongChoice: false,
+        },
+      ],
+      answer: [
+        {
+          name: 'spoon',
+          isCorrect: false,
+        },
+        {
+          name: 'plate',
+          isCorrect: false,
+        },
+        {
+          name: 'pot',
+          isCorrect: false,
+        },
+        {
+          name: 'knife',
+          isCorrect: false,
+        },
+      ],
     },
   ];
   previewList: any[] = [];
@@ -65,8 +181,13 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
-  stageNumber: number = 1;
+  stageNumber: number = 2;
   gameLevel = GameLevel.WORD;
+  test!: {
+    hint: string;
+    keyList: { name: string; isWrongChoice: boolean }[];
+    answer: any[];
+  };
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
@@ -76,95 +197,23 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.onReplceKeyList();
-    this.onCheckTestCompletion();
     this.onGetGameSessionId();
+
+    let testList = this.testList;
+    this.testList = new ShuffleArray(testList).shuffle();
+    let testKeyArr = this.testList[this.testNumber]?.testKeys;
+    new ShuffleArray(testKeyArr).shuffle();
+    let answerArr = this.testList[this.testNumber]?.answer;
+    new ShuffleArray(answerArr).shuffle();
+    this.onFillNewTest();
   }
 
-  onCheckTestCompletion() {
-    this.checkTestCompletion = this.testList.filter(
-      (test: any) => test.isTestComplete == true
-    );
-  }
-
-  onReplceKeyList() {
-    this.keyList = this.testList[this.testNumber]?.testKeys;
-  }
-
-  onSelectAlphabet(alphabet: any) {
-    this.previewList.push(alphabet);
-    if (this.previewList.length == 2) {
-      if (this.previewList[0].position == this.previewList[1].position) {
-        for (let i = 0; i < this.previewList.length; i++) {
-          this.previewList[i].isWrongChoice = true;
-        }
-        setTimeout(() => {
-          for (let i = 0; i < this.previewList.length; i++) {
-            this.previewList[i].isWrongChoice = false;
-          }
-          this.previewList = [];
-          return;
-        }, 2000);
-        return;
-      }
-      if (this.previewList[0].position == 2) {
-        for (let i = 0; i < this.previewList.length; i++) {
-          this.previewList[i].isWrongChoice = true;
-        }
-        setTimeout(() => {
-          for (let i = 0; i < this.previewList.length; i++) {
-            this.previewList[i].isWrongChoice = false;
-          }
-          this.previewList = [];
-          return;
-        }, 2000);
-        return;
-      }
-      let resultObject = {
-        item1: this.previewList[0],
-        item2: this.previewList[1],
-      };
-      for (let i = 0; i < this.resultItemList.length; i++) {
-        if (
-          this.resultItemList[i].item1 == resultObject.item1 &&
-          this.resultItemList[i].item2 == resultObject.item2
-        ) {
-          alert('item already exist!');
-          this.previewList = [];
-          return;
-        }
-      }
-      this.resultItemList.push(resultObject);
-      this.previewList = [];
-      this.isComplete();
-    }
-  }
-
-  isComplete() {
-    if (this.resultItemList.length == 2) {
-      this.testList[this.testNumber].isTestComplete = true;
-      this.testGameCompletion();
-    } else {
-      return;
-    }
-  }
-
-  onGetGameSessionId() {
-    this._gameSvc.LoadGameSession();
-    this._gameSvc.gameSessionBehaviorSubject.subscribe({
-      next: (msg: any) => {
-        this.gameSessionId = msg?.id;
-      },
-    });
-  }
-
-  testGameCompletion() {
-    this.onCheckTestCompletion();
-    if (this.checkTestCompletion.length == this.testList.length) {
+  onFillNewTest() {
+    if (this.testNumber == this.testList.length) {
       const Payload: ActivityAnswer = {
         session_id: this.gameSessionId,
         answer: '4',
-        data: [...this.checkTestCompletion],
+        data: [...this.testList],
       };
       this.store.dispatch(addWordLevelStageTwoResult({ payload: Payload }));
       this._wordStageTwoSvc.addWordLevelResultBehaviour.subscribe(
@@ -177,8 +226,45 @@ export class ExerciseComponent implements OnInit, OnDestroy {
           }
         }
       );
+      return;
     }
-    return;
+
+    this.test = {
+      hint: this.testList[this.testNumber].hint,
+      keyList: this.testList[this.testNumber].testKeys,
+      answer: this.testList[this.testNumber].answer,
+    };
+  }
+
+  onSelectAlphabet(alphabet: any) {
+    let isExist = this.test.answer.findIndex((x) => x.name === alphabet.name);
+    let item = this.test.answer[isExist];
+    if (item) {
+      item.isCorrect = true;
+      let correctAnswers = this.test.answer.filter(
+        (item: any) => item.isCorrect == true
+      );
+      if (correctAnswers.length == this.test.answer.length) {
+        this.testNumber++;
+        setTimeout(() => {
+          this.onFillNewTest();
+        }, 1500);
+      }
+    } else {
+      alphabet.isWrongChoice = true;
+      setTimeout(() => {
+        alphabet.isWrongChoice = false;
+      }, 1000);
+    }
+  }
+
+  onGetGameSessionId() {
+    this._gameSvc.LoadGameSession();
+    this._gameSvc.gameSessionBehaviorSubject.subscribe({
+      next: (msg: any) => {
+        this.gameSessionId = msg?.id;
+      },
+    });
   }
 
   onReadHint() {
@@ -192,12 +278,16 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
     this.testNumber = 0;
-    this.onReplceKeyList();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    this.testList.forEach((element: any) => {
+      element.testKeys.forEach((key: any) => {
+        key.isWrongChoice = false;
+      });
+      element.answer.forEach((answer: any) => {
+        answer.isCorrect = false;
+      });
+    });
+    this.onFillNewTest();
   }
 
   ngOnDestroy(): void {
