@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { LetterStageOneRoutingModule } from './letter-stage-one-routing.module';
+import { WordStageOneRoutingModule } from './word-stage-one-routing.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    LetterStageOneRoutingModule
+    WordStageOneRoutingModule
   ]
 })
-export class LetterStageOneModule { }
+export class WordStageOneModule { }

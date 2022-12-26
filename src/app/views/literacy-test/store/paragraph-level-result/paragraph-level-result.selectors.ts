@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { paragraphLevelResultsFeatureKey, ParagraphLevelResultsState, selectAll } from './paragraph-level-result.reducer';
+import { paragraphLevelResultFeatureKey, ParagraphLevelResultState, selectAll } from './paragraph-level-result.reducer';
 
-export const selectParagraphLevelResultState = createFeatureSelector<ParagraphLevelResultsState>(
-  paragraphLevelResultsFeatureKey
+export const selectParagraphLevelResultState = createFeatureSelector<ParagraphLevelResultState>(
+  paragraphLevelResultFeatureKey
 );
 
-export const selectParagraphLevelResults = createSelector(
+export const selectParagraphLevelResult = createSelector(
   selectParagraphLevelResultState,
   selectAll
 );

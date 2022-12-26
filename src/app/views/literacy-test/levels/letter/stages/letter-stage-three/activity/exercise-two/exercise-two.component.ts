@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -18,7 +18,7 @@ import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter
   templateUrl: './exercise-two.component.html',
   styleUrls: ['./exercise-two.component.scss'],
 })
-export class ExerciseTwoComponent implements OnInit {
+export class ExerciseTwoComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Create words';
   testNumber: number = 0;
   checkTestCompletion: any;

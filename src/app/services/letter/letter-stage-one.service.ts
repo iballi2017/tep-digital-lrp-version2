@@ -26,10 +26,10 @@ export class LetterStageOneService {
   }
 
 
-  SubmitResult(_LetteringStageOneResult: any) {
-    console.log("_LetteringStageOneResult: ", _LetteringStageOneResult)
+  SubmitResult(_LetterStageOneResult: any) {
+    console.log("_LetterStageOneResult: ", _LetterStageOneResult)
     return this._http
-      .post(`${this.SubmitGameStage_1_Url}`, _LetteringStageOneResult)
+      .post(`${this.SubmitGameStage_1_Url}`, _LetterStageOneResult)
       .pipe(catchError(handleError));
   }
 

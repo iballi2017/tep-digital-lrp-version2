@@ -3,7 +3,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { LetterLevelResult } from './letter-level-result.model';
 import * as LetterLevelResultActions from './letter-level-result.actions';
 
-export const letterLevelResultsFeatureKey = 'letterLevelResults';
+export const letterLevelResultFeatureKey = 'letterLevelResult';
 
 export interface LetterLevelResultState extends EntityState<LetterLevelResult> {
   result: any;
@@ -23,17 +23,17 @@ export const initialState: LetterLevelResultState = adapter.getInitialState({
 export const reducer = createReducer(
   initialState,
   /* LOAD LETTER LEVEL RESULTS WITH RATINGS*/
-  on(LetterLevelResultActions.loadLetterLevelResults, (state, action) => {
+  on(LetterLevelResultActions.loadLetterLevelResult, (state, action) => {
     return {
       ...state,
       isLoading: true,
     };
   }),
-  on(LetterLevelResultActions.loadLetterLevelResultsSuccess, (state, action) =>
-    adapter.setAll(action.letterLevelResults, state)
+  on(LetterLevelResultActions.loadLetterLevelResultSuccess, (state, action) =>
+    adapter.setAll(action.letterLevelResult, state)
   ),
   on(
-    LetterLevelResultActions.loadLetterLevelResultsSuccess,
+    LetterLevelResultActions.loadLetterLevelResultSuccess,
     (state, action) => {
       return {
         ...state,
@@ -41,7 +41,7 @@ export const reducer = createReducer(
       };
     }
   ),
-  on(LetterLevelResultActions.loadLetterLevelResults, (state, action: any) => {
+  on(LetterLevelResultActions.loadLetterLevelResult, (state, action: any) => {
     return {
       ...state,
       error: action?.error,

@@ -9,9 +9,9 @@ import * as ParagraphLevelResultActions from './paragraph-level-result.actions';
 @Injectable()
 export class ParagraphLevelResultEffects {
 
-  loadParagrapLevelResults$ = createEffect(() => {
+  loadParagrapLevelResult$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ParagraphLevelResultActions.loadParagraphLevelResults),
+      ofType(ParagraphLevelResultActions.loadParagraphLevelResult),
       mergeMap((action: any) =>
         this._gameLevelResultAndRatingSvc.LoadParagraphGameResultAndRating(action?.session_id).pipe(
           map((response: any) =>
@@ -23,13 +23,13 @@ export class ParagraphLevelResultEffects {
               //     id: item.occ_id,
               //   };
               // });
-              return ParagraphLevelResultActions.loadParagraphLevelResultsSuccess({
-                paragraphLevelResults: response,
+              return ParagraphLevelResultActions.loadParagraphLevelResultSuccess({
+                paragraphLevelResult: response,
               });
             }
           ),
           catchError((error: any) =>
-            of(ParagraphLevelResultActions.loadParagraphLevelResultsFailure({ error }))
+            of(ParagraphLevelResultActions.loadParagraphLevelResultFailure({ error }))
           )
         )
       )

@@ -6,9 +6,9 @@ import { ModifyStageArrayData } from 'src/app/models/class/modify-stage-array-da
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
 import { GameService } from 'src/app/services/game.service';
-import { loadStoryLevelResults } from '../../store/story-level-result/story-level-result.actions';
-import { StoryLevelResultsState } from '../../store/story-level-result/story-level-result.reducer';
-import { selectStoryLevelResults } from '../../store/story-level-result/story-level-result.selectors';
+import { loadStoryLevelResult } from '../../store/story-level-result/story-level-result.actions';
+import { StoryLevelResultState } from '../../store/story-level-result/story-level-result.reducer';
+import { selectStoryLevelResult } from '../../store/story-level-result/story-level-result.selectors';
 
 @Component({
   selector: 'app-story',
@@ -43,7 +43,7 @@ export class StoryComponent implements OnInit {
     private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService,
     private _gameSvc: GameService,
     private _snackBar: MatSnackBar,
-    private store: Store<StoryLevelResultsState>
+    private store: Store<StoryLevelResultState>
   ) {}
 
   ngOnInit(): void {
@@ -52,8 +52,8 @@ export class StoryComponent implements OnInit {
   }
 
   onGetLevelGameResult(GameSessionId: string) {
-    this.store.dispatch(loadStoryLevelResults({ session_id: GameSessionId }));
-    this.userData$ = this.store.pipe(select(selectStoryLevelResults));
+    this.store.dispatch(loadStoryLevelResult({ session_id: GameSessionId }));
+    this.userData$ = this.store.pipe(select(selectStoryLevelResult));
     this.isLoadingStarCards = true;
     let subscription = this.userData$.subscribe({
       next: (response: any) => {

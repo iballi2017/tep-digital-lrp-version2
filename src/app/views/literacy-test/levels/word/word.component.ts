@@ -6,9 +6,9 @@ import { ModifyStageArrayData } from 'src/app/models/class/modify-stage-array-da
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
 import { GameService } from 'src/app/services/game.service';
-import { selectwordLevelResults } from '../../store/word-level-result/story-level-result.selectors';
-import { loadWordLevelResults } from '../../store/word-level-result/word-level-result.actions';
-import { WordLevelResultsState } from '../../store/word-level-result/word-level-result.reducer';
+import { selectWordLevelResult } from '../../store/word-level-result/story-level-result.selectors';
+import { loadWordLevelResult } from '../../store/word-level-result/word-level-result.actions';
+import { WordLevelResultState } from '../../store/word-level-result/word-level-result.reducer';
 
 @Component({
   selector: 'app-word',
@@ -43,7 +43,7 @@ export class WordComponent implements OnInit {
     private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService,
     private _gameSvc: GameService,
     private _snackBar: MatSnackBar,
-    private store: Store<WordLevelResultsState>
+    private store: Store<WordLevelResultState>
   ) {}
 
   ngOnInit(): void {
@@ -52,8 +52,8 @@ export class WordComponent implements OnInit {
   }
 
   onGetLevelGameResult(GameSessionId: string) {
-    this.store.dispatch(loadWordLevelResults({ session_id: GameSessionId }));
-    this.userData$ = this.store.pipe(select(selectwordLevelResults));
+    this.store.dispatch(loadWordLevelResult({ session_id: GameSessionId }));
+    this.userData$ = this.store.pipe(select(selectWordLevelResult));
     this.isLoadingStarCards = true;
     let subscription = this.userData$.subscribe({
       next: (response: any) => {

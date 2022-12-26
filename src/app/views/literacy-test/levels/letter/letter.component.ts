@@ -6,7 +6,7 @@ import { ModifyStageArrayData } from 'src/app/models/class/modify-stage-array-da
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
 import { GameService } from 'src/app/services/game.service';
-import { loadLetterLevelResults } from '../../store/letter-level-result/letter-level-result.actions';
+import { loadLetterLevelResult } from '../../store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from '../../store/letter-level-result/letter-level-result.reducer';
 import { selectLetterLevelResults } from '../../store/letter-level-result/letter-level-result.selectors';
 
@@ -52,7 +52,7 @@ export class LetterComponent implements OnInit {
   }
 
   onGetLevelGameResult(GameSessionId: string) {
-    this.store.dispatch(loadLetterLevelResults({ session_id: GameSessionId }));
+    this.store.dispatch(loadLetterLevelResult({ session_id: GameSessionId }));
     this.userData$ = this.store.pipe(select(selectLetterLevelResults));
     let subscription = this.userData$.subscribe({
       next: (response: any) => {

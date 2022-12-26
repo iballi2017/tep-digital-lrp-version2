@@ -1,12 +1,12 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
-  letterLevelResultsFeatureKey,
+  letterLevelResultFeatureKey,
   LetterLevelResultState,
   selectAll,
 } from './letter-level-result.reducer';
 
 export const selectLetterLevelResultState =
-  createFeatureSelector<LetterLevelResultState>(letterLevelResultsFeatureKey);
+  createFeatureSelector<LetterLevelResultState>(letterLevelResultFeatureKey);
 
 export const selectLetterLevelResults = createSelector(
   selectLetterLevelResultState,

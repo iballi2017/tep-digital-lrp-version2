@@ -74,14 +74,6 @@ export class StageCompletionComponent implements OnInit {
   }
 
   onEndAssessment($event: any) {
-    // if (!this.gameSessionId) {
-    //   this._router.navigate(['/']);
-    //   return;
-    // } else {
-    //   this._router.navigate([
-    //     `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
-    //   ]);
-    // }
     this.openDialog(this.gameSessionId);
   }
 

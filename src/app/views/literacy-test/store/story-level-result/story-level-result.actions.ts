@@ -3,15 +3,15 @@ import { Update } from '@ngrx/entity';
 
 import { StoryLevelResult } from './story-level-result.model';
 
-export const loadStoryLevelResults = createAction(
-  '[StoryLevelResult Component] Load StoryLevelResults',
+export const loadStoryLevelResult = createAction(
+  '[StoryLevelResult Component] Load StoryLevelResult',
   props<{ session_id: string }>()
 );
-export const loadStoryLevelResultsSuccess = createAction(
-  '[StoryLevelResult Effect] Load StoryLevelResults Success',
-  props<{ storyLevelResults: StoryLevelResult[] }>()
+export const loadStoryLevelResultSuccess = createAction(
+  '[StoryLevelResult Effect] Load StoryLevelResult Success',
+  props<{ storyLevelResult: StoryLevelResult[] }>()
 );
-export const loadStoryLevelResultsFailure = createAction(
-  '[StoryLevelResult Effect] Load StoryLevelResults Failure',
+export const loadStoryLevelResultFailure = createAction(
+  '[StoryLevelResult Effect] Load StoryLevelResult Failure',
   props<{ error: any }>()
 );

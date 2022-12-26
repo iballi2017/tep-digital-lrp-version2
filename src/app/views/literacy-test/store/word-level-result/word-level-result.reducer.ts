@@ -3,37 +3,46 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { WordLevelResult } from './word-level-result.model';
 import * as WordLevelResultActions from './word-level-result.actions';
 
-export const wordLevelResultsFeatureKey = 'wordLevelResults';
+export const wordLevelResultFeatureKey = 'wordLevelResult';
 
-export interface WordLevelResultsState extends EntityState<WordLevelResult> {
+export interface WordLevelResultState extends EntityState<WordLevelResult> {
   // additional entities state properties
+  result: any;
+  error: any;
+  isLoading: boolean;
 }
 
-export const adapter: EntityAdapter<WordLevelResult> = createEntityAdapter<WordLevelResult>();
+export const adapter: EntityAdapter<WordLevelResult> =
+  createEntityAdapter<WordLevelResult>();
 
-export const initialState: WordLevelResultsState = adapter.getInitialState({
+export const initialState: WordLevelResultState = adapter.getInitialState({
   // additional entity state properties
+  result: undefined,
+  error: undefined,
+  isLoading: false,
 });
 
 export const reducer = createReducer(
-  initialState,  
-  on(WordLevelResultActions.loadWordLevelResults, (state, action) => {
+  initialState,
+
+  /* LOAD WORD LEVEL RESULTS WITH RATINGS*/
+  on(WordLevelResultActions.loadWordLevelResult, (state, action) => {
     return {
       ...state,
       isLoading: true,
     };
   }),
-  on(WordLevelResultActions.loadWordLevelResultsSuccess, (state, action) =>
+  on(WordLevelResultActions.loadWordLevelResultSuccess, (state, action) =>
     adapter.setAll(action.wordLevelResults, state)
   ),
-  on(WordLevelResultActions.loadWordLevelResultsSuccess, (state, action) => {
+  on(WordLevelResultActions.loadWordLevelResultSuccess, (state, action) => {
     return {
       ...state,
       isLoading: false,
     };
   }),
   on(
-    WordLevelResultActions.loadWordLevelResultsFailure,
+    WordLevelResultActions.loadWordLevelResultFailure,
     (state, action: any) => {
       return {
         ...state,
@@ -41,12 +50,116 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
+  ),
+
+  /* ADD WORD LEVEL STAGE ONE RESULT */
+  on(WordLevelResultActions.addWordLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    WordLevelResultActions.addWordLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    WordLevelResultActions.addWordLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    WordLevelResultActions.addWordLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
+
+  /* ADD Word LEVEL STAGE TWO RESULT */
+  on(WordLevelResultActions.addWordLevelStageTwoResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    WordLevelResultActions.addWordLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    WordLevelResultActions.addWordLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    WordLevelResultActions.addWordLevelStageTwoResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
+
+  /* ADD Word LEVEL STAGE THREE RESULT */
+  on(WordLevelResultActions.addWordLevelStageThreeResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    WordLevelResultActions.addWordLevelStageThreeResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    WordLevelResultActions.addWordLevelStageThreeResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    WordLevelResultActions.addWordLevelStageThreeResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
   )
 );
 
-export const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal,
-} = adapter.getSelectors();
+export const { selectIds, selectEntities, selectAll, selectTotal } =
+  adapter.getSelectors();

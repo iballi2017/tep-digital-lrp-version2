@@ -138,9 +138,10 @@ export class LetterLevelResultEffects {
     );
   });
 
-  loadLetterLevelResults$ = createEffect(() => {
+/* LOAD LETTER LEVEL RESULTS WITH RATINGS*/
+  loadLetterLevelResult$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromLetterLevelResultActions.loadLetterLevelResults),
+      ofType(fromLetterLevelResultActions.loadLetterLevelResult),
       mergeMap((action: any) =>
         this._gameLevelResultAndRatingSvc
           .LoadLetterGameResultAndRating(action?.session_id)
@@ -154,16 +155,16 @@ export class LetterLevelResultEffects {
                 //     id: item.occ_id,
                 //   };
                 // });
-                return fromLetterLevelResultActions.loadLetterLevelResultsSuccess(
+                return fromLetterLevelResultActions.loadLetterLevelResultSuccess(
                   {
-                    letterLevelResults: response,
+                    letterLevelResult: response,
                   }
                 );
               }
             ),
             catchError((error: any) =>
               of(
-                fromLetterLevelResultActions.loadLetterLevelResultsFailure({
+                fromLetterLevelResultActions.loadLetterLevelResultFailure({
                   error,
                 })
               )

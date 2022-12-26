@@ -3,15 +3,15 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { ParagraphLevelResult } from './paragraph-level-result.model';
 import * as ParagraphLevelResultActions from './paragraph-level-result.actions';
 
-export const paragraphLevelResultsFeatureKey = 'paragraphLevelResults';
+export const paragraphLevelResultFeatureKey = 'paragraphLevelResult';
 
-export interface ParagraphLevelResultsState extends EntityState<ParagraphLevelResult> {
+export interface ParagraphLevelResultState extends EntityState<ParagraphLevelResult> {
   // additional entities state properties
 }
 
 export const adapter: EntityAdapter<ParagraphLevelResult> = createEntityAdapter<ParagraphLevelResult>();
 
-export const initialState: ParagraphLevelResultsState = adapter.getInitialState({
+export const initialState: ParagraphLevelResultState = adapter.getInitialState({
   // additional entity state properties
 });
 
@@ -19,22 +19,22 @@ export const reducer = createReducer(
   initialState,
  
   
-  on(ParagraphLevelResultActions.loadParagraphLevelResults, (state, action) => {
+  on(ParagraphLevelResultActions.loadParagraphLevelResult, (state, action) => {
     return {
       ...state,
       isLoading: true,
     };
   }),
-  on(ParagraphLevelResultActions.loadParagraphLevelResultsSuccess, (state, action) =>
-    adapter.setAll(action.paragraphLevelResults, state)
+  on(ParagraphLevelResultActions.loadParagraphLevelResultSuccess, (state, action) =>
+    adapter.setAll(action.paragraphLevelResult, state)
   ),  
-  on(ParagraphLevelResultActions.loadParagraphLevelResultsSuccess, (state, action) => {
+  on(ParagraphLevelResultActions.loadParagraphLevelResultSuccess, (state, action) => {
     return {
       ...state,
       isLoading: false,
     };
   }),
-  on(ParagraphLevelResultActions.loadParagraphLevelResults, (state, action:any) => {
+  on(ParagraphLevelResultActions.loadParagraphLevelResult, (state, action:any) => {
     return {
       ...state,
       error: action?.error,

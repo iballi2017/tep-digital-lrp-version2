@@ -21,10 +21,10 @@ export class LetterStageTwoService {
     return this.addLetterLevelResultBehaviour.asObservable();
   }
 
-  SubmitResult(_LetteringStageTwoResult: any) {
-    console.log('_LetteringStageTwoResult: ', _LetteringStageTwoResult);
+  SubmitResult(_LetterStageTwoResult: any) {
+    console.log('_LetterStageTwoResult: ', _LetterStageTwoResult);
     return this._http
-      .post(`${this.SubmitGameStage_2_Url}`, _LetteringStageTwoResult)
+      .post(`${this.SubmitGameStage_2_Url}`, _LetterStageTwoResult)
       .pipe(catchError(handleError));
   }
 }

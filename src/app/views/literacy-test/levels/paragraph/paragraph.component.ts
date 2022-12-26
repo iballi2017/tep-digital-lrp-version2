@@ -6,9 +6,9 @@ import { ModifyStageArrayData } from 'src/app/models/class/modify-stage-array-da
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
 import { GameService } from 'src/app/services/game.service';
-import { loadParagraphLevelResults } from '../../store/paragraph-level-result/paragraph-level-result.actions';
-import { ParagraphLevelResultsState } from '../../store/paragraph-level-result/paragraph-level-result.reducer';
-import { selectParagraphLevelResults } from '../../store/paragraph-level-result/paragraph-level-result.selectors';
+import { loadParagraphLevelResult } from '../../store/paragraph-level-result/paragraph-level-result.actions';
+import { ParagraphLevelResultState } from '../../store/paragraph-level-result/paragraph-level-result.reducer';
+import { selectParagraphLevelResult } from '../../store/paragraph-level-result/paragraph-level-result.selectors';
 
 @Component({
   selector: 'app-paragraph',
@@ -42,7 +42,7 @@ export class ParagraphComponent implements OnInit {
     private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService,
     private _gameSvc: GameService,
     private _snackBar: MatSnackBar,
-    private store: Store<ParagraphLevelResultsState>
+    private store: Store<ParagraphLevelResultState>
   ) {}
 
   ngOnInit(): void {
@@ -51,8 +51,8 @@ export class ParagraphComponent implements OnInit {
   }
 
   onGetLevelGameResult(GameSessionId: string) {
-    this.store.dispatch(loadParagraphLevelResults({ session_id: GameSessionId }));
-    this.userData$ = this.store.pipe(select(selectParagraphLevelResults));
+    this.store.dispatch(loadParagraphLevelResult({ session_id: GameSessionId }));
+    this.userData$ = this.store.pipe(select(selectParagraphLevelResult));
     let subscription = this.userData$.subscribe({
         next: (response: any) => {
           if (response) {

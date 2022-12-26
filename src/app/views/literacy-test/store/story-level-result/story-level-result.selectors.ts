@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { storyLevelResultsFeatureKey, StoryLevelResultsState, selectAll } from './story-level-result.reducer';
+import { storyLevelResultFeatureKey, StoryLevelResultState, selectAll } from './story-level-result.reducer';
 
-export const selectStoryLevelResultsState = createFeatureSelector<StoryLevelResultsState>(
-  storyLevelResultsFeatureKey
+export const selectStoryLevelResultState = createFeatureSelector<StoryLevelResultState>(
+  storyLevelResultFeatureKey
 );
 
-export const selectStoryLevelResults = createSelector(
-  selectStoryLevelResultsState,
+export const selectStoryLevelResult = createSelector(
+  selectStoryLevelResultState,
   selectAll
 );

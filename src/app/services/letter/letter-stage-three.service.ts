@@ -21,10 +21,10 @@ export class LetterStageThreeService {
     return this.addLetterLevelResultBehaviour.asObservable();
   }
 
-  SubmitResult(_LetteringStageThreeResult: any) {
-    console.log('_LetteringStageThreeResult: ', _LetteringStageThreeResult);
+  SubmitResult(_LetterStageThreeResult: any) {
+    console.log('_LetterStageThreeResult: ', _LetterStageThreeResult);
     return this._http
-      .post(`${this.SubmitGameStage_3_Url}`, _LetteringStageThreeResult)
+      .post(`${this.SubmitGameStage_3_Url}`, _LetterStageThreeResult)
       .pipe(catchError(handleError));
   }
 }

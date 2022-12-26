@@ -6,21 +6,21 @@ import * as StoryLevelResultActions from './story-level-result.actions';
 
 @Injectable()
 export class StoryLevelResultEffects {
-  loadStoryLevelResults$ = createEffect(() => {
+  loadStoryLevelResult$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(StoryLevelResultActions.loadStoryLevelResults),
+      ofType(StoryLevelResultActions.loadStoryLevelResult),
       mergeMap((action: any) =>
         this._gameLevelResultAndRatingSvc
           .LoadStoryGameResultAndRating(action?.session_id)
           .pipe(
             map((response: any) => {
-              return StoryLevelResultActions.loadStoryLevelResultsSuccess({
-                storyLevelResults: response,
+              return StoryLevelResultActions.loadStoryLevelResultSuccess({
+                storyLevelResult: response,
               });
             }),
             catchError((error: any) =>
               of(
-                StoryLevelResultActions.loadStoryLevelResultsFailure({
+                StoryLevelResultActions.loadStoryLevelResultFailure({
                   error,
                 })
               )

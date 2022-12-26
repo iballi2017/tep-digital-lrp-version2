@@ -3,15 +3,15 @@ import { Update } from '@ngrx/entity';
 
 import { ParagraphLevelResult } from './paragraph-level-result.model';
 
-export const loadParagraphLevelResults = createAction(
-  '[ParagraphLevelResult Component] Load ParagraphLevelResults', 
+export const loadParagraphLevelResult = createAction(
+  '[ParagraphLevelResult Component] Load ParagraphLevelResult', 
   props<{ session_id: string }>()
 );
-export const loadParagraphLevelResultsSuccess = createAction(
-  '[ParagraphLevelResult Effect] Load ParagraphLevelResults Success', 
-  props<{ paragraphLevelResults: ParagraphLevelResult[] }>()
+export const loadParagraphLevelResultSuccess = createAction(
+  '[ParagraphLevelResult Effect] Load ParagraphLevelResult Success', 
+  props<{ paragraphLevelResult: ParagraphLevelResult[] }>()
 );
-export const loadParagraphLevelResultsFailure = createAction(
-  '[ParagraphLevelResult Effect] Load ParagraphLevelResults Failure', 
+export const loadParagraphLevelResultFailure = createAction(
+  '[ParagraphLevelResult Effect] Load ParagraphLevelResult Failure', 
   props<{ error: any }>()
 );

@@ -4,6 +4,21 @@ import { Update } from '@ngrx/entity';
 import { LetterLevelResult } from './letter-level-result.model';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 
+/* LOAD LETTER LEVEL RESULTS WITH RATINGS*/
+export const loadLetterLevelResult = createAction(
+  '[LetterLevelResult Component] Load LetterLevelResult',
+  props<{ session_id: string }>()
+);
+
+export const loadLetterLevelResultSuccess = createAction(
+  '[LetterLevelResult Effect] Load LetterLevelResults Success',
+  props<{ letterLevelResult: LetterLevelResult[] }>()
+);
+
+export const loadLetterLevelResultFailure = createAction(
+  '[LetterLevelResult Effect] Load LetterLevelResult Failure',
+  props<{ error: any }>()
+);
 
 // ADD LetterLevelStageOneResult
 export const addLetterLevelStageOneResult = createAction(
@@ -33,7 +48,6 @@ export const addLetterLevelStageTwoResultFailure = createAction(
   props<{ error: any }>()
 );
 
-
 // ADD LetterLevelStageThreeResult
 export const addLetterLevelStageThreeResult = createAction(
   '[Letter Stage-three Activity] Add Level Stage Three Result',
@@ -45,22 +59,5 @@ export const addLetterLevelStageThreeResultSuccess = createAction(
 );
 export const addLetterLevelStageThreeResultFailure = createAction(
   '[Letter Level Result Effect] Add Level Stage Three Result Failure',
-  props<{ error: any }>()
-);
-
-
-
-export const loadLetterLevelResults = createAction(
-  '[LetterLevelResult Component] Load LetterLevelResults',
-  props<{ session_id: string }>()
-);
-
-export const loadLetterLevelResultsSuccess = createAction(
-  '[LetterLevelResult Effect] Load LetterLevelResults Success',
-  props<{ letterLevelResults: LetterLevelResult[] }>()
-);
-
-export const loadLetterLevelResultsFailure = createAction(
-  '[LetterLevelResult Effect] Load LetterLevelResults Failure',
   props<{ error: any }>()
 );

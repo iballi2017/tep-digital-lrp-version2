@@ -35,7 +35,7 @@ import * as fromLetterLevelResult from './views/literacy-test/store/letter-level
     ReactiveFormsModule,
     SharedModule,
     StoreModule.forFeature(
-      fromLetterLevelResult.letterLevelResultsFeatureKey,
+      fromLetterLevelResult.letterLevelResultFeatureKey,
       fromLetterLevelResult.reducer
     ), //add to import this because the letterLevelResult loading stte belongs to another module
     NgbModule,
