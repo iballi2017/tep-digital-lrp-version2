@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
+import { WordStageFourService } from 'src/app/services/word/word-stage-four.service';
 import { WordStageOneService } from 'src/app/services/word/word-stage-one.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { WordStageTwoService } from 'src/app/services/word/word-stage-two.service';
@@ -137,6 +138,49 @@ export class WordLevelResultEffects {
     );
   });
 
+  // ADD LETTER LEVEL STAGE FOUR
+  addWordLevelStageFourResult$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromWordLevelResultActions.addWordLevelStageFourResult),
+      mergeMap((action: any) => {
+        console.group('action: ', action);
+        return this._wordStageFourSvc.SubmitResult(action.payload).pipe(
+          map((response: any) => {
+            if (response) {
+              const successResponse = response?.message;
+              const x = new Snackbar(successResponse, this._snackBar);
+              x.successSnackbar();
+              this._wordStageFourSvc.sendAddWordLevelResultBehaviour(
+                'Occupant added!'
+              );
+            }
+            return fromWordLevelResultActions.addWordLevelStageFourResultSuccess(
+              { payload: response }
+            );
+          }),
+          catchError((err: any) => {
+            console.warn('Error: ', err);
+            let successResponse = err?.error?.message;
+            if (err?.error?.message) {
+              successResponse = err?.error?.message;
+            } else {
+              successResponse = 'Test submission failed!, please try again';
+            }
+            const x = new Snackbar(successResponse, this._snackBar);
+            x.errorSnackbar();
+            return of(
+              fromWordLevelResultActions.addWordLevelStageFourResultFailure({
+                error: err,
+              })
+            );
+          })
+        );
+      })
+      // tap(() => this._router.navigate(['']))
+    );
+  });
+
+
   /* LOAD WORD LEVEL RESULTS WITH RATINGS*/
   loadwordLevelResults$ = createEffect(() => {
     return this.actions$.pipe(
@@ -168,6 +212,7 @@ export class WordLevelResultEffects {
     private _wordStageOneSvc: WordStageOneService,
     private _wordStageTwoSvc: WordStageTwoService,
     private _wordStageThreeSvc: WordStageThreeService,
+    private _wordStageFourSvc: WordStageFourService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 }

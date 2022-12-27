@@ -158,6 +158,42 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
+  ),
+
+  /* ADD Word LEVEL STAGE FOUR RESULT */
+  on(WordLevelResultActions.addWordLevelStageFourResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    WordLevelResultActions.addWordLevelStageFourResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    WordLevelResultActions.addWordLevelStageFourResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    WordLevelResultActions.addWordLevelStageFourResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
   )
 );
 

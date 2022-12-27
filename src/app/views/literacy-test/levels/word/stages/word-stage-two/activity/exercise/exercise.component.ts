@@ -24,155 +24,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   checkTestCompletion: any;
   keyList: any[] = [];
 
-  testList = [
-    {
-      testName: 'test-1',
-      // isTestComplete: false,
-      hint: 'classroom',
-      testKeys: [
-        {
-          name: 'cocoa',
-          isWrongChoice: false,
-        },
-        {
-          name: 'blackboard',
-          isWrongChoice: false,
-        },
-        {
-          name: 'duster',
-          isWrongChoice: false,
-        },
-        {
-          name: 'chair',
-          isWrongChoice: false,
-        },
-        {
-          name: 'juice',
-          isWrongChoice: false,
-        },
-        {
-          name: 'desk',
-          isWrongChoice: false,
-        },
-      ],
-      answer: [
-        {
-          name: 'blackboard',
-          isCorrect: false,
-        },
-        {
-          name: 'desk',
-          isCorrect: false,
-        },
-        {
-          name: 'duster',
-          isCorrect: false,
-        },
-        {
-          name: 'chair',
-          isCorrect: false,
-        },
-      ],
-    },
-    {
-      testName: 'test-2',
-      // isTestComplete: false,
-      hint: 'church',
-      testKeys: [
-        {
-          name: 'calabash',
-          isWrongChoice: false,
-        },
-        {
-          name: 'bible',
-          isWrongChoice: false,
-        },
-        {
-          name: 'altar',
-          isWrongChoice: false,
-        },
-        {
-          name: 'dagger',
-          isWrongChoice: false,
-        },
-        {
-          name: 'pulpit',
-          isWrongChoice: false,
-        },
-        {
-          name: 'rosary',
-          isWrongChoice: false,
-        },
-      ],
-      answer: [
-        {
-          name: 'rosary',
-          isCorrect: false,
-        },
-        {
-          name: 'altar',
-          isCorrect: false,
-        },
-        {
-          name: 'pulpit',
-          isCorrect: false,
-        },
-        {
-          name: 'bible',
-          isCorrect: false,
-        },
-      ],
-    },
-    {
-      testName: 'test-3',
-      // isTestComplete: false,
-      hint: 'kitchen',
-      testKeys: [
-        {
-          name: 'knife',
-          isWrongChoice: false,
-        },
-        {
-          name: 'duster',
-          isWrongChoice: false,
-        },
-        {
-          name: 'plate',
-          isWrongChoice: false,
-        },
-        {
-          name: 'pot',
-          isWrongChoice: false,
-        },
-        {
-          name: 'spoon',
-          isWrongChoice: false,
-        },
-        {
-          name: 'cutlas',
-          isWrongChoice: false,
-        },
-      ],
-      answer: [
-        {
-          name: 'spoon',
-          isCorrect: false,
-        },
-        {
-          name: 'plate',
-          isCorrect: false,
-        },
-        {
-          name: 'pot',
-          isCorrect: false,
-        },
-        {
-          name: 'knife',
-          isCorrect: false,
-        },
-      ],
-    },
-  ];
+  testList = testList;
   previewList: any[] = [];
   resultItemList: any[] = [];
   previewText: string = '';
@@ -194,7 +46,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     private store: Store<WordLevelResultState>,
     private _router: Router,
     private _wordStageTwoSvc: WordStageTwoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onGetGameSessionId();
@@ -298,3 +150,153 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     });
   }
 }
+
+const testList = [
+  {
+    testName: 'test-1',
+    // isTestComplete: false,
+    hint: 'classroom',
+    testKeys: [
+      {
+        name: 'cocoa',
+        isWrongChoice: false,
+      },
+      {
+        name: 'blackboard',
+        isWrongChoice: false,
+      },
+      {
+        name: 'duster',
+        isWrongChoice: false,
+      },
+      {
+        name: 'chair',
+        isWrongChoice: false,
+      },
+      {
+        name: 'juice',
+        isWrongChoice: false,
+      },
+      {
+        name: 'desk',
+        isWrongChoice: false,
+      },
+    ],
+    answer: [
+      {
+        name: 'blackboard',
+        isCorrect: false,
+      },
+      {
+        name: 'desk',
+        isCorrect: false,
+      },
+      {
+        name: 'duster',
+        isCorrect: false,
+      },
+      {
+        name: 'chair',
+        isCorrect: false,
+      },
+    ],
+  },
+  {
+    testName: 'test-2',
+    // isTestComplete: false,
+    hint: 'church',
+    testKeys: [
+      {
+        name: 'calabash',
+        isWrongChoice: false,
+      },
+      {
+        name: 'bible',
+        isWrongChoice: false,
+      },
+      {
+        name: 'altar',
+        isWrongChoice: false,
+      },
+      {
+        name: 'dagger',
+        isWrongChoice: false,
+      },
+      {
+        name: 'pulpit',
+        isWrongChoice: false,
+      },
+      {
+        name: 'rosary',
+        isWrongChoice: false,
+      },
+    ],
+    answer: [
+      {
+        name: 'rosary',
+        isCorrect: false,
+      },
+      {
+        name: 'altar',
+        isCorrect: false,
+      },
+      {
+        name: 'pulpit',
+        isCorrect: false,
+      },
+      {
+        name: 'bible',
+        isCorrect: false,
+      },
+    ],
+  },
+  {
+    testName: 'test-3',
+    // isTestComplete: false,
+    hint: 'kitchen',
+    testKeys: [
+      {
+        name: 'knife',
+        isWrongChoice: false,
+      },
+      {
+        name: 'duster',
+        isWrongChoice: false,
+      },
+      {
+        name: 'plate',
+        isWrongChoice: false,
+      },
+      {
+        name: 'pot',
+        isWrongChoice: false,
+      },
+      {
+        name: 'spoon',
+        isWrongChoice: false,
+      },
+      {
+        name: 'cutlas',
+        isWrongChoice: false,
+      },
+    ],
+    answer: [
+      {
+        name: 'spoon',
+        isCorrect: false,
+      },
+      {
+        name: 'plate',
+        isCorrect: false,
+      },
+      {
+        name: 'pot',
+        isCorrect: false,
+      },
+      {
+        name: 'knife',
+        isCorrect: false,
+      },
+    ],
+  },
+];

@@ -8,7 +8,9 @@
         <div class="inner">
             <div id="result-item-list">
                 <ul class="item-list ps-0 mb-0">
-                    <li *ngFor="let item of resultItemList">{{item}}</li>
+                    <li [ngClass]="{'hint': item.hint}" *ngFor="let item of testList[testNumber]?.answer">
+                        <span [ngClass]="{'d-none': !item?.isShow}">{{item?.text}}</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -18,7 +20,6 @@
             {{previewText}}
         </div>
     </div>
-
     <div id="activity-keypad">
         <ul class="key-list ps-0 list-style-none">
             <li *ngFor="let key of keyList">
@@ -39,4 +40,3 @@
         </div>
     </div>
 </div>
-

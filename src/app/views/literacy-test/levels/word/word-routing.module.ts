@@ -88,33 +88,33 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: 'word/stage-4',
-  //   component: WordStageTwoComponent,
-  //   children: [
-  //     {
-  //       path: '',
-  //       loadChildren: () =>
-  //         import(
-  //           './stages/word-stage-four/word-stage-four-splash/word-stage-four-splash.module'
-  //         ).then((m) => m.WordStageFourSplashModule),
-  //     },
-  //     {
-  //       path: 'word-splash',
-  //       loadChildren: () =>
-  //         import(
-  //           './stages/word-stage-four/word-stage-four-splash/word-stage-four-splash.module'
-  //         ).then((m) => m.WordStageFourSplashModule),
-  //     },
-  //     {
-  //       path: 'activity',
-  //       loadChildren: () =>
-  //         import('./stages/word-stage-four/activity/activity.module').then(
-  //           (m) => m.ActivityModule
-  //         ),
-  //     },
-  //   ],
-  // },
+  {
+    path: 'word/stage-4',
+    component: WordStageTwoComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import(
+            './stages/word-stage-four/word-stage-four-splash/word-stage-four-splash.module'
+          ).then((m) => m.WordStageFourSplashModule),
+      },
+      {
+        path: 'word-splash',
+        loadChildren: () =>
+          import(
+            './stages/word-stage-four/word-stage-four-splash/word-stage-four-splash.module'
+          ).then((m) => m.WordStageFourSplashModule),
+      },
+      {
+        path: 'activity',
+        loadChildren: () =>
+          import('./stages/word-stage-four/activity/activity.module').then(
+            (m) => m.ActivityModule
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({

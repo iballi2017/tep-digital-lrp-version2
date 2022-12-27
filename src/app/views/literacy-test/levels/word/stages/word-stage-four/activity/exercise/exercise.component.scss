@@ -2,19 +2,26 @@
     position: relative;
 }
 
-.item-list{
-    li{
-        &:first-child{
+.item-list {
+    li {
+        &:first-child {
             text-transform: capitalize;
+        }
+
+        &.hint {
+            background: unset !important;
+            color: #ffffff !important;
         }
     }
 }
+
 #key-selection-preview-block {
     max-width: auto !important;
     // margin: 0 auto;
     // height: 80px;
     display: flex;
-    .preview-text{
+
+    .preview-text {
         width: auto !important;
         display: inline-flex !important;
         min-width: 72px;
@@ -28,6 +35,7 @@
     background: #242424;
     border-radius: 22px;
     padding: 1.5em 1.2em;
+
     .key-list {
         .btn {
             background: #ffffff;

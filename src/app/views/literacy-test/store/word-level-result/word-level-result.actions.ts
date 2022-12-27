@@ -62,3 +62,18 @@ export const addWordLevelStageThreeResultFailure = createAction(
   '[Word Level Result Effect] Add Level Stage Three Result Failure',
   props<{ error: any }>()
 );
+
+
+// ADD WordLevelStageFourResult
+export const addWordLevelStageFourResult = createAction(
+  '[Word Stage-Four Activity] Add Level Stage Four Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addWordLevelStageFourResultSuccess = createAction(
+  '[Word Level Result Effect] Add Level Stage Four Result Success',
+  props<{ payload: any }>()
+);
+export const addWordLevelStageFourResultFailure = createAction(
+  '[Word Level Result Effect] Add Level Stage Four Result Failure',
+  props<{ error: any }>()
+);

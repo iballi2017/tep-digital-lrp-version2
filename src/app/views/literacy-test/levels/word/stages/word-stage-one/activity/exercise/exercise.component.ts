@@ -23,31 +23,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   checkTestCompletion: any;
   keyList: any[] = [];
 
-  testList = [
-    {
-      testName: 'test-1',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: 'ca',
-          isWrongChoice: false,
-          position: 1,
-        },
-        {
-          name: 'n',
-          isWrongChoice: false,
-          position: 2,
-        },
-        {
-          name: 'pa',
-          isWrongChoice: false,
-          position: 1,
-        },
-      ],
-
-      answer: ['can', 'pan'],
-    },
-  ];
+  testList = testList;
   previewList: any[] = [];
   resultItemList: any[] = [];
   previewText: string = '';
@@ -64,7 +40,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     private store: Store<WordLevelResultState>,
     private _router: Router,
     private _wordStageOneSvc: WordStageOneService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onReplceKeyList();
@@ -199,3 +175,30 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     });
   }
 }
+
+const testList = [
+  {
+    testName: 'test-1',
+    isTestComplete: false,
+    testKeys: [
+      {
+        name: 'ca',
+        isWrongChoice: false,
+        position: 1,
+      },
+      {
+        name: 'n',
+        isWrongChoice: false,
+        position: 2,
+      },
+      {
+        name: 'pa',
+        isWrongChoice: false,
+        position: 1,
+      },
+    ],
+
+    answer: ['can', 'pan'],
+  },
+];
+
