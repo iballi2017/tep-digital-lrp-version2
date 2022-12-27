@@ -57,8 +57,38 @@ export class ExerciseComponent implements OnInit, OnDestroy {
           isWrongChoice: false,
         },
       ],
-
       answer: ['I', 'have', 'a', 'dog'],
+    },
+    {
+      testName: 'test-1',
+      isTestComplete: false,
+      testKeys: [
+        {
+          name: 'is',
+          isWrongChoice: false,
+        },
+        {
+          name: 'clean',
+          isWrongChoice: false,
+        },
+        {
+          name: 'my',
+          isWrongChoice: false,
+        },
+        {
+          name: 'this',
+          isWrongChoice: false,
+        },
+        {
+          name: 'book',
+          isWrongChoice: false,
+        },
+        {
+          name: 'this',
+          isWrongChoice: false,
+        },
+      ],
+      answer: ['This', 'is', 'my', 'book'],
     },
   ];
   previewList: any[] = [];
@@ -98,6 +128,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   onSelectAlphabet(alphabet: any) {
     // this.previewList.push(alphabet);
     this.previewText = alphabet.name;
+    let testAnswerLength = this.testList[this.testNumber].answer.length
     setTimeout(() => {
       this.previewText = '';
     }, 500);
@@ -109,9 +140,10 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     if (item) {
       return;
     } else {
-      if (this.resultItemList.length < 4) {
+      if (this.resultItemList.length < testAnswerLength) {
         this.resultItemList.push(alphabet.name);
-        this.testList[this.testNumber].isTestComplete = true;
+      }
+      if (this.resultItemList.length == testAnswerLength) {
         this.testResult();
       }
     }
@@ -120,7 +152,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   testResult() {
     let expectedResult = JSON.stringify(this.testList[0].answer);
     let selectedResult = JSON.stringify(this.resultItemList);
+    if (expectedResult != selectedResult) {
+      console.warn('incorrect!');
+    }
     if (expectedResult === selectedResult) {
+      this.testList[this.testNumber].isTestComplete = true;
+      console.log('this.testList: ', this.testList);
       setTimeout(() => {
         // alert('completed!');
         this.testGameCompletion();
