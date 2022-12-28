@@ -24,6 +24,7 @@ import { LiteracyLevelCompletionComponent } from './completion/literacy-level-co
 import { LiteracyStageCompletionComponent } from './completion/literacy-stage-completion/literacy-stage-completion.component';
 import { LiteracyProgramCompletionComponent } from './completion/literacy-program-completion/literacy-program-completion.component';
 import { WordModule } from './levels/word/word.module';
+import { ParagraphModule } from './levels/paragraph/paragraph.module';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { WordModule } from './levels/word/word.module';
     NgMaterialModule,
     LetterModule,
     WordModule,
+    ParagraphModule,
     SharedModule,
     StoreModule.forFeature(fromLetterLevelResult.letterLevelResultFeatureKey, fromLetterLevelResult.reducer),
     StoreModule.forFeature(fromWordLevelResult.wordLevelResultFeatureKey, fromWordLevelResult.reducer),

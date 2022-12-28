@@ -14,7 +14,8 @@ const routes: Routes = [
         component: WordStageOneInstructionalVideoComponent,
       },
     ],
-  },];
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
