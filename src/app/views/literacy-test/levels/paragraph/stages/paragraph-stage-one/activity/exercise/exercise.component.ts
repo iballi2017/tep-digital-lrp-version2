@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -8,6 +8,7 @@ import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
+import { ParagraphStageOneService } from 'src/app/services/paragraph/paragraph-stage-one.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addWordLevelStageThreeResult } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
@@ -19,104 +20,78 @@ import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-lev
   styleUrls: ['./exercise.component.scss']
 })
 export class ExerciseComponent implements OnInit, OnDestroy {
-  boardActivityHint: string = 'Read the sentence';
+  boardActivityHint: string = 'Read the paragraph below';
   testNumber: number = 0;
   checkTestCompletion: any;
   keyList: any[] = [];
-
-  testList = testList;
   previewList: any[] = [];
   resultItemList: any[] = [];
   previewText: string = '';
-  activityHint: any = 'Click on the start button below to start the activity; Read out the sentences correctly to go on to the next activity.';
+  activityHint: any = 'Click on the start button below to start the activity; Read the paragraph below noting the punctuations and at a steady pace';
 
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
   stageNumber: number = 3;
   gameLevel = GameLevel.WORD;
+
+  // 
+  
+  resultTextList: any[] = [];
+  textPosition = 0;
+  speechText!: string;
+  isStart:boolean = false;
+
+
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
     private _router: Router,
-    private _wordStageThreeSvc: WordStageThreeService
-  ) { }
+    private _wordStageThreeSvc: WordStageThreeService,
+    // Speech recog
+    private _paragraphStageOneSvc : ParagraphStageOneService,
+    private cdr: ChangeDetectorRef,
+  ) { 
+    this._paragraphStageOneSvc?.init();
+    this.speechText = this._paragraphStageOneSvc.text;
+  }
 
   ngOnInit(): void {
-    let testList = this.testList;
-    if (testList) {
-      new ShuffleArray(testList).shuffle();
-    }
-    let testKeyArr = this.testList[this.testNumber]?.testKeys;
-    if (testKeyArr) {
-      new ShuffleArray(testKeyArr).shuffle();
-    }
-
+    this.cdr.detectChanges();
     // 
-    this.loadTestContent();
+    // this.loadTestContent();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
+
+    // 
+
+    this.  GetExerciseTexts();
   }
+
+  /* SPEECH RECOG CODE STARTS */
+
+  GetExerciseTexts() {
+    this.resultTextList = this._paragraphStageOneSvc.GetExerciseTexts();
+  }
+  startService() {
+    this.isStart = true;
+    this._paragraphStageOneSvc.start();
+  }
+
+  stopService() {
+    this.isStart = false;
+    this._paragraphStageOneSvc.stop();
+  }
+
+  clearService() {
+    this._paragraphStageOneSvc.clear();
+  }
+  /* SPEECH RECOG CODE ENDS */
 
   onCheckTestCompletion() {
-    this.checkTestCompletion = this.testList.filter(
-      (test: any) => test.isTestComplete == true
-    );
-  }
-
-  loadTestContent() {
-    this.keyList = this.testList[this.testNumber]?.testKeys;
-    this.resultItemList = [];
-  }
-
-  onSelectAlphabet(alphabet: any) {
-    this.previewText = alphabet.name;
-    let testAnswerLength = this.testList[this.testNumber].answer.length
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
-
-    let isExist = this.resultItemList.findIndex(
-      (item: any) => item == alphabet.name
-    );
-    let item = this.resultItemList[isExist];
-    if (item) {
-      return;
-    } else {
-      if (this.resultItemList.length < testAnswerLength) {
-        this.resultItemList.push(alphabet.name);
-      }
-      if (this.resultItemList.length == testAnswerLength) {
-        this.testResult();
-      }
-    }
-  }
-
-  testResult() {
-    let expectedResult = JSON.stringify(this.testList[this.testNumber].answer);
-    let selectedResult = JSON.stringify(this.resultItemList);
-    if (expectedResult != selectedResult) {
-      console.warn('incorrect!');
-      setTimeout(() => {
-        alert('Incorrect sentence, try again!');
-      }, 1200);
-    }
-    if (expectedResult === selectedResult) {
-      this.testList[this.testNumber].isTestComplete = true;
-      this.testNumber++;
-      setTimeout(() => {
-        // alert('completed!');
-        this.onCheckTestCompletion()
-        // if(this.checkTestCompletion.length != this.testList.length){
-        //   this.testNumber++;
-        //   console.log('this.testList: ', this.testList);
-        // }
-        if (this.checkTestCompletion.length < this.testList.length) {
-          this.loadTestContent();
-        }
-        this.testGameCompletion();
-      }, 1000);
-    }
+    // this.checkTestCompletion = this.testList.filter(
+    //   (test: any) => test.isTestComplete == true
+    // );
   }
 
   onGetGameSessionId() {
@@ -126,29 +101,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         this.gameSessionId = msg?.id;
       },
     });
-  }
-
-  testGameCompletion() {
-    this.onCheckTestCompletion();
-    if (this.checkTestCompletion.length == this.testList.length) {
-      const Payload: ActivityAnswer = {
-        session_id: this.gameSessionId,
-        answer: '4',
-        data: [...this.checkTestCompletion],
-      };
-      this.store.dispatch(addWordLevelStageThreeResult({ payload: Payload }));
-      this._wordStageThreeSvc.addWordLevelResultBehaviour.subscribe(
-        (msg: any) => {
-          if (msg) {
-            // console.log('msg: ', msg);
-            this._router.navigate([
-              `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-            ]);
-          }
-        }
-      );
-    }
-    return;
   }
 
   onReadHint() {
@@ -164,10 +116,10 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   refreshGame() {
     this.resultItemList = [];
     this.testNumber = 0;
-    this.loadTestContent();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    // this.loadTestContent();
+    // for (let i = 0; i < this.testList.length; i++) {
+    //   this.testList[i].isTestComplete = false;
+    // }
   }
 
   ngOnDestroy(): void {
@@ -179,70 +131,3 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 }
 
-
-
-
-const testList = [
-  {
-    testName: 'test-1',
-    isTestComplete: false,
-    testKeys: [
-      {
-        name: 'i',
-        isWrongChoice: false,
-      },
-      {
-        name: 'are',
-        isWrongChoice: false,
-      },
-      {
-        name: 'a',
-        isWrongChoice: false,
-      },
-      {
-        name: 'local',
-        isWrongChoice: false,
-      },
-      {
-        name: 'have',
-        isWrongChoice: false,
-      },
-      {
-        name: 'dog',
-        isWrongChoice: false,
-      },
-    ],
-    answer: ['i', 'have', 'a', 'dog'],
-  },
-  {
-    testName: 'test-2',
-    isTestComplete: false,
-    testKeys: [
-      {
-        name: 'this',
-        isWrongChoice: false,
-      },
-      {
-        name: 'just',
-        isWrongChoice: false,
-      },
-      {
-        name: 'not',
-        isWrongChoice: false,
-      },
-      {
-        name: 'my',
-        isWrongChoice: false,
-      },
-      {
-        name: 'is',
-        isWrongChoice: false,
-      },
-      {
-        name: 'cat',
-        isWrongChoice: false,
-      },
-    ],
-    answer: ['this', 'is', 'my', 'cat'],
-  },
-];

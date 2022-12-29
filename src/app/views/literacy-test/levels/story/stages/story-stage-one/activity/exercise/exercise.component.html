@@ -8,9 +8,9 @@
         <div class="inner">
             <div id="result-item-list">
                 <ul class="item-list ps-0 mb-0">
-                    <!-- <li *ngFor="let item of resultItemList">{{item}}</li> -->
-                    <!-- <li>The sky is blue.</li> -->
-                    <li>{{resultTextList[textPosition]?.uiText}}</li>
+                    <li [ngClass]="{'hint': item.hint}" *ngFor="let item of testList[testNumber]?.answer">
+                        <span [ngClass]="{'d-none': !item?.isShow}">{{item?.text}}</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -20,22 +20,12 @@
             {{previewText}}
         </div>
     </div>
-
-    <!-- <div id="action-buttons" class="mark-control text-center">
-        <button class="btn btn-success" (click)="startService()">Start</button>
-        <button class="btn btn-danger" (click)="stopService()">Stop</button>
-        <button class="btn btn-warning" (click)="clearService()">Clear</button>
-    </div> -->
-
-
-
     <div id="activity-keypad">
-        <div class="key-list ps-0 list-style-none">
-            <div class="action-btn">
-                <button mat-button class="btn btn-primary" (click)="startService()" *ngIf="!isStart">Start</button>
-                <button mat-button class="btn danger-btn" (click)="stopService()" *ngIf="isStart">Stop</button>
-            </div>
-        </div>
+        <ul class="key-list ps-0 list-style-none">
+            <li *ngFor="let key of keyList">
+                <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
+            </li>
+        </ul>
     </div>
 
     <div id="utility-controls">

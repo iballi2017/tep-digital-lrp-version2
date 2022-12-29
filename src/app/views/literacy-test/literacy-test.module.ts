@@ -25,6 +25,8 @@ import { LiteracyStageCompletionComponent } from './completion/literacy-stage-co
 import { LiteracyProgramCompletionComponent } from './completion/literacy-program-completion/literacy-program-completion.component';
 import { WordModule } from './levels/word/word.module';
 import { ParagraphModule } from './levels/paragraph/paragraph.module';
+import { StoryModule } from './levels/story/story.module';
+import * as fromSpeechTexts from './store/speech-texts/speech-texts.reducer';
 
 
 @NgModule({
@@ -46,12 +48,14 @@ import { ParagraphModule } from './levels/paragraph/paragraph.module';
     LetterModule,
     WordModule,
     ParagraphModule,
+    StoryModule,
     SharedModule,
     StoreModule.forFeature(fromLetterLevelResult.letterLevelResultFeatureKey, fromLetterLevelResult.reducer),
     StoreModule.forFeature(fromWordLevelResult.wordLevelResultFeatureKey, fromWordLevelResult.reducer),
     StoreModule.forFeature(fromParagraphLevelResult.paragraphLevelResultFeatureKey, fromParagraphLevelResult.reducer),
     StoreModule.forFeature(fromStoryLevelResult.storyLevelResultFeatureKey, fromStoryLevelResult.reducer),
-    EffectsModule.forFeature([LetterLevelResultEffects, ParagraphLevelResultEffects, StoryLevelResultEffects, WordLevelResultEffects])
+    EffectsModule.forFeature([LetterLevelResultEffects, ParagraphLevelResultEffects, StoryLevelResultEffects, WordLevelResultEffects]),
+    StoreModule.forFeature(fromSpeechTexts.speechTextsListFeatureKey, fromSpeechTexts.reducer)
   ]
 })
 export class LiteracyTestModule { }
