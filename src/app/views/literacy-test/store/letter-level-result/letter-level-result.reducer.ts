@@ -41,7 +41,7 @@ export const reducer = createReducer(
       };
     }
   ),
-  on(LetterLevelResultActions.loadLetterLevelResult, (state, action: any) => {
+  on(LetterLevelResultActions.loadLetterLevelResultFailure, (state, action: any) => {
     return {
       ...state,
       error: action?.error,

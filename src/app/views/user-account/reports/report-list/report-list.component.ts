@@ -6,8 +6,8 @@ import { Observable, Subscription } from 'rxjs';
 import { SessionId } from 'src/app/models/interface/game-report';
 import { ReportService } from 'src/app/services/report.service';
 import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
-import { selectReports } from '../../store/reports/report.selectors';
-import { loadReports } from '../../store/reports/reports.actions';
+import { reportSelectStateIsLoading, selectReports } from '../../store/reports/report.selectors';
+import { deleteReport, loadReports } from '../../store/reports/reports.actions';
 import { ReportState } from '../../store/reports/reports.reducer';
 
 @Component({
@@ -28,7 +28,7 @@ export class ReportListComponent implements OnInit {
     FilterDropdown?.HIGHEST_SCORE,
   ];
   Subscriptions: Subscription[] = [];
-  reports: any;
+  reportList: any;
   primaryBtnTitle = 'View';
   dangerBtnTitle = 'Delete';
   SortItem: any;
@@ -40,6 +40,7 @@ export class ReportListComponent implements OnInit {
   btnEdit = {
     title: 'View',
   };
+  isLoadingReportList$!: Observable<boolean>;
   constructor(
     private _reportSvc: ReportService,
     // private ngRedux: NgRedux<IAppState>,
@@ -58,13 +59,14 @@ export class ReportListComponent implements OnInit {
   onGetReportList() {
     this.store.dispatch(loadReports());
     this.reportsList$ = this.store.pipe(select(selectReports));
-    // let subscription = this.reportsList$.subscribe({
-    //   next: (response: any) => {
-    //     console.log('response: ', response);
-    //     this.reports = response;
-    //   },
-    // });
-    // this.Subscriptions.push(subscription);
+    this.isLoadingReportList$ = this.store.pipe(select(reportSelectStateIsLoading));
+    let subscription = this.reportsList$.subscribe({
+      next: (response: any) => {
+        console.log('response: ', response);
+        this.reportList = response;
+      },
+    });
+    this.Subscriptions.push(subscription);
   }
   onViewReportDetails(sessionId: any) {
     console.log('sessionId: ', sessionId);
@@ -98,27 +100,28 @@ export class ReportListComponent implements OnInit {
     const _sessionId: SessionId = {
       session_id: sessionId,
     };
+    this.store.dispatch(deleteReport({ id: _sessionId }));
 
-    this._reportSvc.RemoveReport(_sessionId).subscribe({
-      next: (response: any) => {
-        if (response) {
-          console.log('response: ', response);
-          // this.ngRedux.dispatch({
-          //   type: REMOVE_REPORT_SUCCESS,
-          //   payload: {
-          //     sessionId: sessionId,
-          //   },
-          // });
-        }
-      },
-      error: (err: any) => {
-        console.warn('Error: ', err);
-        // this.ngRedux.dispatch({
-        //   type: REMOVE_REPORT_ERROR,
-        //   payload: err,
-        // });
-      },
-    });
+    // this._reportSvc.RemoveReport(_sessionId).subscribe({
+    //   next: (response: any) => {
+    //     if (response) {
+    //       console.log('response: ', response);
+    //       // this.ngRedux.dispatch({
+    //       //   type: REMOVE_REPORT_SUCCESS,
+    //       //   payload: {
+    //       //     sessionId: sessionId,
+    //       //   },
+    //       // });
+    //     }
+    //   },
+    //   error: (err: any) => {
+    //     console.warn('Error: ', err);
+    //     // this.ngRedux.dispatch({
+    //     //   type: REMOVE_REPORT_ERROR,
+    //     //   payload: err,
+    //     // });
+    //   },
+    // });
   }
 
   onEditReport() {}
@@ -129,19 +132,19 @@ export class ReportListComponent implements OnInit {
     let SortItem = FilterForm.value.Filter;
     switch (SortItem) {
       case FilterDropdown.ASCENDING:
-        this.reports.sort((a: any, b: any) =>
+        this.reportList.sort((a: any, b: any) =>
           a['fullname'] > b['fullname'] ? 1 : -1
         );
         break;
 
       case FilterDropdown.DESCENDING:
-        this.reports.sort((a: any, b: any) =>
+        this.reportList.sort((a: any, b: any) =>
           a['fullname'] > b['fullname'] ? -1 : 1
         );
         break;
 
       case FilterDropdown.AGE:
-        this.reports.sort((a: any, b: any) => {
+        this.reportList.sort((a: any, b: any) => {
           let x = parseInt(a['age']);
           let y = parseInt(b['age']);
           return x > y ? 1 : -1;
@@ -149,7 +152,7 @@ export class ReportListComponent implements OnInit {
         break;
 
       case FilterDropdown.HIGHEST_SCORE:
-        this.reports.sort((a: any, b: any) => {
+        this.reportList.sort((a: any, b: any) => {
           let x = parseInt(a['overallScore']);
           let y = parseInt(b['overallScore']);
           return x > y ? -1 : 1;
@@ -157,7 +160,7 @@ export class ReportListComponent implements OnInit {
         break;
 
       case FilterDropdown.LOWEST_SCORE:
-        this.reports.sort((a: any, b: any) => {
+        this.reportList.sort((a: any, b: any) => {
           let x = parseInt(a['overallScore']);
           let y = parseInt(b['overallScore']);
           return x > y ? 1 : -1;
@@ -165,7 +168,7 @@ export class ReportListComponent implements OnInit {
         break;
 
       default:
-        return this.reports;
+        return this.reportList;
     }
   }
 

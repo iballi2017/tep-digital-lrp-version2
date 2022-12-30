@@ -1,6 +1,10 @@
 <!-- <p>letter works!</p> -->
 <div>
-    <ng-container *ngIf="isLoadingStarCards">
+    <!-- <p class="text-danger">{{isLoadingStarCards}}</p>
+    <p class="text-primary">Obs: {{letterResultLoading$ | async}}</p> -->
+    <!-- <p class="text-primary">Obs: {{testStageStars | json}}</p> -->
+    
+    <ng-container *ngIf="isLoadingStarCards && !testStageStars.length">
         <div class="text-info text-bold">Loading...</div>
     </ng-container>
     <ul class="stage-status list-style-none ps-0">

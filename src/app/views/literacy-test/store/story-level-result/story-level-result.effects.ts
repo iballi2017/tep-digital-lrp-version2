@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
@@ -14,9 +15,20 @@ export class StoryLevelResultEffects {
           .LoadStoryGameResultAndRating(action?.session_id)
           .pipe(
             map((response: any) => {
-              return StoryLevelResultActions.loadStoryLevelResultSuccess({
-                storyLevelResult: response,
-              });
+              let x: any;
+              if (response) {
+                x = StoryLevelResultActions.loadStoryLevelResultSuccess({
+                  storyLevelResult: response,
+                });
+              } else {
+                alert('No game started!!!');
+                this._router.navigate(['/program-starter']);
+              }
+              return x;
+
+              // return StoryLevelResultActions.loadStoryLevelResultSuccess({
+              //   storyLevelResult: response,
+              // });
             }),
             catchError((error: any) =>
               of(
@@ -33,6 +45,7 @@ export class StoryLevelResultEffects {
 
   constructor(
     private actions$: Actions,
-    private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService
+    private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService,
+    private _router: Router
   ) {}
 }

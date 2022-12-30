@@ -67,9 +67,9 @@
                 </div>
             </div>
             <button mat-button class="btn primary-btn btn-40-height"
-                [disabled]="AddRespondentForm.invalid || (occupantStateIsLoading$ | async)">
-                <ng-container *ngIf="(occupantStateIsLoading$ | async)">Sending...</ng-container>
-                <ng-container *ngIf="!(occupantStateIsLoading$ | async)">
+                [disabled]="AddRespondentForm.invalid || (isLoadingOccupantState$ | async)">
+                <ng-container *ngIf="(isLoadingOccupantState$ | async)">Sending...</ng-container>
+                <ng-container *ngIf="!(isLoadingOccupantState$ | async)">
                     {{submitBtnLabel}}
                 </ng-container>
             </button>

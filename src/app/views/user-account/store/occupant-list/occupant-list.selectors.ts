@@ -22,7 +22,7 @@ export const selectedOccupant = createSelector(
 );
 
 
-export const occupantStateIsLoading = createSelector(
+export const isLoadingOccupantState = createSelector(
     selectOccupantListState,
     (state: OccupantListState) => state.isLoading
   );

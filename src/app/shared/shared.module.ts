@@ -22,6 +22,8 @@ import { NotificationSnackbarComponent } from './shared.components/snackbar/noti
 import { LevelLoaderComponent } from './shared.views/level-loader/level-loader.component';
 import { ActivityKeypadTypeOneComponent } from './shared.components/activity-keypad-type-one/activity-keypad-type-one.component';
 import { FullPageLoaderComponent } from './shared.components/full-page-loader/full-page-loader.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromGame from './store/game/game.reducer';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -49,6 +51,7 @@ import { FullPageLoaderComponent } from './shared.components/full-page-loader/fu
     // ToastrModule.forRoot(),
     SharedRoutingModule,
     NgMaterialModule,
+    StoreModule.forFeature(fromGame.gamesFeatureKey, fromGame.reducer),
   ],
   exports: [
     // ToastrModule

@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IDeleteOccupant } from 'src/app/models/interface/occupant';
-import { OccupantService } from 'src/app/services/occupant.service';
 import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 import {
   deleteOccupant,
@@ -13,14 +12,14 @@ import {
   loadOccupantList,
 } from '../../store/occupant-list/occupant-list.actions';
 import { OccupantListState } from '../../store/occupant-list/occupant-list.reducer';
-import { selectOccupants } from '../../store/occupant-list/occupant-list.selectors';
+import { isLoadingOccupantState, selectOccupants } from '../../store/occupant-list/occupant-list.selectors';
 
 @Component({
   selector: 'app-occupant-list',
   templateUrl: './occupant-list.component.html',
   styleUrls: ['./occupant-list.component.scss'],
 })
-export class OccupantListComponent implements OnInit {
+export class OccupantListComponent implements OnInit,AfterContentInit {
   Subscriptions: Subscription[] = [];
   btnClasses = 'btn-40-height';
   btnDanger = {
@@ -31,18 +30,51 @@ export class OccupantListComponent implements OnInit {
   };
 
   occupantList$!: Observable<any[]>;
+  list: any;
+  occupantListLoading$!: Observable<boolean>;
+  isLoading!: boolean;
   constructor(
     private store: Store<OccupantListState>,
-    private _occupantSvc: OccupantService,
     private _router: Router,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.store.dispatch(loadOccupantList());
-    // this.occupantList$ = this.occupantList;
     this.occupantList$ = this.store.pipe(select(selectOccupants));
-    console.log('this.occupantList$ ##: ', this.occupantList$);
+    this.occupantListLoading$ = this.store.pipe(select(isLoadingOccupantState));
+    this.getOccupantList();
+  }
+  ngAfterContentInit (){
+    
+    let subscription = this.occupantListLoading$.subscribe({
+      next: (response: any) => {
+        if (response) {
+          this.isLoading = response;
+        }
+      },
+      error: (err: any) => {
+        if (err) {
+          console.warn('Error: ', err);
+        }
+      },
+    });
+    this.Subscriptions.push(subscription);
+  }
+  getOccupantList() {
+    let subscription = this.occupantList$.subscribe({
+      next: (response: any) => {
+        if (response) {
+          this.list = response;
+        }
+      },
+      error: (err: any) => {
+        if (err) {
+          console.warn('Error: ', err);
+        }
+      },
+    });
+    this.Subscriptions.push(subscription);
   }
 
   onViewRespondentDetails(item: any) {

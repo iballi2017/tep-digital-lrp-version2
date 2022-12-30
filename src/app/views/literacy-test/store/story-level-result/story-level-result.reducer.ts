@@ -7,6 +7,8 @@ export const storyLevelResultFeatureKey = 'storyLevelResult';
 
 export interface StoryLevelResultState extends EntityState<StoryLevelResult> {
   // additional entities state properties
+  isLoading: boolean;
+  error: any;
 }
 
 export const adapter: EntityAdapter<StoryLevelResult> =
@@ -14,6 +16,8 @@ export const adapter: EntityAdapter<StoryLevelResult> =
 
 export const initialState: StoryLevelResultState = adapter.getInitialState({
   // additional entity state properties
+  isLoading: false,
+  error: null,
 });
 
 export const reducer = createReducer(

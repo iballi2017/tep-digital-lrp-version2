@@ -127,9 +127,11 @@ export class LetterLevelResultEffects {
             const x = new Snackbar(successResponse, this._snackBar);
             x.errorSnackbar();
             return of(
-              fromLetterLevelResultActions.addLetterLevelStageThreeResultFailure({
-                error: err,
-              })
+              fromLetterLevelResultActions.addLetterLevelStageThreeResultFailure(
+                {
+                  error: err,
+                }
+              )
             );
           })
         );
@@ -138,7 +140,7 @@ export class LetterLevelResultEffects {
     );
   });
 
-/* LOAD LETTER LEVEL RESULTS WITH RATINGS*/
+  /* LOAD LETTER LEVEL RESULTS WITH RATINGS*/
   loadLetterLevelResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromLetterLevelResultActions.loadLetterLevelResult),
@@ -146,22 +148,24 @@ export class LetterLevelResultEffects {
         this._gameLevelResultAndRatingSvc
           .LoadLetterGameResultAndRating(action?.session_id)
           .pipe(
-            map((response: any) =>
-              // fromLetterLevelResultActions.loadOccupantListSuccess({ occupantList })
-              {
-                // let occupantList = occupantListArray?.data.map((item: any) => {
-                //   return {
-                //     ...item,
-                //     id: item.occ_id,
-                //   };
-                // });
-                return fromLetterLevelResultActions.loadLetterLevelResultSuccess(
-                  {
-                    letterLevelResult: response,
-                  }
-                );
+            map((response: any) => {
+              let x: any;
+              if (response) {
+                x = fromLetterLevelResultActions.loadLetterLevelResultSuccess({
+                  letterLevelResult: response,
+                });
+              } else {
+                alert('No game started!!!');
+                this._router.navigate(['/program-starter']);
               }
-            ),
+              return x;
+
+              // return fromLetterLevelResultActions.loadLetterLevelResultSuccess(
+              //   {
+              //     letterLevelResult: response,
+              //   }
+              // );
+            }),
             catchError((error: any) =>
               of(
                 fromLetterLevelResultActions.loadLetterLevelResultFailure({

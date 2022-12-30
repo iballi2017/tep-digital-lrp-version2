@@ -45,7 +45,10 @@
                 <ng-template #noItem>
                     <div class="alert alert-info text-center">No report</div>
                 </ng-template>
-                <div class="table-responsive">
+                <ng-container *ngIf="!reportList?.length && !(isLoadingReportList$ | async) ">
+                    <div class="alert alert-info text-center">No report</div>
+                </ng-container>
+                <div class="table-responsive" *ngIf="reportList?.length">
                     <table class="table">
                         <thead>
                             <tr>
@@ -79,7 +82,7 @@
                                 <td class="text-right">
                                     <div class="actions-btn">
                                         <div class="d-flex justify-content-end">
-                                            <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses" (onClickButton)="onViewReportDetails(item?.sessionId)"></app-primary-button>
+                                            <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses" (onClickEvent)="onViewReportDetails(item?.sessionId)"></app-primary-button>
                                             <div class="mx-1"></div>
                                             <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses" (onClickEvent)="onRemoveReport(item?.sessionId)"></app-danger-button>
                                         </div>

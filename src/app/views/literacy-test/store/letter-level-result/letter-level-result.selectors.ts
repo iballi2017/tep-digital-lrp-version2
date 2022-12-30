@@ -8,7 +8,7 @@ import {
 export const selectLetterLevelResultState =
   createFeatureSelector<LetterLevelResultState>(letterLevelResultFeatureKey);
 
-export const selectLetterLevelResults = createSelector(
+export const selectLetterLevelResult = createSelector(
   selectLetterLevelResultState,
   selectAll
 );

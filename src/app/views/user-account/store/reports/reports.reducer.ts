@@ -9,6 +9,7 @@ export interface ReportState extends EntityState<Report> {
   // additional entities state properties
   isLoading: boolean;
   selectedReport: any;
+  error: any;
 }
 
 export const adapter: EntityAdapter<Report> = createEntityAdapter<Report>();
@@ -16,21 +17,34 @@ export const adapter: EntityAdapter<Report> = createEntityAdapter<Report>();
 export const initialState: ReportState = adapter.getInitialState({
   // additional entity state properties
   isLoading: false,
-  selectedReport: undefined
+  selectedReport: null,
+  error: null,
 });
 
 export const reducer = createReducer(
   initialState,
+  on(ReportsActions.loadReports, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
   on(ReportsActions.loadReportsSuccess, (state, action) =>
     adapter.setAll(action.reports, state)
   ),
+  on(ReportsActions.loadReportsSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }),
   on(ReportsActions.loadReportsFailure, (state, action) => {
     return {
       ...state,
       error: action?.error,
+      isLoading: false,
     };
   }),
-
 
   // LOAD SINGLE REPORT
   on(ReportsActions.loadSingleReportSuccess, (state, action) => {
@@ -46,7 +60,52 @@ export const reducer = createReducer(
     };
   }),
 
+  // DELETE SINGLE REPORT
+  on(ReportsActions.deleteReport, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(ReportsActions.deleteReportSuccess, (state, action) =>
+    adapter.removeOne(action.id.session_id, state)
+  ),
+  on(ReportsActions.deleteReportSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }),
+  on(ReportsActions.deleteReportFailure, (state, action) => {
+    return {
+      ...state,
+      error: action.error,
+      isLoading: false,
+    };
+  }),
 
+  // DELETE ALL REPORTs
+  on(ReportsActions.deleteAllReports, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(ReportsActions.deleteAllReportsSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }),
+  on(ReportsActions.deleteAllReportsSuccess, (state, action) =>
+    adapter.removeMany(action.ids, state)
+  ),
+  on(ReportsActions.deleteAllReportsFailure, (state, action) => {
+    return {
+      ...state,
+      error: action.error,
+    };
+  })
 
   // on(ReportsActions.addReports,
   //   (state, action) => adapter.addOne(action.reports, state)

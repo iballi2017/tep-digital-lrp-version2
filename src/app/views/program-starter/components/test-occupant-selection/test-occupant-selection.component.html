@@ -4,12 +4,16 @@
         <div class="card shadow">
             <div class="card-header">
                 <h5>{{title}}</h5>
+                <!-- <p class="text-primary">{{(occupantList$ | async) | json}}</p> -->
             </div>
             <div class="card-body pb-0">
                 <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>Select occupant</mat-label>
+                    <mat-label>
+                        <ng-container *ngIf="!(isLoadingOccupantState$ | async)">{{selectLabel}}</ng-container>
+                        <ng-container *ngIf="isLoadingOccupantState$ | async">Loading...</ng-container>
+                    </mat-label>
                     <mat-select name="RespondentId" formControlName="RespondentId">
-                        <mat-option *ngFor="let occupant of (occupantList$ | async)" [value]="occupant?.usr_id">
+                        <mat-option *ngFor="let occupant of (occupantList$ | async)" [value]="occupant?.occ_id">
                             {{occupant?.occ_name}}
                         </mat-option>
                     </mat-select>

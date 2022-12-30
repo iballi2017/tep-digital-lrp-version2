@@ -9,3 +9,7 @@ export const selectParagraphLevelResult = createSelector(
   selectParagraphLevelResultState,
   selectAll
 );
+export const paragraphLevelResultIsLoading = createSelector(
+  selectParagraphLevelResultState,
+  (state: ParagraphLevelResultState) => state?.isLoading
+);

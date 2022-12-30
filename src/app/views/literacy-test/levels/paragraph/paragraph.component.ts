@@ -8,36 +8,23 @@ import { GameLevelResultAndRatingService } from 'src/app/services/game-level-res
 import { GameService } from 'src/app/services/game.service';
 import { loadParagraphLevelResult } from '../../store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from '../../store/paragraph-level-result/paragraph-level-result.reducer';
-import { selectParagraphLevelResult } from '../../store/paragraph-level-result/paragraph-level-result.selectors';
+import {
+  paragraphLevelResultIsLoading,
+  selectParagraphLevelResult,
+} from '../../store/paragraph-level-result/paragraph-level-result.selectors';
 
 @Component({
   selector: 'app-paragraph',
   templateUrl: './paragraph.component.html',
-  styleUrls: ['./paragraph.component.scss']
+  styleUrls: ['./paragraph.component.scss'],
 })
 export class ParagraphComponent implements OnInit {
   testStageStars: any[] = [];
-  letteringStages = [
-    {
-      id: 1,
-      title: 'stage-1',
-      rating: 3,
-    },
-    {
-      id: 2,
-      title: 'stage-2',
-      rating: 2,
-    },
-    {
-      id: 3,
-      title: 'stage-3',
-      rating: 5,
-    },
-  ];
   Subscriptions: Subscription[] = [];
   gameLevelResultAndRating: any;
   gameSessionId: any;
   userData$!: Observable<any>;
+  isLoadingStarCards: any;
   constructor(
     private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService,
     private _gameSvc: GameService,
@@ -48,38 +35,50 @@ export class ParagraphComponent implements OnInit {
   ngOnInit(): void {
     this.modifyStageArray();
     this.onGetGameSessionId();
+
+    let paragraphLevelResultIsLoading$: Observable<any> = this.store.pipe(
+      select(paragraphLevelResultIsLoading)
+    );
+    paragraphLevelResultIsLoading$.subscribe((data: any) => {
+      this.isLoadingStarCards = data;
+    });
   }
 
-  onGetLevelGameResult(GameSessionId: string) {
-    this.store.dispatch(loadParagraphLevelResult({ session_id: GameSessionId }));
+  onGetGameLevelResult(GameSessionId: string) {
+    this.store.dispatch(
+      loadParagraphLevelResult({ session_id: GameSessionId })
+    );
     this.userData$ = this.store.pipe(select(selectParagraphLevelResult));
     let subscription = this.userData$.subscribe({
-        next: (response: any) => {
-          if (response) {
-            this.gameLevelResultAndRating = response;
-            this.modifyStageArray();
-          }
-        },
-        error: (err: any) => {
-          if (err) {
-            console.warn('Error**: ', err);
-            new Snackbar("Failed to load stages, please refresh", this._snackBar).errorSnackbar();
-          }
-        },
-      });
+      next: (response: any) => {
+        if (response) {
+          this.gameLevelResultAndRating = response;
+          this.modifyStageArray();
+        }
+      },
+      error: (err: any) => {
+        if (err) {
+          console.warn('Error**: ', err);
+          new Snackbar(
+            'Failed to load stages, please refresh',
+            this._snackBar
+          ).errorSnackbar();
+        }
+      },
+    });
     this.Subscriptions.push(subscription);
   }
 
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
     this._gameSvc.gameSessionBehaviorSubject.subscribe((msg: any) => {
-      this.gameSessionId = msg.session_id
-      this.onGetLevelGameResult(this.gameSessionId);
-    })
+      this.gameSessionId = msg.session_id;
+      this.onGetGameLevelResult(this.gameSessionId);
+    });
   }
 
   modifyStageArray() {
-    if(this.gameLevelResultAndRating){
+    if (this.gameLevelResultAndRating) {
       let x = new ModifyStageArrayData(this.gameLevelResultAndRating);
       this.testStageStars = x.modifyStageArray();
     }

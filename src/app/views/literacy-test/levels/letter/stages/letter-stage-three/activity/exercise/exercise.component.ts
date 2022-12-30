@@ -144,7 +144,7 @@ export class ExerciseComponent implements OnInit {
     this._gameSvc.LoadGameSession();
     this._gameSvc.gameSessionBehaviorSubject.subscribe({
       next: (msg: any) => {
-        this.gameSessionId = msg?.id;
+        this.gameSessionId = msg?.session_id;
       },
     });
   }

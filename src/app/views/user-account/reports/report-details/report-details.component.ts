@@ -7,8 +7,17 @@ import { SessionId } from 'src/app/models/interface/game-report';
 import { GameType } from 'src/app/models/interface/game-type';
 import { ReportService } from 'src/app/services/report.service';
 import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
+import {
+  addGameSession,
+  addGameSessionSuccess,
+} from 'src/app/shared/store/game/game.actions';
 import { selectedReport } from '../../store/reports/report.selectors';
-import { loadSingleReport } from '../../store/reports/reports.actions';
+import {
+  deleteReport,
+  deleteReportFailure,
+  deleteReportSuccess,
+  loadSingleReport,
+} from '../../store/reports/reports.actions';
 import { ReportState } from '../../store/reports/reports.reducer';
 
 @Component({
@@ -26,7 +35,7 @@ export class ReportDetailsComponent implements OnInit {
   // primaryBtnStyle = { fontSize: '17px' };
   // dangerBtnStyle = { fontSize: '17px' };
 
-  // 
+  //
 
   SortItem: any;
   btnClasses = 'btn-40-height text-bold text-uppercase px-3';
@@ -58,7 +67,7 @@ export class ReportDetailsComponent implements OnInit {
       next: (params: any) => {
         if (params) {
           let x = params.get('sessionId');
-          // console.log("params: ", params)
+          console.log('params: ', params);
           this.respondentInformation = x;
           this.onGetReportDetails(x);
         }
@@ -97,6 +106,9 @@ export class ReportDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(BooleanAlertDialogComponent, {
       width: '100%',
       maxWidth: '500px',
+      data: {
+        textInfo: 'Are you sure you want to delete this Report?',
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       //
@@ -107,7 +119,6 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   onDeleteOccupant(sessionId: string) {
-    // this.ngRedux.dispatch({ type: REMOVE_REPORT });
     const _sessionId: SessionId = {
       session_id: sessionId,
     };
@@ -115,6 +126,8 @@ export class ReportDetailsComponent implements OnInit {
     this._reportSvc.RemoveReport(_sessionId).subscribe({
       next: (response: any) => {
         if (response) {
+          console.log('response: ', response);
+          this.store.dispatch(deleteReport({ id: _sessionId }));
           // this.ngRedux.dispatch({
           //   type: REMOVE_REPORT_SUCCESS,
           //   payload: {
@@ -126,6 +139,7 @@ export class ReportDetailsComponent implements OnInit {
       },
       error: (err: any) => {
         console.warn('Error: ', err);
+        this.store.dispatch(deleteReportFailure({ error: err }));
         // this.ngRedux.dispatch({
         //   type: REMOVE_REPORT_ERROR,
         //   payload: err,
@@ -135,50 +149,21 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   onContinueReportGame(sessionId: string, GameType: string) {
-    // this.ngRedux.dispatch({ type: ADD_GAME_SESSION });
+    this.store.dispatch(addGameSession());
     console.log('sessionId: ', sessionId);
     const Payload = {
-      id: new Date().getTime().toString(),
       status: 'success',
       session_id: sessionId,
       game_type: GameType.toLowerCase(),
       message: 'Game initiated successfully',
     };
-    console.log('Payload : ', Payload);
-    // this.ngRedux.dispatch({
-    //   type: ADD_GAME_SESSION_SUCCESS,
-    //   payload: Payload,
-    // });
+    this.store.dispatch(addGameSessionSuccess({ sessionData: Payload }));
     this.routeToGame(Payload.game_type);
-
-    //   {
-    //     "id": "1668545287938",
-    //     "status": "success",
-    //     "session_id": "91269aa8-0891-4a6f9c5f",
-    //     "game_type": "literacy",
-    //     "message": "Game initiated successfully"
-    // }
-
-    // routeToGame(GT: string) {
-    // switch (GT) {
-    //   case GameType.LITERACY:
-    //     this._router.navigate(['/literacy/levels/lettering']);
-    //     break;
-    //   case GameType.NUMERACY:
-    //     this._router.navigate(['/numeracy/levels/number-recognition-one']);
-    //     break;
-    //   default:
-    //     break;
-    // }
-    // }
   }
   routeToGame(GT: string) {
-    console.log('GT : ', GT);
-    console.log('GameType.LITERACY : ', GameType.LITERACY);
-    console.log('GameType.NUMERACY : ', GameType.NUMERACY);
     switch (GT) {
       case GameType.LITERACY.toLowerCase():
-        this._router.navigate(['/literacy/levels/lettering']);
+        this._router.navigate(['/literacy/levels/letter']);
         break;
       case GameType.NUMERACY.toLowerCase():
         this._router.navigate(['/numeracy/levels/number-recognition-one']);

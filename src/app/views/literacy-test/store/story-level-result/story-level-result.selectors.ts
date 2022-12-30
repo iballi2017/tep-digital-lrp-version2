@@ -9,3 +9,7 @@ export const selectStoryLevelResult = createSelector(
   selectStoryLevelResultState,
   selectAll
 );
+export const storyLevelResultIsLoading = createSelector(
+  selectStoryLevelResultState,
+  (state: StoryLevelResultState) => state?.isLoading
+);

@@ -53,6 +53,12 @@ export const reducer = createReducer(
   }),
 
   // LOAD OCCUPANTS
+  on(OccupantListActions.loadOccupantList, (state, action: any) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
   on(OccupantListActions.loadOccupantListSuccess, (state, action: any) =>
     // {
     //   return {
@@ -62,11 +68,18 @@ export const reducer = createReducer(
     // }
     adapter.setAll(action.occupantList, state)
   ),
+  on(OccupantListActions.loadOccupantListSuccess, (state, action: any) => {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }),
 
   on(OccupantListActions.loadOccupantListFailure, (state, action: any) => {
     return {
       ...state,
       error: action.error,
+      isLoading: false,
     };
   }),
 
@@ -85,13 +98,26 @@ export const reducer = createReducer(
   }),
 
   // DELETE OCCUPANT
+  on(OccupantListActions.deleteOccupant, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
   on(OccupantListActions.deleteOccupantSuccess, (state, action: any) =>
     adapter.removeOne(action.id.occ_id, state)
   ),
+  on(OccupantListActions.deleteOccupantSuccess, (state, action: any) => {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }),
   on(OccupantListActions.deleteOccupantFailure, (state, action) => {
     return {
       ...state,
       error: action.error,
+      isLoading: false,
     };
   })
 

@@ -2,6 +2,6 @@
 // }
 
 export enum AlphabetType {
-  VOWEL = 'vowel',
-  CONSONANT = 'consonant',
+  VOWEL = 'VOWEL',
+  CONSONANT = 'CONSONANT',
 }

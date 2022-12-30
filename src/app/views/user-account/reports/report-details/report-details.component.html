@@ -155,7 +155,7 @@
             </div>
             <div class="actions-btn-wrapper">
                 <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
-                    (onClickButton)="onContinueReportGame(reportDetails?.session_id, reportDetails?.gms_type)"></app-primary-button>
+                    (onClickEvent)="onContinueReportGame(reportDetails?.session_id, reportDetails?.gms_type)"></app-primary-button>
                 <div class="mx-1"></div>
                 <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses"
                     (onClickEvent)="onRemoveReport(reportDetails?.session_id)"></app-danger-button>

@@ -1,12 +1,14 @@
 <!-- <p>word works!</p> -->
 
 <div>
-    <ng-container *ngIf="isLoadingStarCards">
+    <!-- <p class="text-primary">Obs: {{isLoadingStarCards | json}}</p>
+    <p class="text-danger">results: {{testStageStars | json}}</p> -->
+    <ng-container *ngIf="isLoadingStarCards && !testStageStars.length">
         <div class="text-info text-bold">Loading...</div>
     </ng-container>
     <ul class="stage-status list-style-none ps-0">
         <li class="cursor-pointer" *ngFor="let item of testStageStars; let i = index"
-            [routerLink]="['/literacy/letter/', item?.title, 'lettering-splash']">
+            [routerLink]="['/literacy/word/', item?.title, 'word-splash']">
             <div class="stage-card">
                 <p>{{i + 1}}</p>
             </div>

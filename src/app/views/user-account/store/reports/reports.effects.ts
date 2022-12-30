@@ -6,7 +6,7 @@ import * as fromReportActions from './reports.actions';
 
 @Injectable()
 export class ReportsEffects {
-  loadOccupantList$ = createEffect(() => {
+  loadReportList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromReportActions.loadReports),
       mergeMap((action: any) =>
@@ -40,7 +40,7 @@ export class ReportsEffects {
     );
   });
 
-  loadSingleOccupant$ = createEffect(() => {
+  loadSingleReport$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromReportActions.loadSingleReport),
       mergeMap((action: any) =>
@@ -60,5 +60,25 @@ export class ReportsEffects {
     );
   });
 
+
+  deleteSingleReportt$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromReportActions.deleteReport),
+      mergeMap((action: any) =>
+        this._reportSvc.RemoveReport(action.id).pipe(
+          map((report: any) => {
+            console.log('report: ', report);
+            return fromReportActions.deleteReportSuccess({
+              id: report?.id,
+            });
+          }),
+          catchError((error: any) =>
+            of(fromReportActions.deleteReportFailure({ error }))
+          )
+        )
+      )
+      // tap(() => this._router.navigate(['/practicals/ngrx/products']))
+    );
+  });
   constructor(private actions$: Actions, private _reportSvc: ReportService) {}
 }

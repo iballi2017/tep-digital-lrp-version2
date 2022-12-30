@@ -6,9 +6,9 @@ import { Observable, Subscription } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
 import { OccupantMessengerService } from 'src/app/services/occupant-messenger.service';
 import { OccupantService } from 'src/app/services/occupant.service';
-import { addOccupant } from '../../store/occupant-list/occupant-list.actions';
+import { addOccupant, loadOccupantList } from '../../store/occupant-list/occupant-list.actions';
 import { OccupantListState } from '../../store/occupant-list/occupant-list.reducer';
-import { occupantStateIsLoading } from '../../store/occupant-list/occupant-list.selectors';
+import { isLoadingOccupantState } from '../../store/occupant-list/occupant-list.selectors';
 
 @Component({
   selector: 'app-add-new-occupant',
@@ -24,7 +24,7 @@ export class AddNewOccupantComponent implements OnInit, OnDestroy {
   AddRespondentForm!: FormGroup;
   Subscriptions: Subscription[] = [];
   responseMessage: any;
-  occupantStateIsLoading$!: Observable<any>;
+  isLoadingOccupantState$!: Observable<any>;
   constructor(
     private _locationSvc: LocationService,
     private _fb: FormBuilder,
@@ -38,8 +38,8 @@ export class AddNewOccupantComponent implements OnInit, OnDestroy {
     this.buildForm();
     let x: number = this.num;
     this.createNumberArray(x);
-    this.occupantStateIsLoading$ = this.store.pipe(
-      select(occupantStateIsLoading)
+    this.isLoadingOccupantState$ = this.store.pipe(
+      select(isLoadingOccupantState)
     );
   }
 
@@ -75,6 +75,7 @@ export class AddNewOccupantComponent implements OnInit, OnDestroy {
     this._occupantMessengerSvc.addOccupantBehaviour.subscribe((msg: any) => {
       if (msg) {
         this.AddRespondentForm.reset();
+        this.store.dispatch(loadOccupantList());
         this.closeDialog();
       }
     });

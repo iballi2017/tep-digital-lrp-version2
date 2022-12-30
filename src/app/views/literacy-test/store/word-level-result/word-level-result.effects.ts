@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Snackbar } from 'src/app/models/class/snackbar';
@@ -12,7 +13,7 @@ import * as fromWordLevelResultActions from './word-level-result.actions';
 
 @Injectable()
 export class WordLevelResultEffects {
-  // ADD LETTER LEVEL STAGE ONE
+  // ADD WORD LEVEL STAGE ONE
   addWordLevelStageOneResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.addWordLevelStageOneResult),
@@ -54,7 +55,7 @@ export class WordLevelResultEffects {
     );
   });
 
-  // ADD LETTER LEVEL STAGE TWO
+  // ADD WORD LEVEL STAGE TWO
   addWordLevelStageTwoResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.addWordLevelStageTwoResult),
@@ -96,7 +97,7 @@ export class WordLevelResultEffects {
     );
   });
 
-  // ADD LETTER LEVEL STAGE THREE
+  // ADD WORD LEVEL STAGE THREE
   addWordLevelStageThreeResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.addWordLevelStageThreeResult),
@@ -138,7 +139,7 @@ export class WordLevelResultEffects {
     );
   });
 
-  // ADD LETTER LEVEL STAGE FOUR
+  // ADD WORD LEVEL STAGE FOUR
   addWordLevelStageFourResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.addWordLevelStageFourResult),
@@ -180,7 +181,6 @@ export class WordLevelResultEffects {
     );
   });
 
-
   /* LOAD WORD LEVEL RESULTS WITH RATINGS*/
   loadwordLevelResults$ = createEffect(() => {
     return this.actions$.pipe(
@@ -190,9 +190,17 @@ export class WordLevelResultEffects {
           .LoadWordGameResultAndRating(action?.session_id)
           .pipe(
             map((response: any) => {
-              return fromWordLevelResultActions.loadWordLevelResultSuccess({
-                wordLevelResults: response,
-              });
+              // console.warn('response: ', response);
+              let x: any;
+              if (response) {
+                x = fromWordLevelResultActions.loadWordLevelResultSuccess({
+                  wordLevelResults: response,
+                });
+              }else{
+                alert("No game started!!!");
+                this._router.navigate(['/program-starter'])
+              }
+              return x;
             }),
             catchError((error: any) =>
               of(
@@ -213,6 +221,7 @@ export class WordLevelResultEffects {
     private _wordStageTwoSvc: WordStageTwoService,
     private _wordStageThreeSvc: WordStageThreeService,
     private _wordStageFourSvc: WordStageFourService,
-    private _snackBar: MatSnackBar
-  ) { }
+    private _snackBar: MatSnackBar,
+    private _router: Router
+  ) {}
 }

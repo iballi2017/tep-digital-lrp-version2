@@ -19,7 +19,7 @@ export const selectedReport = createSelector(
 );
 
 
-export const selectStateIsLoading = createSelector(
+export const reportSelectStateIsLoading = createSelector(
     selectReportState,
     (state: ReportState) => state.isLoading
   );

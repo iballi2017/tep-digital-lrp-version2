@@ -12,10 +12,14 @@ import { GameSessionData, StartGame } from 'src/app/models/interface/game';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { OccupantService } from 'src/app/services/occupant.service';
+import {
+  addGameSessionFailure,
+  addGameSessionSuccess,
+} from 'src/app/shared/store/game/game.actions';
 import { AddNewOccupantComponent } from 'src/app/views/user-account/profile-information/add-new-occupant/add-new-occupant.component';
 import { loadOccupantList } from 'src/app/views/user-account/store/occupant-list/occupant-list.actions';
 import { OccupantListState } from 'src/app/views/user-account/store/occupant-list/occupant-list.reducer';
-import { selectOccupants } from 'src/app/views/user-account/store/occupant-list/occupant-list.selectors';
+import { isLoadingOccupantState, selectOccupants } from 'src/app/views/user-account/store/occupant-list/occupant-list.selectors';
 
 @Component({
   selector: 'app-test-occupant-selection',
@@ -32,8 +36,10 @@ export class TestOccupantSelectionComponent implements OnInit {
   newOccupantBtnLabel: string = 'Add New';
   continueBtnLabel: string = 'Continue';
   cancelBtnLabel: string = 'Cancel';
-  isStatingTest:boolean = false;
+  isStatingTest: boolean = false;
   occupantList$!: Observable<any[]>;
+  selectLabel: string = 'Select occupant';
+  isLoadingOccupantState$!: Observable<boolean>;
 
   constructor(
     public dialogRef: MatDialogRef<TestOccupantSelectionComponent>,
@@ -42,14 +48,15 @@ export class TestOccupantSelectionComponent implements OnInit {
     private _router: Router,
     @Inject(MAT_DIALOG_DATA) public data: { QuestionCategory: any },
     private _gameSvc: GameService,
-    private store: Store<OccupantListState>,
+    private store: Store<OccupantListState>
   ) {}
 
   ngOnInit(): void {
     this.getOccupantList();
     this.buildForm();
 
-    let isGame = this._gameSvc.IsGame();
+    // let isGame = this._gameSvc.IsGame();
+    this.isLoadingOccupantState$ = this.store.pipe(select(isLoadingOccupantState));
   }
   getOccupantList() {
     this.store.dispatch(loadOccupantList());
@@ -78,24 +85,7 @@ export class TestOccupantSelectionComponent implements OnInit {
       next: (response: any) => {
         if (response) {
           this.isStatingTest = false;
-          // this.ngRedux.dispatch({
-          //   type: ADD_GAME_SESSION_SUCCESS,
-          //   payload: response,
-          // });
-          // this._router.navigate(['/literacy/levels/lettering']);
-
-          var newGameSession = {
-            // id: state.reportsList?.length + 1,
-            id: new Date().getTime().toString(),
-            ...response,
-          };
-          let sessionData = JSON.stringify(newGameSession);
-          localStorage.setItem(GameSessionData.name, sessionData);
-          const gameResult = {};
-          let result = JSON.stringify(gameResult);
-          localStorage.setItem(GameSessionData.result, result);
-
-
+          this.store.dispatch(addGameSessionSuccess({ sessionData: response }));
           this.routeToGame(Payload.game_type.toLowerCase());
           this.closeDialog();
         }
@@ -104,6 +94,7 @@ export class TestOccupantSelectionComponent implements OnInit {
         if (err) {
           console.warn('Error: ', err);
           this.isStatingTest = false;
+          this.store.dispatch(addGameSessionFailure({ error: err }));
           // this.ngRedux.dispatch({
           //   type: FETCH_GAME_SESSION_ERROR,
           //   payload: err,
@@ -136,7 +127,6 @@ export class TestOccupantSelectionComponent implements OnInit {
       width: '100%',
       maxWidth: '500px',
     });
-    dialogRef.afterClosed().subscribe((result) => {
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

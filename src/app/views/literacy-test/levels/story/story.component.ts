@@ -8,7 +8,7 @@ import { GameLevelResultAndRatingService } from 'src/app/services/game-level-res
 import { GameService } from 'src/app/services/game.service';
 import { loadStoryLevelResult } from '../../store/story-level-result/story-level-result.actions';
 import { StoryLevelResultState } from '../../store/story-level-result/story-level-result.reducer';
-import { selectStoryLevelResult } from '../../store/story-level-result/story-level-result.selectors';
+import { selectStoryLevelResult, storyLevelResultIsLoading } from '../../store/story-level-result/story-level-result.selectors';
 
 @Component({
   selector: 'app-story',
@@ -49,6 +49,10 @@ export class StoryComponent implements OnInit {
   ngOnInit(): void {
     this.modifyStageArray();
     this.onGetGameSessionId();
+    let storyLevelResultIsLoading$: Observable<any> = this.store.pipe(select(storyLevelResultIsLoading));
+    storyLevelResultIsLoading$.subscribe((data: any) => {
+      this.isLoadingStarCards = data;
+    });
   }
 
   onGetLevelGameResult(GameSessionId: string) {
@@ -81,6 +85,7 @@ export class StoryComponent implements OnInit {
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
     this._gameSvc.gameSessionBehaviorSubject.subscribe((msg: any) => {
+      // console.log('msg: ', msg);
       this.gameSessionId = msg.session_id
       this.onGetLevelGameResult(this.gameSessionId);
     })
