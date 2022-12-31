@@ -5,7 +5,11 @@ export const selectSpeechTextsState = createFeatureSelector<SpeechTextsState>(
   speechTextsListFeatureKey
 );
 
-export const selectParagraphLevelResult = createSelector(
+// export const selectSpeechTexts = createSelector(
+//   selectSpeechTextsState,
+//   selectAll
+// );
+export const speechTexts = createSelector(
   selectSpeechTextsState,
-  selectAll
+    (state: SpeechTextsState) => state.speechTexts
 );

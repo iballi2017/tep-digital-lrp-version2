@@ -15,6 +15,9 @@ export class SpeechToText {
     this.store.dispatch(addSpeechTexts());
     this.text = this.text + ' ' + this.tempWords + ' ';
     console.warn("this.tempWords: ", this.tempWords)
+    // if(this.tempWords){
+
+    // }
     this.tempWords = '';
     this.store.dispatch(addSpeechTextsSuccess({ speechTexts: this.text.trim() }));
   }

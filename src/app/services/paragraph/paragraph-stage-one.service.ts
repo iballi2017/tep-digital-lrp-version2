@@ -5,12 +5,16 @@ import { catchError } from 'rxjs';
 import { baseUrl } from 'src/app/config/api';
 import { handleError } from 'src/app/helpers/errorHandler';
 import { SpeechToText } from 'src/app/models/class/speech-to-text';
-import { addSpeechTexts, addSpeechTextsFailure, addSpeechTextsSuccess } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.actions';
+import {
+  addSpeechTexts,
+  addSpeechTextsFailure,
+  addSpeechTextsSuccess,
+} from 'src/app/views/literacy-test/store/speech-texts/speech-texts.actions';
 import { SpeechTextsState } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.reducer';
 
 declare var webkitSpeechRecognition: any;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParagraphStageOneService {
   StartGameUrl = baseUrl + '/start-game-session';
@@ -21,15 +25,17 @@ export class ParagraphStageOneService {
   tempWords: any;
   VoiceText: any;
 
-  constructor(private _http: HttpClient,
-    private store: Store<SpeechTextsState>,) { }
+  constructor(
+    private _http: HttpClient,
+    private store: Store<SpeechTextsState>
+  ) {}
 
   init() {
     this.recognition.interimResults = true;
     this.recognition.lang = 'en-US';
 
     this.recognition.addEventListener('result', (e: any) => {
-      console.warn("e: ", e)
+      console.warn('e: ', e);
       const transcript = Array.from(e.results)
         .map((result: any) => result[0])
         .map((result: any) => result.transcript)
@@ -41,7 +47,7 @@ export class ParagraphStageOneService {
   }
 
   GetVoiceText() {
-    console.group("this.VoiceText: ", this.VoiceText)
+    console.log('this.VoiceText: ', this.VoiceText);
     return this.VoiceText;
   }
 
@@ -51,7 +57,6 @@ export class ParagraphStageOneService {
     this.recognition.addEventListener('end', (condition: any) => {
       if (this.isStoppedSpeechRecog) {
         this.recognition.stop();
-
       } else {
         this.wordConcat();
         this.recognition.start();
@@ -61,23 +66,32 @@ export class ParagraphStageOneService {
 
   stop() {
     this.isStoppedSpeechRecog = true;
-    // this.wordConcat();
-    this.recognition.stop();
-
+    if (this.isStoppedSpeechRecog) {
+      this.wordConcat();
+      this.recognition.stop();
+    }
   }
 
   clear() {
     this.text = '';
     this.store.dispatch(addSpeechTextsSuccess({ speechTexts: null }));
-    // this.ngRedux.dispatch({
-    //   type: ADD_SPEECH_TO_TEXT_SUCCESS,
-    //   payload: null,
-    // });
   }
 
+  // wordConcat() {
+  //   let x;
+  //   console.warn((this.store, this.text, this.tempWords))
+  //   x = new SpeechToText(this.store, this.text, this.tempWords);
+  //   x.wordConcat();
+  // }
   wordConcat() {
-    let x = new SpeechToText(this.store, this.text, this.tempWords);
-    x.wordConcat();
+    // let x = new SpeechToText(this.ngRedux, this.text, this.tempWords)
+    // x.wordConcat();
+    this.store.dispatch(addSpeechTexts());
+    this.text = this.text + ' ' + this.tempWords + ' ';
+    this.tempWords = '';
+    this.store.dispatch(
+      addSpeechTextsSuccess({ speechTexts: this.text.trim() })
+    );
   }
 
   GetExerciseTexts() {
@@ -90,7 +104,6 @@ export class ParagraphStageOneService {
       .pipe(catchError(handleError));
   }
 }
-
 
 export const exerciseTexts = [
   {
