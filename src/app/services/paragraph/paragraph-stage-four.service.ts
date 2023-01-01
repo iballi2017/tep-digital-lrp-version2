@@ -1,93 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError } from 'rxjs';
+import { BehaviorSubject, catchError } from 'rxjs';
 import { baseUrl } from 'src/app/config/api';
 import { handleError } from 'src/app/helpers/errorHandler';
-import { addSpeechTexts, addSpeechTextsSuccess } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.actions';
+import {
+  addSpeechTexts,
+  addSpeechTextsSuccess,
+} from 'src/app/views/literacy-test/store/speech-texts/speech-texts.actions';
 import { SpeechTextsState } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.reducer';
 
-declare var webkitSpeechRecognition: any;
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParagraphStageFourService {
+  addParagraphLevelResultBehaviour = new BehaviorSubject(false);
   StartGameUrl = baseUrl + '/start-game-session';
   SubmitGameStage_4_Url = baseUrl + '/submit-paragraph-stage-4';
-  recognition = new webkitSpeechRecognition();
   isStoppedSpeechRecog = false;
   public text = '';
   tempWords!: string;
   VoiceText: any;
 
-  constructor(private _http: HttpClient,
-    private store: Store<SpeechTextsState>,) { }
+  constructor(
+    private _http: HttpClient,
+  ) {}
 
-  init() {
-    this.recognition.interimResults = true;
-    this.recognition.lang = 'en-US';
+  
 
-    this.recognition.addEventListener('result', (e: any) => {
-      console.warn("e: ", e)
-      const transcript = Array.from(e.results)
-        .map((result: any) => result[0])
-        .map((result: any) => result.transcript)
-        .join('');
-      this.tempWords = transcript;
-      this.VoiceText = this.text;
-      this.GetVoiceText();
-    });
+  sendAddParagraphLevelResultBehaviour(Msg: any) {
+    this.addParagraphLevelResultBehaviour.next(Msg);
+  }
+  getAddParagraphLevelResultBehaviour() {
+    return this.addParagraphLevelResultBehaviour.asObservable();
   }
 
-  GetVoiceText() {
-    console.log("this.VoiceText: ", this.VoiceText)
-    return this.VoiceText;
-  }
 
-  start() {
-    this.isStoppedSpeechRecog = false;
-    this.recognition.start();
-    this.recognition.addEventListener('end', (condition: any) => {
-      if (this.isStoppedSpeechRecog) {
-        this.recognition.stop();
-
-      } else {
-        this.wordConcat();
-        this.recognition.start();
-      }
-    });
-  }
-
-  stop() {
-    this.isStoppedSpeechRecog = true;
-    this.wordConcat();
-    this.recognition.stop();
-
-  }
-
-  clear() {
-    this.text = '';
-    this.store.dispatch(addSpeechTextsSuccess({ speechTexts: null }));
-    // this.ngRedux.dispatch({
-    //   type: ADD_SPEECH_TO_TEXT_SUCCESS,
-    //   payload: null,
-    // });
-  }
-
-  wordConcat() {
-    // let x = new SpeechToText(this.store, this.text, this.tempWords);
-    // x.wordConcat();
-    // 
-
-    this.store.dispatch(addSpeechTexts());
-    this.text = this.text + ' ' + this.tempWords + ' ';
-    console.warn("this.tempWords: ", this.tempWords)
-    // if(this.tempWords){
-
-    // }
-    this.tempWords = '';
-    this.store.dispatch(addSpeechTextsSuccess({ speechTexts: this.text.trim() }));
-  }
 
   GetExerciseTexts() {
     return exerciseTexts;
@@ -100,31 +49,174 @@ export class ParagraphStageFourService {
   }
 }
 
-
-
 export const exerciseTexts = [
   {
-    statement: [
-      { text: "my", isHide: true },
-      { text: "name", isHide: false },
-      { text: "is", isHide: false },
-      { text: "Ahmed", isHide: false }
-    ],
-    text: 'my name is Ahmed',
-    uiText: 'My name is Ahmed',
     isDone: false,
+    statement: [
+      { text: 'my', isHide: true },
+      { text: 'name', isHide: false },
+      { text: 'is', isHide: false },
+      { text: 'Ahmed', isHide: false },
+    ],
+    testKeys: [
+      {
+        name: 'no',
+        isWrongChoice: false,
+      },
+      {
+        name: 'have',
+        isWrongChoice: false,
+      },
+      {
+        name: 'my',
+        isWrongChoice: false,
+      },
+    ],
   },
   {
-    statement: [
-      { text: "i", isHide: true },
-      { text: "live", isHide: false },
-      { text: "in", isHide: false },
-      { text: "a", isHide: false },
-      { text: "big", isHide: false },
-      { text: "town", isHide: false }
-    ],
-    text: 'every day I like to drink some tea',
-    uiText: 'Every day, I like to drink some tea.',
     isDone: false,
+    statement: [
+      { text: 'i', isHide: false },
+      { text: 'live', isHide: true },
+      { text: 'in', isHide: false },
+      { text: 'a', isHide: false },
+      { text: 'big', isHide: false },
+      { text: 'town', isHide: false },
+    ],
+    testKeys: [
+      {
+        name: 'live',
+        isWrongChoice: false,
+      },
+      {
+        name: 'is',
+        isWrongChoice: false,
+      },
+      {
+        name: 'not',
+        isWrongChoice: false,
+      },
+    ],
+  },
+  {
+    isDone: false,
+    statement: [
+      { text: 'i', isHide: false },
+      { text: 'have', isHide: true },
+      { text: 'three', isHide: false },
+      { text: 'brothers', isHide: false },
+      { text: 'and', isHide: true },
+      { text: 'two', isHide: false },
+      { text: 'sisters', isHide: false },
+    ],
+    testKeys: [
+      {
+        name: 'have',
+        isWrongChoice: false,
+      },
+      {
+        name: 'my',
+        isWrongChoice: false,
+      },
+      {
+        name: 'and',
+        isWrongChoice: false,
+      },
+    ],
+  },
+  {
+    isDone: false,
+    statement: [
+      { text: 'we', isHide: false },
+      { text: 'all', isHide: true },
+      { text: 'clean', isHide: false },
+      { text: 'the', isHide: false },
+      { text: 'house', isHide: false },
+      { text: 'every', isHide: false },
+      { text: 'morning', isHide: false },
+      { text: 'before', isHide: true },
+      { text: 'going', isHide: false },
+      { text: 'out', isHide: false },
+      { text: 'to', isHide: true },
+      { text: 'the', isHide: false },
+      { text: 'shop', isHide: false },
+    ],
+    testKeys: [
+      {
+        name: 'all',
+        isWrongChoice: false,
+      },
+      {
+        name: 'is',
+        isWrongChoice: false,
+      },
+      {
+        name: 'to',
+        isWrongChoice: false,
+      },
+      {
+        name: 'came',
+        isWrongChoice: false,
+      },
+      {
+        name: 'before',
+        isWrongChoice: false,
+      },
+      {
+        name: 'they',
+        isWrongChoice: false,
+      },
+    ],
+  },
+  {
+    isDone: false,
+    // Today is a market day in the
+    statement: [
+      { text: 'today', isHide: false },
+      { text: 'is', isHide: false },
+      { text: 'a', isHide: false },
+      { text: 'market', isHide: false },
+      { text: 'day', isHide: false },
+      { text: 'in', isHide: false },
+      { text: 'the', isHide: false },
+      { text: 'town', isHide: true },
+      { text: 'I', isHide: false },
+      { text: 'live, ', isHide: false },
+      { text: 'we', isHide: true },
+      { text: 'are', isHide: false },
+      { text: 'going', isHide: false },
+      { text: 'to', isHide: false },
+      { text: 'have', isHide: false },
+      { text: 'lots', isHide: false },
+      { text: 'of', isHide: false },
+      { text: 'fun', isHide: true },
+      { text: 'today', isHide: false },
+    ],
+    testKeys: [
+      {
+        name: 'we',
+        isWrongChoice: false,
+      },
+      {
+        name: 'town',
+        isWrongChoice: false,
+      },
+      {
+        name: 'not',
+        isWrongChoice: false,
+      },
+      {
+        name: 'have',
+        isWrongChoice: false,
+      },
+      {
+        name: 'my',
+        isWrongChoice: false,
+      },
+      {
+        name: 'fun',
+        isWrongChoice: false,
+      },
+    ],
   },
 ];

@@ -27,6 +27,7 @@ import { WordModule } from './levels/word/word.module';
 import { ParagraphModule } from './levels/paragraph/paragraph.module';
 import { StoryModule } from './levels/story/story.module';
 import * as fromSpeechTexts from './store/speech-texts/speech-texts.reducer';
+import { LongTextReadDialogComponent } from './completion/long-text-read-dialog/long-text-read-dialog.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import * as fromSpeechTexts from './store/speech-texts/speech-texts.reducer';
     StoryComponent,
     LiteracyLevelCompletionComponent,
     LiteracyStageCompletionComponent,
-    LiteracyProgramCompletionComponent
+    LiteracyProgramCompletionComponent,
+    LongTextReadDialogComponent
   ],
   imports: [
     CommonModule,

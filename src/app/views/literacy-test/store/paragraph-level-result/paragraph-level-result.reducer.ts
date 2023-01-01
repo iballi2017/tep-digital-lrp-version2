@@ -52,7 +52,45 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
+  ),
+
+
+  
+  /* ADD LETTER LEVEL STAGE TWO RESULT */
+  on(ParagraphLevelResultActions.addParagraphLevelStageFourResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageFourResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageFourResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageFourResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
 );
 
 export const { selectIds, selectEntities, selectAll, selectTotal } =
