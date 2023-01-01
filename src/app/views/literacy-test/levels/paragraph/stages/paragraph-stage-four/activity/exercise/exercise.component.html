@@ -1,0 +1,62 @@
+<!-- <p>exercise works!</p> -->
+
+<div id="activity-canvas">
+    <div id="blue-board">
+        <div id="board-activity-hint">
+            <p class="my-0">{{boardActivityHint}}</p>
+        </div>
+        <div class="inner">
+            <!-- <div id="result-item-list">
+                <ul class="item-list ps-0 mb-0">
+                    <li>{{boardData?.uiText}}</li>
+                </ul>
+            </div>
+             -->
+            <div id="result-item-list-text">
+                <ul class="item-list ps-0 mb-0 list-style-none">
+                    <li [ngClass]="{'hint': item.isHide}" *ngFor="let item of boardData?.statement">
+                        <div>
+                            <span [ngClass]="{'d-none': item.isHide}">{{item?.text}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <p class="text-info text-center">{{speechTexts$ | async}}</p>
+    <div id="key-selection-preview-block">
+        <div class="preview-text" *ngIf="previewText">
+            {{previewText}}
+        </div>
+    </div>
+
+    <!-- <div id="action-buttons" class="mark-control text-center">
+        <button class="btn btn-success" (click)="startService()">Start</button>
+        <button class="btn btn-danger" (click)="stopService()">Stop</button>
+        <button class="btn btn-warning" (click)="clearService()">Clear</button>
+    </div> -->
+
+
+
+    <div id="activity-keypad">
+        <div class="key-list ps-0 list-style-none">
+            <div class="action-btn">
+                <button mat-button class="btn btn-primary" (click)="startService()" *ngIf="!isStart">Start</button>
+                <button mat-button class="btn danger-btn" (click)="stopService()" *ngIf="isStart">Stop</button>
+                <button mat-button class="btn btn-primary" (click)="clearService()" *ngIf="isStart">Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="utility-controls">
+        <div id="activity-hint-btn-wrapper">
+            <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
+            </button>
+            <p>Hint</p>
+        </div>
+        <div id="replay-voice-btn-wrapper">
+            <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
+            <p>Refresh</p>
+        </div>
+    </div>
+</div>

@@ -1,27 +1,24 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
-import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
-import { ParagraphStageOneService } from 'src/app/services/paragraph/paragraph-stage-one.service';
+import { ParagraphStageTwoService } from 'src/app/services/paragraph/paragraph-stage-two.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
 import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.selectors';
-import { addWordLevelStageThreeResult } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
 import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.reducer';
 
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.scss'],
+  styleUrls: ['./exercise.component.scss']
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent implements OnInit {
   boardActivityHint: string = 'Read the paragraph below';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -50,11 +47,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private store: Store<ParagraphLevelResultState>,
     private _router: Router,
+    private _wordStageThreeSvc: WordStageThreeService,
     // Speech recog
-    private _paragraphStageOneSvc: ParagraphStageOneService,
+    private _paragraphStageTwoSvc: ParagraphStageTwoService,
     private cdr: ChangeDetectorRef
   ) {
-    this._paragraphStageOneSvc?.init();
+    this._paragraphStageTwoSvc?.init();
   }
 
   ngOnInit(): void {
@@ -184,20 +182,20 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   GetExerciseTexts() {
-    this.resultTextList = this._paragraphStageOneSvc.GetExerciseTexts();
+    this.resultTextList = this._paragraphStageTwoSvc.GetExerciseTexts();
   }
   startService() {
     this.isStart = true;
-    this._paragraphStageOneSvc.start();
+    this._paragraphStageTwoSvc.start();
   }
 
   stopService() {
     this.isStart = false;
-    this._paragraphStageOneSvc.stop();
+    this._paragraphStageTwoSvc.stop();
   }
 
   clearService() {
-    this._paragraphStageOneSvc.clear();
+    this._paragraphStageTwoSvc.clear();
   }
   /* SPEECH RECOG CODE ENDS */
 
@@ -231,7 +229,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.testNumber = 0;
     this.clearService();
     // this.stopService();
-    this.resultTextList = this._paragraphStageOneSvc.GetExerciseTexts();
+    this.resultTextList = this._paragraphStageTwoSvc.GetExerciseTexts();
     // for (let i = 0; i < this.resultTextList.length; i++) {
     //   this.resultTextList[i].isDone = false;
     // }
