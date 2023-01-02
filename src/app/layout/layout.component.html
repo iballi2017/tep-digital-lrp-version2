@@ -2,8 +2,11 @@
 <!-- <p class="text-primary">Letter: {{(letterResultLoading$ | async)}}</p>
 <p class="text-info">Word: {{(wordResultLoading$ | async)}}</p> -->
 <div id="main-app-wrapper">
-    <!-- <div *ngIf="(wordResultLoading$ | async) || (letterResultLoading$ | async)">
+    <div *ngIf="
+    (wordResultLoading$ | async) || 
+    (letterResultLoading$ | async) ||
+    (paragraphResultLoading$ | async)">
         <app-full-page-loader></app-full-page-loader>
-    </div> -->
+    </div>
     <router-outlet></router-outlet>
 </div>

@@ -19,6 +19,52 @@ export const loadParagraphLevelResultFailure = createAction(
 
 
 
+// ADD ParagraphLevelStageOneResult
+export const addParagraphLevelStageOneResult = createAction(
+  '[Paragraph Stage-one Activity] Add Level Stage Two Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addParagraphLevelStageOneResultSuccess = createAction(
+  '[Paragraph Level Result Effect] Add Level Stage Two Result Success',
+  props<{ payload: any }>()
+);
+export const addParagraphLevelStageOneResultFailure = createAction(
+  '[Paragraph Level Result Effect] Add Level Stage Two Result Failure',
+  props<{ error: any }>()
+);
+
+
+// ADD ParagraphLevelStageTwoResult
+export const addParagraphLevelStageTwoResult = createAction(
+  '[Paragraph Stage-one Activity] Add Level Stage Two Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addParagraphLevelStageTwoResultSuccess = createAction(
+  '[Paragraph Level Result Effect] Add Level Stage Two Result Success',
+  props<{ payload: any }>()
+);
+export const addParagraphLevelStageTwoResultFailure = createAction(
+  '[Paragraph Level Result Effect] Add Level Stage Two Result Failure',
+  props<{ error: any }>()
+);
+
+
+// ADD ParagraphLevelStageThreeResult
+export const addParagraphLevelStageThreeResult = createAction(
+  '[Paragraph Stage-one Activity] Add Level Stage Three Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addParagraphLevelStageThreeResultSuccess = createAction(
+  '[Paragraph Level Result Effect] Add Level Stage Three Result Success',
+  props<{ payload: any }>()
+);
+export const addParagraphLevelStageThreeResultFailure = createAction(
+  '[Paragraph Level Result Effect] Add Level Stage Three Result Failure',
+  props<{ error: any }>()
+);
+
+
+
 // ADD ParagraphLevelStageFourResult
 export const addParagraphLevelStageFourResult = createAction(
   '[Paragraph Stage-one Activity] Add Level Stage Four Result',

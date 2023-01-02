@@ -56,7 +56,121 @@ export const reducer = createReducer(
 
 
   
+  /* ADD LETTER LEVEL STAGE ONE RESULT */
+  on(ParagraphLevelResultActions.addParagraphLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
+
+  
+  
   /* ADD LETTER LEVEL STAGE TWO RESULT */
+  on(ParagraphLevelResultActions.addParagraphLevelStageTwoResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageTwoResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
+
+  
+  
+  /* ADD LETTER LEVEL STAGE THREE RESULT */
+  on(ParagraphLevelResultActions.addParagraphLevelStageThreeResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageThreeResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageThreeResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    ParagraphLevelResultActions.addParagraphLevelStageThreeResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
+
+  
+  
+  /* ADD LETTER LEVEL STAGE FOUR RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageFourResult, (state, action) => {
     return {
       ...state,

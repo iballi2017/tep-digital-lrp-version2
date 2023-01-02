@@ -5,7 +5,7 @@ export const selectParagraphLevelResultState = createFeatureSelector<ParagraphLe
   paragraphLevelResultFeatureKey
 );
 
-export const selectParagraphLevelResult = createSelector(
+export const paragraphLevelResult = createSelector(
   selectParagraphLevelResultState,
   selectAll
 );

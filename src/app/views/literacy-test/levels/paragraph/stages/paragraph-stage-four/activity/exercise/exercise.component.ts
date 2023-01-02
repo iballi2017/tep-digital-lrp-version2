@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
@@ -78,7 +79,8 @@ export class ExerciseComponent implements OnInit {
   }
   loadKeyList() {
     let data = this._paragraphStageFourSvc.GetExerciseTexts();
-    this.keyList = data[this.testNumber].testKeys;
+    let keys = data[this.testNumber].testKeys;
+    this.keyList = new ShuffleArray(keys).shuffle();
   }
 
   onSelectAlphabet(alphabet: any) {

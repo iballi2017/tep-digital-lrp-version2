@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
@@ -55,7 +56,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   onReplceKeyList() {
-    this.keyList = this.testList[this.testNumber]?.testKeys;
+    let keys = this.testList[this.testNumber]?.testKeys;
+    this.keyList = new ShuffleArray(keys).shuffle();
   }
 
   onSelectAlphabet(alphabet: any) {

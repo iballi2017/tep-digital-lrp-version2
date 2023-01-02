@@ -5,10 +5,12 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
+import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { ParagraphStageTwoService } from 'src/app/services/paragraph/paragraph-stage-two.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { addParagraphLevelStageTwoResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
 import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.selectors';
 import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.reducer';
@@ -20,7 +22,6 @@ import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-lev
 })
 export class ExerciseComponent implements OnInit {
   boardActivityHint: string = 'Read the paragraph below';
-  testNumber: number = 0;
   checkTestCompletion: any;
   keyList: any[] = [];
   previewList: any[] = [];
@@ -30,8 +31,8 @@ export class ExerciseComponent implements OnInit {
 
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
-  stageNumber: number = 3;
-  gameLevel = GameLevel.WORD;
+  stageNumber: number = 2;
+  gameLevel = GameLevel.PARAGRAPH;
 
   //
 
@@ -98,18 +99,11 @@ export class ExerciseComponent implements OnInit {
           // }
           //Log object to console again.
 
-          console.log(
-            'this.boardData.uiText == speechText: ',
-            this.boardData.uiText == speechText
-          );
           this.boardData.uiText == speechText;
           this.boardData.uiText == speechText;
-          console.log('this.boardData.uiText: ', this.boardData.text.replace(/\s/g, ''));
-          console.log('speechText: ', speechText);
           if (this.boardData.text.replace(/\s/g, '') == speechText) {
             this.boardData.isDone = true;
             this.onTestValues(this.resultTextList);
-            console.warn('this.resultTextList: ', this.resultTextList);
             this.clearService();
           }
         }
@@ -146,39 +140,16 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmit(Result: ActivityAnswer) {
-    console.warn('Result: ', Result);
-
-    // this.ngRedux.dispatch({ type: SUBMIT_GAME_STAGE_RESULT });
-    // let subscription = this._paragraphStageTwoSvc.SubmitGameStageResult(Result).subscribe({
-    //   next: (response: any) => {
-    //     if (response) {
-
-    //       this.ngRedux.dispatch({
-    //         type: SUBMIT_GAME_STAGE_RESULT_SUCCESS,
-    //         payload: Result,
-    //       });
-    //       this.openSnackBar(response?.message);
-    //       setTimeout(() => {
-    //         this.isFinishedMessage = '';
-    //         this.successMessage = '';
-    //         // alert('completed!!!');
-    //         this._router.navigate([
-    //           `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-    //         ]);
-    //       }, 3000);
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     if (err) {
-    //       // console.warn('Error: ', err);
-    //       this.ngRedux.dispatch({
-    //         type: SUBMIT_GAME_STAGE_RESULT_ERROR,
-    //         payload: err,
-    //       });
-    //     }
-    //   },
-    // });
-    // this.Subscriptions.push(subscription)
+    this.store.dispatch(addParagraphLevelStageTwoResult({ payload: Result }));
+    this._paragraphStageTwoSvc.addParagraphLevelResultBehaviour.subscribe(
+      (msg: any) => {
+        if (msg) {
+          this._router.navigate([
+            `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+          ]);
+        }
+      }
+    );
   }
 
   GetExerciseTexts() {
@@ -225,19 +196,13 @@ export class ExerciseComponent implements OnInit {
   }
 
   refreshGame() {
-    this.resultTextList = [];
-    this.testNumber = 0;
+    this.stopService();
     this.clearService();
-    // this.stopService();
-    this.resultTextList = this._paragraphStageTwoSvc.GetExerciseTexts();
-    // for (let i = 0; i < this.resultTextList.length; i++) {
-    //   this.resultTextList[i].isDone = false;
-    // }
-    // console.log('this.resultTextList: ', this.resultTextList);
-
+    this.boardData = null;
+    this.resultTextList = [];
+    this.textPosition = 0;
+    this.GetExerciseTexts();
     this.resultTextList.forEach((obj: any) => (obj.isDone = false));
-    console.log('this.resultTextList***: ', this.resultTextList);
-
     this.loadBoardData();
   }
 

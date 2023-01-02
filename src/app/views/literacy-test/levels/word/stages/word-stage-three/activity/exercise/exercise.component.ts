@@ -69,7 +69,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   loadTestContent() {
-    this.keyList = this.testList[this.testNumber]?.testKeys;
+    let keys = this.testList[this.testNumber]?.testKeys;
+    this.keyList = new ShuffleArray(keys).shuffle();
     this.resultItemList = [];
   }
 

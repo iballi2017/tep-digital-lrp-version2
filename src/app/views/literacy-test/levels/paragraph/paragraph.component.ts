@@ -10,7 +10,7 @@ import { loadParagraphLevelResult } from '../../store/paragraph-level-result/par
 import { ParagraphLevelResultState } from '../../store/paragraph-level-result/paragraph-level-result.reducer';
 import {
   paragraphLevelResultIsLoading,
-  selectParagraphLevelResult,
+  paragraphLevelResult,
 } from '../../store/paragraph-level-result/paragraph-level-result.selectors';
 
 @Component({
@@ -48,7 +48,7 @@ export class ParagraphComponent implements OnInit {
     this.store.dispatch(
       loadParagraphLevelResult({ session_id: GameSessionId })
     );
-    this.userData$ = this.store.pipe(select(selectParagraphLevelResult));
+    this.userData$ = this.store.pipe(select(paragraphLevelResult));
     let subscription = this.userData$.subscribe({
       next: (response: any) => {
         if (response) {

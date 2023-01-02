@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError } from 'rxjs';
+import { BehaviorSubject, catchError } from 'rxjs';
 import { baseUrl } from 'src/app/config/api';
 import { handleError } from 'src/app/helpers/errorHandler';
 import { addSpeechTexts, addSpeechTextsSuccess } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.actions';
@@ -12,6 +12,7 @@ declare var webkitSpeechRecognition: any;
   providedIn: 'root'
 })
 export class ParagraphStageThreeService {
+  addParagraphLevelResultBehaviour = new BehaviorSubject(false);
   StartGameUrl = baseUrl + '/start-game-session';
   SubmitGameStage_3_Url = baseUrl + '/submit-paragraph-stage-3';
   recognition = new webkitSpeechRecognition();
@@ -22,6 +23,15 @@ export class ParagraphStageThreeService {
 
   constructor(private _http: HttpClient,
     private store: Store<SpeechTextsState>,) { }
+
+    
+
+  sendAddParagraphLevelResultBehaviour(Msg: any) {
+    this.addParagraphLevelResultBehaviour.next(Msg);
+  }
+  getAddParagraphLevelResultBehaviour() {
+    return this.addParagraphLevelResultBehaviour.asObservable();
+  }
 
   init() {
     this.recognition.interimResults = true;
