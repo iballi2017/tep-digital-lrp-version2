@@ -33,7 +33,7 @@ export class ExerciseComponent implements OnInit {
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
   stageNumber: number = 4;
-  gameLevel = GameLevel.WORD;
+  gameLevel = GameLevel.PARAGRAPH;
 
   //
 

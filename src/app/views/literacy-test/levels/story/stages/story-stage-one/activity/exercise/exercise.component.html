@@ -7,9 +7,22 @@
         </div>
         <div class="inner">
             <div id="result-item-list">
-                <ul class="item-list ps-0 mb-0">
+                <!-- <ul class="item-list ps-0 mb-0">
                     <li [ngClass]="{'hint': item.hint}" *ngFor="let item of testList[testNumber]?.answer">
                         <span [ngClass]="{'d-none': !item?.isShow}">{{item?.text}}</span>
+                    </li>
+                </ul> -->
+                <ul class="ps-0 mb-0 list-style-none">
+                    <li class="queue" *ngFor="let item of [1, 2]">
+                        <div class="label">Title</div>
+                        <ul class="item-list ps-0 mb-0 list-style-none value">
+                            <li>
+                                <div>The</div>
+                                <div>boy</div>
+                                <div>Abba</div>
+                                <!-- <div>Lorem ipsum dolor sit, amet cum ducimus voluptate</div> -->
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

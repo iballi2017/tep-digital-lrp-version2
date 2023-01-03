@@ -29,7 +29,7 @@ export class ParagraphStageOneService {
   constructor(
     private _http: HttpClient,
     private store: Store<SpeechTextsState>
-  ) {}
+  ) { }
 
   sendAddParagraphLevelResultBehaviour(Msg: any) {
     this.addParagraphLevelResultBehaviour.next(Msg);
@@ -71,10 +71,8 @@ export class ParagraphStageOneService {
         }
       });
     } catch (err) {
-      if (err) {
-        // console.warn('Error: ', err);
-        return;
-      }
+      // console.warn('Error: ', err);
+      return;
     }
   }
 

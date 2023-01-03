@@ -69,10 +69,8 @@ export class ParagraphStageTwoService {
         }
       });
     } catch (err) {
-      if (err) {
-        // console.warn('Error: ', err);
+        console.warn('Error: ', err);
         return;
-      }
     }
   }
 

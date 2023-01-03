@@ -5,10 +5,12 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
+import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { ParagraphStageThreeService } from 'src/app/services/paragraph/paragraph-stage-three.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { addParagraphLevelStageThreeResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
 import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.selectors';
 
@@ -19,7 +21,6 @@ import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/spee
 })
 export class ExerciseComponent implements OnInit {
   boardActivityHint: string = 'Read the paragraph below';
-  testNumber: number = 0;
   checkTestCompletion: any;
   keyList: any[] = [];
   previewList: any[] = [];
@@ -30,10 +31,7 @@ export class ExerciseComponent implements OnInit {
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
   stageNumber: number = 3;
-  gameLevel = GameLevel.WORD;
-
-  //
-
+  gameLevel = GameLevel.PARAGRAPH;
   resultTextList: any[] = [];
   textPosition = 0;
   speechText!: string;
@@ -56,9 +54,6 @@ export class ExerciseComponent implements OnInit {
 
   ngOnInit(): void {
     this.cdr.detectChanges();
-    //
-    // this.loadTestContent();
-    this.onCheckTestCompletion();
     this.onGetGameSessionId();
 
     //
@@ -80,35 +75,11 @@ export class ExerciseComponent implements OnInit {
       next: (response: any) => {
         if (response) {
           let speechText = response.replace(/\s/g, '');
-
-          // let objIndex = this.resultTextList.findIndex(
-          //   (obj: any) => obj.text.replace(/\s/g, '') == speechText
-          // );
-          // console.log('objIndex***: ', objIndex);
-          // //Log object to Console.
-          // //
-          // //Update object's name property.
-          // if (this.resultTextList[objIndex]) {
-          //   this.resultTextList[objIndex].isDone = true;
-          //   // this.textPosition += 1;
-          //   this.onTestValues(this.resultTextList);
-          //   console.warn('this.resultTextList: ', this.resultTextList);
-          //   this.clearService();
-          // }
-          //Log object to console again.
-
-          console.log(
-            'this.boardData.uiText == speechText: ',
-            this.boardData.uiText == speechText
-          );
           this.boardData.uiText == speechText;
           this.boardData.uiText == speechText;
-          console.log('this.boardData.text: ', this.boardData.text.replace(/\s/g, ''));
-          console.log('speechText: ', speechText);
           if (this.boardData.text.replace(/\s/g, '') == speechText) {
             this.boardData.isDone = true;
             this.onTestValues(this.resultTextList);
-            console.warn('this.resultTextList: ', this.resultTextList);
             this.clearService();
           }
         }
@@ -123,14 +94,8 @@ export class ExerciseComponent implements OnInit {
     let complete = List.filter((done: any) => done?.isDone == true);
 
     if (complete.length == List?.length) {
-      //
       this.clearService();
       this.stopService();
-      // alert('completed!!!');
-      // this.textPosition += 1;
-      // this.stopService();
-      // this.clearService();
-
       const Payload: ActivityAnswer = {
         session_id: this.gameSessionId,
         answer: '3',
@@ -145,39 +110,16 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSubmit(Result: ActivityAnswer) {
-    console.warn('Result: ', Result);
-
-    // this.ngRedux.dispatch({ type: SUBMIT_GAME_STAGE_RESULT });
-    // let subscription = this._paragraphStageThreeSvc.SubmitGameStageResult(Result).subscribe({
-    //   next: (response: any) => {
-    //     if (response) {
-
-    //       this.ngRedux.dispatch({
-    //         type: SUBMIT_GAME_STAGE_RESULT_SUCCESS,
-    //         payload: Result,
-    //       });
-    //       this.openSnackBar(response?.message);
-    //       setTimeout(() => {
-    //         this.isFinishedMessage = '';
-    //         this.successMessage = '';
-    //         // alert('completed!!!');
-    //         this._router.navigate([
-    //           `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-    //         ]);
-    //       }, 3000);
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     if (err) {
-    //       // console.warn('Error: ', err);
-    //       this.ngRedux.dispatch({
-    //         type: SUBMIT_GAME_STAGE_RESULT_ERROR,
-    //         payload: err,
-    //       });
-    //     }
-    //   },
-    // });
-    // this.Subscriptions.push(subscription)
+    this.store.dispatch(addParagraphLevelStageThreeResult({ payload: Result }));
+    this._paragraphStageThreeSvc.addParagraphLevelResultBehaviour.subscribe(
+      (msg: any) => {
+        if (msg) {
+          this._router.navigate([
+            `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+          ]);
+        }
+      }
+    );
   }
 
   GetExerciseTexts() {
@@ -197,12 +139,6 @@ export class ExerciseComponent implements OnInit {
     this._paragraphStageThreeSvc.clear();
   }
   /* SPEECH RECOG CODE ENDS */
-
-  onCheckTestCompletion() {
-    // this.checkTestCompletion = this.testList.filter(
-    //   (test: any) => test.isTestComplete == true
-    // );
-  }
 
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
@@ -224,19 +160,13 @@ export class ExerciseComponent implements OnInit {
   }
 
   refreshGame() {
-    this.resultTextList = [];
-    this.testNumber = 0;
+    this.stopService();
     this.clearService();
-    // this.stopService();
-    this.resultTextList = this._paragraphStageThreeSvc.GetExerciseTexts();
-    // for (let i = 0; i < this.resultTextList.length; i++) {
-    //   this.resultTextList[i].isDone = false;
-    // }
-    // console.log('this.resultTextList: ', this.resultTextList);
-
+    this.boardData = null;
+    this.resultTextList = [];
+    this.textPosition = 0;
+    this.GetExerciseTexts();
     this.resultTextList.forEach((obj: any) => (obj.isDone = false));
-    console.log('this.resultTextList***: ', this.resultTextList);
-
     this.loadBoardData();
   }
 

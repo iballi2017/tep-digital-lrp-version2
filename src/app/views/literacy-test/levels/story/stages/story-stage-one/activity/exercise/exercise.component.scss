@@ -1,16 +1,73 @@
+@use "../../../../../../../../../sass/_partials/mixins";
+
 #activity-canvas {
     position: relative;
 }
 
-.item-list {
-    li {
-        &:first-child {
-            text-transform: capitalize;
+#blue-board {
+
+    >.inner {
+        justify-content: flex-start;
+        padding: .8em 1.2em;
+
+        .label {
+            font-family: 'Open Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 1.3rem;
+            line-height: 157.68%;
+            color: #FFFFFF;
+            text-align: left;
         }
 
-        &.hint {
-            background: unset !important;
-            color: #ffffff !important;
+        #result-item-list {
+            @include mixins.minmq(768px){
+                padding-left: 3em;
+                padding-right: 3em;
+            }
+            .item-list li {
+                height: auto;
+                width: auto;
+                padding: 0.9em 1em;
+                font-weight: 700;
+                font-size: 1.1rem;
+                text-transform: none;
+                line-height: unset;
+                text-align: left;
+
+                >div {
+                    margin-right: .5em;
+                    border-bottom: 2px solid #000000;
+                }
+            }
+        }
+    }
+}
+
+.queue {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: .5em;
+}
+
+.item-list {
+    // li {
+    //     &:first-child {
+    //         text-transform: capitalize;
+    //     }
+
+    //     &.hint {
+    //         background: unset !important;
+    //         color: #ffffff !important;
+    //     }
+    // }
+    ul {
+        list-style: none;
+        padding-left: 0;
+
+        li {
+            text-align: left;
         }
     }
 }
@@ -30,7 +87,7 @@
 
 
 #activity-keypad {
-    max-width: 600px;
+    max-width: 450px;
     margin: 0 auto;
     background: #242424;
     border-radius: 22px;

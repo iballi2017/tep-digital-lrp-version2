@@ -24,7 +24,7 @@ export class ParagraphStageThreeService {
   constructor(private _http: HttpClient,
     private store: Store<SpeechTextsState>,) { }
 
-    
+
 
   sendAddParagraphLevelResultBehaviour(Msg: any) {
     this.addParagraphLevelResultBehaviour.next(Msg);
@@ -38,7 +38,6 @@ export class ParagraphStageThreeService {
     this.recognition.lang = 'en-US';
 
     this.recognition.addEventListener('result', (e: any) => {
-      console.warn("e: ", e)
       const transcript = Array.from(e.results)
         .map((result: any) => result[0])
         .map((result: any) => result.transcript)
@@ -50,22 +49,26 @@ export class ParagraphStageThreeService {
   }
 
   GetVoiceText() {
-    console.log("this.VoiceText: ", this.VoiceText)
     return this.VoiceText;
   }
 
   start() {
-    this.isStoppedSpeechRecog = false;
-    this.recognition.start();
-    this.recognition.addEventListener('end', (condition: any) => {
-      if (this.isStoppedSpeechRecog) {
-        this.recognition.stop();
+    try {
+      this.isStoppedSpeechRecog = false;
+      this.recognition.start();
+      this.recognition.addEventListener('end', (condition: any) => {
+        if (this.isStoppedSpeechRecog) {
+          this.recognition.stop();
 
-      } else {
-        this.wordConcat();
-        this.recognition.start();
-      }
-    });
+        } else {
+          this.wordConcat();
+          this.recognition.start();
+        }
+      });
+    } catch (err) {
+      console.warn('Error: ', err);
+      return;
+    }
   }
 
   stop() {
@@ -91,10 +94,6 @@ export class ParagraphStageThreeService {
 
     this.store.dispatch(addSpeechTexts());
     this.text = this.text + ' ' + this.tempWords + ' ';
-    console.warn("this.tempWords: ", this.tempWords)
-    // if(this.tempWords){
-
-    // }
     this.tempWords = '';
     this.store.dispatch(addSpeechTextsSuccess({ speechTexts: this.text.trim() }));
   }
