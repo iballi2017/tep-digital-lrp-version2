@@ -1,11 +1,11 @@
 <!-- <p>report-list works!</p> -->
-
+<!-- this.reportsList$ = this.store.pipe(select(selectReports));
+this.isLoadingReportList$  -->
 
 <div id="account-page" class="details-card-2">
     <div class="title-wrapper">
         <h2 class="title text-uppercase">Report</h2>
     </div>
-<!-- {{ reportsList$ | async | json}} -->
     <div class="body-wrapper">
         <div class="item-card">
             <div class="item-card-header">
@@ -48,6 +48,9 @@
                 <ng-container *ngIf="!reportList?.length && !(isLoadingReportList$ | async) ">
                     <div class="alert alert-info text-center">No report</div>
                 </ng-container>
+                <ng-container *ngIf="!reportList.length && (isLoadingReportList$ |async)">
+                    <P>LOADING...</P>
+                </ng-container>
                 <div class="table-responsive" *ngIf="reportList?.length">
                     <table class="table">
                         <thead>
@@ -82,9 +85,13 @@
                                 <td class="text-right">
                                     <div class="actions-btn">
                                         <div class="d-flex justify-content-end">
-                                            <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses" (onClickEvent)="onViewReportDetails(item?.sessionId)"></app-primary-button>
+                                            <app-primary-button [btnTitle]="btnEdit.title | uppercase"
+                                                [btnClasses]="btnClasses"
+                                                (onClickEvent)="onViewReportDetails(item?.sessionId)"></app-primary-button>
                                             <div class="mx-1"></div>
-                                            <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses" (onClickEvent)="onRemoveReport(item?.sessionId)"></app-danger-button>
+                                            <app-danger-button [btnTitle]="btnDanger.title | uppercase"
+                                                [btnClasses]="btnClasses"
+                                                (onClickEvent)="onRemoveReport(item?.sessionId)"></app-danger-button>
                                         </div>
                                         <!-- <app-table-column-action-buttons (remove)="onRemoveReport(item)"
                                                 (edit)="onViewRespondentDetails(item)" [item]="item"></app-table-column-action-buttons> -->

@@ -1,0 +1,33 @@
+#level-completion-page {
+    font-family: "Open Sans";
+    font-style: normal;
+    .inner-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .page-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .page-tagline {
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 33px;
+            text-align: center;
+            color: #000000;
+            // margin-bottom: 2em;
+        }
+        .btn-wrapper {
+            max-width: 380px;
+            margin: 0 auto;
+        }
+    }
+}
+
+.featured-image {
+    width: 100%;
+    // max-width: 900px;
+    margin: 0 auto;
+}

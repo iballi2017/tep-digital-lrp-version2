@@ -46,7 +46,48 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
+  ),
+
+
+  
+  
+  /* ADD STORY LEVEL STAGE ONE RESULT */
+  on(StoryLevelResultActions.addStoryLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    StoryLevelResultActions.addStoryLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    StoryLevelResultActions.addStoryLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    }
+  ),
+  on(
+    StoryLevelResultActions.addStoryLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+      };
+    }
+  ),
+
+  
 );
 
 export const { selectIds, selectEntities, selectAll, selectTotal } =

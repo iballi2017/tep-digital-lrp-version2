@@ -67,9 +67,9 @@ export class ReportsEffects {
       mergeMap((action: any) =>
         this._reportSvc.RemoveReport(action.id).pipe(
           map((report: any) => {
-            console.log('report: ', report);
+            // console.log('report: ', report);
             return fromReportActions.deleteReportSuccess({
-              id: report?.id,
+              id: action?.id,
             });
           }),
           catchError((error: any) =>

@@ -5,7 +5,8 @@
     <div *ngIf="
     (wordResultLoading$ | async) || 
     (letterResultLoading$ | async) ||
-    (paragraphResultLoading$ | async)">
+    (paragraphResultLoading$ | async) ||
+    (storyResultLoading$ | async)">
         <app-full-page-loader></app-full-page-loader>
     </div>
     <router-outlet></router-outlet>

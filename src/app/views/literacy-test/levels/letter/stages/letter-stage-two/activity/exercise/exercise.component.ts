@@ -20,7 +20,7 @@ import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter
   styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit, OnDestroy {
-  boardActivityHint: string = 'Reveal the hidden vowel letters';
+  boardActivityHint: string = 'Reveal the hidden consonant letters';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
   testNumber: number = 0;

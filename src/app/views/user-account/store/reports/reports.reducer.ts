@@ -67,8 +67,10 @@ export const reducer = createReducer(
       isLoading: true,
     };
   }),
-  on(ReportsActions.deleteReportSuccess, (state, action) =>
-    adapter.removeOne(action.id.session_id, state)
+  on(ReportsActions.deleteReportSuccess, (state, action) => {
+    console.log("action: ", action)
+    return adapter.removeOne(action.id.session_id, state)
+  }
   ),
   on(ReportsActions.deleteReportSuccess, (state, action) => {
     return {

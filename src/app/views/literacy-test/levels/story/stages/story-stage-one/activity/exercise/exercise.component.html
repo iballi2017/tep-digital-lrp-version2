@@ -13,14 +13,25 @@
                     </li>
                 </ul> -->
                 <ul class="ps-0 mb-0 list-style-none">
-                    <li class="queue" *ngFor="let item of [1, 2]">
+                    <li class="queue">
                         <div class="label">Title</div>
                         <ul class="item-list ps-0 mb-0 list-style-none value">
-                            <li>
-                                <div>The</div>
-                                <div>boy</div>
-                                <div>Abba</div>
-                                <!-- <div>Lorem ipsum dolor sit, amet cum ducimus voluptate</div> -->
+                            <li [ngClass]="{'disabled': !boardData.title.active}">
+                                <div *ngFor="let item of boardData.title.titleContent">
+                                    <span [ngClass]="{'d-none': !item.display}">{{item?.text}}</span>
+                                </div>
+                                <span class="disable-film"></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="queue">
+                        <div class="label">Short story</div>
+                        <ul class="item-list ps-0 mb-0 list-style-none value">
+                            <li [ngClass]="{'disabled': !boardData.body.active}">
+                                <div *ngFor="let item of boardData.body.bodyContent[testBodyLoopNumber].content">
+                                    <span [ngClass]="{'d-none': !item.display}">{{item?.text}}</span>
+                                </div>
+                                <span class="disable-film"></span>
                             </li>
                         </ul>
                     </li>
@@ -36,7 +47,7 @@
     <div id="activity-keypad">
         <ul class="key-list ps-0 list-style-none">
             <li *ngFor="let key of keyList">
-                <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
+                <button class="btn" (click)="onSelectAlphabet(key, key?.parent)">{{key?.label}}</button>
             </li>
         </ul>
     </div>

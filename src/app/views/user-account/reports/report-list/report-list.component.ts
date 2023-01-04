@@ -16,9 +16,6 @@ import { ReportState } from '../../store/reports/reports.reducer';
   styleUrls: ['./report-list.component.scss'],
 })
 export class ReportListComponent implements OnInit {
-  // @select((s) => s.reportsList.reportsList) reportsList$!: any;
-  // @select((s) => s.reportsList.isLoading) isLoading$!: any;
-  // reportList: any[] = [1, 2, 3];
   reportsList$!: Observable<any>;
   filterDropdownList = [
     FilterDropdown?.ASCENDING,
@@ -60,6 +57,10 @@ export class ReportListComponent implements OnInit {
     this.store.dispatch(loadReports());
     this.reportsList$ = this.store.pipe(select(selectReports));
     this.isLoadingReportList$ = this.store.pipe(select(reportSelectStateIsLoading));
+    
+    // this.isLoadingReportList$.subscribe((data: any) => {
+    //   this.isLoadingReportList = data;
+    // });
     let subscription = this.reportsList$.subscribe({
       next: (response: any) => {
         console.log('response: ', response);
@@ -96,37 +97,11 @@ export class ReportListComponent implements OnInit {
 
   onDeleteOccupant(sessionId: string) {
     console.log('sessionId: ', sessionId);
-    // this.ngRedux.dispatch({ type: REMOVE_REPORT });
     const _sessionId: SessionId = {
       session_id: sessionId,
     };
     this.store.dispatch(deleteReport({ id: _sessionId }));
-
-    // this._reportSvc.RemoveReport(_sessionId).subscribe({
-    //   next: (response: any) => {
-    //     if (response) {
-    //       console.log('response: ', response);
-    //       // this.ngRedux.dispatch({
-    //       //   type: REMOVE_REPORT_SUCCESS,
-    //       //   payload: {
-    //       //     sessionId: sessionId,
-    //       //   },
-    //       // });
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     console.warn('Error: ', err);
-    //     // this.ngRedux.dispatch({
-    //     //   type: REMOVE_REPORT_ERROR,
-    //     //   payload: err,
-    //     // });
-    //   },
-    // });
   }
-
-  onEditReport() {}
-
-
 
   sortReportListBy(FilterForm: any) {
     let SortItem = FilterForm.value.Filter;

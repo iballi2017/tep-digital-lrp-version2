@@ -56,7 +56,7 @@ export const reducer = createReducer(
 
 
   
-  /* ADD LETTER LEVEL STAGE ONE RESULT */
+  /* ADD PARAGRAPH LEVEL STAGE ONE RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageOneResult, (state, action) => {
     return {
       ...state,
@@ -94,7 +94,7 @@ export const reducer = createReducer(
 
   
   
-  /* ADD LETTER LEVEL STAGE TWO RESULT */
+  /* ADD PARAGRAPH LEVEL STAGE TWO RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageTwoResult, (state, action) => {
     return {
       ...state,
@@ -132,7 +132,7 @@ export const reducer = createReducer(
 
   
   
-  /* ADD LETTER LEVEL STAGE THREE RESULT */
+  /* ADD PARAGRAPH LEVEL STAGE THREE RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageThreeResult, (state, action) => {
     return {
       ...state,
@@ -170,7 +170,7 @@ export const reducer = createReducer(
 
   
   
-  /* ADD LETTER LEVEL STAGE FOUR RESULT */
+  /* ADD PARAGRAPH LEVEL STAGE FOUR RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageFourResult, (state, action) => {
     return {
       ...state,
