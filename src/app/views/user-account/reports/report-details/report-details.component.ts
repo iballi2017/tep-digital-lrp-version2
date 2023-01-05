@@ -11,7 +11,7 @@ import {
   addGameSession,
   addGameSessionSuccess,
 } from 'src/app/shared/store/game/game.actions';
-import { selectedReport } from '../../store/reports/report.selectors';
+import { reportSelectStateIsLoading, selectedReport } from '../../store/reports/report.selectors';
 import {
   deleteReport,
   deleteReportFailure,
@@ -50,6 +50,7 @@ export class ReportDetailsComponent implements OnInit {
   respondentInformation: any;
   reportDetails: any;
   reportDetails$!: Observable<any>;
+  reportDetailsIsLoading$!: Observable<boolean>;
   constructor(
     private _route: ActivatedRoute,
     private _reportSvc: ReportService,
@@ -82,6 +83,8 @@ export class ReportDetailsComponent implements OnInit {
     console.log('sessionId***: ', sessionId);
     this.store.dispatch(loadSingleReport({ session_id: sessionId }));
     this.reportDetails$ = this.store.pipe(select(selectedReport));
+    this.reportDetailsIsLoading$ = this.store.pipe(select(reportSelectStateIsLoading));
+    
     // this._reportSvc.LoadGameResultDetails(sessionId);
 
     // this.gameResultDetails$.subscribe({

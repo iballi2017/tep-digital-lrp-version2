@@ -49,7 +49,7 @@ this.isLoadingReportList$  -->
                     <div class="alert alert-info text-center">No report</div>
                 </ng-container>
                 <ng-container *ngIf="!reportList.length && (isLoadingReportList$ |async)">
-                    <P>LOADING...</P>
+                    <P class="text-bold">LOADING...</P>
                 </ng-container>
                 <div class="table-responsive" *ngIf="reportList?.length">
                     <table class="table">

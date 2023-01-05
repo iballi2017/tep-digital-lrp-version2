@@ -13,3 +13,9 @@ export const storyLevelResultIsLoading = createSelector(
   selectStoryLevelResultState,
   (state: StoryLevelResultState) => state?.isLoading
 );
+
+
+export const isSubmitResultStoryLevelResult = createSelector(
+  selectStoryLevelResultState,
+  (state: StoryLevelResultState) => state?.isSubmitResult
+);

@@ -47,16 +47,24 @@ export const reducer = createReducer(
   }),
 
   // LOAD SINGLE REPORT
+  on(ReportsActions.loadSingleReport, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
   on(ReportsActions.loadSingleReportSuccess, (state, action) => {
     return {
       ...state,
       selectedReport: action.selectedReport,
+      isLoading: false,
     };
   }),
   on(ReportsActions.loadSingleReportFailure, (state, action) => {
     return {
       ...state,
       error: action.error,
+      isLoading: false,
     };
   }),
 

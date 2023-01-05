@@ -18,3 +18,8 @@ export const wordLevelResultIsLoading = createSelector(
   selectWordLevelResultState,
   (state: WordLevelResultState) => state?.isLoading
 );
+
+export const isSubmitResultWordLevelResult = createSelector(
+  selectWordLevelResultState,
+  (state: WordLevelResultState) => state?.isSubmitResult
+);

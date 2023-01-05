@@ -8,7 +8,8 @@ export const storyLevelResultFeatureKey = 'storyLevelResult';
 export interface StoryLevelResultState extends EntityState<StoryLevelResult> {
   // additional entities state properties
   isLoading: boolean;
-  error: any;
+  error: any; 
+  isSubmitResult: boolean;
 }
 
 export const adapter: EntityAdapter<StoryLevelResult> =
@@ -17,7 +18,8 @@ export const adapter: EntityAdapter<StoryLevelResult> =
 export const initialState: StoryLevelResultState = adapter.getInitialState({
   // additional entity state properties
   isLoading: false,
-  error: null,
+  error: null, 
+  isSubmitResult: false
 });
 
 export const reducer = createReducer(
@@ -49,13 +51,13 @@ export const reducer = createReducer(
   ),
 
 
-  
-  
+
+
   /* ADD STORY LEVEL STAGE ONE RESULT */
   on(StoryLevelResultActions.addStoryLevelStageOneResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -72,7 +74,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -82,12 +84,12 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
 
-  
+
 );
 
 export const { selectIds, selectEntities, selectAll, selectTotal } =

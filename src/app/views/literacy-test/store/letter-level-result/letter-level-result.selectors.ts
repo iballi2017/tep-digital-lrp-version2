@@ -21,3 +21,7 @@ export const letterLevelResultIsLoading = createSelector(
   selectLetterLevelResultState,
   (state: LetterLevelResultState) => state?.isLoading
 );
+export const isSubmitResultLetterLevelResult = createSelector(
+  selectLetterLevelResultState,
+  (state: LetterLevelResultState) => state?.isSubmitResult
+);

@@ -22,6 +22,11 @@
             {{ isLoading$ | async | json }}
         </div>
         <hr> -->
+        <ng-container *ngIf="!(reportDetails$ | async ) && (reportDetailsIsLoading$ |async)">
+            <div class="body-wrapper">
+                <P class="text-bold m-0">LOADING...</P>
+            </div>
+        </ng-container>
         <div class="body-wrapper" *ngIf="(reportDetails$ | async ) as reportDetails">
             <div class="item-card">
                 <div class="item-card-header">
@@ -133,12 +138,6 @@
                                     <td>{{reportDetails?.paragraph_stage_1}}</td>
                                     <td>{{reportDetails?.paragraph_stage_2}}</td>
                                     <td>{{reportDetails?.paragraph_stage_3}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">STORY</th>
-                                    <td>{{reportDetails?.story_stage_1}}</td>
-                                    <td>{{reportDetails?.story_stage_2}}</td>
-                                    <td>{{reportDetails?.story_stage_3}}</td>
                                 </tr>
                             </tbody>
                         </table>

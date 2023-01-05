@@ -10,6 +10,7 @@ export interface ParagraphLevelResultState
   // additional entities state properties
   isLoading: boolean;
   error: any;
+  isSubmitResult: boolean;
 }
 
 export const adapter: EntityAdapter<ParagraphLevelResult> =
@@ -19,6 +20,7 @@ export const initialState: ParagraphLevelResultState = adapter.getInitialState({
   // additional entity state properties
   isLoading: false,
   error: null,
+  isSubmitResult: false
 });
 
 export const reducer = createReducer(
@@ -55,12 +57,12 @@ export const reducer = createReducer(
   ),
 
 
-  
+
   /* ADD PARAGRAPH LEVEL STAGE ONE RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageOneResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -77,7 +79,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -87,18 +89,18 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
 
-  
-  
+
+
   /* ADD PARAGRAPH LEVEL STAGE TWO RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageTwoResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -115,7 +117,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -125,18 +127,18 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
 
-  
-  
+
+
   /* ADD PARAGRAPH LEVEL STAGE THREE RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageThreeResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -153,7 +155,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -163,18 +165,18 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
 
-  
-  
+
+
   /* ADD PARAGRAPH LEVEL STAGE FOUR RESULT */
   on(ParagraphLevelResultActions.addParagraphLevelStageFourResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -191,7 +193,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -201,7 +203,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),

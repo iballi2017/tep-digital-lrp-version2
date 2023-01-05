@@ -13,3 +13,8 @@ export const paragraphLevelResultIsLoading = createSelector(
   selectParagraphLevelResultState,
   (state: ParagraphLevelResultState) => state?.isLoading
 );
+
+export const isSubmitResultParagraphLevelResult = createSelector(
+  selectParagraphLevelResultState,
+  (state: ParagraphLevelResultState) => state?.isSubmitResult
+);

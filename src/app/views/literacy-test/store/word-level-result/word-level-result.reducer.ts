@@ -10,6 +10,7 @@ export interface WordLevelResultState extends EntityState<WordLevelResult> {
   result: any;
   error: any;
   isLoading: boolean;
+  isSubmitResult: boolean;
 }
 
 export const adapter: EntityAdapter<WordLevelResult> =
@@ -20,6 +21,7 @@ export const initialState: WordLevelResultState = adapter.getInitialState({
   result: undefined,
   error: undefined,
   isLoading: false,
+  isSubmitResult: false
 });
 
 export const reducer = createReducer(
@@ -56,7 +58,7 @@ export const reducer = createReducer(
   on(WordLevelResultActions.addWordLevelStageOneResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -73,7 +75,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -83,7 +85,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -92,7 +94,7 @@ export const reducer = createReducer(
   on(WordLevelResultActions.addWordLevelStageTwoResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -109,7 +111,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -119,7 +121,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -128,7 +130,7 @@ export const reducer = createReducer(
   on(WordLevelResultActions.addWordLevelStageThreeResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -145,7 +147,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -155,7 +157,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -164,7 +166,7 @@ export const reducer = createReducer(
   on(WordLevelResultActions.addWordLevelStageFourResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -181,7 +183,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -191,7 +193,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   )

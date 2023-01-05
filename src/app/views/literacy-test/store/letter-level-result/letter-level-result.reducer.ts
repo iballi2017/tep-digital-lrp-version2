@@ -9,6 +9,7 @@ export interface LetterLevelResultState extends EntityState<LetterLevelResult> {
   result: any;
   error: any;
   isLoading: boolean;
+  isSubmitResult: boolean;
 }
 
 export const adapter: EntityAdapter<LetterLevelResult> =
@@ -18,6 +19,7 @@ export const initialState: LetterLevelResultState = adapter.getInitialState({
   result: undefined,
   error: undefined,
   isLoading: false,
+  isSubmitResult: false,
 });
 
 export const reducer = createReducer(
@@ -53,7 +55,7 @@ export const reducer = createReducer(
   on(LetterLevelResultActions.addLetterLevelStageOneResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -70,7 +72,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -80,7 +82,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -89,7 +91,7 @@ export const reducer = createReducer(
   on(LetterLevelResultActions.addLetterLevelStageTwoResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -106,7 +108,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -116,7 +118,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -125,7 +127,7 @@ export const reducer = createReducer(
   on(LetterLevelResultActions.addLetterLevelStageThreeResult, (state, action) => {
     return {
       ...state,
-      isLoading: true,
+      isSubmitResult: true,
     };
   }),
   on(
@@ -142,7 +144,7 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   ),
@@ -152,7 +154,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
-        isLoading: false,
+        isSubmitResult: false,
       };
     }
   )
