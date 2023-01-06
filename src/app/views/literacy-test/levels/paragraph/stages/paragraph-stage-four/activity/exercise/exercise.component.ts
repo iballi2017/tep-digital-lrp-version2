@@ -210,7 +210,7 @@ export class ExerciseComponent implements OnInit {
       if (result) {
         const Payload: ActivityAnswer = {
           session_id: this.gameSessionId,
-          answer: '4',
+          answer: '5',
           data: [...TestList],
         }
         this.onSubmit(Payload) 

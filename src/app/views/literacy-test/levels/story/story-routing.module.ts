@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GameLevel } from 'src/app/models/interface/game-level';
+import { GameStage } from 'src/app/models/interface/game-stage';
 import { StoryStageOneComponent } from './stages/story-stage-one/story-stage-one.component';
 
 const routes: Routes = [
   {
-    path: 'story/stage-1',
+    path: `${GameLevel.STORY}/stage-${GameStage.ONE}`,
     component: StoryStageOneComponent,
     children: [
       {

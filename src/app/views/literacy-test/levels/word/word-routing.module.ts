@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GameLevel } from 'src/app/models/interface/game-level';
+import { GameStage } from 'src/app/models/interface/game-stage';
 import { WordStageOneComponent } from './stages/word-stage-one/word-stage-one.component';
 import { WordStageTwoComponent } from './stages/word-stage-two/word-stage-two.component';
 
 const routes: Routes = [
   {
-    path: 'word/stage-1',
+    path: `${GameLevel.WORD}/stage-${GameStage.ONE}`,
     component: WordStageOneComponent,
     children: [
       {
@@ -35,7 +37,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'word/stage-2',
+    path: `${GameLevel.WORD}/stage-${GameStage.TWO}`,
     component: WordStageTwoComponent,
     children: [
       {
@@ -62,7 +64,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'word/stage-3',
+    path: `${GameLevel.WORD}/stage-${GameStage.THREE}`,
     component: WordStageTwoComponent,
     children: [
       {
@@ -89,7 +91,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'word/stage-4',
+    path: `${GameLevel.WORD}/stage-${GameStage.FOUR}`,
     component: WordStageTwoComponent,
     children: [
       {

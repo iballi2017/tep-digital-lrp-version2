@@ -7,7 +7,7 @@
     <ng-container *ngIf="isLoadingStarCards && !testStageStars.length">
         <div class="text-info text-bold">Loading...</div>
     </ng-container>
-    <p class="text-danger text-bold">{{testStageStars | json}}</p>
+    <!-- <p class="text-danger text-bold">{{testStageStars | json}}</p> -->
     <ul class="stage-status list-style-none ps-0">
         <li class="cursor-pointer" *ngFor="let item of testStageStars; let i = index"
             [routerLink]="['/literacy/letter/', item?.title, 'letter-splash']">

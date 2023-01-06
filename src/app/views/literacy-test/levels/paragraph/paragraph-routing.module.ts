@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GameLevel } from 'src/app/models/interface/game-level';
+import { GameStage } from 'src/app/models/interface/game-stage';
 import { ParagraphStageOneComponent } from './stages/paragraph-stage-one/paragraph-stage-one.component';
 
 const routes: Routes = [
   {
-    path: 'paragraph/stage-1',
+    path: `${GameLevel.PARAGRAPH}/stage-${GameStage.ONE}`,
     component: ParagraphStageOneComponent,
     children: [
       {
@@ -34,7 +36,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'paragraph/stage-2',
+    path: `${GameLevel.PARAGRAPH}/stage-${GameStage.TWO}`,
     component: ParagraphStageOneComponent,
     children: [
       {
@@ -61,7 +63,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'paragraph/stage-3',
+    path: `${GameLevel.PARAGRAPH}/stage-${GameStage.THREE}`,
     component: ParagraphStageOneComponent,
     children: [
       {
@@ -88,7 +90,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'paragraph/stage-4',
+    path: `${GameLevel.PARAGRAPH}/stage-${GameStage.FOUR}`,
     component: ParagraphStageOneComponent,
     children: [
       {

@@ -138,7 +138,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     if (this.checkTestCompletion.length == this.testList.length) {
       const Payload: ActivityAnswer = {
         session_id: this.gameSessionId,
-        answer: '4',
+        answer: '1',
         data: [...this.checkTestCompletion],
       };
       this.store.dispatch(addWordLevelStageThreeResult({ payload: Payload }));

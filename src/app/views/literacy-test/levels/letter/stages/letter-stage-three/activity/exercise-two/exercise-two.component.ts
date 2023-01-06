@@ -152,7 +152,7 @@ export class ExerciseTwoComponent implements OnInit, OnDestroy {
     if (this.checkTestCompletion.length == this.testList.length) {
       const Payload: ActivityAnswer = {
         session_id: this.gameSessionId,
-        answer: '4',
+        answer: '2',
         data: [...this.checkTestCompletion],
       };
       this.store.dispatch(addLetterLevelStageThreeResult({ payload: Payload }));
