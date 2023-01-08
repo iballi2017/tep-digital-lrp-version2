@@ -23,8 +23,13 @@ export const loadProfileInformationsFailure = createAction(
 //   '[update-personal-information.component] Update ProfileInformation'
 // );
 export const updateProfileInformation = createAction(
-  '[profile-information.effects] Update ProfileInformation',
+  '[profile- Information.effects] Update ProfileInformation',
   props<{ profileInformation: any }>()
+);
+
+export const updateProfileInformationFailure = createAction(
+  '[Profile Information Effect] Update ProfileInformations Failure',
+  props<{ error: any }>()
 );
 // export const updateProfileInformationFailure = createAction(
 //   '[profile-information.effects] Update ProfileInformation',

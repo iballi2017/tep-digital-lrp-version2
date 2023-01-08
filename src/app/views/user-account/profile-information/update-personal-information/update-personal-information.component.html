@@ -84,7 +84,8 @@
         </button> -->
             </div>
             <div class="footer-wrapper">
-                <app-primary-button [btnTitle]="'Save'" [btnClasses]="btnClasses"></app-primary-button>
+                <app-primary-button [btnTitle]="'Save'" [btnClasses]="btnClasses" [disabled]="UpdatePersonalDetailsForm.invalid || isUpdating" [isUpdating]="isUpdating"
+                [updatingText]="updatingText | uppercase"></app-primary-button>
                 <!-- <button class="btn primary-btn text-uppercase form-btn" [disabled]="(isLoading | async)">
                     {{submitBtnLabel}}
                 </button> -->

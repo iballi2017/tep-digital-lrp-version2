@@ -2,26 +2,30 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { ProfileInformation } from './profile-information.model';
 import * as ProfileInformationActions from './profile-information.actions';
+import { UpdateUserModel } from 'src/app/models/interface/user';
 
 export const profileInformationsFeatureKey = 'profileInformation';
 
-export interface ProfileInformationState extends EntityState<ProfileInformation> {
+export interface ProfileInformationState
+  extends EntityState<ProfileInformation> {
   // additional entities state properties
-  profileInformation: any,
-  error: any
+  profileInformation: any;
+  error: any;
 }
 
-export const adapter: EntityAdapter<ProfileInformation> = createEntityAdapter<ProfileInformation>();
+export const adapter: EntityAdapter<ProfileInformation> =
+  createEntityAdapter<ProfileInformation>();
 
 export const initialState: ProfileInformationState = adapter.getInitialState({
   // additional entity state properties,
   profileInformation: undefined,
-  error: undefined
+  error: undefined,
 });
 
 export const reducer = createReducer(
   initialState,
-  on(ProfileInformationActions.loadProfileInformationsSuccess,
+  on(
+    ProfileInformationActions.loadProfileInformationsSuccess,
     (state, action: any) => {
       return {
         ...state,
@@ -29,7 +33,8 @@ export const reducer = createReducer(
       };
     }
   ),
-  on(ProfileInformationActions.loadProfileInformationsFailure,
+  on(
+    ProfileInformationActions.loadProfileInformationsFailure,
     (state, action: any) => {
       return {
         ...state,
@@ -37,24 +42,24 @@ export const reducer = createReducer(
       };
     }
   ),
-  on(ProfileInformationActions.updateProfileInformation,
-    (state, action:any) => {
+  on(
+    ProfileInformationActions.updateProfileInformation,
+    (state, action: any) => {
       return {
         ...state,
         profileInformation: action?.profileInformation,
       };
     }
   ),
-  // on(ProfileInformationActions.updateProfileInformationFailure,
-  //   (state, action:any) => {
-  //     return {
-  //       ...state,
-  //       error: action.error,
-  //     };
-  //   }
-  // ),
-
-
+  on(
+    ProfileInformationActions.updateProfileInformationFailure,
+    (state, action: any) => {
+      return {
+        ...state,
+        error: action.error,
+      };
+    }
+  )
 
   // on(ProfileInformationActions.addProfileInformation,
   //   (state, action) => adapter.addOne(action.profileInformation, state)
@@ -88,9 +93,5 @@ export const reducer = createReducer(
   // ),
 );
 
-export const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal,
-} = adapter.getSelectors();
+export const { selectIds, selectEntities, selectAll, selectTotal } =
+  adapter.getSelectors();

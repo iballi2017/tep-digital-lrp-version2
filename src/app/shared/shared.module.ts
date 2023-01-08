@@ -24,6 +24,8 @@ import { ActivityKeypadTypeOneComponent } from './shared.components/activity-key
 import { FullPageLoaderComponent } from './shared.components/full-page-loader/full-page-loader.component';
 import { StoreModule } from '@ngrx/store';
 import * as fromGame from './store/game/game.reducer';
+import { ReportListSearchFieldComponent } from './shared.components/report-list-search-field/report-list-search-field.component';
+import { FormsModule } from '@angular/forms';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -45,12 +47,14 @@ import * as fromGame from './store/game/game.reducer';
     LevelLoaderComponent,
     ActivityKeypadTypeOneComponent,
     FullPageLoaderComponent,
+    ReportListSearchFieldComponent,
   ],
   imports: [
     CommonModule,
     // ToastrModule.forRoot(),
     SharedRoutingModule,
     NgMaterialModule,
+    FormsModule,
     StoreModule.forFeature(fromGame.gamesFeatureKey, fromGame.reducer),
   ],
   exports: [
@@ -66,6 +70,7 @@ import * as fromGame from './store/game/game.reducer';
     LevelLoaderComponent,
     ActivityKeypadTypeOneComponent,
     FullPageLoaderComponent,
+    ReportListSearchFieldComponent
   ],
 })
 export class SharedModule {}

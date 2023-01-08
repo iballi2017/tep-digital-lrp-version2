@@ -1,0 +1,26 @@
+<!-- <p>report-list-search-field works!</p> -->
+
+<div id="search-input-wrapper" class="order-2 order-md-1">
+    <div id="search-input" class="d-flex flex-nowrap my-2 my-lg-0">
+        <button id="search-btn" class="btn" type="submit">
+            <!-- <img src="../../../../../assets/images/icons/search-lens-icon.svg" alt="search icon" class="img-fluid"> -->
+            <img src="../../../../assets/images/icons/search-lens-icon.svg"
+                alt="search icon">
+        </button>
+        <input class="form-control me-sm-2 w-100" type="search"
+            placeholder="Search By name or PROGRAM" aria-label="Search By name or PROGRAM" [(ngModel)]="searchTerm"
+            (change)="onSearch(searchTerm)">
+    </div>
+</div>
+
+<!-- <div id="filter-dropdown">
+    <form #FilterForm="ngForm">
+        <div class="select-drop-wrapper_">
+            <select name="Filter" id="" class="form-select" (change)="sortReportListBy(FilterForm)"
+                [(ngModel)]="SortItem">
+                <option value="" selected="selected">FILTER</option>
+                <option [value]="item" *ngFor="let item of filterDropdownList">{{item}}</option>
+            </select>
+        </div>
+    </form>
+</div> -->

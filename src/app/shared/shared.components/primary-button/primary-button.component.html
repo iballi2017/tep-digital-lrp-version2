@@ -1,4 +1,6 @@
 <!-- <p>primary-button works!</p> -->
-<button mat-button [type]="btnType" class="btn primary-btn" [ngClass]="btnClasses" (click)="onClickBtn()" [disabled]="disabled">
-    {{btnTitle}}
+<button mat-button [type]="btnType" class="btn primary-btn" [ngClass]="btnClasses" (click)="onClickBtn()"
+    [disabled]="disabled">
+    <ng-container *ngIf="isUpdating">{{updatingText}}</ng-container>
+    <ng-container *ngIf="!isUpdating">{{btnTitle}}</ng-container>
 </button>

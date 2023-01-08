@@ -37,7 +37,7 @@ export class ProfileInformationComponent implements OnInit, OnDestroy {
   getUserData() {
     this.store.dispatch(loadProfileInformations());
     this.userData$ = this.store.pipe(select(profileInformation));
-    console.warn(this.userData$)
+    // console.warn(this.userData$)
     // this._identitySvc.getUserById().subscribe({
     //   next: (response) => {
     //     if (response) {
@@ -50,7 +50,7 @@ export class ProfileInformationComponent implements OnInit, OnDestroy {
 
 
   onEditPersonalDetails(userData: any) {
-    console.group(userData);
+    // console.group(userData);
     this._router.navigate([
       `/account/update-personal-details/${userData?.usr_id}`,
     ]);

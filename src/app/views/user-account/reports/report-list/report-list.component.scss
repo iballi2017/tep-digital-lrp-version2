@@ -1,18 +1,18 @@
 @use "../../../../../sass/_abstracts/colors";
 @use "../../../../../sass/_partials/mixins";
 
-#search-input-wrapper {
-    // width: 100%;
-    // max-width: 500px;
-    // width: 500px;
-    + div {
-        width: 100%;
-        // background-color: red;
-        @include mixins.minmq(765px) {
-            max-width: 160px;
-        }
-    }
-}
+// #search-input-wrapper {
+//     // width: 100%;
+//     // max-width: 500px;
+//     // width: 500px;
+//     + div {
+//         width: 100%;
+//         // background-color: red;
+//         @include mixins.minmq(765px) {
+//             max-width: 160px;
+//         }
+//     }
+// }
 
 .status {
     display: flex;
@@ -60,16 +60,6 @@ select.form-select {
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-    }
-}
-#search-input {
-    border: 1px solid rgba(199, 199, 199, 1);
-    border-radius: 5px;
-    input {
-        border: none;
-        &:focus {
-            border: none !important;
         }
     }
 }

@@ -6,7 +6,7 @@
     <div class="details-card-1">
         <div class="title-wrapper">
             <div class="d-flex align-items-center">
-                <button class="btn back-btn pl-0" (click)="back()"></button>
+                <button class="btn back-btn black-arrow pl-0" (click)="back()"></button>
                 <h2 class="title">{{title}}</h2>
             </div>
         </div>
@@ -138,6 +138,12 @@
                                     <td>{{reportDetails?.paragraph_stage_1}}</td>
                                     <td>{{reportDetails?.paragraph_stage_2}}</td>
                                     <td>{{reportDetails?.paragraph_stage_3}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">STORY</th>
+                                    <td>{{reportDetails?.story_stage_1}}</td>
+                                    <td>{{reportDetails?.story_stage_2}}</td>
+                                    <td>{{reportDetails?.story_stage_3}}</td>
                                 </tr>
                             </tbody>
                         </table>

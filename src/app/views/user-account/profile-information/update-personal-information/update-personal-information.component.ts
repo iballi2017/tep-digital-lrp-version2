@@ -30,6 +30,8 @@ export class UpdatePersonalInformationComponent implements OnInit {
   userId: any;
   btnClasses: string = 'btn-40-height px-4';
   gender = ['male', 'female', 'other'];
+  isUpdating: boolean = false;
+  updatingText: string = 'updating...';
   constructor(
     private _identitySvc: IdentityService,
     private _fb: FormBuilder,
@@ -87,26 +89,25 @@ export class UpdatePersonalInformationComponent implements OnInit {
   onGetParams() {
     this._route.paramMap.subscribe((params: any) => {
       if (params) {
-        console.warn('params: ', params);
         this.userId = params.get('userId');
       }
     });
   }
 
-  getUserDetails() {
-    this._identitySvc.getUserById().subscribe({
-      next: (response) => {
-        if (response) {
-          console.group('user details: ', response);
-        }
-      },
-      error: (err: any) => {
-        if (err) {
-          console.warn('Error: ', err);
-        }
-      },
-    });
-  }
+  // getUserDetails() {
+  //   this._identitySvc.getUserById().subscribe({
+  //     next: (response) => {
+  //       if (response) {
+  //         console.group('user details: ', response);
+  //       }
+  //     },
+  //     error: (err: any) => {
+  //       if (err) {
+  //         console.warn('Error: ', err);
+  //       }
+  //     },
+  //   });
+  // }
 
   getUserData(data: any) {
     this.UpdatePersonalDetailsForm.controls['FullName'].setValue(
@@ -123,10 +124,16 @@ export class UpdatePersonalInformationComponent implements OnInit {
 
   onSubmit() {
     // this.ngRedux.dispatch({ type: UPDATE_USER_DETAILS });
-    const Payload: UpdateUserModel = {
+    const Payload: any = {
       usr_fullname: this.UpdatePersonalDetailsForm.value.FullName,
       usr_gender: this.UpdatePersonalDetailsForm.value.Gender,
+      usr_email: this.UpdatePersonalDetailsForm.value.EmailAddress,
+      usr_party: this.UpdatePersonalDetailsForm.value.Party,
     };
+    // const Payload: UpdateUserModel = {
+    //   usr_fullname: this.UpdatePersonalDetailsForm.value.FullName,
+    //   usr_gender: this.UpdatePersonalDetailsForm.value.Gender,
+    // };
 
     if (this.UpdatePersonalDetailsForm.invalid) {
       return;
@@ -152,9 +159,18 @@ export class UpdatePersonalInformationComponent implements OnInit {
   }
 
   processData(Payload: any) {
-    this.store.dispatch(
-      updateProfileInformation({ profileInformation: Payload })
-    );
+    this.isUpdating = true;
+    setTimeout(() => {
+      this.store.dispatch(
+        updateProfileInformation({ profileInformation: Payload })
+      );
+      this._identitySvc.UpdateUserDetailsBehaviour.subscribe((msg: any) => {
+        if (msg) {
+          this.isUpdating = false;
+        }
+      });
+    }, 2000);
+
     // let subscription = this._identitySvc.UpdateUserDetails(Payload).subscribe({
     //   next: (response: any) => {
     //     if (response) {
