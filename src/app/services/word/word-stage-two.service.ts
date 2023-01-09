@@ -8,7 +8,7 @@ import { handleError } from 'src/app/helpers/errorHandler';
   providedIn: 'root',
 })
 export class WordStageTwoService {
-  SubmitGameStage_2_Url = baseUrl + '/submit-letter-stage-2';
+  SubmitGameStage_2_Url = baseUrl + '/submit-word-stage-2';
   addWordLevelResultBehaviour = new BehaviorSubject(false);
 
   constructor(private _http: HttpClient) {}

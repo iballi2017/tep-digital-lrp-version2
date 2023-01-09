@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { AlphabetType } from 'src/app/models/interface/alphabet-type';
 import { ActivityAnswer } from 'src/app/models/interface/game';
@@ -13,13 +14,14 @@ import { LetterStageThreeService } from 'src/app/services/letter/letter-stage-th
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addLetterLevelStageThreeResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
+import { BackgroundNote } from 'src/assets/data/background-sound.voicenote';
 
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   boardActivityHint: string = 'Create syllables';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -70,6 +72,14 @@ export class ExerciseComponent implements OnInit {
     this.onReplceKeyList();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
+  }
+
+  
+
+  ngAfterViewInit() {
+    let sound = BackgroundNote.Literacy_Note;
+    let _PlayBGSound = new PlaySound(sound);
+    _PlayBGSound.playBGSound();
   }
 
   onCheckTestCompletion() {

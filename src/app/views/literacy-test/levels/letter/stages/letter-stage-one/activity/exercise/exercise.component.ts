@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { AlphabetType } from 'src/app/models/interface/alphabet-type';
 import { ActivityAnswer } from 'src/app/models/interface/game';
@@ -13,13 +14,15 @@ import { LetterStageOneService } from 'src/app/services/letter/letter-stage-one.
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addLetterLevelStageOneResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
+import { AlphabetNote } from 'src/assets/data/alphabet.voicenote';
+import { BackgroundNote } from 'src/assets/data/background-sound.voicenote';
 
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   boardActivityHint: string = 'Reveal the hidden vowel letters';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
@@ -60,6 +63,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         {
           name: 'a',
           type: AlphabetType.VOWEL,
+          vn: AlphabetNote.A_Note,
         },
         {
           name: 'j',
@@ -80,6 +84,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         {
           name: 'b',
           type: AlphabetType.CONSONANT,
+          vn: AlphabetNote.B_Note,
         },
       ],
     },
@@ -110,6 +115,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         {
           name: 'c',
           type: AlphabetType.CONSONANT,
+          vn: AlphabetNote.C_Note,
         },
       ],
     },
@@ -125,6 +131,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   gameSessionId!: string;
   stageNumber: number = 1;
   gameLevel = GameLevel.LETTER;
+
+  // audioFile: string = AlphabetNote.A_Note;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
@@ -139,6 +147,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.onGetGameSessionId();
   }
 
+  ngAfterViewInit() {
+    let sound = BackgroundNote.Literacy_Note;
+    let _PlayBGSound = new PlaySound(sound);
+    _PlayBGSound.playBGSound();
+  }
+
   onCheckTestCompletion() {
     this.checkTestCompletion = this.testList.filter(
       (test: any) => test.isTestComplete == true
@@ -151,6 +165,9 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   onSelectAlphabet(alphabet: any) {
+    let playSound = new PlaySound(alphabet);
+    playSound.playAlphabetVoice();
+
     this.previewList.push(alphabet.name);
     this.previewText = alphabet.name;
     setTimeout(() => {
@@ -196,7 +213,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this._gameSvc.LoadGameSession();
     this._gameSvc.gameSessionBehaviorSubject.subscribe({
       next: (msg: any) => {
-        this.gameSessionId = msg?.session_id
+        this.gameSessionId = msg?.session_id;
       },
     });
   }
