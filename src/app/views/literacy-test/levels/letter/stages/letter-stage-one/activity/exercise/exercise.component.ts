@@ -120,6 +120,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
       ],
     },
   ];
+  
   // previewList = ['a', 'b', 'c'];
   previewList: string[] = [];
   resultItemList: any[] = [];

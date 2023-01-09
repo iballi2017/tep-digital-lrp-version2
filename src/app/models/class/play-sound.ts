@@ -8,6 +8,7 @@ export class PlaySound {
     if (this.item) {
       let audio = new Audio();
       audio.src = this.item;
+      audio.muted = true;
       audio.load();
       audio.play();
       audio.volume = 0.02;
@@ -15,12 +16,12 @@ export class PlaySound {
     }
   }
 
-  playAlphabetVoice(){
-      if (this.item.vn) {
-        let audio = new Audio();
-        audio.src = this.item.vn;
-        audio.load();
-        audio.play();
-      }
+  playAlphabetVoice() {
+    if (this.item.vn) {
+      let audio = new Audio();
+      audio.src = this.item.vn;
+      audio.load();
+      audio.play();
+    }
   }
 }
