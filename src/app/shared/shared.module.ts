@@ -26,6 +26,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromGame from './store/game/game.reducer';
 import { ReportListSearchFieldComponent } from './shared.components/report-list-search-field/report-list-search-field.component';
 import { FormsModule } from '@angular/forms';
+import { ActivityLauncherComponent } from './shared.components/activity-launcher/activity-launcher.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -48,6 +49,7 @@ import { FormsModule } from '@angular/forms';
     ActivityKeypadTypeOneComponent,
     FullPageLoaderComponent,
     ReportListSearchFieldComponent,
+    ActivityLauncherComponent,
   ],
   imports: [
     CommonModule,
@@ -70,7 +72,8 @@ import { FormsModule } from '@angular/forms';
     LevelLoaderComponent,
     ActivityKeypadTypeOneComponent,
     FullPageLoaderComponent,
-    ReportListSearchFieldComponent
+    ReportListSearchFieldComponent,
+    ActivityLauncherComponent
   ],
 })
 export class SharedModule {}

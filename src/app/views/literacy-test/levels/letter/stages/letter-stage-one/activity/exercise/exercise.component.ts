@@ -120,7 +120,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
       ],
     },
   ];
-  
+
   // previewList = ['a', 'b', 'c'];
   previewList: string[] = [];
   resultItemList: any[] = [];
@@ -149,9 +149,19 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    // this.playBGSound().playBGSound();
+  }
+
+  playBGSound() {
     let sound = BackgroundNote.Literacy_Note;
     let _PlayBGSound = new PlaySound(sound);
-    _PlayBGSound.playBGSound();
+    return _PlayBGSound;
+  }
+
+  stopBGSound(){
+    let sound = BackgroundNote.Literacy_Note;
+    let _PlayBGSound = new PlaySound(sound);
+    _PlayBGSound.stopSound();
   }
 
   onCheckTestCompletion() {
@@ -267,5 +277,9 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
         x.unsubscribe();
       }
     });
+
+    // let sound = BackgroundNote.Literacy_Note;
+    // let _PlayBGSound = new PlaySound(sound);
+    // _PlayBGSound.stopSound();
   }
 }
