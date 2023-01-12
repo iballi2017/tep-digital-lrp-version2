@@ -8,18 +8,11 @@ export class PlaySound {
 
   playBGSound() {
     if (this.item) {
-      let audio = new Audio();
-      audio.src = this.item;
-      // audio.muted = true;
-      console.group('PLAY this.audio: ', this.audio);
-      audio.load();
-      audio.play();
-      audio.volume = 0.1;
-      audio.loop = true;
-
-      // setTimeout(() => {
-      //   audio.pause();
-      // }, 5000);
+      this.audio.src = this.item;
+      this.audio.load();
+      this.audio.play();
+      this.audio.volume = 0.1;
+      this.audio.loop = true;
     }
   }
 
@@ -33,12 +26,6 @@ export class PlaySound {
   }
 
   stopSound() {
-    console.warn('STOP this.item: ', this.item);
-    // this.audio.src = this.item;
-    console.warn('STOP this.item: ', this.item);
-    console.group('STOP this.audio: ', this.audio);
-    // this.audio.load();
-    // audio.pause();
     this.audio.pause();
   }
 }

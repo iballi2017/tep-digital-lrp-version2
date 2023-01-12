@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductState } from './store/product.reducer';
 import { addProduct, deleteProduct, loadProducts } from './store/product.actions';
 import { selectProducts } from './store/product.selectors';
+import { PlaySound } from 'src/app/models/class/play-sound';
 
 @Component({
   selector: 'app-products',
@@ -22,7 +23,7 @@ export class ProductsComponent implements OnInit {
     private _fb: FormBuilder,
     private _productSvc: ProductService,
     private store: Store<ProductState>
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.store.dispatch(loadProducts());
@@ -35,6 +36,18 @@ export class ProductsComponent implements OnInit {
       title: '',
       price: '',
     });
+  }
+
+  Literacy_Note = 'https://mainlandcode.com/lrpaudios/literacy/Literacy-BG-Audio.mp3';
+  _PlayBGSound = new PlaySound(this.Literacy_Note);
+  playSound() {
+    // let sound = this.Literacy_Note;
+    // let _PlayBGSound = new PlaySound(sound);
+    this._PlayBGSound.playBGSound()
+  }
+
+  pauseSound(){
+    this._PlayBGSound.stopSound();
   }
 
   LoadProducts() {
@@ -68,7 +81,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onDelete(Id: any) {
-    this.store.dispatch(deleteProduct({id: Id}))
+    this.store.dispatch(deleteProduct({ id: Id }))
     // this._productSvc.DeleteProduct(Id).subscribe({
     //   next: (response: any) => {
     //     if (response) {

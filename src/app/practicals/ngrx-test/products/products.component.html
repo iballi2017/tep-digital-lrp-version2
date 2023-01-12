@@ -24,7 +24,7 @@
         <!-- <li *ngFor="let product of list">
             {{product?.title}}
         </li> -->
-        
+
         <li *ngFor="let product of (products$ | async)">
             {{product?.title}}
         </li>
@@ -32,23 +32,28 @@
 
     <table class="table">
         <thead>
-          <tr>
-            <th scope="col">S/N</th>
-            <th scope="col">Title</th>
-            <th scope="col">Price</th>
-            <th scope="col"></th>
-          </tr>
+            <tr>
+                <th scope="col">S/N</th>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+            </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of (products$ | async); let i = index">
-            <th scope="row">{{i + 1}}</th>
-            <td> {{product?.title}}</td>
-            <td> {{product?.price}}</td>
-            <td>
-                <button mat-button color="warn" (click)="onDelete(product?.id)">Delete</button>
-            </td>
-          </tr>
-          <tr>
+            <tr *ngFor="let product of (products$ | async); let i = index">
+                <th scope="row">{{i + 1}}</th>
+                <td> {{product?.title}}</td>
+                <td> {{product?.price}}</td>
+                <td>
+                    <button mat-button color="warn" (click)="onDelete(product?.id)">Delete</button>
+                </td>
+            </tr>
+            <tr>
         </tbody>
-      </table>
+    </table>
 </div>
+
+
+
+<button (click)="playSound()">PLAY</button>
+<button (click)="pauseSound()">PAUSE</button>
