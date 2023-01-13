@@ -8,6 +8,7 @@ this.isLoadingReportList$  -->
     </div>
     <div class="body-wrapper">
         <div class="item-card">
+            <!-- <p class="text-danger">{{reportsList$ | async | json}}</p> -->
             <div class="item-card-header">
                 <div class="inner">
                     <div>
@@ -37,7 +38,7 @@ this.isLoadingReportList$  -->
                 <ng-container *ngIf="!reportList?.length && !(isLoadingReportList$ | async) ">
                     <div class="alert alert-info text-center">No report</div>
                 </ng-container>
-                <ng-container *ngIf="!reportList.length && (isLoadingReportList$ |async)">
+                <ng-container *ngIf="!reportList?.length && (isLoadingReportList$ |async)">
                     <P class="text-bold">LOADING...</P>
                 </ng-container>
                 <div class="table-responsive" *ngIf="reportList?.length">
@@ -55,7 +56,12 @@ this.isLoadingReportList$  -->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of reportsList$ | async; let i = index">
+                            <tr *ngFor="let item of reportsList$ | async   | paginate
+                            : {
+                                itemsPerPage: ItemsPerPage,
+                                currentPage: page,
+                                totalItems: totalRecords
+                              }; let i = index ">
                                 <th scope="row">
                                     {{i + 1}}
                                 </th>
@@ -114,6 +120,7 @@ this.isLoadingReportList$  -->
                         </tbody>
                     </table>
                 </div>
+                <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
             </div>
         </div>
     </div>

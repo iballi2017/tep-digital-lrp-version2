@@ -7,7 +7,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class ActivityLauncherComponent implements OnInit {
   @Output()onPlayBGSound = new EventEmitter();
-  @Output()onStopBGSound = new EventEmitter();
 
   constructor() { }
 
@@ -17,9 +16,6 @@ export class ActivityLauncherComponent implements OnInit {
 
   StartTestAndPlaySound(){
     this.onPlayBGSound.emit();
-  }
-  StopTestAndPlaySound(){
-    this.onStopBGSound.emit();
   }
 
 }

@@ -1,8 +1,10 @@
 export class PlaySound {
   item: any;
   audio = new Audio();
-  constructor(item: any) {
+  volume:number;
+  constructor(item: any, volume:number = 0.01) {
     this.item = item;
+    this.volume = volume;
     console.warn('item: ', item);
   }
 
@@ -11,7 +13,7 @@ export class PlaySound {
       this.audio.src = this.item;
       this.audio.load();
       this.audio.play();
-      this.audio.volume = 0.1;
+      this.audio.volume = this.volume;
       this.audio.loop = true;
     }
   }

@@ -4,7 +4,7 @@ import { Update } from '@ngrx/entity';
 import { Report } from './reports.model';
 import { SessionId } from 'src/app/models/interface/game-report';
 
-// LOAD REPORTs BEGINS
+// LOAD REPORTS BEGINS
 export const loadReports = createAction(
   '[Reports list component] Load Reports'
 );
@@ -14,6 +14,20 @@ export const loadReportsSuccess = createAction(
 );
 export const loadReportsFailure = createAction(
   '[Reports Effect] Load Reports Failure',
+  props<{ error: any }>()
+);
+
+// LOAD PAGED REPORTS BEGINS
+export const loadPagedReports = createAction(
+  '[Reports list component] Load Paged Reports',
+  props<{Payload:any}>()
+);
+export const loadPagedReportsSuccess = createAction(
+  '[Reports Effect] Load Paged Reports Success',
+  props<{ reports: any }>()
+);
+export const loadPagedReportsFailure = createAction(
+  '[Reports Effect] Load Paged Reports Failure',
   props<{ error: any }>()
 );
 
@@ -34,8 +48,10 @@ export const loadSingleReportFailure = createAction(
 );
 
 // DELETE REPORT
-export const deleteReport = createAction('[Reports/API] Delete Report',
-props<{ id: SessionId }>());
+export const deleteReport = createAction(
+  '[Reports/API] Delete Report',
+  props<{ id: SessionId }>()
+);
 export const deleteReportSuccess = createAction(
   '[Reports/API] Delete Report Success',
   props<{ id: SessionId }>()

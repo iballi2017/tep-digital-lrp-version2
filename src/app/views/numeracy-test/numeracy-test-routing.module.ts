@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NumeracyLevelCompletionComponent } from './completion/numeracy-level-completion/numeracy-level-completion.component';
+import { NumeracyProgramCompletionComponent } from './completion/numeracy-program-completion/numeracy-program-completion.component';
+import { NumeracyStageCompletionComponent } from './completion/numeracy-stage-completion/numeracy-stage-completion.component';
 import { BasicOperationsAdditionComponent } from './levels/basic-operations-addition/basic-operations-addition.component';
 import { BasicOperationsDivisionComponent } from './levels/basic-operations-division/basic-operations-division.component';
 import { BasicOperationsMultiplicationComponent } from './levels/basic-operations-multiplication/basic-operations-multiplication.component';
@@ -50,6 +53,20 @@ const routes: Routes = [
         component: BasicOperationsMultiplicationComponent,
       },
     ],
+  },
+  {
+    path: 'stage-completion/:game-level/:stage-number',
+    // component: LetteringStageCompletionComponent,
+    component: NumeracyStageCompletionComponent,
+  },
+  {
+    path: 'level-completion/:game-level',
+    // component: LetteringLevelCompletionComponent,
+    component: NumeracyLevelCompletionComponent,
+  },
+  {
+    path: 'game-type-completion/:game-level',
+    component: NumeracyProgramCompletionComponent,
   },
 ];
 

@@ -65,6 +65,7 @@ export class OccupantListComponent implements OnInit,AfterContentInit {
     let subscription = this.occupantList$.subscribe({
       next: (response: any) => {
         if (response) {
+          console.log('response: ', response);
           this.list = response;
         }
       },

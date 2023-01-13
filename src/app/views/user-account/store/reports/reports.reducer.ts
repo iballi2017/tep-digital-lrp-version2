@@ -8,7 +8,9 @@ export const reportsFeatureKey = 'reports';
 export interface ReportState extends EntityState<Report> {
   // additional entities state properties
   isLoading: boolean;
+  reportList: any;
   selectedReport: any;
+  reportsParams: any;
   error: any;
 }
 
@@ -17,12 +19,16 @@ export const adapter: EntityAdapter<Report> = createEntityAdapter<Report>();
 export const initialState: ReportState = adapter.getInitialState({
   // additional entity state properties
   isLoading: false,
+  reportsParams: null,
+  reportList: null,
   selectedReport: null,
   error: null,
 });
 
 export const reducer = createReducer(
   initialState,
+
+  // LOAD REPORTS
   on(ReportsActions.loadReports, (state, action) => {
     return {
       ...state,
@@ -39,6 +45,46 @@ export const reducer = createReducer(
     };
   }),
   on(ReportsActions.loadReportsFailure, (state, action) => {
+    return {
+      ...state,
+      error: action?.error,
+      isLoading: false,
+    };
+  }),
+
+  // LOAD PAGED REPORTS
+  on(ReportsActions.loadPagedReports, (state, action) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(ReportsActions.loadPagedReportsSuccess, (state, action) => {
+    console.log('report action: ', action);
+    // return adapter.setAll(action.reports?.data, state);
+    return {
+      ...state,
+      reportList: action.reports.data
+    }
+  }),
+  on(ReportsActions.loadPagedReportsSuccess, (state, action) => {
+    console.log('report action: ', action);
+    return {
+      ...state,
+      reportsParams: {
+        itemsPerPage: action.reports.itemsPerPage,
+        page: action.reports.page,
+        totalRecords: action.reports.totalRecords,
+      },
+    };
+  }),
+  on(ReportsActions.loadPagedReportsSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }),
+  on(ReportsActions.loadPagedReportsFailure, (state, action) => {
     return {
       ...state,
       error: action?.error,
@@ -76,10 +122,9 @@ export const reducer = createReducer(
     };
   }),
   on(ReportsActions.deleteReportSuccess, (state, action) => {
-    console.log("action: ", action)
-    return adapter.removeOne(action.id.session_id, state)
-  }
-  ),
+    console.log('action: ', action);
+    return adapter.removeOne(action.id.session_id, state);
+  }),
   on(ReportsActions.deleteReportSuccess, (state, action) => {
     return {
       ...state,

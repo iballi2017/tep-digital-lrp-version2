@@ -27,6 +27,7 @@ import * as fromGame from './store/game/game.reducer';
 import { ReportListSearchFieldComponent } from './shared.components/report-list-search-field/report-list-search-field.component';
 import { FormsModule } from '@angular/forms';
 import { ActivityLauncherComponent } from './shared.components/activity-launcher/activity-launcher.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -57,6 +58,7 @@ import { ActivityLauncherComponent } from './shared.components/activity-launcher
     SharedRoutingModule,
     NgMaterialModule,
     FormsModule,
+    NgxPaginationModule,
     StoreModule.forFeature(fromGame.gamesFeatureKey, fromGame.reducer),
   ],
   exports: [
@@ -73,7 +75,8 @@ import { ActivityLauncherComponent } from './shared.components/activity-launcher
     ActivityKeypadTypeOneComponent,
     FullPageLoaderComponent,
     ReportListSearchFieldComponent,
-    ActivityLauncherComponent
+    ActivityLauncherComponent,
+    NgxPaginationModule
   ],
 })
 export class SharedModule {}

@@ -13,7 +13,8 @@ const routes: Routes = [
       { path: '', component: ReportListComponent },
       { path: 'report-list', component: ReportListComponent },
       { path: 'details/:sessionId', component: ReportDetailsComponent },
-      { path: 'search/:searchTerm', component: ReportSearchResultComponent },
+      // { path: 'search/:searchTerm', component: ReportSearchResultComponent },
+      { path: 'report-list/:searchTerm', component: ReportListComponent },
     ],
   },
 ];

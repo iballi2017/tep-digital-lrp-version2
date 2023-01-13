@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { SessionId } from 'src/app/models/interface/game-report';
 import { ReportService } from 'src/app/services/report.service';
 import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
-import { reportSelectStateIsLoading, selectReports } from '../../store/reports/report.selectors';
-import { deleteReport, loadReports } from '../../store/reports/reports.actions';
+import {
+  reportSelectStateIsLoading,
+  selectedReportParams,
+  selectReports,
+} from '../../store/reports/report.selectors';
+import {
+  deleteReport,
+  loadPagedReports,
+  loadReports,
+} from '../../store/reports/reports.actions';
 import { ReportState } from '../../store/reports/reports.reducer';
 
 @Component({
@@ -38,36 +46,100 @@ export class ReportListComponent implements OnInit {
     title: 'View',
   };
   isLoadingReportList$!: Observable<boolean>;
+  pageRequest!: { pageSize: number; pageNumber: number; searchWord: string };
+  reportParams$!: Observable<any>;
+  page: number = 1;
+  count = 0;
+  ItemsPerPage = 10;
+  searchTerm:string = '';
+  totalRecords!: string;
   constructor(
     private _reportSvc: ReportService,
     // private ngRedux: NgRedux<IAppState>,
     private _router: Router,
     public dialog: MatDialog,
-    private store: Store<ReportState>
+    private store: Store<ReportState>,
+    private _route: ActivatedRoute
   ) {
     this.SortItem = '';
   }
 
   ngOnInit(): void {
+    this.onGetSearchTerm();
     this.onGetReportList();
     // this._reportSvc.LoadUserGameResult();
   }
 
+  onGetSearchTerm() {
+    this._route.paramMap.subscribe({
+      next: (params: any) => {
+        if (params) {
+          console.log('params: ', params);
+          let searchTerm = params.get('searchTerm');
+          console.log('searchTerm: ', searchTerm);
+          this.searchTerm = searchTerm;
+          const Payload = {
+            pageSize: this.ItemsPerPage,
+            pageNumber: this.page,
+            searchWord: this.searchTerm,
+          };
+          this.store.dispatch(loadPagedReports({ Payload }));
+        } 
+        // else {
+          // this.searchTerm = '';
+          // const Payload = {
+          //   pageSize: this.ItemsPerPage,
+          //   pageNumber: this.page,
+          //   searchWord: this.searchTerm,
+          // };
+          // this.store.dispatch(loadPagedReports({ Payload }));
+        // }
+      },
+      error: (err: any) => {
+        console.warn('Error: ', err);
+      },
+    });
+  }
   onGetReportList() {
-    this.store.dispatch(loadReports());
+    if(!this.searchTerm){
+      this.searchTerm = ""
+    }
+    const Payload = {
+      pageSize: this.ItemsPerPage,
+      pageNumber: 1,
+      searchWord: this.searchTerm,
+    };
+    console.log("Payload: ", Payload)
+    this.store.dispatch(loadPagedReports({ Payload }));
+    // this.store.dispatch(loadReports());
     this.reportsList$ = this.store.pipe(select(selectReports));
-    this.isLoadingReportList$ = this.store.pipe(select(reportSelectStateIsLoading));
-    
+    this.reportParams$ = this.store.pipe(select(selectedReportParams));
+    this.isLoadingReportList$ = this.store.pipe(
+      select(reportSelectStateIsLoading)
+    );
+
     // this.isLoadingReportList$.subscribe((data: any) => {
     //   this.isLoadingReportList = data;
     // });
     let subscription = this.reportsList$.subscribe({
       next: (response: any) => {
-        console.log('response: ', response);
-        this.reportList = response;
+        if (response) {
+          console.log('response: ', response);
+          this.reportList = response;
+        }
       },
     });
     this.Subscriptions.push(subscription);
+
+    let reportParamsSubscription = this.reportParams$.subscribe({
+      next: (response: any) => {
+        if (response) {
+          console.log('response: ', response);
+          this.totalRecords = response.totalRecords;
+        }
+      },
+    });
+    this.Subscriptions.push(reportParamsSubscription);
   }
   onViewReportDetails(sessionId: any) {
     console.log('sessionId: ', sessionId);
@@ -145,6 +217,18 @@ export class ReportListComponent implements OnInit {
       default:
         return this.reportList;
     }
+  }
+
+  pageChangeEvent($event: any) {
+    this.page = $event;
+    // console.log("Paginate: ", this.ItemsPerPage, this.page);
+    // this._IdentitySvc._LoadAllUsers(this.ItemsPerPage, this.page);
+    const Payload = {
+      pageSize: this.ItemsPerPage,
+      pageNumber: this.page,
+      searchWord: this.searchTerm,
+    };
+    this.store.dispatch(loadPagedReports({ Payload }));
   }
 
   ngOnDestroy(): void {

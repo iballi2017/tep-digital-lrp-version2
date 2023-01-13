@@ -40,6 +40,42 @@ export class ReportsEffects {
     );
   });
 
+  loadPagedReportList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromReportActions.loadPagedReports),
+      mergeMap((action: any) =>
+        this._reportSvc.LoadPagedUserGameResult(action.Payload).pipe(
+          map((response: any) => {
+            console.log('response***: ', response);
+            let _reports = response?.data.map((item: any) => {
+              return {
+                ...item,
+                id: item.session_id,
+                sessionId: item.session_id,
+                fullname: item.occ_name,
+                age: item.occ_age,
+                gender: item.occ_gender,
+                program: item.gms_type,
+                status: item.status,
+                overallScore: item.total_score,
+                scorePercent: item.score_percent,
+              };
+            });
+            const reports = Object.assign(response, { data: _reports });
+            console.warn('reports: ', reports);
+            return fromReportActions.loadPagedReportsSuccess({
+              reports,
+            });
+          }),
+          catchError((error: any) =>
+            of(fromReportActions.loadPagedReportsFailure({ error }))
+          )
+        )
+      )
+      // tap(() => this._router.navigate(['/practicals/ngrx/products']))
+    );
+  });
+
   loadSingleReport$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromReportActions.loadSingleReport),
@@ -59,7 +95,6 @@ export class ReportsEffects {
       // tap(() => this._router.navigate(['/practicals/ngrx/products']))
     );
   });
-
 
   deleteSingleReportt$ = createEffect(() => {
     return this.actions$.pipe(

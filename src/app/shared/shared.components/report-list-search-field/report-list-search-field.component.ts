@@ -14,6 +14,7 @@ export class ReportListSearchFieldComponent implements OnInit {
 
   onSearch(searchTerm: any) {
     console.log('searchTerm: ', searchTerm);
-    this._router.navigate([`/account/reports/search/${this.searchTerm}`]);
+    // this._router.navigate([`/account/reports/search/${this.searchTerm}`]);
+    this._router.navigate([`/account/reports/report-list/${this.searchTerm}`]);
   }
 }

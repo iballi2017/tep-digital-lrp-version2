@@ -20,11 +20,19 @@ export class ReportService {
     private _http: HttpClient //  private ngRedux: NgRedux<IAppState>
   ) {}
 
+  // search=lite&pageLength=20&pageNumber=1&sort=Asc
+
+  LoadPagedUserGameResult(Payload: any) {
+    console.warn('Payload: ', Payload);
+    return this._http.get<GameReport>(
+      `${this.GetUserGameResultUrl}?search=${Payload?.searchWord}&pageLength=${Payload?.pageSize}&pageNumber=${Payload?.pageNumber}&sort=Asc`
+    );
+  }
+
   LoadUserGameResult() {
     // this.ngRedux.dispatch({ type: FETCH_REPORTS_LIST });
     return this._http.get<GameReport>(this.GetUserGameResultUrl);
 
-    
     // let subscription = this._http
     //   .get<GameReport>(this.GetUserGameResultUrl)
     //   .pipe(

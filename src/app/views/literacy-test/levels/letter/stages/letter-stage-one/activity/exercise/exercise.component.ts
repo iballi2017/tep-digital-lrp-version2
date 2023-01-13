@@ -11,6 +11,7 @@ import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { LetterStageOneService } from 'src/app/services/letter/letter-stage-one.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addLetterLevelStageOneResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
@@ -139,7 +140,8 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private _letterStageOneSvc: LetterStageOneService,
     private store: Store<LetterLevelResultState>,
-    private _router: Router
+    private _router: Router,
+    private _playSoundSvc: PlaySoundService
   ) {}
 
   ngOnInit(): void {
@@ -153,15 +155,13 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   playBGSound() {
-    let sound = BackgroundNote.Literacy_Note;
-    let _PlayBGSound = new PlaySound(sound);
-    return _PlayBGSound;
+    // let sound = BackgroundNote.Literacy_Note;
+    // let _PlayBGSound = new PlaySound(sound);
+    // return _PlayBGSound;
   }
 
   stopBGSound(){
-    let sound = BackgroundNote.Literacy_Note;
-    let _PlayBGSound = new PlaySound(sound);
-    _PlayBGSound.stopSound();
+    this._playSoundSvc.stopLiteracyBGSound();
   }
 
   onCheckTestCompletion() {
