@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Subscription } from 'rxjs';
+import { catchError, Observable, Subscription } from 'rxjs';
 import { baseUrl } from '../config/api';
 import { handleError } from '../helpers/errorHandler';
 import { IOccupant } from '../models/interface/occupant';
@@ -20,28 +20,15 @@ export class OccupantService {
     // private ngRedux: NgRedux<IAppState>
     ) { }
 
-  LoadOccupants() {
-    // this.ngRedux.dispatch({ type: FETCH_OCCUPANTS_LIST });
-    return this._http.get(this.GetOccupantUrl);
-    
-    // .subscribe({
-    //   next: (response: any) => {
-    //     if (response) {
-
-    //       // this.ngRedux.dispatch({
-    //       //   type: FETCH_OCCUPANTS_LIST_SUCCESS,
-    //       //   payload: response.data,
-    //       // });
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     console.warn('Error: ', err);
-    //     // this.ngRedux.dispatch({
-    //     //   type: FETCH_OCCUPANTS_LIST_ERROR,
-    //     //   payload: err,
-    //     // });
-    //   },
-    // });
+  LoadOccupants(queryParams: any):Observable<any> {
+    // return this._http.get(this.GetOccupantUrl);
+    return this._http.get<any>(
+      `${this.GetOccupantUrl}${queryParams}`,
+      {
+        observe: 'response',
+        // observe: 'events',
+      }
+    );
   }
 
   AddOccupant(Occupant: Occupant) {

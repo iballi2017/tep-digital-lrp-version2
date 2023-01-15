@@ -25,7 +25,7 @@ export class ReportService {
   // LoadPagedUserGameResult(Payload: any) {
   LoadPagedUserGameResult(queryParams: any) {
     // console.warn('Payload: ', Payload);
-    console.warn('queryParams: ', queryParams);
+    // console.warn('queryParams: ', queryParams);
     // return this._http.get<GameReport>(
     //   `${this.GetUserGameResultUrl}?search=${encodeURIComponent(
     //     Payload?.searchWord

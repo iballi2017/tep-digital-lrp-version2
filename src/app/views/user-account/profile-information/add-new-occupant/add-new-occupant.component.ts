@@ -3,10 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { buildQueryParams } from 'src/app/helpers/buildQueryParams';
+import { QueryParamsModel } from 'src/app/models/interface/queryParamsModel';
 import { LocationService } from 'src/app/services/location.service';
 import { OccupantMessengerService } from 'src/app/services/occupant-messenger.service';
 import { OccupantService } from 'src/app/services/occupant.service';
-import { addOccupant, loadOccupantList } from '../../store/occupant-list/occupant-list.actions';
+import {
+  addOccupant,
+  loadOccupantList,
+} from '../../store/occupant-list/occupant-list.actions';
 import { OccupantListState } from '../../store/occupant-list/occupant-list.reducer';
 import { isLoadingOccupantState } from '../../store/occupant-list/occupant-list.selectors';
 
@@ -25,6 +30,14 @@ export class AddNewOccupantComponent implements OnInit, OnDestroy {
   Subscriptions: Subscription[] = [];
   responseMessage: any;
   isLoadingOccupantState$!: Observable<any>;
+  page: number = 1;
+  count = 0;
+  ItemsPerPage = 3;
+  totalRecords!: string;
+  occupantListQuery: QueryParamsModel = {
+    PageSize: this.ItemsPerPage,
+    PageNumber: this.page,
+  };
   constructor(
     private _locationSvc: LocationService,
     private _fb: FormBuilder,
@@ -75,7 +88,9 @@ export class AddNewOccupantComponent implements OnInit, OnDestroy {
     this._occupantMessengerSvc.addOccupantBehaviour.subscribe((msg: any) => {
       if (msg) {
         this.AddRespondentForm.reset();
-        this.store.dispatch(loadOccupantList());
+        const Payload = buildQueryParams(this.occupantListQuery);
+        this.store.dispatch(loadOccupantList({ Payload }));
+        // this.store.dispatch(loadOccupantList());
         this.closeDialog();
       }
     });

@@ -17,8 +17,13 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor="let item of (occupantList$ | async); let i = index">
+                <tbody *ngIf="occupantList$ | async as occupantList">
+                    <tr *ngFor="let item of occupantList  | paginate
+                    : {
+                        itemsPerPage: ItemsPerPage,
+                        currentPage: page,
+                        totalItems: totalRecords
+                      }; let i = index">
                         <th scope="row">
                             {{i + 1}}
                         </th>
@@ -41,6 +46,10 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="py-2 d-flex">
+            <div class="ms-auto"></div>
+            <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
         </div>
     </ng-container>
 </div>

@@ -20,7 +20,8 @@ export const addOccupantFailure = createAction(
 
 // LOAD OCCUPANT LIST ENDS
 export const loadOccupantList = createAction(
-  '[OccupantList/API] Load OccupantList'
+  '[OccupantList/API] Load OccupantList',
+  props<{Payload:any}>()
 );
 export const loadOccupantListSuccess = createAction(
   '[OccupantList Effect] Load OccupantList Success',

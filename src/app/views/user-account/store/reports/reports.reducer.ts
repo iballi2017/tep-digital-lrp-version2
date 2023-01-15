@@ -60,7 +60,6 @@ export const reducer = createReducer(
     };
   }),
   on(ReportsActions.loadPagedReportsSuccess, (state, action) => {
-    console.log('report action: ', action);
     // return adapter.setAll(action.reports?.data, state);
     return {
       ...state,
@@ -68,7 +67,6 @@ export const reducer = createReducer(
     }
   }),
   on(ReportsActions.loadPagedReportsSuccess, (state, action) => {
-    console.log('report action: ', action);
     return {
       ...state,
       reportsParams: {

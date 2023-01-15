@@ -46,7 +46,6 @@ export class ReportsEffects {
       mergeMap((action: any) =>
         this._reportSvc.LoadPagedUserGameResult(action.Payload).pipe(
           map((response: any) => {
-            console.log('response***: ', response);
             let _reports = response?.body?.data.map((item: any) => {
               return {
                 ...item,
@@ -62,7 +61,6 @@ export class ReportsEffects {
               };
             });
             const reports = Object.assign(response, { data: _reports });
-            console.warn('reports: ', reports);
             return fromReportActions.loadPagedReportsSuccess({
               reports,
             });
@@ -82,7 +80,6 @@ export class ReportsEffects {
       mergeMap((action: any) =>
         this._reportSvc.LoadGameResultDetails(action.session_id).pipe(
           map((report: any) => {
-            console.log('report: ', report);
             return fromReportActions.loadSingleReportSuccess({
               selectedReport: report?.data,
             });

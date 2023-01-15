@@ -57,12 +57,11 @@ export class OccupantListEffects {
     return this.actions$.pipe(
       ofType(fromOccupantListActions.loadOccupantList),
       mergeMap((action: any) => {
-        console.log("action: ", action)
-        return this._occupantSvc.LoadOccupants().pipe(
+        return this._occupantSvc.LoadOccupants(action.Payload).pipe(
           map((occupantListArray: any) =>
           // fromOccupantListActions.loadOccupantListSuccess({ occupantList })
           {
-            let occupantList = occupantListArray?.data.map((item: any) => {
+            let occupantList = occupantListArray?.body?.data.map((item: any) => {
               return {
                 ...item,
                 id: item.occ_id,

@@ -82,29 +82,11 @@ export class ReportListComponent implements OnInit {
     this._route.paramMap.subscribe({
       next: (params: any) => {
         if (params) {
-          console.log('params: ', params);
           let searchTerm = params.get('searchTerm');
-          console.log('searchTerm: ', searchTerm);
-          // this.searchTerm = searchTerm;
-          // const Payload = {
-          //   pageSize: this.ItemsPerPage,
-          //   pageNumber: this.page,
-          //   searchWord: this.searchTerm,
-          // };
           this.reportQuery.searchWord = searchTerm;
           const Payload = buildQueryParams(this.reportQuery);
-      
           this.store.dispatch(loadPagedReports({ Payload }));
         }
-        // else {
-        // this.searchTerm = '';
-        // const Payload = {
-        //   pageSize: this.ItemsPerPage,
-        //   pageNumber: this.page,
-        //   searchWord: this.searchTerm,
-        // };
-        // this.store.dispatch(loadPagedReports({ Payload }));
-        // }
       },
       error: (err: any) => {
         console.warn('Error: ', err);
@@ -115,29 +97,16 @@ export class ReportListComponent implements OnInit {
     if (!this.searchTerm) {
       this.reportQuery.searchWord = '';
     }
-    // const Payload = {
-    //   pageSize: this.ItemsPerPage,
-    //   pageNumber: this.page,
-    //   searchWord: this.searchTerm,
-    // };
     const Payload = buildQueryParams(this.reportQuery);
-
-    console.log('Payload: ', Payload);
     this.store.dispatch(loadPagedReports({ Payload }));
-    // this.store.dispatch(loadReports());
     this.reportsList$ = this.store.pipe(select(selectReports));
     this.reportParams$ = this.store.pipe(select(selectedReportParams));
     this.isLoadingReportList$ = this.store.pipe(
       select(reportSelectStateIsLoading)
     );
-
-    // this.isLoadingReportList$.subscribe((data: any) => {
-    //   this.isLoadingReportList = data;
-    // });
     let subscription = this.reportsList$.subscribe({
       next: (response: any) => {
         if (response) {
-          console.log('response: ', response);
           this.reportList = response;
         }
       },
@@ -147,7 +116,6 @@ export class ReportListComponent implements OnInit {
     let reportParamsSubscription = this.reportParams$.subscribe({
       next: (response: any) => {
         if (response) {
-          console.log('response: ', response);
           this.totalRecords = response.totalRecords;
         }
       },
@@ -155,12 +123,10 @@ export class ReportListComponent implements OnInit {
     this.Subscriptions.push(reportParamsSubscription);
   }
   onViewReportDetails(sessionId: any) {
-    console.log('sessionId: ', sessionId);
     this._router.navigate([`account/reports/details/${sessionId}`]);
   }
 
   onRemoveReport(sessionId: string) {
-    console.log('sessionId: ', sessionId);
     this.openDialog(sessionId);
   }
 
@@ -181,7 +147,6 @@ export class ReportListComponent implements OnInit {
   }
 
   onDeleteOccupant(sessionId: string) {
-    console.log('sessionId: ', sessionId);
     const _sessionId: SessionId = {
       session_id: sessionId,
     };
@@ -234,8 +199,6 @@ export class ReportListComponent implements OnInit {
 
   pageChangeEvent($event: any) {
     this.page = $event;
-    // console.log("Paginate: ", this.ItemsPerPage, this.page);
-    // this._IdentitySvc._LoadAllUsers(this.ItemsPerPage, this.page);
     const Payload = {
       pageSize: this.ItemsPerPage,
       pageNumber: this.page,

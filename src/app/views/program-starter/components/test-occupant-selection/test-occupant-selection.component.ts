@@ -8,8 +8,10 @@ import {
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { buildQueryParams } from 'src/app/helpers/buildQueryParams';
 import { GameSessionData, StartGame } from 'src/app/models/interface/game';
 import { GameType } from 'src/app/models/interface/game-type';
+import { QueryParamsModel } from 'src/app/models/interface/queryParamsModel';
 import { GameService } from 'src/app/services/game.service';
 import { OccupantService } from 'src/app/services/occupant.service';
 import {
@@ -40,6 +42,14 @@ export class TestOccupantSelectionComponent implements OnInit {
   occupantList$!: Observable<any[]>;
   selectLabel: string = 'Select occupant';
   isLoadingOccupantState$!: Observable<boolean>;
+  page = undefined;
+  count = undefined;
+  ItemsPerPage = undefined;
+  totalRecords!: string;
+  occupantListQuery: QueryParamsModel = {
+    PageSize: this.ItemsPerPage,
+    PageNumber: this.page,
+  };
 
   constructor(
     public dialogRef: MatDialogRef<TestOccupantSelectionComponent>,
@@ -59,7 +69,9 @@ export class TestOccupantSelectionComponent implements OnInit {
     this.isLoadingOccupantState$ = this.store.pipe(select(isLoadingOccupantState));
   }
   getOccupantList() {
-    this.store.dispatch(loadOccupantList());
+    // this.store.dispatch(loadOccupantList());
+        const Payload = buildQueryParams(this.occupantListQuery);
+    this.store.dispatch(loadOccupantList({ Payload }));
     this.occupantList$ = this.store.pipe(select(selectOccupants));
   }
 
