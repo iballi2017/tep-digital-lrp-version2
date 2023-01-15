@@ -47,7 +47,7 @@ export class ReportsEffects {
         this._reportSvc.LoadPagedUserGameResult(action.Payload).pipe(
           map((response: any) => {
             console.log('response***: ', response);
-            let _reports = response?.data.map((item: any) => {
+            let _reports = response?.body?.data.map((item: any) => {
               return {
                 ...item,
                 id: item.session_id,

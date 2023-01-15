@@ -36,7 +36,7 @@ export class GameLevelResultAndRatingService {
 
   // LETERACY
   LoadLetterGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.LetterLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.LetterLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.letterData;
       })
@@ -44,7 +44,7 @@ export class GameLevelResultAndRatingService {
   }
 
   LoadWordGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.WordLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.WordLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.wordData;
       })
@@ -52,7 +52,7 @@ export class GameLevelResultAndRatingService {
   }
 
   LoadParagraphGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.ParagraphLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.ParagraphLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.paragraphData;
       })
@@ -60,7 +60,7 @@ export class GameLevelResultAndRatingService {
   }
 
   LoadStoryGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.StoryLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.StoryLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.storyData;
       })
@@ -70,7 +70,7 @@ export class GameLevelResultAndRatingService {
 
   // NUMERACY
   LoadNumberRecognition_1_gameResult(SessionId: string) {
-    return this._http.get(`${this.NumberRecognition_1_gameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.NumberRecognition_1_gameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.numRecognitionData;
       })
@@ -78,7 +78,7 @@ export class GameLevelResultAndRatingService {
   }
 
   LoadNumberRecognition_2_gameResult(SessionId: string) {
-    return this._http.get(`${this.NumberRecognition_2_gameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.NumberRecognition_2_gameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.numRecognition2Data;
       })
@@ -86,7 +86,7 @@ export class GameLevelResultAndRatingService {
   }
 
   LoadNumberRecognition_3_gameResult(SessionId: string) {
-    return this._http.get(`${this.NumberRecognition_3_gameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.NumberRecognition_3_gameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.numRecognition3Data;
       })
@@ -94,7 +94,7 @@ export class GameLevelResultAndRatingService {
   }
 
   LoadPlaceValueGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.PlaceValueLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.PlaceValueLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.placeValue;
       })
@@ -103,7 +103,7 @@ export class GameLevelResultAndRatingService {
 
 
   LoadbasicOperationsAddGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.basicOperationsAddLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.basicOperationsAddLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.basicOpAdd;
       })
@@ -113,7 +113,7 @@ export class GameLevelResultAndRatingService {
 
 
   LoadbasicOperationsSubtractionGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.basicOperationsSubtractionLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.basicOperationsSubtractionLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.basicOpSub;
       })
@@ -122,7 +122,7 @@ export class GameLevelResultAndRatingService {
 
 
   LoadbasicOperationsMultiplicationGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.basicOperationsMultiplicationLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.basicOperationsMultiplicationLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.basicOpMul;
       })
@@ -131,7 +131,7 @@ export class GameLevelResultAndRatingService {
 
 
   LoadbasicOperationsDivisionGameResultAndRating(SessionId: string) {
-    return this._http.get(`${this.basicOperationsDivisionLevelGameResult_Url}/${SessionId}`).pipe(
+    return this._http.get(`${this.basicOperationsDivisionLevelGameResult_Url}/${encodeURIComponent(SessionId)}`).pipe(
       map((response: any) => {
         return response?.basicOpDiv;
       })

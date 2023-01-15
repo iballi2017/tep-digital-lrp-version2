@@ -22,10 +22,24 @@ export class ReportService {
 
   // search=lite&pageLength=20&pageNumber=1&sort=Asc
 
-  LoadPagedUserGameResult(Payload: any) {
-    console.warn('Payload: ', Payload);
+  // LoadPagedUserGameResult(Payload: any) {
+  LoadPagedUserGameResult(queryParams: any) {
+    // console.warn('Payload: ', Payload);
+    console.warn('queryParams: ', queryParams);
+    // return this._http.get<GameReport>(
+    //   `${this.GetUserGameResultUrl}?search=${encodeURIComponent(
+    //     Payload?.searchWord
+    //   )}&pageLength=${encodeURIComponent(
+    //     Payload?.pageSize
+    //   )}&pageNumber=${encodeURIComponent(Payload?.pageNumber)}&sort=Asc`
+    // );
+
     return this._http.get<GameReport>(
-      `${this.GetUserGameResultUrl}?search=${Payload?.searchWord}&pageLength=${Payload?.pageSize}&pageNumber=${Payload?.pageNumber}&sort=Asc`
+      `${this.GetUserGameResultUrl}${queryParams}`,
+      {
+        observe: 'response',
+        // observe: 'events',
+      }
     );
   }
 
@@ -92,8 +106,12 @@ export class ReportService {
     // this.Subscriptions.push(subscription);
   }
 
-  LoadGameResultDetails(sessionId: SessionId) {
-    return this._http.get(`${this.GetUserGameResultDetailsUrl}/${sessionId}`);
+  // LoadGameResultDetails(sessionId: SessionId) {
+  LoadGameResultDetails(sessionId: string) {
+    console.warn('sessionId: ', sessionId);
+    return this._http.get(
+      `${this.GetUserGameResultDetailsUrl}/${encodeURIComponent(sessionId)}`
+    );
   }
 
   RemoveReport(sessionId: SessionId) {

@@ -1,0 +1,9 @@
+@use "../_abstracts/colors";
+.ngx-pagination {
+    a{
+        text-decoration: none;
+    }
+    .current {
+        background: colors.$primaryColorDark !important;
+    }
+}

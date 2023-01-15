@@ -51,7 +51,7 @@ export class OccupantService {
   FetchOccupantDetails(OccupantId: string) {
     // this.ngRedux.dispatch({ type: FETCH_SINGLE_OCCUPANT });
     // return this._http.get(`${this.FetchOccupantUrl}/${OccupantId}`);
-    let subscription = this._http.get(`${this.FetchOccupantUrl}/${OccupantId}`).subscribe({
+    let subscription = this._http.get(`${this.FetchOccupantUrl}/${encodeURIComponent(OccupantId)}`).subscribe({
       next: (response: any) => {
         if (response) {
 
@@ -74,7 +74,7 @@ export class OccupantService {
 
 
   GetSingleOccupant(OccupantId:string){
-    return this._http.get(`${this.FetchOccupantUrl}/${OccupantId}`)
+    return this._http.get(`${this.FetchOccupantUrl}/${encodeURIComponent(OccupantId)}`)
   }
 
   UpdateOccupantDetails(Occupant: IOccupant) {

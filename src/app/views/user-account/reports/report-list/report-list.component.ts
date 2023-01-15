@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { buildQueryParams } from 'src/app/helpers/buildQueryParams';
 import { SessionId } from 'src/app/models/interface/game-report';
+import { QueryParamsModel } from 'src/app/models/interface/queryParamsModel';
 import { ReportService } from 'src/app/services/report.service';
 import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 import {
@@ -50,9 +52,15 @@ export class ReportListComponent implements OnInit {
   reportParams$!: Observable<any>;
   page: number = 1;
   count = 0;
-  ItemsPerPage = 10;
-  searchTerm:string = '';
+  ItemsPerPage = 3;
+  searchTerm: string = '';
   totalRecords!: string;
+
+  reportQuery: QueryParamsModel = {
+    PageSize: this.ItemsPerPage,
+    PageNumber: this.page,
+    searchWord: this.searchTerm,
+  };
   constructor(
     private _reportSvc: ReportService,
     // private ngRedux: NgRedux<IAppState>,
@@ -77,22 +85,25 @@ export class ReportListComponent implements OnInit {
           console.log('params: ', params);
           let searchTerm = params.get('searchTerm');
           console.log('searchTerm: ', searchTerm);
-          this.searchTerm = searchTerm;
-          const Payload = {
-            pageSize: this.ItemsPerPage,
-            pageNumber: this.page,
-            searchWord: this.searchTerm,
-          };
-          this.store.dispatch(loadPagedReports({ Payload }));
-        } 
-        // else {
-          // this.searchTerm = '';
+          // this.searchTerm = searchTerm;
           // const Payload = {
           //   pageSize: this.ItemsPerPage,
           //   pageNumber: this.page,
           //   searchWord: this.searchTerm,
           // };
-          // this.store.dispatch(loadPagedReports({ Payload }));
+          this.reportQuery.searchWord = searchTerm;
+          const Payload = buildQueryParams(this.reportQuery);
+      
+          this.store.dispatch(loadPagedReports({ Payload }));
+        }
+        // else {
+        // this.searchTerm = '';
+        // const Payload = {
+        //   pageSize: this.ItemsPerPage,
+        //   pageNumber: this.page,
+        //   searchWord: this.searchTerm,
+        // };
+        // this.store.dispatch(loadPagedReports({ Payload }));
         // }
       },
       error: (err: any) => {
@@ -101,15 +112,17 @@ export class ReportListComponent implements OnInit {
     });
   }
   onGetReportList() {
-    if(!this.searchTerm){
-      this.searchTerm = ""
+    if (!this.searchTerm) {
+      this.reportQuery.searchWord = '';
     }
-    const Payload = {
-      pageSize: this.ItemsPerPage,
-      pageNumber: 1,
-      searchWord: this.searchTerm,
-    };
-    console.log("Payload: ", Payload)
+    // const Payload = {
+    //   pageSize: this.ItemsPerPage,
+    //   pageNumber: this.page,
+    //   searchWord: this.searchTerm,
+    // };
+    const Payload = buildQueryParams(this.reportQuery);
+
+    console.log('Payload: ', Payload);
     this.store.dispatch(loadPagedReports({ Payload }));
     // this.store.dispatch(loadReports());
     this.reportsList$ = this.store.pipe(select(selectReports));
