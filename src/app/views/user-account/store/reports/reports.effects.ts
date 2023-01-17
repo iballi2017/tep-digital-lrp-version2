@@ -46,6 +46,7 @@ export class ReportsEffects {
       mergeMap((action: any) =>
         this._reportSvc.LoadPagedUserGameResult(action.Payload).pipe(
           map((response: any) => {
+            this._reportSvc.sendGameResultWithSearchParamBehavior(false);
             let _reports = response?.body?.data.map((item: any) => {
               return {
                 ...item,
@@ -65,9 +66,10 @@ export class ReportsEffects {
               reports,
             });
           }),
-          catchError((error: any) =>
-            of(fromReportActions.loadPagedReportsFailure({ error }))
-          )
+          catchError((error: any) => {
+            this._reportSvc.sendGameResultWithSearchParamBehavior(false);
+            return of(fromReportActions.loadPagedReportsFailure({ error }));
+          })
         )
       )
       // tap(() => this._router.navigate(['/practicals/ngrx/products']))

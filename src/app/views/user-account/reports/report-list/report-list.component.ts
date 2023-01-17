@@ -48,7 +48,7 @@ export class ReportListComponent implements OnInit {
     title: 'View',
   };
   isLoadingReportList$!: Observable<boolean>;
-  pageRequest!: { pageSize: number; pageNumber: number; searchWord: string };
+  pageRequest!: { pageSize: number; pageNumber: number; search: string };
   reportParams$!: Observable<any>;
   page: number = 1;
   count = 0;
@@ -59,7 +59,7 @@ export class ReportListComponent implements OnInit {
   reportQuery: QueryParamsModel = {
     PageSize: this.ItemsPerPage,
     PageNumber: this.page,
-    searchWord: this.searchTerm,
+    search: this.searchTerm,
   };
   constructor(
     private _reportSvc: ReportService,
@@ -83,7 +83,12 @@ export class ReportListComponent implements OnInit {
       next: (params: any) => {
         if (params) {
           let searchTerm = params.get('searchTerm');
-          this.reportQuery.searchWord = searchTerm;
+          this.reportQuery.search = searchTerm;
+          if (!searchTerm) {
+            this.reportQuery.search = '';
+          }else{
+            this._reportSvc.sendGameResultWithSearchParamBehavior(true);
+          }
           const Payload = buildQueryParams(this.reportQuery);
           this.store.dispatch(loadPagedReports({ Payload }));
         }
@@ -95,7 +100,7 @@ export class ReportListComponent implements OnInit {
   }
   onGetReportList() {
     if (!this.searchTerm) {
-      this.reportQuery.searchWord = '';
+      this.reportQuery.search = '';
     }
     const Payload = buildQueryParams(this.reportQuery);
     this.store.dispatch(loadPagedReports({ Payload }));
@@ -202,7 +207,7 @@ export class ReportListComponent implements OnInit {
     const Payload = {
       pageSize: this.ItemsPerPage,
       pageNumber: this.page,
-      searchWord: this.searchTerm,
+      search: this.searchTerm,
     };
     this.store.dispatch(loadPagedReports({ Payload }));
   }

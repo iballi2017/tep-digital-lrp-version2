@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-report-list-search-field',
@@ -8,9 +9,14 @@ import { Router } from '@angular/router';
 })
 export class ReportListSearchFieldComponent implements OnInit {
   searchTerm = '';
-  constructor(private _router: Router) {}
+  isSearchTermSearchStart!: boolean;
+  constructor(private _router: Router, private _reportSvc: ReportService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._reportSvc.GameResultWithSearchParamBehavior.subscribe((msg) => {
+        this.isSearchTermSearchStart = msg;
+    });
+  }
 
   onSearch(searchTerm: any) {
     console.log('searchTerm: ', searchTerm);

@@ -5,12 +5,9 @@ import { Observable, Subscription } from 'rxjs';
 import { ModifyStageArrayData } from 'src/app/models/class/modify-stage-array-data';
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameService } from 'src/app/services/game.service';
-import { loadLetterLevelResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
-import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
-import {
-  letterLevelResultIsLoading,
-  selectLetterLevelResult,
-} from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.selectors';
+import { loadNumberRecognitionOneLevelResult } from '../../store/number-recognition-one-level-result/number-recognition-one-level-result.actions';
+import { NumberRecognitionOneLevelResultState } from '../../store/number-recognition-one-level-result/number-recognition-one-level-result.reducer';
+import { numberRecognitionOneLevelResultIsLoading, selectNumberRecognitionOneLevelResult } from '../../store/number-recognition-one-level-result/number-recognition-one-level-result.selectors';
 
 @Component({
   selector: 'app-number-recognition-one',
@@ -27,17 +24,17 @@ export class NumberRecognitionOneComponent implements OnInit {
   constructor(
     private _gameSvc: GameService,
     private _snackBar: MatSnackBar,
-    private store: Store<LetterLevelResultState>
+    private store: Store<NumberRecognitionOneLevelResultState>
   ) {}
 
   ngOnInit(): void {
     let letterResultLoading$: Observable<any> = this.store.pipe(
-      select(letterLevelResultIsLoading)
+      select(numberRecognitionOneLevelResultIsLoading)
     );
     letterResultLoading$.subscribe((data: any) => {
       this.isLoadingStarCards = data;
     });
-    this.userData$ = this.store.pipe(select(selectLetterLevelResult));
+    this.userData$ = this.store.pipe(select(selectNumberRecognitionOneLevelResult));
     this.modifyStageArray();
     this.onGetGameSessionId();
   }
@@ -45,18 +42,18 @@ export class NumberRecognitionOneComponent implements OnInit {
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
     this._gameSvc.gameSessionBehaviorSubject.subscribe((msg: any) => {
-      console.log('msg: ', msg);
+      // console.log('msg: ', msg);
       this.gameSessionId = msg.session_id;
       this.onGetGameLevelResult(this.gameSessionId);
     });
   }
 
   onGetGameLevelResult(GameSessionId: string) {
-    this.store.dispatch(loadLetterLevelResult({ session_id: GameSessionId }));
+    this.store.dispatch(loadNumberRecognitionOneLevelResult({ session_id: GameSessionId }));
     let subscription = this.userData$.subscribe({
       next: (response: any) => {
+        console.warn('response***: ', response);
         if (response) {
-          console.log('LoadLetter response>>>: ', response);
           this.gameLevelResultAndRating = response;
           this.modifyStageArray();
         }

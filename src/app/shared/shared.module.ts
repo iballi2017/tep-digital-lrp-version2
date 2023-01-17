@@ -76,7 +76,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FullPageLoaderComponent,
     ReportListSearchFieldComponent,
     ActivityLauncherComponent,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
 })
 export class SharedModule {}

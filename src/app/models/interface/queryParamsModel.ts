@@ -3,7 +3,8 @@ export type QueryParamsModel = {
   PageNumber?: number;
   pageLength?:number;
   pageNumber?:number;
-  searchWord?: string,
+  // searchWord?: string,
+  search?: string,
   // StartDate?: string;
   // EndDate?: string;
   // Recent?: boolean;

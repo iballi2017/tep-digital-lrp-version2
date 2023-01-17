@@ -1,15 +1,13 @@
 <!-- <p>report-list-search-field works!</p> -->
-
 <div id="search-input-wrapper" class="order-2 order-md-1">
     <div id="search-input" class="d-flex flex-nowrap my-2 my-lg-0">
-        <button id="search-btn" class="btn" type="submit">
-            <!-- <img src="../../../../../assets/images/icons/search-lens-icon.svg" alt="search icon" class="img-fluid"> -->
-            <img src="../../../../assets/images/icons/search-lens-icon.svg"
-                alt="search icon">
-        </button>
-        <input class="form-control me-sm-2 w-100" type="search"
-            placeholder="Search By name or PROGRAM" aria-label="Search By name or PROGRAM" [(ngModel)]="searchTerm"
-            (change)="onSearch(searchTerm)">
+        <!-- <ng-container *ngIf="!isSearchTermSearchStart"> -->
+            <button id="search-btn" class="btn" type="submit">
+                <small class="text-bold" *ngIf="isSearchTermSearchStart">Searching...</small>
+                <img src="../../../../assets/images/icons/search-lens-icon.svg" alt="search icon" *ngIf="!isSearchTermSearchStart">
+            </button>
+        <input class="form-control me-sm-2 w-100" type="search" placeholder="Search By name or PROGRAM"
+            aria-label="Search By name or PROGRAM" [(ngModel)]="searchTerm" (change)="onSearch(searchTerm)">
     </div>
 </div>
 

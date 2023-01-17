@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Subscription } from 'rxjs';
+import { BehaviorSubject, catchError, map, Subscription } from 'rxjs';
 import { baseUrl } from '../config/api';
 import { handleError } from '../helpers/errorHandler';
 import { GameReport, SessionId } from '../models/interface/game-report';
@@ -13,12 +13,17 @@ export class ReportService {
   // fetch-user-game-result?search=lite&pageLength=20&pageNumber=1&sort=Asc
   DeleteUserGameResultUrl = baseUrl + '/delete-game-result';
   GetUserGameResultDetailsUrl = baseUrl + '/fetch-game-result-details';
+  GameResultWithSearchParamBehavior = new BehaviorSubject(false);
 
   Subscriptions: Subscription[] = [];
 
   constructor(
     private _http: HttpClient //  private ngRedux: NgRedux<IAppState>
   ) {}
+
+  sendGameResultWithSearchParamBehavior(msg: any) {
+    this.GameResultWithSearchParamBehavior.next(msg);
+  }
 
   // search=lite&pageLength=20&pageNumber=1&sort=Asc
 
@@ -28,7 +33,7 @@ export class ReportService {
     // console.warn('queryParams: ', queryParams);
     // return this._http.get<GameReport>(
     //   `${this.GetUserGameResultUrl}?search=${encodeURIComponent(
-    //     Payload?.searchWord
+    //     Payload?.search
     //   )}&pageLength=${encodeURIComponent(
     //     Payload?.pageSize
     //   )}&pageNumber=${encodeURIComponent(Payload?.pageNumber)}&sort=Asc`

@@ -27,7 +27,11 @@ import * as fromParagraphLevelResult from './views/literacy-test/store/paragraph
 import * as fromStoryLevelResult from './views/literacy-test/store/story-level-result/story-level-result.reducer';
 
 @NgModule({
-  declarations: [AppComponent, LayoutComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    LayoutComponent,
+    HomeComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

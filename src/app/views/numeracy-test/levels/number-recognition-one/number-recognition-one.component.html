@@ -3,14 +3,17 @@
     <!-- <p class="text-danger">{{isLoadingStarCards}}</p>
     <p class="text-primary">Obs: {{letterResultLoading$ | async}}</p> -->
     <!-- <p class="text-primary">Obs: {{testStageStars | json}}</p> -->
-    
+    <!-- <p class="text-danger">isLoadingStarCards: {{isLoadingStarCards | json}}</p>
+    <p class="text-warning">testStageStars: {{testStageStars | json}}</p> -->
     <ng-container *ngIf="isLoadingStarCards && !testStageStars.length">
         <div class="text-info text-bold">Loading...</div>
     </ng-container>
-    <!-- <p class="text-danger text-bold">{{testStageStars | json}}</p> -->
+    <!-- <p class="text-danger text-bold">{{testStageStars | json}}</p>
+    <p class="text-danger text-bold">{{userData$ | async | json}}</p> -->
+    
     <ul class="stage-status list-style-none ps-0">
         <li class="cursor-pointer" *ngFor="let item of testStageStars; let i = index"
-            [routerLink]="['/literacy/letter/', item?.title, 'letter-splash']">
+            [routerLink]="['/numeracy/number-recognition-one/', item?.title, 'number-recognition-one-splash']">
             <div class="stage-card">
                 <p>{{i + 1}}</p>
             </div>

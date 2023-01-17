@@ -26,6 +26,11 @@ import * as fromBasicOperationsAdditionLevelResult from './store/basic-operation
 import * as fromBasicOperationsSubtractionLevelResult from './store/basic-operations-subtraction-level-result/basic-operations-subtraction-level-result.reducer';
 import * as fromBasicOperationsMultiplicationLevelResult from './store/basic-operations-multiplication-level-result/basic-operations-multiplication-level-result.reducer';
 import * as fromBasicOperationsDivisionLevelResult from './store/basic-operations-division-level-result/basic-operations-division-level-result.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { NumberRecognitionOneLevelResultEffects } from './store/number-recognition-one-level-result/number-recognition-one-level-result.effects';
+import { NumberRecognitionTwoLevelResultEffects } from './store/number-recognition-two-level-result/number-recognition-two-level-result.effects';
+import { NumberRecognitionThreeLevelResultEffects } from './store/number-recognition-three-level-result/number-recognition-three-level-result.effects';
+import { BasicOperationsAdditionLevelResultEffects } from './store/basic-operations-addition-level-result/basic-operations-addition-level-result.effects';
 @NgModule({
   declarations: [
     NumeracyTestComponent,
@@ -54,7 +59,8 @@ import * as fromBasicOperationsDivisionLevelResult from './store/basic-operation
     StoreModule.forFeature(fromBasicOperationsAdditionLevelResult.basicOperationsAdditionLevelResultsFeatureKey, fromBasicOperationsAdditionLevelResult.reducer),
     StoreModule.forFeature(fromBasicOperationsSubtractionLevelResult.basicOperationsSubtractionLevelResultsFeatureKey, fromBasicOperationsSubtractionLevelResult.reducer),
     StoreModule.forFeature(fromBasicOperationsMultiplicationLevelResult.basicOperationsMultiplicationLevelResultsFeatureKey, fromBasicOperationsMultiplicationLevelResult.reducer),
-    StoreModule.forFeature(fromBasicOperationsDivisionLevelResult.basicOperationsDivisionLevelResultsFeatureKey, fromBasicOperationsDivisionLevelResult.reducer)
+    StoreModule.forFeature(fromBasicOperationsDivisionLevelResult.basicOperationsDivisionLevelResultsFeatureKey, fromBasicOperationsDivisionLevelResult.reducer),
+    EffectsModule.forFeature([NumberRecognitionOneLevelResultEffects, NumberRecognitionTwoLevelResultEffects, NumberRecognitionThreeLevelResultEffects, BasicOperationsAdditionLevelResultEffects])
   ],
 })
 export class NumeracyTestModule {}
