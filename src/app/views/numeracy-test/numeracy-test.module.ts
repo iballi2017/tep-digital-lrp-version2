@@ -31,6 +31,7 @@ import { NumberRecognitionOneLevelResultEffects } from './store/number-recogniti
 import { NumberRecognitionTwoLevelResultEffects } from './store/number-recognition-two-level-result/number-recognition-two-level-result.effects';
 import { NumberRecognitionThreeLevelResultEffects } from './store/number-recognition-three-level-result/number-recognition-three-level-result.effects';
 import { BasicOperationsAdditionLevelResultEffects } from './store/basic-operations-addition-level-result/basic-operations-addition-level-result.effects';
+import { BasicOperationsSubtractionLevelResultEffects } from './store/basic-operations-subtraction-level-result/basic-operations-subtraction-level-result.effects';
 @NgModule({
   declarations: [
     NumeracyTestComponent,
@@ -60,7 +61,7 @@ import { BasicOperationsAdditionLevelResultEffects } from './store/basic-operati
     StoreModule.forFeature(fromBasicOperationsSubtractionLevelResult.basicOperationsSubtractionLevelResultsFeatureKey, fromBasicOperationsSubtractionLevelResult.reducer),
     StoreModule.forFeature(fromBasicOperationsMultiplicationLevelResult.basicOperationsMultiplicationLevelResultsFeatureKey, fromBasicOperationsMultiplicationLevelResult.reducer),
     StoreModule.forFeature(fromBasicOperationsDivisionLevelResult.basicOperationsDivisionLevelResultsFeatureKey, fromBasicOperationsDivisionLevelResult.reducer),
-    EffectsModule.forFeature([NumberRecognitionOneLevelResultEffects, NumberRecognitionTwoLevelResultEffects, NumberRecognitionThreeLevelResultEffects, BasicOperationsAdditionLevelResultEffects])
+    EffectsModule.forFeature([NumberRecognitionOneLevelResultEffects, NumberRecognitionTwoLevelResultEffects, NumberRecognitionThreeLevelResultEffects, BasicOperationsAdditionLevelResultEffects, BasicOperationsSubtractionLevelResultEffects])
   ],
 })
 export class NumeracyTestModule {}

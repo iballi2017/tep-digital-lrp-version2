@@ -3,16 +3,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
-import { BasicOperationsAdditionStageOneService } from 'src/app/services/basic-operations/addition/basic-operations-addition-stage-one.service';
+import { BasicOperationsSubtractionStageOneService } from 'src/app/services/basic-operations/subtraction/basic-operations-subtraction-stage-one.service';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
-import * as BasicOperationsAdditionLevelResultActions from './basic-operations-addition-level-result.actions';
+import * as BasicOperationsSubtractionLevelResultActions from './basic-operations-subtraction-level-result.actions';
 
 @Injectable()
-export class BasicOperationsAdditionLevelResultEffects {
-  loadBasicOperationsAdditionLevelResult$ = createEffect(() => {
+export class BasicOperationsSubtractionLevelResultEffects {
+  loadBasicOperationsSubtractionLevelResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(
-        BasicOperationsAdditionLevelResultActions.loadBasicOperationsAdditionLevelResult
+        BasicOperationsSubtractionLevelResultActions.loadBasicOperationsSubtractionLevelResult
       ),
       mergeMap((action: any) => {
         return this._gameLevelResultAndRatingSvc
@@ -22,9 +22,9 @@ export class BasicOperationsAdditionLevelResultEffects {
               let x: any;
               if (response) {
                 x =
-                  BasicOperationsAdditionLevelResultActions.loadBasicOperationsAdditionLevelResultSuccess(
+                  BasicOperationsSubtractionLevelResultActions.loadBasicOperationsSubtractionLevelResultSuccess(
                     {
-                      basicOperationsAdditionLevelResult: response,
+                      basicOperationsSubtractionLevelResult: response,
                     }
                   );
               } else {
@@ -33,13 +33,13 @@ export class BasicOperationsAdditionLevelResultEffects {
               }
               return x;
 
-              // return BasicOperationsAdditionLevelResultActions.loadNumberRecognitionOneLevelResultSuccess({
+              // return BasicOperationsSubtractionLevelResultActions.loadNumberRecognitionOneLevelResultSuccess({
               //   NumberRecognitionOneLevelResult: response,
               // });
             }),
             catchError((error: any) =>
               of(
-                BasicOperationsAdditionLevelResultActions.loadBasicOperationsAdditionLevelResultFailure(
+                BasicOperationsSubtractionLevelResultActions.loadBasicOperationsSubtractionLevelResultFailure(
                   {
                     error,
                   }
@@ -56,7 +56,7 @@ export class BasicOperationsAdditionLevelResultEffects {
     private actions$: Actions,
     private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService,
     private _router: Router,
-    private _basicOperationsAdditionStageOneSvc: BasicOperationsAdditionStageOneService,
+    private _basicOperationsSubtractionStageOneSvc: BasicOperationsSubtractionStageOneService,
     private _snackBar: MatSnackBar
   ) {}
 }
