@@ -32,6 +32,9 @@ import { NumberRecognitionTwoLevelResultEffects } from './store/number-recogniti
 import { NumberRecognitionThreeLevelResultEffects } from './store/number-recognition-three-level-result/number-recognition-three-level-result.effects';
 import { BasicOperationsAdditionLevelResultEffects } from './store/basic-operations-addition-level-result/basic-operations-addition-level-result.effects';
 import { BasicOperationsSubtractionLevelResultEffects } from './store/basic-operations-subtraction-level-result/basic-operations-subtraction-level-result.effects';
+import { BasicOperationsDivisionLevelResultEffects } from './store/basic-operations-division-level-result/basic-operations-division-level-result.effects';
+import { BasicOperationsMultiplicationLevelResultEffects } from './store/basic-operations-multiplication-level-result/basic-operations-multiplication-level-result.effects';
+import { PlaceValueLevelResultEffects } from './store/place-value-level-result/place-value-level-result.effects';
 @NgModule({
   declarations: [
     NumeracyTestComponent,
@@ -61,7 +64,7 @@ import { BasicOperationsSubtractionLevelResultEffects } from './store/basic-oper
     StoreModule.forFeature(fromBasicOperationsSubtractionLevelResult.basicOperationsSubtractionLevelResultsFeatureKey, fromBasicOperationsSubtractionLevelResult.reducer),
     StoreModule.forFeature(fromBasicOperationsMultiplicationLevelResult.basicOperationsMultiplicationLevelResultsFeatureKey, fromBasicOperationsMultiplicationLevelResult.reducer),
     StoreModule.forFeature(fromBasicOperationsDivisionLevelResult.basicOperationsDivisionLevelResultsFeatureKey, fromBasicOperationsDivisionLevelResult.reducer),
-    EffectsModule.forFeature([NumberRecognitionOneLevelResultEffects, NumberRecognitionTwoLevelResultEffects, NumberRecognitionThreeLevelResultEffects, BasicOperationsAdditionLevelResultEffects, BasicOperationsSubtractionLevelResultEffects])
+    EffectsModule.forFeature([NumberRecognitionOneLevelResultEffects, NumberRecognitionTwoLevelResultEffects, NumberRecognitionThreeLevelResultEffects, BasicOperationsAdditionLevelResultEffects, BasicOperationsSubtractionLevelResultEffects, BasicOperationsDivisionLevelResultEffects, BasicOperationsMultiplicationLevelResultEffects, PlaceValueLevelResultEffects])
   ],
 })
 export class NumeracyTestModule {}

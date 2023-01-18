@@ -3,51 +3,68 @@ import { Update } from '@ngrx/entity';
 
 import { BasicOperationsMultiplicationLevelResult } from './basic-operations-multiplication-level-result.model';
 
-export const loadBasicOperationsMultiplicationLevelResults = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Load BasicOperationsMultiplicationLevelResults', 
-  props<{ basicOperationsMultiplicationLevelResults: BasicOperationsMultiplicationLevelResult[] }>()
+export const loadBasicOperationsMultiplicationLevelResult = createAction(
+  '[BasicOperationsMultiplicationLevelResult/API] Load BasicOperationsMultiplicationLevelResults',
+  props<{ session_id: string }>()
 );
 
-export const addBasicOperationsMultiplicationLevelResult = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Add BasicOperationsMultiplicationLevelResult',
-  props<{ basicOperationsMultiplicationLevelResult: BasicOperationsMultiplicationLevelResult }>()
+export const loadBasicOperationsMultiplicationLevelResultSuccess = createAction(
+  '[BasicOperationsMultiplicationLevelResult/API] Load BasicOperationsMultiplicationLevelResults Success',
+  props<{
+    basicOperationsMultiplicationLevelResult: BasicOperationsMultiplicationLevelResult[];
+  }>()
 );
 
-export const upsertBasicOperationsMultiplicationLevelResult = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Upsert BasicOperationsMultiplicationLevelResult',
-  props<{ basicOperationsMultiplicationLevelResult: BasicOperationsMultiplicationLevelResult }>()
+export const loadBasicOperationsMultiplicationLevelResultFailure = createAction(
+  '[BasicOperationsMultiplicationLevelResult/API] Load BasicOperationsMultiplicationLevelResults Failure',
+  props<{ error: any }>()
 );
 
-export const addBasicOperationsMultiplicationLevelResults = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Add BasicOperationsMultiplicationLevelResults',
-  props<{ basicOperationsMultiplicationLevelResults: BasicOperationsMultiplicationLevelResult[] }>()
-);
+// export const loadBasicOperationsMultiplicationLevelResults = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Load BasicOperationsMultiplicationLevelResults',
+//   props<{ basicOperationsMultiplicationLevelResults: BasicOperationsMultiplicationLevelResult[] }>()
+// );
 
-export const upsertBasicOperationsMultiplicationLevelResults = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Upsert BasicOperationsMultiplicationLevelResults',
-  props<{ basicOperationsMultiplicationLevelResults: BasicOperationsMultiplicationLevelResult[] }>()
-);
+// export const addBasicOperationsMultiplicationLevelResult = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Add BasicOperationsMultiplicationLevelResult',
+//   props<{ basicOperationsMultiplicationLevelResult: BasicOperationsMultiplicationLevelResult }>()
+// );
 
-export const updateBasicOperationsMultiplicationLevelResult = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Update BasicOperationsMultiplicationLevelResult',
-  props<{ basicOperationsMultiplicationLevelResult: Update<BasicOperationsMultiplicationLevelResult> }>()
-);
+// export const upsertBasicOperationsMultiplicationLevelResult = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Upsert BasicOperationsMultiplicationLevelResult',
+//   props<{ basicOperationsMultiplicationLevelResult: BasicOperationsMultiplicationLevelResult }>()
+// );
 
-export const updateBasicOperationsMultiplicationLevelResults = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Update BasicOperationsMultiplicationLevelResults',
-  props<{ basicOperationsMultiplicationLevelResults: Update<BasicOperationsMultiplicationLevelResult>[] }>()
-);
+// export const addBasicOperationsMultiplicationLevelResults = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Add BasicOperationsMultiplicationLevelResults',
+//   props<{ basicOperationsMultiplicationLevelResults: BasicOperationsMultiplicationLevelResult[] }>()
+// );
 
-export const deleteBasicOperationsMultiplicationLevelResult = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Delete BasicOperationsMultiplicationLevelResult',
-  props<{ id: string }>()
-);
+// export const upsertBasicOperationsMultiplicationLevelResults = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Upsert BasicOperationsMultiplicationLevelResults',
+//   props<{ basicOperationsMultiplicationLevelResults: BasicOperationsMultiplicationLevelResult[] }>()
+// );
 
-export const deleteBasicOperationsMultiplicationLevelResults = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Delete BasicOperationsMultiplicationLevelResults',
-  props<{ ids: string[] }>()
-);
+// export const updateBasicOperationsMultiplicationLevelResult = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Update BasicOperationsMultiplicationLevelResult',
+//   props<{ basicOperationsMultiplicationLevelResult: Update<BasicOperationsMultiplicationLevelResult> }>()
+// );
 
-export const clearBasicOperationsMultiplicationLevelResults = createAction(
-  '[BasicOperationsMultiplicationLevelResult/API] Clear BasicOperationsMultiplicationLevelResults'
-);
+// export const updateBasicOperationsMultiplicationLevelResults = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Update BasicOperationsMultiplicationLevelResults',
+//   props<{ basicOperationsMultiplicationLevelResults: Update<BasicOperationsMultiplicationLevelResult>[] }>()
+// );
+
+// export const deleteBasicOperationsMultiplicationLevelResult = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Delete BasicOperationsMultiplicationLevelResult',
+//   props<{ id: string }>()
+// );
+
+// export const deleteBasicOperationsMultiplicationLevelResults = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Delete BasicOperationsMultiplicationLevelResults',
+//   props<{ ids: string[] }>()
+// );
+
+// export const clearBasicOperationsMultiplicationLevelResults = createAction(
+//   '[BasicOperationsMultiplicationLevelResult/API] Clear BasicOperationsMultiplicationLevelResults'
+// );
