@@ -25,6 +25,7 @@ import * as fromLetterLevelResult from './views/literacy-test/store/letter-level
 import * as fromWordLevelResult from './views/literacy-test/store/word-level-result/word-level-result.reducer';
 import * as fromParagraphLevelResult from './views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
 import * as fromStoryLevelResult from './views/literacy-test/store/story-level-result/story-level-result.reducer';
+import * as fromNumberRecognitionOneLevelResult from './views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.reducer';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,10 @@ import * as fromStoryLevelResult from './views/literacy-test/store/story-level-r
     StoreModule.forFeature(
       fromStoryLevelResult.storyLevelResultFeatureKey,
       fromStoryLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
+    StoreModule.forFeature(
+      fromNumberRecognitionOneLevelResult.numberRecognitionOneLevelResultsFeatureKey,
+      fromNumberRecognitionOneLevelResult.reducer
     ), //add to import this because the letterLevelResult loading stte belongs to another module
     NgbModule,
     // StoreModule.forRoot({}, {}),

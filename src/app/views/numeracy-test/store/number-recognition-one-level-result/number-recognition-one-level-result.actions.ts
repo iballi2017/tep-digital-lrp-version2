@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { NumberRecognitionOneLevelResult } from './number-recognition-one-level-result.model';
+import { ActivityAnswer } from 'src/app/models/interface/game';
 
 export const loadNumberRecognitionOneLevelResult = createAction(
   '[NumberRecognitionOneLevelResult/API] Load NumberRecognitionOneLevelResults',
@@ -17,6 +18,26 @@ export const loadNumberRecognitionOneLevelResultFailure = createAction(
   '[NumberRecognitionOneLevelResult/API] Load NumberRecognitionOneLevelResults Failure',
   props<{ error: any }>()
 );
+
+
+
+// ADD NumberRecognitionOneLevelStageOneResult
+export const addNumberRecognitionOneLevelStageOneResult = createAction(
+  '[NumberRecognitionOne Stage-one Activity] Add NumberRecognitionOne Stage One Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addNumberRecognitionOneLevelStageOneResultSuccess = createAction(
+  '[NumberRecognitionOne Level Result Effect] Add NumberRecognitionOne Stage One Result Success',
+  props<{ payload: any }>()
+);
+export const addNumberRecognitionOneLevelStageOneResultFailure = createAction(
+  '[NumberRecognitionOne Level Result Effect] Add NumberRecognitionOne Stage One Result Failure',
+  props<{ error: any }>()
+);
+
+
+
+
 
 // export const loadNumberRecognitionOneLevelResults = createAction(
 //   '[NumberRecognitionOneLevelResult/API] Load NumberRecognitionOneLevelResults',

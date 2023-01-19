@@ -21,6 +21,7 @@ export class LetterLevelResultEffects {
         return this._letterStageOneSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
+              console.log('response: ', response);
               const successResponse = response?.message;
               const x = new Snackbar(successResponse, this._snackBar);
               x.successSnackbar();

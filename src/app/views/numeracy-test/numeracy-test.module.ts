@@ -35,6 +35,7 @@ import { BasicOperationsSubtractionLevelResultEffects } from './store/basic-oper
 import { BasicOperationsDivisionLevelResultEffects } from './store/basic-operations-division-level-result/basic-operations-division-level-result.effects';
 import { BasicOperationsMultiplicationLevelResultEffects } from './store/basic-operations-multiplication-level-result/basic-operations-multiplication-level-result.effects';
 import { PlaceValueLevelResultEffects } from './store/place-value-level-result/place-value-level-result.effects';
+import { NumberRecognitionTwoModule } from './levels/number-recognition-two/number-recognition-two.module';
 @NgModule({
   declarations: [
     NumeracyTestComponent,
@@ -56,6 +57,7 @@ import { PlaceValueLevelResultEffects } from './store/place-value-level-result/p
     SharedModule,
     NgMaterialModule,
     NumberRecognitionOneModule,
+    NumberRecognitionTwoModule,
     StoreModule.forFeature(fromNumberRecognitionOneLevelResult.numberRecognitionOneLevelResultsFeatureKey, fromNumberRecognitionOneLevelResult.reducer),
     StoreModule.forFeature(fromNumberRecognitionTwoLevelResult.numberRecognitionTwoLevelResultsFeatureKey, fromNumberRecognitionTwoLevelResult.reducer),
     StoreModule.forFeature(fromNumberRecognitionThreeLevelResult.numberRecognitionThreeLevelResultsFeatureKey, fromNumberRecognitionThreeLevelResult.reducer),

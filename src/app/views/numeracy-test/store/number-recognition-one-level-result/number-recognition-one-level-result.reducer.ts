@@ -4,11 +4,12 @@ import { NumberRecognitionOneLevelResult } from './number-recognition-one-level-
 import * as NumberRecognitionOneLevelResultActions from './number-recognition-one-level-result.actions';
 
 export const numberRecognitionOneLevelResultsFeatureKey =
-  'numberRecognitionOneLevelResults';
+  'numberRecognitionOneLevelResult';
 
 export interface NumberRecognitionOneLevelResultState
   extends EntityState<NumberRecognitionOneLevelResult> {
   // additional entities state properties
+  result: any;
   isLoading: boolean;
   error: any;
   isSubmitResult: boolean;
@@ -20,6 +21,7 @@ export const adapter: EntityAdapter<NumberRecognitionOneLevelResult> =
 export const initialState: NumberRecognitionOneLevelResultState =
   adapter.getInitialState({
     // additional entity state properties
+  result: undefined,
     isLoading: false,
     error: null,
     isSubmitResult: false,
@@ -59,7 +61,45 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
+  ),
+
+  
+  /* ADD LETTER LEVEL STAGE ONE RESULT */
+  on(NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
 
   // on(NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelResult,
   //   (state, action) => adapter.addOne(action.numberRecognitionOneLevelResult, state)

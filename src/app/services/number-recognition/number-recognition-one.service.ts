@@ -12,11 +12,20 @@ export class NumberRecognitionOneService {
   StartGameUrl = baseUrl + '/start-game-session';
   SubmitNumberRecognition_1_GameStage_1_Url =
     baseUrl + '/submit-number-recognition-1-stage-1';
-  addLetterLevelResultBehaviour = new BehaviorSubject(false);
+  addNumberRecognitionOneLevelResultBehaviour = new BehaviorSubject(false);
 
   constructor(private _http: HttpClient) {}
+  
 
-  SubmitGameStageResult(_GameStageResult: ExerciseAnswer) {
+  sendAddNumberRecognitionOneLevelResultBehaviour(Msg: any) {
+    this.addNumberRecognitionOneLevelResultBehaviour.next(Msg);
+  }
+  getAddNumberRecognitionOneLevelResultBehaviour() {
+    return this.addNumberRecognitionOneLevelResultBehaviour.asObservable();
+  }
+
+
+  SubmitResult(_GameStageResult: ExerciseAnswer) {
     return this._http
       .post(
         `${this.SubmitNumberRecognition_1_GameStage_1_Url}`,

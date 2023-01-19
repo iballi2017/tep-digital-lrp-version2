@@ -1,8 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
+import { GameLevel } from 'src/app/models/interface/game-level';
+import { GameType } from 'src/app/models/interface/game-type';
 import { NumberDigitType } from 'src/app/models/interface/number-type';
 import { GameService } from 'src/app/services/game.service';
+import { NumberRecognitionOneService } from 'src/app/services/number-recognition/number-recognition-one.service';
+import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { addNumberRecognitionOneLevelStageOneResult } from 'src/app/views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.actions';
+import { NumberRecognitionOneLevelResultState } from 'src/app/views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.reducer';
 
 @Component({
   selector: 'app-exercise',
@@ -19,6 +28,9 @@ export class ExerciseComponent implements OnInit {
   previewText: string = '';
   resultItemList: any[] = [];
   checkTestCompletion: any;
+  gameSessionId!: string;
+  stageNumber: number = 1;
+  gameLevel = GameLevel.NUMBER_RECOGNITION_ONE;
 
 
   testList = [
@@ -80,8 +92,11 @@ export class ExerciseComponent implements OnInit {
       ],
     }
   ];
-  gameSessionId!: string;
-  constructor(private _gameSvc: GameService) { }
+  activityHint: any = "Identify the 1-digit numbers selecting the right answer in the green boxes below";
+  constructor(private _gameSvc: GameService, private _numberRecognitionOneSvc: NumberRecognitionOneService,
+    private store: Store<NumberRecognitionOneLevelResultState>,
+    private _router: Router,
+    public dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.onReplceKeyList();
@@ -106,7 +121,6 @@ export class ExerciseComponent implements OnInit {
 
 
   onSelectAlphabet(number: any) {
-    console.log("number: ", number);
     this.previewList.push(number.name);
     this.previewText = number.name;
     setTimeout(() => {
@@ -127,20 +141,14 @@ export class ExerciseComponent implements OnInit {
     let expectedList = this.resultItemList.filter((item: any) => {
       return item.type == NumberDigitType.ONE_DIGIT_NUMBER;
     });
-    console.log("keyList: ", this.keyList)
     let availableList = this.keyList.filter((item: any) => {
       return item.type == NumberDigitType.ONE_DIGIT_NUMBER;
     });
-    console.log("availableList.length: ", availableList.length)
-    console.log("expectedList.length: ", expectedList.length)
-    // console.warn("availableList.length == expectedList.length: ", availableList.length == expectedList.length)
-    // console.log("this.checkTestCompletion.length: ", this.checkTestCompletion.length)
     if (availableList.length == expectedList.length) {
       this.testList[this.testNumber].isTestComplete = true;
       this.onCheckTestCompletion();
       if (this.testList.length == this.checkTestCompletion.length) {
         setTimeout(() => {
-          // alert("completed!!!")
           this.testGameCompletion();
         }, 2000);
         return;
@@ -157,28 +165,23 @@ export class ExerciseComponent implements OnInit {
 
   testGameCompletion() {
     this.onCheckTestCompletion();
-    console.log("this.testList.length: ", this.testList.length)
-    console.log("this.checkTestCompletion.length: ", this.checkTestCompletion.length)
-    console.warn("this.checkTestCompletion.length == this.testList.length: ", this.checkTestCompletion.length == this.testList.length)
-
     if (this.checkTestCompletion.length == this.testList.length) {
       const Payload: ActivityAnswer = {
         session_id: this.gameSessionId,
         answer: '1',
         data: [...this.checkTestCompletion],
       };
-      alert("Completed!!!")
-      // this.store.dispatch(addLetterLevelStageOneResult({ payload: Payload }));
-      // this._letterStageOneSvc.addLetterLevelResultBehaviour.subscribe(
-      //   (msg: any) => {
-      //     if (msg) {
-      //       console.log('msg: ', msg);
-      //       this._router.navigate([
-      //         `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-      //       ]);
-      //     }
-      //   }
-      // );
+      this.store.dispatch(addNumberRecognitionOneLevelStageOneResult({ payload: Payload }));
+      this._numberRecognitionOneSvc.addNumberRecognitionOneLevelResultBehaviour.subscribe(
+        (msg: any) => {
+          if (msg) {
+            this._router.navigate([
+              `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`
+              // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+            ]);
+          }
+        }
+      );
     }
     return;
   }
@@ -187,10 +190,23 @@ export class ExerciseComponent implements OnInit {
     this.checkTestCompletion = this.testList.filter(
       (test: any) => test.isTestComplete == true
     );
-    console.log("this.testList : ", this.testList)
-    console.log("this.checkTestCompletion : ", this.checkTestCompletion)
   }
 
-  onReadHint() { }
-  refreshGame() { }
+  onReadHint() {
+    this.dialog.open(ActivityHintDialogComponent, {
+      width: '100%',
+      maxWidth: '445px',
+      data: {
+        hint: this.activityHint,
+      },
+    });
+  }
+  refreshGame() {
+    this.resultItemList = [];
+    this.testNumber = 0;
+    this.onReplceKeyList();
+    for (let i = 0; i < this.testList.length; i++) {
+      this.testList[i].isTestComplete = false;
+    }
+  }
 }
