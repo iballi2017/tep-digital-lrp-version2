@@ -29,32 +29,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   VOWEL = AlphabetType.VOWEL;
   testNumber: number = 0;
   checkTestCompletion: any;
-  keyList: any[] = [
-    // {
-    //   name: 'a',
-    //   type: AlphabetType.VOWEL,
-    // },
-    // {
-    //   name: 'j',
-    //   type: AlphabetType.CONSONANT,
-    // },
-    // {
-    //   name: 'e',
-    //   type: AlphabetType.VOWEL,
-    // },
-    // {
-    //   name: 'm',
-    //   type: AlphabetType.CONSONANT,
-    // },
-    // {
-    //   name: 'i',
-    //   type: AlphabetType.VOWEL,
-    // },
-    // {
-    //   name: 'b',
-    //   type: AlphabetType.CONSONANT,
-    // },
-  ];
+  keyList: any[] = [];
 
   testList = [
     {
@@ -120,6 +95,46 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
         },
       ],
     },
+    {
+      testName: 'test-3',
+      isTestComplete: false,
+      testKeys: [
+        {
+          name: 'h',
+          type: AlphabetType.CONSONANT,
+        },
+        {
+          name: 'o',
+          type: AlphabetType.VOWEL,
+        },
+        {
+          name: 'p',
+          type: AlphabetType.CONSONANT,
+        }
+      ],
+    },
+    {
+      testName: 'test-4',
+      isTestComplete: false,
+      testKeys: [
+        {
+          name: 'q',
+          type: AlphabetType.CONSONANT,
+        },
+        {
+          name: 'l',
+          type: AlphabetType.CONSONANT,
+        },
+        {
+          name: 'a',
+          type: AlphabetType.VOWEL,
+        },
+        {
+          name: 'u',
+          type: AlphabetType.VOWEL,
+        }
+      ],
+    }
   ];
 
   // previewList = ['a', 'b', 'c'];
@@ -142,7 +157,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: Store<LetterLevelResultState>,
     private _router: Router,
     private _playSoundSvc: PlaySoundService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onReplceKeyList();
@@ -160,7 +175,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     // return _PlayBGSound;
   }
 
-  stopBGSound(){
+  stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
   }
 
@@ -203,13 +218,19 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     if (availableList.length == expectedList.length) {
       this.testList[this.testNumber].isTestComplete = true;
+
       this.onCheckTestCompletion();
-      if (expectedList.length == this.checkTestCompletion.length) {
-        this.testGameCompletion();
+      console.log("this.checkTestCompletion: ", this.checkTestCompletion)
+      console.log("this.testList: ", this.testList)
+
+      if (this.testList.length == this.checkTestCompletion.length) {
+        setTimeout(() => {
+          // alert("completed!!!")
+          this.testGameCompletion();
+        }, 2000);
         return;
       }
 
-      this.testGameCompletion();
       setTimeout(() => {
         this.testNumber++;
         this.resultItemList = [];
