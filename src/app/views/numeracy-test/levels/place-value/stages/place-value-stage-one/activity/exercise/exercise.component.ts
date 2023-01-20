@@ -23,6 +23,7 @@ export class ExerciseComponent implements OnInit {
   activityHint: any =
     'Arrange each number into the place value table by selecting correct answer in the boxes below.';
   testNumber: number = 0;
+  microNumberIndex = 0;
   ONE_DIGIT_NUMBER = NumberDigitType.ONE_DIGIT_NUMBER;
   TWO_DIGIT_NUMBER = NumberDigitType.TWO_DIGIT_NUMBER;
   keyList: any[] = [];
@@ -33,6 +34,47 @@ export class ExerciseComponent implements OnInit {
   gameSessionId!: string;
   stageNumber: number = 1;
   gameLevel = GameLevel.NUMBER_RECOGNITION_TWO;
+  testNumberList: any = [
+    {
+      isDone: false,
+      activeIndexList: [2, 0, 1],
+      numberArray: [
+        {
+          name: '2',
+          isActive: false,
+        },
+        {
+          name: '3',
+          isActive: false,
+        },
+        {
+          name: '1',
+          isActive: false,
+        },
+      ],
+    },
+    {
+      isDone: false,
+      activeIndexList: [0, 2, 1],
+      numberArray: [
+        {
+          name: '4',
+          isActive: true,
+          // placeValue: PlaceValue.UNIT,
+        },
+        {
+          name: '0',
+          isActive: false,
+          // placeValue: PlaceValue.TENS,
+        },
+        {
+          name: '2',
+          isActive: false,
+          // placeValue: PlaceValue.UNIT,
+        },
+      ],
+    },
+  ];
 
   testList = [
     {
@@ -97,14 +139,18 @@ export class ExerciseComponent implements OnInit {
   _keyList: any[] = [
     {
       name: 'hundred',
+      placeValue: PlaceValue.UNIT,
     },
     {
       name: 'tens',
+      placeValue: PlaceValue.TENS,
     },
     {
       name: 'unit',
+      placeValue: PlaceValue.HUNDRED,
     },
   ];
+  numberList!: any[];
   constructor(
     private _gameSvc: GameService,
     private _numberRecognitionTwoSvc: NumberRecognitionTwoService,
@@ -114,14 +160,32 @@ export class ExerciseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.onReplceKeyList();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
+    this.updateNumberList();
   }
 
-  onReplceKeyList() {
-    let keys = this.testList[this.testNumber]?.testKeys;
-    this.keyList = new ShuffleArray(keys).shuffle();
+  updateNumberList() {
+    console.log('this.testNumberList: ', this.testNumberList);
+    console.log('this.testNumber: ', this.testNumber);
+    this.numberList = this.testNumberList[this.testNumber]?.numberArray;
+    this.moveToNextNumber();
+  }
+
+  moveToNextNumber() {
+    this.testNumberList[this.testNumber]?.numberArray.forEach(
+      (element: any) => {
+        element.isActive = false;
+      }
+    );
+    let _index =
+      this.testNumberList[this.testNumber]?.activeIndexList[
+        this.microNumberIndex
+      ];
+    if (_index != undefined) {
+      let number = this.numberList[_index];
+      number.isActive = true;
+    }
   }
 
   onGetGameSessionId() {
@@ -134,17 +198,59 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSelectAlphabet(number: any) {
-    this.previewList.push(number.name);
-    this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
-    if (number.type == NumberDigitType.TWO_DIGIT_NUMBER) {
-      if (!this.resultItemList.find((item: any) => item.name === number.name)) {
-        this.resultItemList.push(number);
-        this.isComplete();
+    console.log('number: ', number);
+    let numberList = this.testNumberList[this.testNumber].numberArray;
+    console.warn('numberList: ', numberList);
+    let activeItem = numberList.findIndex((item: any) => item.isActive == true);
+    console.log('activeItem: ', activeItem);
+    if (activeItem == number.placeValue) {
+      // alert('correct');
+      if (
+        this.testNumberList[this.testNumber].activeIndexList?.length >
+        this.microNumberIndex + 1
+      ) {
+        this.microNumberIndex++;
+        this.updateNumberList();
+      } else {
+        // console.log('this.testNumberList: ', this.testNumberList);
+        // console.log('this.testNumberList.length: ', this.testNumberList.length);
+        // console.log('this.testNumber + 1: ', this.testNumber + 1);
+        if (this.testNumberList.length != this.testNumber + 1) {
+          this.microNumberIndex = 0;
+          this.testNumber++;
+          this.updateNumberList();
+        }
+        else{
+          alert("Finished!!!");
+          return;
+        }
       }
+
+      // if (
+      //   this.testNumberList[this.testNumber].activeIndexList[
+      //     this.testNumberList[this.testNumber].activeIndexList.length - 1
+      //   ] == number
+      // ) {
+      //   return;
+      // } else {
+      //   this.testNumber++;
+
+      //   console.warn('this.testNumber: ', this.testNumber);
+      //   this.updateNumberList();
+      // }
     }
+
+    // this.previewList.push(number.name);
+    // this.previewText = number.name;
+    // setTimeout(() => {
+    //   this.previewText = '';
+    // }, 500);
+    // if (number.type == NumberDigitType.TWO_DIGIT_NUMBER) {
+    //   if (!this.resultItemList.find((item: any) => item.name === number.name)) {
+    //     this.resultItemList.push(number);
+    //     this.isComplete();
+    //   }
+    // }
   }
 
   isComplete() {
@@ -166,7 +272,6 @@ export class ExerciseComponent implements OnInit {
       setTimeout(() => {
         this.testNumber++;
         this.resultItemList = [];
-        this.onReplceKeyList();
       }, 1500);
     } else {
       return;
@@ -216,9 +321,17 @@ export class ExerciseComponent implements OnInit {
   refreshGame() {
     this.resultItemList = [];
     this.testNumber = 0;
-    this.onReplceKeyList();
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isTestComplete = false;
     }
   }
+}
+
+export enum PlaceValue {
+  // UNIT = 'UNIT',
+  // TENS = 'TENS',
+  // HUNDRED = 'HUNDRED',
+  UNIT = 0,
+  TENS,
+  HUNDRED,
 }
