@@ -1,0 +1,45 @@
+<!-- <p>exercise works!</p> -->
+
+<div id="activity-canvas">
+    <div id="blue-board">
+        <div id="board-activity-hint">
+            <p class="my-0">{{boardActivityHint}}</p>
+        </div>
+        <div class="inner">
+            <div id="result-item-list">
+                <ul class="item-list ps-0 mb-0">
+                    <li *ngFor="let item of resultItemList">{{item?.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <p class="text-warning">{{resultItemList | json}}</p> -->
+    <div id="key-selection-preview-block">
+        <div class="preview-text" *ngIf="previewText">
+            {{previewText}}
+        </div>
+    </div>
+    <div id="activity-keypad">
+        <ul class="key-list ps-0 list-style-none">
+            <!-- <li *ngFor="let key of keyList">
+                <button class="btn" (click)="onSelectAlphabet(key)"
+                    [ngClass]="{'is-right': key?.type == TWO_DIGIT_NUMBER,'is-wrong': key?.type != TWO_DIGIT_NUMBER}">{{key?.name}}</button>
+            </li> -->
+            <li *ngFor="let key of _keyList">
+                <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
+            </li>
+        </ul>
+    </div>
+    <div id="utility-controls">
+        <div id="activity-hint-btn-wrapper">
+            <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
+            </button>
+            <p>Hint</p>
+        </div>
+        <div id="replay-voice-btn-wrapper">
+            <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
+            <p>Refresh</p>
+        </div>
+    </div>
+</div>
+

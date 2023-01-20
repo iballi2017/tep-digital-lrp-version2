@@ -1,0 +1,22 @@
+@use "../../../../../../../../../sass/_partials/mixins";
+
+#activity-canvas {
+    position: relative;
+}
+#activity-keypad {
+    width: 100%;
+    max-width: 500px;
+    padding: 2.5em 1.2em;
+}
+
+#key-selection-preview-block .preview-text {
+    width: auto;
+    display: inline-block;
+    padding: .6em .3em;
+    align-items: center;
+}
+#key-selection-preview-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
