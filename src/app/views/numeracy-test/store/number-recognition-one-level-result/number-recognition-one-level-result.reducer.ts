@@ -64,7 +64,7 @@ export const reducer = createReducer(
   ),
 
 
-  /* ADD LETTER LEVEL STAGE ONE RESULT */
+  /* ADD NUMBER_RECOGNITION_ONE LEVEL STAGE ONE RESULT */
   on(NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelStageOneResult, (state, action) => {
     return {
       ...state,

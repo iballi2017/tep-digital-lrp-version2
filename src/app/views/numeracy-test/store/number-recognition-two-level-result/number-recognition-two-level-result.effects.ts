@@ -56,7 +56,7 @@ export class NumberRecognitionTwoLevelResultEffects {
   });
 
 
-  // ADD NumberRecognitionTwo LEVEL STAGE ONE
+  /* ADD NUMBER_RECOGNITION_TWO LEVEL STAGE ONE RESULT */
   addNumberRecognitionTwoLevelStageOneResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(NumberRecognitionTwoLevelResultActions.addNumberRecognitionTwoLevelStageOneResult),

@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { NumberRecognitionThreeLevelResult } from './number-recognition-three-level-result.model';
+import { ActivityAnswer } from 'src/app/models/interface/game';
 
 
 export const loadNumberRecognitionThreeLevelResult = createAction(
@@ -18,6 +19,22 @@ export const loadNumberRecognitionThreeLevelResultFailure = createAction(
   '[NumberRecognitionThreeLevelResult/API] Load NumberRecognitionThreeLevelResults Failure',
   props<{ error: any }>()
 );
+
+
+// ADD NumberRecognitionThreeLevelStageOneResult
+export const addNumberRecognitionThreeLevelStageOneResult = createAction(
+  '[NumberRecognitionThree Stage-one Activity] Add NumberRecognitionThree Stage One Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addNumberRecognitionThreeLevelStageOneResultSuccess = createAction(
+  '[NumberRecognitionThree Level Result Effect] Add NumberRecognitionThree Stage One Result Success',
+  props<{ payload: any }>()
+);
+export const addNumberRecognitionThreeLevelStageOneResultFailure = createAction(
+  '[NumberRecognitionThree Level Result Effect] Add NumberRecognitionThree Stage One Result Failure',
+  props<{ error: any }>()
+);
+
 
 
 

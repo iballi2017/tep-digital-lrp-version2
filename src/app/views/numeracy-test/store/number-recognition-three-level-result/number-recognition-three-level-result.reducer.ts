@@ -3,26 +3,33 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { NumberRecognitionThreeLevelResult } from './number-recognition-three-level-result.model';
 import * as NumberRecognitionThreeLevelResultActions from './number-recognition-three-level-result.actions';
 
-export const numberRecognitionThreeLevelResultsFeatureKey = 'numberRecognitionThreeLevelResults';
+export const numberRecognitionThreeLevelResultsFeatureKey =
+  'numberRecognitionThreeLevelResults';
 
-export interface NumberRecognitionThreeLevelResultState extends EntityState<NumberRecognitionThreeLevelResult> {
+export interface NumberRecognitionThreeLevelResultState
+  extends EntityState<NumberRecognitionThreeLevelResult> {
   // additional entities state properties
+  result: any;
   isLoading: boolean;
   error: any;
   isSubmitResult: boolean;
 }
 
-export const adapter: EntityAdapter<NumberRecognitionThreeLevelResult> = createEntityAdapter<NumberRecognitionThreeLevelResult>();
+export const adapter: EntityAdapter<NumberRecognitionThreeLevelResult> =
+  createEntityAdapter<NumberRecognitionThreeLevelResult>();
 
-export const initialState: NumberRecognitionThreeLevelResultState = adapter.getInitialState({
-  // additional entity state properties
+export const initialState: NumberRecognitionThreeLevelResultState =
+  adapter.getInitialState({
+    // additional entity state properties
+    result: undefined,
     isLoading: false,
     error: null,
     isSubmitResult: false,
-});
+  });
 
 export const reducer = createReducer(
-  initialState,  on(
+  initialState,
+  on(
     NumberRecognitionThreeLevelResultActions.loadNumberRecognitionThreeLevelResult,
     (state, action) => {
       return {
@@ -54,11 +61,46 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
+  ),
+
+  /* ADD NUMBER_RECOGNITION_THREE LEVEL STAGE ONE RESULT */
+  on(
+    NumberRecognitionThreeLevelResultActions.addNumberRecognitionThreeLevelStageOneResult,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: true,
+      };
+    }
+  ),
+  on(
+    NumberRecognitionThreeLevelResultActions.addNumberRecognitionThreeLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    NumberRecognitionThreeLevelResultActions.addNumberRecognitionThreeLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    NumberRecognitionThreeLevelResultActions.addNumberRecognitionThreeLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
   )
-
-
-
-
 
   // on(NumberRecognitionThreeLevelResultActions.addNumberRecognitionThreeLevelResult,
   //   (state, action) => adapter.addOne(action.numberRecognitionThreeLevelResult, state)
@@ -92,9 +134,5 @@ export const reducer = createReducer(
   // ),
 );
 
-export const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal,
-} = adapter.getSelectors();
+export const { selectIds, selectEntities, selectAll, selectTotal } =
+  adapter.getSelectors();

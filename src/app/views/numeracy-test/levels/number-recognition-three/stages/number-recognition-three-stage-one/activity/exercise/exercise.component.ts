@@ -8,10 +8,10 @@ import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { NumberDigitType } from 'src/app/models/interface/number-type';
 import { GameService } from 'src/app/services/game.service';
-import { NumberRecognitionTwoService } from 'src/app/services/number-recognition/number-recognition-two.service';
+import { NumberRecognitionThreeService } from 'src/app/services/number-recognition/number-recognition-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
-import { addNumberRecognitionTwoLevelStageOneResult } from 'src/app/views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.actions';
-import { NumberRecognitionTwoLevelResultState } from 'src/app/views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.reducer';
+import { addNumberRecognitionThreeLevelStageOneResult } from 'src/app/views/numeracy-test/store/number-recognition-three-level-result/number-recognition-three-level-result.actions';
+import { NumberRecognitionThreeLevelResultState } from 'src/app/views/numeracy-test/store/number-recognition-three-level-result/number-recognition-three-level-result.reducer';
 
 @Component({
   selector: 'app-exercise',
@@ -94,8 +94,8 @@ export class ExerciseComponent implements OnInit {
       ],
     }
   ];
-  constructor(private _gameSvc: GameService, private _numberRecognitionTwoSvc: NumberRecognitionTwoService,
-    private store: Store<NumberRecognitionTwoLevelResultState>,
+  constructor(private _gameSvc: GameService, private _numberRecognitionThreeSvc: NumberRecognitionThreeService,
+    private store: Store<NumberRecognitionThreeLevelResultState>,
     private _router: Router,
     public dialog: MatDialog,) { }
 
@@ -172,8 +172,8 @@ export class ExerciseComponent implements OnInit {
         answer: '1',
         data: [...this.checkTestCompletion],
       };
-      this.store.dispatch(addNumberRecognitionTwoLevelStageOneResult({ payload: Payload }));
-      this._numberRecognitionTwoSvc.addNumberRecognitionTwoLevelResultBehaviour.subscribe(
+      this.store.dispatch(addNumberRecognitionThreeLevelStageOneResult({ payload: Payload }));
+      this._numberRecognitionThreeSvc.addNumberRecognitionThreeLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
             this._router.navigate([
