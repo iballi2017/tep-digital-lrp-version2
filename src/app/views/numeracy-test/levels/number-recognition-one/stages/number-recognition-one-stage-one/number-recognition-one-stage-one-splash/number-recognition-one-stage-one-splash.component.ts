@@ -8,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class NumberRecognitionOneStageOneSplashComponent implements OnInit {
   menuList = [
     {
-      title: 'NUMBER RECOGNITION ONE',
+      title: 'NUMERACY',
     },
     {
-      title: 'LETTER',
+      title: 'NUMBER RECOGNITION 1',
     },
     {
       title: 'STAGE 1',

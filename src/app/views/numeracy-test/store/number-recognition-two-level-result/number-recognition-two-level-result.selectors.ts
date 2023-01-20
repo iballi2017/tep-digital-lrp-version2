@@ -13,15 +13,16 @@ export const selectNumberRecognitionTwoLevelResult = createSelector(
   selectAll
 );
 
-// export const letterLevelResult = createSelector(
-//   selectNumberRecognitionTwoLevelResultState,
-//   (state: NumberRecognitionTwoLevelResultState) => state.result
-// );
+
+export const numberRecognitionOneLevelResult = createSelector(
+  selectNumberRecognitionTwoLevelResultState,
+  (state: NumberRecognitionTwoLevelResultState) => state.result
+);
 export const numberRecognitionTwoLevelResultIsLoading = createSelector(
   selectNumberRecognitionTwoLevelResultState,
   (state: NumberRecognitionTwoLevelResultState) => state?.isLoading
 );
-// export const isSubmitResultLetterLevelResult = createSelector(
-//   selectNumberRecognitionTwoLevelResultState,
-//   (state: NumberRecognitionTwoLevelResultState) => state?.isSubmitResult
-// );
+export const isSubmitResultNumberRecognitionTwoLevelResult = createSelector(
+  selectNumberRecognitionTwoLevelResultState,
+  (state: NumberRecognitionTwoLevelResultState) => state?.isSubmitResult
+);

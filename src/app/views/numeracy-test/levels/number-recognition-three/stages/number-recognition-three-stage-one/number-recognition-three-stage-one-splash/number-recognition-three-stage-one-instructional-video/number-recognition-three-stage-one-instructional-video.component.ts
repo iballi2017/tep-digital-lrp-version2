@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-number-recognition-two-stage-one-instructional-video',
-  templateUrl: './number-recognition-two-stage-one-instructional-video.component.html',
-  styleUrls: ['./number-recognition-two-stage-one-instructional-video.component.scss']
+  selector: 'app-number-recognition-three-stage-one-instructional-video',
+  templateUrl: './number-recognition-three-stage-one-instructional-video.component.html',
+  styleUrls: ['./number-recognition-three-stage-one-instructional-video.component.scss']
 })
-export class NumberRecognitionTwoStageOneInstructionalVideoComponent implements OnInit {
+export class NumberRecognitionThreeStageOneInstructionalVideoComponent implements OnInit {
   ngOnInit(): void {
     const video = document.querySelector('video');
     video?.addEventListener('ended', this.isEnded, false);

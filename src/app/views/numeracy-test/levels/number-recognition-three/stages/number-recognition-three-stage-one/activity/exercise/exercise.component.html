@@ -1,4 +1,5 @@
 <!-- <p>exercise works!</p> -->
+
 <div id="activity-canvas">
     <div id="blue-board">
         <div id="board-activity-hint">
@@ -23,7 +24,7 @@
             <li *ngFor="let key of keyList">
                 <!-- {{key}} -->
                 <button class="btn" (click)="onSelectAlphabet(key)"
-                    [ngClass]="{'is-right': key?.type == TWO_DIGIT_NUMBER,'is-wrong': key?.type != TWO_DIGIT_NUMBER}">{{key?.name}}</button>
+                    [ngClass]="{'is-right': key?.type == THREE_DIGIT_NUMBER,'is-wrong': key?.type != THREE_DIGIT_NUMBER}">{{key?.name}}</button>
             </li>
         </ul>
     </div>

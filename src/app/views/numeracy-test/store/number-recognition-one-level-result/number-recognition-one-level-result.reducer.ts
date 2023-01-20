@@ -21,7 +21,7 @@ export const adapter: EntityAdapter<NumberRecognitionOneLevelResult> =
 export const initialState: NumberRecognitionOneLevelResultState =
   adapter.getInitialState({
     // additional entity state properties
-  result: undefined,
+    result: undefined,
     isLoading: false,
     error: null,
     isSubmitResult: false,
@@ -63,7 +63,7 @@ export const reducer = createReducer(
     }
   ),
 
-  
+
   /* ADD LETTER LEVEL STAGE ONE RESULT */
   on(NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelStageOneResult, (state, action) => {
     return {

@@ -9,6 +9,7 @@ export const numberRecognitionTwoLevelResultsFeatureKey =
 export interface NumberRecognitionTwoLevelResultState
   extends EntityState<NumberRecognitionTwoLevelResult> {
   // additional entities state properties
+  result: any;
   isLoading: boolean;
   error: any;
   isSubmitResult: boolean;
@@ -20,6 +21,7 @@ export const adapter: EntityAdapter<NumberRecognitionTwoLevelResult> =
 export const initialState: NumberRecognitionTwoLevelResultState =
   adapter.getInitialState({
     // additional entity state properties
+    result: undefined,
     isLoading: false,
     error: null,
     isSubmitResult: false,
@@ -59,11 +61,52 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
+  ),
 
 
 
-  
+
+  /* ADD LETTER LEVEL STAGE ONE RESULT */
+  on(NumberRecognitionTwoLevelResultActions.addNumberRecognitionTwoLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    NumberRecognitionTwoLevelResultActions.addNumberRecognitionTwoLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    NumberRecognitionTwoLevelResultActions.addNumberRecognitionTwoLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    NumberRecognitionTwoLevelResultActions.addNumberRecognitionTwoLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
+
+
+
+
   // on(
   //   NumberRecognitionTwoLevelResultActions.addNumberRecognitionTwoLevelResult,
   //   (state, action) =>

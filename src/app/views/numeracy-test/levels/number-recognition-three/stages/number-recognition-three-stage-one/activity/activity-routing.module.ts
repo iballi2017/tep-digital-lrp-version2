@@ -11,8 +11,7 @@ const routes: Routes = [
       { path: '', component: ExerciseComponent },
       { path: 'exercise', component: ExerciseComponent },
     ],
-  },
-];
+  },];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -17,7 +17,8 @@ const routes: Routes = [
         component: NumberRecognitionTwoStageOneInstructionalVideoComponent,
       },
     ],
-  },];
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

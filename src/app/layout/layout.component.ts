@@ -11,6 +11,8 @@ import { WordLevelResultState } from '../views/literacy-test/store/word-level-re
 import { isSubmitResultWordLevelResult, wordLevelResultIsLoading } from '../views/literacy-test/store/word-level-result/word-level-result.selectors';
 import { NumberRecognitionOneLevelResultState } from '../views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.reducer';
 import { isSubmitResultNumberRecognitionOneLevelResult } from '../views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.selectors';
+import { NumberRecognitionTwoLevelResultState } from '../views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.reducer';
+import { isSubmitResultNumberRecognitionTwoLevelResult } from '../views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.selectors';
 
 @Component({
   selector: 'app-layout',
@@ -23,13 +25,15 @@ export class LayoutComponent implements OnInit {
   paragraphResultLoading$!: Observable<any>;
   storyResultLoading$!: Observable<any>;
   numberRecognitionOneResultLoading$!: Observable<boolean>;
+  numberRecognitionTwoResultLoading$!: Observable<any>;
   
   constructor(
     private storeLetter: Store<LetterLevelResultState>,
     private storeWord: Store<WordLevelResultState>,
     private storePragraph: Store<ParagraphLevelResultState>,
     private storeStory: Store<StoryLevelResultState>,
-    private storeNumberRecognitionOne: Store<NumberRecognitionOneLevelResultState>) {}
+    private storeNumberRecognitionOne: Store<NumberRecognitionOneLevelResultState>,
+    private storeNumberRecognitionTwo: Store<NumberRecognitionTwoLevelResultState>) {}
 
   ngOnInit(): void {
     this.letterResultLoading$ = this.storeLetter.pipe(
@@ -39,5 +43,6 @@ export class LayoutComponent implements OnInit {
     this.paragraphResultLoading$ = this.storePragraph.pipe(select(isSubmitResultParagraphLevelResult));
     this.storyResultLoading$ = this.storeStory.pipe(select(isSubmitResultStoryLevelResult));
     this.numberRecognitionOneResultLoading$ = this.storeNumberRecognitionOne.pipe(select(isSubmitResultNumberRecognitionOneLevelResult));
+    this.numberRecognitionTwoResultLoading$ = this.storeNumberRecognitionTwo.pipe(select(isSubmitResultNumberRecognitionTwoLevelResult));
   }
 }

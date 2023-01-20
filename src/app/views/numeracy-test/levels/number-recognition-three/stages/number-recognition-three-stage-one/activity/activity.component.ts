@@ -8,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class ActivityComponent implements OnInit {
   menuList = [
     {
-      title: 'NUMBERACY',
+      title: 'NUMERACY',
     },
     {
-      title: 'NUMBER RECOGNITION 2',
+      title: 'NUMBER RECOGNITION 3',
     },
     {
       title: 'STAGE 1',
