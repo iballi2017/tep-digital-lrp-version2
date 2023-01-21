@@ -34,6 +34,7 @@ export class ExerciseComponent implements OnInit {
   gameSessionId!: string;
   stageNumber: number = 1;
   gameLevel = GameLevel.NUMBER_RECOGNITION_TWO;
+  testingNumber: any;
   testNumberList: any = [
     {
       isDone: false,
@@ -163,6 +164,11 @@ export class ExerciseComponent implements OnInit {
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
     this.updateNumberList();
+    this.loadKeys();
+  }
+
+  loadKeys() {
+    this.keyList = this._keyList;
   }
 
   updateNumberList() {
@@ -170,6 +176,15 @@ export class ExerciseComponent implements OnInit {
     console.log('this.testNumber: ', this.testNumber);
     this.numberList = this.testNumberList[this.testNumber]?.numberArray;
     this.moveToNextNumber();
+  }
+
+  testNumberAgainstButton() {
+    // for (let i = 0; i < this.numberList.length; i++) {
+    //   if ((this.numberList[i].isActive = true))
+    //     console.log('this.testNumber: ', this.testNumber);
+    //   console.log('this.numberList[i]: ', this.numberList[i]);
+    //   this.testingNumber = this.numberList[i];
+    // }
   }
 
   moveToNextNumber() {
@@ -198,13 +213,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSelectAlphabet(number: any) {
-    console.log('number: ', number);
+    // console.log('number: ', number);
     let numberList = this.testNumberList[this.testNumber].numberArray;
-    console.warn('numberList: ', numberList);
     let activeItem = numberList.findIndex((item: any) => item.isActive == true);
-    console.log('activeItem: ', activeItem);
     if (activeItem == number.placeValue) {
-      // alert('correct');
       if (
         this.testNumberList[this.testNumber].activeIndexList?.length >
         this.microNumberIndex + 1
@@ -212,32 +224,20 @@ export class ExerciseComponent implements OnInit {
         this.microNumberIndex++;
         this.updateNumberList();
       } else {
-        // console.log('this.testNumberList: ', this.testNumberList);
-        // console.log('this.testNumberList.length: ', this.testNumberList.length);
-        // console.log('this.testNumber + 1: ', this.testNumber + 1);
         if (this.testNumberList.length != this.testNumber + 1) {
           this.microNumberIndex = 0;
           this.testNumber++;
           this.updateNumberList();
-        }
-        else{
-          alert("Finished!!!");
+        } else {
+          alert('Finished!!!');
           return;
         }
       }
-
-      // if (
-      //   this.testNumberList[this.testNumber].activeIndexList[
-      //     this.testNumberList[this.testNumber].activeIndexList.length - 1
-      //   ] == number
-      // ) {
-      //   return;
-      // } else {
-      //   this.testNumber++;
-
-      //   console.warn('this.testNumber: ', this.testNumber);
-      //   this.updateNumberList();
-      // }
+    } else {
+      number.isWrongChoice = true;
+      setTimeout(() => {
+        number.isWrongChoice = true;
+      }, 500);
     }
 
     // this.previewList.push(number.name);

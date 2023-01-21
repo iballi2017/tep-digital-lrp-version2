@@ -30,8 +30,9 @@
                 <button class="btn" (click)="onSelectAlphabet(key)"
                     [ngClass]="{'is-right': key?.type == TWO_DIGIT_NUMBER,'is-wrong': key?.type != TWO_DIGIT_NUMBER}">{{key?.name}}</button>
             </li> -->
-            <li *ngFor="let key of _keyList">
-                <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
+            <li *ngFor="let key of keyList">
+                <button class="btn" [ngClass]="{'is-right': key?.isWrongChoice != true,'is-wrong': key?.isWrongChoice == true}"
+                    (click)="onSelectAlphabet(key)">{{key?.name}}</button>
             </li>
         </ul>
     </div>
@@ -47,4 +48,3 @@
         </div>
     </div>
 </div>
-
