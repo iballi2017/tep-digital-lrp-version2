@@ -103,30 +103,30 @@ export class LevelCompletionComponent implements OnInit {
             `/shared/new-task-loading/${GameLevel.PLACE_VALUE}/${this.stageNumber}/${GameType.NUMERACY}`,
           ]);
           break;
-        case GameLevel.NUMBER_RECOGNITION_THREE:
-          this._router.navigate([
-            `/shared/new-task-loading/${GameLevel.PLACE_VALUE}/${this.stageNumber}/${GameType.NUMERACY}`,
-          ]);
-          break;
-
-        case GameLevel.PLACE_VALUE:
-          this._router.navigate([
-            `/shared/new-task-loading/${GameLevel.BASIC_OPERATIONS_ADDITION}/${this.stageNumber}/${GameType.NUMERACY}`,
-          ]);
-          break;
-
-        // case GameLevel.PLACE_VALUE:
+        // case GameLevel.NUMBER_RECOGNITION_THREE:
         //   this._router.navigate([
-        //     `/shared/new-task-loading/${GameLevel.NUMBER_RECOGNITION_THREE}/${this.stageNumber}/${GameType.NUMERACY}`,
+        //     `/shared/new-task-loading/${GameLevel.PLACE_VALUE}/${this.stageNumber}/${GameType.NUMERACY}`,
         //   ]);
         //   break;
 
-
-        // case GameLevel.NUMBER_RECOGNITION_THREE:
+        // case GameLevel.PLACE_VALUE:
         //   this._router.navigate([
         //     `/shared/new-task-loading/${GameLevel.BASIC_OPERATIONS_ADDITION}/${this.stageNumber}/${GameType.NUMERACY}`,
         //   ]);
         //   break;
+
+        case GameLevel.PLACE_VALUE:
+          this._router.navigate([
+            `/shared/new-task-loading/${GameLevel.NUMBER_RECOGNITION_THREE}/${this.stageNumber}/${GameType.NUMERACY}`,
+          ]);
+          break;
+
+
+        case GameLevel.NUMBER_RECOGNITION_THREE:
+          this._router.navigate([
+            `/shared/new-task-loading/${GameLevel.BASIC_OPERATIONS_ADDITION}/${this.stageNumber}/${GameType.NUMERACY}`,
+          ]);
+          break;
 
         case GameLevel.BASIC_OPERATIONS_ADDITION:
           this._router.navigate([

@@ -27,6 +27,8 @@ import * as fromParagraphLevelResult from './views/literacy-test/store/paragraph
 import * as fromStoryLevelResult from './views/literacy-test/store/story-level-result/story-level-result.reducer';
 import * as fromNumberRecognitionOneLevelResult from './views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.reducer';
 import * as fromNumberRecognitionTwoLevelResult from './views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.reducer';
+import * as fromPlaceValueLevelResult from './views/numeracy-test/store/place-value-level-result/place-value-level-result.reducer';
+import * as fromNumberRecognitionThreeLevelResult from './views/numeracy-test/store/number-recognition-three-level-result/number-recognition-three-level-result.reducer';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,14 @@ import * as fromNumberRecognitionTwoLevelResult from './views/numeracy-test/stor
     StoreModule.forFeature(
       fromNumberRecognitionTwoLevelResult.numberRecognitionTwoLevelResultsFeatureKey,
       fromNumberRecognitionTwoLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
+    StoreModule.forFeature(
+      fromNumberRecognitionThreeLevelResult.numberRecognitionThreeLevelResultsFeatureKey,
+      fromNumberRecognitionThreeLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
+    StoreModule.forFeature(
+      fromPlaceValueLevelResult.placeValueLevelResultsFeatureKey,
+      fromPlaceValueLevelResult.reducer
     ), //add to import this because the letterLevelResult loading stte belongs to another module
     NgbModule,
     // StoreModule.forRoot({}, {}),

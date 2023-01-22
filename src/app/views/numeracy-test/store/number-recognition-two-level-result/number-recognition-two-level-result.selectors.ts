@@ -14,7 +14,7 @@ export const selectNumberRecognitionTwoLevelResult = createSelector(
 );
 
 
-export const numberRecognitionOneLevelResult = createSelector(
+export const numberRecognitionTwoLevelResult = createSelector(
   selectNumberRecognitionTwoLevelResultState,
   (state: NumberRecognitionTwoLevelResultState) => state.result
 );

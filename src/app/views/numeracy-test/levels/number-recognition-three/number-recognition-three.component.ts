@@ -7,7 +7,7 @@ import { Snackbar } from 'src/app/models/class/snackbar';
 import { GameService } from 'src/app/services/game.service';
 import { loadNumberRecognitionThreeLevelResult } from '../../store/number-recognition-three-level-result/number-recognition-three-level-result.actions';
 import { NumberRecognitionThreeLevelResult } from '../../store/number-recognition-three-level-result/number-recognition-three-level-result.model';
-import { numberRecognitionThreeLevelResultIsLoading, selectNumberRecognitionThreeLevelResult } from '../../store/number-recognition-three-level-result/number-recognition-two-level-result.selectors';
+import { numberRecognitionThreeLevelResultIsLoading, selectNumberRecognitionThreeLevelResult } from '../../store/number-recognition-three-level-result/number-recognition-three-level-result.selectors';
 
 @Component({
   selector: 'app-number-recognition-three',

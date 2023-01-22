@@ -10,6 +10,7 @@ export interface PlaceValueLevelResultState extends EntityState<PlaceValueLevelR
   isLoading: boolean;
   error: any;
   isSubmitResult: boolean;
+  result: any;
 }
 
 export const adapter: EntityAdapter<PlaceValueLevelResult> = createEntityAdapter<PlaceValueLevelResult>();
@@ -19,6 +20,7 @@ export const initialState: PlaceValueLevelResultState = adapter.getInitialState(
     isLoading: false,
     error: null,
     isSubmitResult: false,
+    result: undefined,
 });
 
 export const reducer = createReducer(
@@ -56,7 +58,49 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
+  ),
+
+  
+
+
+
+  /* ADD NUMBER_RECOGNITION_TWO LEVEL STAGE ONE RESULT */
+  on(PlaceValueLevelResultActions.addPlaceValueLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    PlaceValueLevelResultActions.addPlaceValueLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    PlaceValueLevelResultActions.addPlaceValueLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    PlaceValueLevelResultActions.addPlaceValueLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
   
   // on(PlaceValueLevelResultActions.addPlaceValueLevelResult,
   //   (state, action) => adapter.addOne(action.placeValueLevelResult, state)

@@ -6,22 +6,25 @@ import {
 } from './number-recognition-three-level-result.reducer';
 
 export const selectNumberRecognitionThreeLevelResultState =
-  createFeatureSelector<NumberRecognitionThreeLevelResultState>(numberRecognitionThreeLevelResultsFeatureKey);
+  createFeatureSelector<NumberRecognitionThreeLevelResultState>(
+    numberRecognitionThreeLevelResultsFeatureKey
+  );
 
 export const selectNumberRecognitionThreeLevelResult = createSelector(
   selectNumberRecognitionThreeLevelResultState,
   selectAll
 );
 
-// export const letterLevelResult = createSelector(
-//   selectNumberRecognitionThreeLevelResultState,
-//   (state: NumberRecognitionThreeLevelResultState) => state.result
-// );
+export const numberRecognitionThreeLevelResult = createSelector(
+  selectNumberRecognitionThreeLevelResultState,
+  (state: NumberRecognitionThreeLevelResultState) => state.result
+);
 export const numberRecognitionThreeLevelResultIsLoading = createSelector(
   selectNumberRecognitionThreeLevelResultState,
   (state: NumberRecognitionThreeLevelResultState) => state?.isLoading
 );
-// export const isSubmitResultLetterLevelResult = createSelector(
-//   selectNumberRecognitionThreeLevelResultState,
-//   (state: NumberRecognitionThreeLevelResultState) => state?.isSubmitResult
-// );
+
+export const isSubmitResultNumberRecognitionThreeLevelResult = createSelector(
+  selectNumberRecognitionThreeLevelResultState,
+  (state: NumberRecognitionThreeLevelResultState) => state?.isSubmitResult
+);

@@ -13,15 +13,16 @@ export const selectPlaceValueLevelResult = createSelector(
   selectAll
 );
 
-// export const letterLevelResult = createSelector(
-//   selectPlaceValueLevelResultState,
-//   (state: PlaceValueLevelResultState) => state.result
-// );
+
+export const numberRecognitionOneLevelResult = createSelector(
+  selectPlaceValueLevelResultState,
+  (state: PlaceValueLevelResultState) => state.result
+);
 export const placeValueLevelResultIsLoading = createSelector(
   selectPlaceValueLevelResultState,
   (state: PlaceValueLevelResultState) => state?.isLoading
 );
-// export const isSubmitResultLetterLevelResult = createSelector(
-//   selectPlaceValueLevelResultState,
-//   (state: PlaceValueLevelResultState) => state?.isSubmitResult
-// );
+export const isSubmitResultPlaceValueLevelResult = createSelector(
+  selectPlaceValueLevelResultState,
+  (state: PlaceValueLevelResultState) => state?.isSubmitResult
+);

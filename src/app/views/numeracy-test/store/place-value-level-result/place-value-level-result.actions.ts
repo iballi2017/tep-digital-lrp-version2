@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { PlaceValueLevelResult } from './place-value-level-result.model';
+import { ActivityAnswer } from 'src/app/models/interface/game';
 
 export const loadPlaceValueLevelResult = createAction(
   '[PlaceValueLevelResult/API] Load PlaceValueLevelResults',
@@ -19,6 +20,23 @@ export const loadPlaceValueLevelResultFailure = createAction(
   '[PlaceValueLevelResult/API] Load PlaceValueLevelResults Failure',
   props<{ error: any }>()
 );
+
+
+
+// ADD PlaceValueLevelStageOneResult
+export const addPlaceValueLevelStageOneResult = createAction(
+  '[PlaceValue Stage-one Activity] Add PlaceValue Stage One Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addPlaceValueLevelStageOneResultSuccess = createAction(
+  '[PlaceValue Level Result Effect] Add PlaceValue Stage One Result Success',
+  props<{ payload: any }>()
+);
+export const addPlaceValueLevelStageOneResultFailure = createAction(
+  '[PlaceValue Level Result Effect] Add PlaceValue Stage One Result Failure',
+  props<{ error: any }>()
+);
+
 
 
 // export const loadPlaceValueLevelResults = createAction(

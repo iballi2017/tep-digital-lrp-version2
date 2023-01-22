@@ -32,7 +32,7 @@ export class ExerciseComponent implements OnInit {
   checkTestCompletion: any;
   gameSessionId!: string;
   stageNumber: number = 1;
-  gameLevel = GameLevel.NUMBER_RECOGNITION_TWO;
+  gameLevel = GameLevel.NUMBER_RECOGNITION_THREE;
 
 
   testList = [
