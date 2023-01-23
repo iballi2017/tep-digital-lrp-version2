@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { BooleanAlertDialogComponent } from '../../shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 
 @Component({
@@ -13,6 +15,8 @@ export class StageCompletionComponent implements OnInit {
   @Input() gameType!: string;
   @Input() levelTitle!: string;
   @Input() stageNumber!: number;
+  isLaunchTest!: boolean;
+  launchBtnTitle = "Proceed";
   pageTitle = '! ! STAGE COMPLETE ! !';
   pageFeaturedImage =
     '../../../../../assets/images/stage-completion-featured-image.png';
@@ -41,10 +45,17 @@ export class StageCompletionComponent implements OnInit {
   constructor(
     private _router: Router,
     private _gameSvc: GameService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
+  ) { }
 
   ngOnInit(): void {
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     this.gameLevel = {
       stageNumber: this.stageNumber,
       levelTitle: this.levelTitle,
@@ -54,7 +65,7 @@ export class StageCompletionComponent implements OnInit {
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
     this._gameSvc.gameSessionBehaviorSubject.subscribe((msg: any) => {
-      console.log('msg: ', msg);
+      // console.log('msg: ', msg);
       this.gameSessionId = msg.session_id;
     });
   }
@@ -103,5 +114,20 @@ export class StageCompletionComponent implements OnInit {
         }
       }
     });
+  }
+
+
+  playBGSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopStageCompletionSound();
+  }
+
+  ngOnDestroy(): void {
+    this._playSoundSvc.stopStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 }

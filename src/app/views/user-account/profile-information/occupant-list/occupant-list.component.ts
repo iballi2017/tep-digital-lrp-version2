@@ -40,7 +40,7 @@ export class OccupantListComponent implements OnInit, AfterContentInit {
   isLoading!: boolean;
   page: number = 1;
   count = 0;
-  ItemsPerPage = 10;
+  ItemsPerPage = 20;
   totalRecords!: string;
   occupantListQuery: QueryParamsModel = {
     pageSize: this.ItemsPerPage,

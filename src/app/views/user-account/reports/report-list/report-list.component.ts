@@ -52,7 +52,7 @@ export class ReportListComponent implements OnInit {
   reportParams$!: Observable<any>;
   page: number = 1;
   count = 0;
-  ItemsPerPage = 3;
+  ItemsPerPage = 20;
   searchTerm: string = '';
   totalRecords!: string;
 

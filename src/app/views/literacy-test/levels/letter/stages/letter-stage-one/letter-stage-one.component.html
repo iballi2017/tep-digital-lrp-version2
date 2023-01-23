@@ -1,5 +1,5 @@
 <!-- <p>letter-stage-one works!</p> -->
-<app-activity-launcher (onPlayBGSound)="playBGSound()" *ngIf="!isLaunchTest"></app-activity-launcher>
-<div id="lettering-stage-one-page">
+<app-launch-activity-sound [btnTitle] = "btnTitle" (onPlayBGSound)="playBGSound()" *ngIf="!isLaunchTest"></app-launch-activity-sound>
+<div id="letter-stage-one-page">
         <router-outlet></router-outlet>
 </div>

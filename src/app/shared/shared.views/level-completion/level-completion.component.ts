@@ -5,6 +5,8 @@ import { GameSessionData } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { BooleanAlertDialogComponent } from '../../shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 
 @Component({
@@ -18,6 +20,8 @@ export class LevelCompletionComponent implements OnInit {
   @Input() gameType!: string;
   @Input() levelTitle!: string;
   // @Input() stageNumber!: number;
+  isLaunchTest!: boolean;
+  launchBtnTitle = "Proceed";
   pageTitle!: string;
   pageFeaturedImage =
     '../../../../../assets/images/level-completion-page-bg.png';
@@ -43,7 +47,9 @@ export class LevelCompletionComponent implements OnInit {
   constructor(
     private _router: Router,
     private _gameSvc: GameService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
   ) { }
 
   ngOnInit(): void {
@@ -179,5 +185,21 @@ export class LevelCompletionComponent implements OnInit {
         ]);
       }
     });
+  }
+
+  
+
+  playBGSound() {
+    this._playSoundSvc.playLevelCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopLevelCompletionSound();
+  }
+
+  ngOnDestroy(): void {
+    this._playSoundSvc.stopLevelCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 }

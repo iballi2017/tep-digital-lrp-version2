@@ -2,9 +2,12 @@ export class PlaySound {
   item: any;
   audio = new Audio();
   volume:number;
-  constructor(item: any, volume:number = 0.01) {
+  loop!: boolean;
+  // constructor(item: any, volume:number = 0.01) {
+    constructor(item: any, volume:number = 0.08, loop:boolean = true) {
     this.item = item;
     this.volume = volume;
+    this.loop = loop
     console.warn('item: ', item);
   }
 
@@ -14,7 +17,7 @@ export class PlaySound {
       this.audio.load();
       this.audio.play();
       this.audio.volume = this.volume;
-      this.audio.loop = true;
+      this.audio.loop = this.loop;
     }
   }
 

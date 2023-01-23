@@ -17,6 +17,7 @@ import { addLetterLevelStageOneResult } from 'src/app/views/literacy-test/store/
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 import { AlphabetNote } from 'src/assets/data/alphabet.voicenote';
 import { BackgroundNote } from 'src/assets/data/background-sound.voicenote';
+import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
@@ -27,116 +28,10 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   boardActivityHint: string = 'Reveal the hidden vowel letters';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
+  testList = testList;
   testNumber: number = 0;
   checkTestCompletion: any;
   keyList: any[] = [];
-
-  testList = [
-    {
-      testName: 'test-1',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: 'a',
-          type: AlphabetType.VOWEL,
-          vn: AlphabetNote.A_Note,
-        },
-        {
-          name: 'j',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'e',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'm',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'i',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'b',
-          type: AlphabetType.CONSONANT,
-          vn: AlphabetNote.B_Note,
-        },
-      ],
-    },
-    {
-      testName: 'test-2',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: 'z',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'u',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'y',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'o',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'j',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'c',
-          type: AlphabetType.CONSONANT,
-          vn: AlphabetNote.C_Note,
-        },
-      ],
-    },
-    {
-      testName: 'test-3',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: 'h',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'o',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'p',
-          type: AlphabetType.CONSONANT,
-        }
-      ],
-    },
-    {
-      testName: 'test-4',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: 'q',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'l',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'a',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'u',
-          type: AlphabetType.VOWEL,
-        }
-      ],
-    }
-  ];
-
   // previewList = ['a', 'b', 'c'];
   previewList: string[] = [];
   resultItemList: any[] = [];
@@ -191,9 +86,6 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSelectAlphabet(alphabet: any) {
-    let playSound = new PlaySound(alphabet);
-    playSound.playAlphabetVoice();
-
     this.previewList.push(alphabet.name);
     this.previewText = alphabet.name;
     setTimeout(() => {
@@ -204,6 +96,8 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
         !this.resultItemList.find((item: any) => item.name === alphabet.name)
       ) {
         this.resultItemList.push(alphabet);
+        let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+        playSound.playAlphabetVoice();
         this.isComplete();
       }
     }
@@ -304,3 +198,107 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     // _PlayBGSound.stopSound();
   }
 }
+
+export const testList = [
+  {
+    testName: 'test-1',
+    isTestComplete: false,
+    testKeys: [
+      {
+        name: 'a',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'j',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'e',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'm',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'i',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'b',
+        type: AlphabetType.CONSONANT,
+      },
+    ],
+  },
+  {
+    testName: 'test-2',
+    isTestComplete: false,
+    testKeys: [
+      {
+        name: 'z',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'u',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'y',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'o',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'j',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'c',
+        type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.C_Note,
+      },
+    ],
+  },
+  {
+    testName: 'test-3',
+    isTestComplete: false,
+    testKeys: [
+      {
+        name: 'h',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'o',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'p',
+        type: AlphabetType.CONSONANT,
+      }
+    ],
+  },
+  {
+    testName: 'test-4',
+    isTestComplete: false,
+    testKeys: [
+      {
+        name: 'q',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'l',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'a',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'u',
+        type: AlphabetType.VOWEL,
+      }
+    ],
+  }
+];

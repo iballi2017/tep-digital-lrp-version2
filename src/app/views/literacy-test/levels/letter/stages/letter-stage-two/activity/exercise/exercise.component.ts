@@ -15,13 +15,14 @@ import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/ac
 import { addLetterLevelStageTwoResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 import { BackgroundNote } from 'src/assets/data/background-sound.voicenote';
+import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Reveal the hidden consonant letters';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
@@ -29,68 +30,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   checkTestCompletion: any;
   keyList: any[] = [];
 
-  testList = [
-    {
-      testName: 'test-1',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: 'b',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'a',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'c',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'e',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'd',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'u',
-          type: AlphabetType.VOWEL,
-        },
-      ],
-    },
-    {
-      testName: 'test-2',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: 's',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'a',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'v',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'p',
-          type: AlphabetType.CONSONANT,
-        },
-        {
-          name: 'e',
-          type: AlphabetType.VOWEL,
-        },
-        {
-          name: 'u',
-          type: AlphabetType.VOWEL,
-        },
-      ],
-    },
-  ];
+  testList = testList
   // previewList = ['a', 'b', 'c'];
   previewList: string[] = [];
   resultItemList: any[] = [];
@@ -107,18 +47,12 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     private _letterStageTwoSvc: LetterStageTwoService,
     private store: Store<LetterLevelResultState>,
     private _router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onReplceKeyList();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
-  }
-
-  ngAfterViewInit() {
-    let sound = BackgroundNote.Literacy_Note;
-    let _PlayBGSound = new PlaySound(sound);
-    _PlayBGSound.playBGSound();
   }
 
   onCheckTestCompletion() {
@@ -143,6 +77,8 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
         !this.resultItemList.find((item: any) => item.name === alphabet.name)
       ) {
         this.resultItemList.push(alphabet);
+        let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+        playSound.playAlphabetVoice();
         this.isComplete();
       }
     }
@@ -155,6 +91,8 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     let availableList = this.keyList.filter((item: any) => {
       return item.type == AlphabetType.CONSONANT;
     });
+    console.log("availableList.length: ", availableList.length);
+    console.log("expectedList.length: ", expectedList.length);
     if (availableList.length == expectedList.length) {
       this.testList[this.testNumber].isTestComplete = true;
       this.onCheckTestCompletion();
@@ -162,7 +100,6 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
         this.testGameCompletion();
         return;
       }
-
       this.testGameCompletion();
       setTimeout(() => {
         this.testNumber++;
@@ -233,3 +170,67 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 }
+
+
+export const testList = [
+  {
+    testName: 'test-1',
+    isTestComplete: false,
+    testKeys: [
+      {
+        name: 'b',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'a',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'c',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'e',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'd',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'u',
+        type: AlphabetType.VOWEL,
+      },
+    ],
+  },
+  {
+    testName: 'test-2',
+    isTestComplete: false,
+    testKeys: [
+      {
+        name: 's',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'a',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'v',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'p',
+        type: AlphabetType.CONSONANT,
+      },
+      {
+        name: 'e',
+        type: AlphabetType.VOWEL,
+      },
+      {
+        name: 'u',
+        type: AlphabetType.VOWEL,
+      },
+    ],
+  },
+];

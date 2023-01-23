@@ -28,6 +28,8 @@ import { ReportListSearchFieldComponent } from './shared.components/report-list-
 import { FormsModule } from '@angular/forms';
 import { ActivityLauncherComponent } from './shared.components/activity-launcher/activity-launcher.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LaunchActivitySoundComponent } from './shared.components/launch-activity-sound/launch-activity-sound.component';
+import { LaunchStageCompletionSoundComponent } from './shared.components/launch-stage-completion-sound/launch-stage-completion-sound.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -51,6 +53,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FullPageLoaderComponent,
     ReportListSearchFieldComponent,
     ActivityLauncherComponent,
+    LaunchActivitySoundComponent,
+    LaunchStageCompletionSoundComponent,
   ],
   imports: [
     CommonModule,
@@ -77,6 +81,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReportListSearchFieldComponent,
     ActivityLauncherComponent,
     NgxPaginationModule,
+    LaunchActivitySoundComponent,
+    LaunchStageCompletionSoundComponent,
   ],
 })
 export class SharedModule {}

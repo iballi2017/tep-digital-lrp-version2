@@ -15,6 +15,7 @@ import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/ac
 import { addLetterLevelStageThreeResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 import { BackgroundNote } from 'src/assets/data/background-sound.voicenote';
+import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
@@ -133,6 +134,8 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
         this.resultItemList.push(resultObject);
+        let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+        playSound.playAlphabetVoice();
         this.previewList = [];
       }
       this.isComplete();

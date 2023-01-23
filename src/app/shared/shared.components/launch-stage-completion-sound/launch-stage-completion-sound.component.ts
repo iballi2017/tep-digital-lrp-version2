@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-activity-launcher',
-  templateUrl: './activity-launcher.component.html',
-  styleUrls: ['./activity-launcher.component.scss']
+  selector: 'app-launch-stage-completion-sound',
+  templateUrl: './launch-stage-completion-sound.component.html',
+  styleUrls: ['./launch-stage-completion-sound.component.scss']
 })
-export class ActivityLauncherComponent implements OnInit {
+export class LaunchStageCompletionSoundComponent implements OnInit {
   @Output() onPlayBGSound = new EventEmitter();
-  @Input()btnTitle!:string;
+  @Input() btnTitle!: string;
   // btnTitle = "Launch";
 
   constructor() { }
@@ -19,5 +19,4 @@ export class ActivityLauncherComponent implements OnInit {
   StartTestAndPlaySound() {
     this.onPlayBGSound.emit();
   }
-
 }
