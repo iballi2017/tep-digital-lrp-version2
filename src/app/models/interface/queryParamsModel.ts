@@ -1,5 +1,6 @@
 export type QueryParamsModel = {
   PageSize?: number;
+  pageSize?: number;
   PageNumber?: number;
   pageLength?:number;
   pageNumber?:number;

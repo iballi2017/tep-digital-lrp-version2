@@ -42,10 +42,20 @@
             }
 
             color: #1e1e1e;
+            &.program-status {
+                font-family: "Open Sans";
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 27px;
+                display: flex;
+                align-items: center;
+                text-transform: capitalize;
+                color: #f58a27;
+            }
         }
     }
 }
-
 .item-card {
     font-family: "Open Sans";
     font-style: normal;
@@ -93,7 +103,7 @@
         align-items: center;
         justify-content: space-between;
         color: #ffffff;
-        padding: .7em 13px;
+        padding: 0.7em 13px;
         .score-label,
         .score-value {
             text-transform: uppercase;
@@ -111,7 +121,6 @@
         }
     }
 }
-
 
 .action-button {
     margin-right: 0.5em;

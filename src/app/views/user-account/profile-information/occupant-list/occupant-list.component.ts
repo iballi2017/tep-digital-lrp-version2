@@ -40,10 +40,10 @@ export class OccupantListComponent implements OnInit, AfterContentInit {
   isLoading!: boolean;
   page: number = 1;
   count = 0;
-  ItemsPerPage = 2;
+  ItemsPerPage = 10;
   totalRecords!: string;
   occupantListQuery: QueryParamsModel = {
-    pageLength: this.ItemsPerPage,
+    pageSize: this.ItemsPerPage,
     pageNumber: this.page,
   };
   constructor(
@@ -122,7 +122,7 @@ export class OccupantListComponent implements OnInit, AfterContentInit {
   pageChangeEvent($event: any) {
     this.page = $event;
     this.occupantListQuery = {
-      pageLength: this.ItemsPerPage,
+      pageSize: this.ItemsPerPage,
       pageNumber: this.page,
     };
     const Payload = buildQueryParams(this.occupantListQuery);

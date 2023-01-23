@@ -11,7 +11,10 @@ import {
   addGameSession,
   addGameSessionSuccess,
 } from 'src/app/shared/store/game/game.actions';
-import { reportSelectStateIsLoading, selectedReport } from '../../store/reports/report.selectors';
+import {
+  reportSelectStateIsLoading,
+  selectedReport,
+} from '../../store/reports/report.selectors';
 import {
   deleteReport,
   deleteReportFailure,
@@ -51,6 +54,8 @@ export class ReportDetailsComponent implements OnInit {
   reportDetails: any;
   reportDetails$!: Observable<any>;
   reportDetailsIsLoading$!: Observable<boolean>;
+  literacyGameType = GameType.LITERACY;
+  numeracyGameType = GameType.NUMERACY;
   constructor(
     private _route: ActivatedRoute,
     private _reportSvc: ReportService,
@@ -68,7 +73,7 @@ export class ReportDetailsComponent implements OnInit {
       next: (params: any) => {
         if (params) {
           let x = params.get('sessionId');
-          console.log('params: ', params);
+          // console.log('params: ', params);
           this.respondentInformation = x;
           this.onGetReportDetails(x);
         }
@@ -80,11 +85,13 @@ export class ReportDetailsComponent implements OnInit {
   }
 
   onGetReportDetails(sessionId: string) {
-    console.log('sessionId***: ', sessionId);
+    // console.log('sessionId***: ', sessionId);
     this.store.dispatch(loadSingleReport({ session_id: sessionId }));
     this.reportDetails$ = this.store.pipe(select(selectedReport));
-    this.reportDetailsIsLoading$ = this.store.pipe(select(reportSelectStateIsLoading));
-    
+    this.reportDetailsIsLoading$ = this.store.pipe(
+      select(reportSelectStateIsLoading)
+    );
+
     // this._reportSvc.LoadGameResultDetails(sessionId);
 
     // this.gameResultDetails$.subscribe({
@@ -129,14 +136,8 @@ export class ReportDetailsComponent implements OnInit {
     this._reportSvc.RemoveReport(_sessionId).subscribe({
       next: (response: any) => {
         if (response) {
-          console.log('response: ', response);
+          // console.log('response: ', response);
           this.store.dispatch(deleteReport({ id: _sessionId }));
-          // this.ngRedux.dispatch({
-          //   type: REMOVE_REPORT_SUCCESS,
-          //   payload: {
-          //     sessionId: sessionId,
-          //   },
-          // });
           this._router.navigate(['/account/reports']);
         }
       },
@@ -153,7 +154,7 @@ export class ReportDetailsComponent implements OnInit {
 
   onContinueReportGame(sessionId: string, GameType: string) {
     this.store.dispatch(addGameSession());
-    console.log('sessionId: ', sessionId);
+    // console.log('sessionId: ', sessionId);
     const Payload = {
       status: 'success',
       session_id: sessionId,

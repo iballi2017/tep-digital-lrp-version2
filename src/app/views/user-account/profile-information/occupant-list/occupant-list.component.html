@@ -34,7 +34,7 @@
                         <td class="text-end">
                             <div class="d-flex justify-content-end">
                                 <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
-                                    (onClickButton)="onViewRespondentDetails(item)"></app-primary-button>
+                                    (onClickEvent)="onViewRespondentDetails(item)"></app-primary-button>
                                 <div class="mx-1"></div>
                                 <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses"
                                     (onClickEvent)="onRemove(item?.occ_id)"></app-danger-button>

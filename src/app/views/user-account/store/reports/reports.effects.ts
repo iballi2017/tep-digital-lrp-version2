@@ -82,8 +82,9 @@ export class ReportsEffects {
       mergeMap((action: any) =>
         this._reportSvc.LoadGameResultDetails(action.session_id).pipe(
           map((report: any) => {
+            // console.group('report: ', report);
             return fromReportActions.loadSingleReportSuccess({
-              selectedReport: report?.data,
+              selectedReport: report,
             });
           }),
           catchError((error: any) =>

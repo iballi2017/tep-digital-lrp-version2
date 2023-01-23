@@ -57,8 +57,8 @@ export class ReportListComponent implements OnInit {
   totalRecords!: string;
 
   reportQuery: QueryParamsModel = {
-    PageSize: this.ItemsPerPage,
-    PageNumber: this.page,
+    pageSize: this.ItemsPerPage,
+    pageNumber: this.page,
     search: this.searchTerm,
   };
   constructor(
@@ -98,6 +98,7 @@ export class ReportListComponent implements OnInit {
       },
     });
   }
+  
   onGetReportList() {
     if (!this.searchTerm) {
       this.reportQuery.search = '';

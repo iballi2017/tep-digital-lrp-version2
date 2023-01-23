@@ -28,149 +28,337 @@
             </div>
         </ng-container>
         <div class="body-wrapper" *ngIf="(reportDetails$ | async ) as reportDetails">
-            <div class="item-card">
-                <div class="item-card-header">
-                    <h3 class="heading">CHILDS INFORMATION</h3>
-                </div>
-                <div class="item-card-body">
-                    <!-- <ul class="row list-style-none mb-0 pl-0" id="respondent-details">
-                        <li class="col-12 col-md-6 order-md-1">
-                            <div class="_key">FULL NAME:</div>
-                            <div class="_value">{{respondentInformation?.fullname}}</div>
-                        </li>
-                        <li class="col-12 col-md-6 order-md-3">
-                            <div class="_key">Age:</div>
-                            <div class="_value">{{respondentInformation?.fullname}}</div>
-                        </li>
-                        <li class="col-12 col-md-6 order-md-3">
-                            <div class="_key">GENDER:</div>
-                            <div class="_value">{{respondentInformation?.fullname}}</div>
-                        </li>
-                        <li class="col-12 col-md-6 order-md-2">
-                            <div class="_key">STATE:</div>
-                            <div class="_value email">{{respondentInformation?.fullname}}</div>
-                        </li>
-                    </ul> -->
+            <!-- <p class="text-danger">{{(reportDetails$ | async ) | json}}</p>
+            <p class="text-danger">{{(reportDetails$ | async )?.gameType | json}}</p> -->
+            <ng-container [ngSwitch]="reportDetails?.gameType | lowercase">
+                <ng-container *ngSwitchCase="literacyGameType | lowercase">
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3 class="heading">CHILDS INFORMATION</h3>
+                        </div>
+                        <div class="item-card-body">
+                            <!-- <ul class="row list-style-none mb-0 pl-0" id="respondent-details">
+                                <li class="col-12 col-md-6 order-md-1">
+                                    <div class="_key">FULL NAME:</div>
+                                    <div class="_value">{{respondentInformation?.fullname}}</div>
+                                </li>
+                                <li class="col-12 col-md-6 order-md-3">
+                                    <div class="_key">Age:</div>
+                                    <div class="_value">{{respondentInformation?.fullname}}</div>
+                                </li>
+                                <li class="col-12 col-md-6 order-md-3">
+                                    <div class="_key">GENDER:</div>
+                                    <div class="_value">{{respondentInformation?.fullname}}</div>
+                                </li>
+                                <li class="col-12 col-md-6 order-md-2">
+                                    <div class="_key">STATE:</div>
+                                    <div class="_value email">{{respondentInformation?.fullname}}</div>
+                                </li>
+                            </ul> -->
+                            <ul class="list-style-none mb-0 pl-0" id="respondent-details">
+                                <li class="item" *ngIf="reportDetails?.dataLitercy?.occ_name">
+                                    <div class="_key">FULL NAME:</div>
+                                    <div class="_value"> {{reportDetails?.dataLitercy?.occ_name}}</div>
+                                </li>
+                                <li class="item" *ngIf="reportDetails?.dataLitercy?.occ_age">
+                                    <div class="_key">Age:</div>
+                                    <div class="_value">{{reportDetails?.dataLitercy?.occ_age}}</div>
+                                </li>
+                                <li class="item" *ngIf="reportDetails?.dataLitercy?.occ_gender">
+                                    <div class="_key">GENDER:</div>
+                                    <div class="_value">{{reportDetails?.dataLitercy?.occ_gender}}</div>
+                                </li>
+                                <li class="item" *ngIf="reportDetails?.dataLitercy?.occ_state">
+                                    <div class="_key">STATE:</div>
+                                    <div class="_value">Adamawa</div>
+                                </li>
+                            </ul>
 
-                    <ul class="list-style-none mb-0 pl-0" id="respondent-details">
-                        <li class="item" *ngIf="reportDetails?.occ_name">
-                            <div class="_key">FULL NAME:</div>
-                            <div class="_value"> {{reportDetails?.occ_name}}</div>
-                        </li>
-                        <li class="item" *ngIf="reportDetails?.occ_age">
-                            <div class="_key">Age:</div>
-                            <div class="_value">{{reportDetails?.occ_age}}</div>
-                        </li>
-                        <li class="item" *ngIf="reportDetails?.occ_gender">
-                            <div class="_key">GENDER:</div>
-                            <div class="_value">{{reportDetails?.occ_gender}}</div>
-                        </li>
-                        <li class="item" *ngIf="reportDetails?.occ_state">
-                            <div class="_key">STATE:</div>
-                            <div class="_value">Adamawa</div>
-                        </li>
-                    </ul>
-
-                </div>
-                <!-- <div class="item-card-footer"> -->
-                <!--    <button class="btn text-uppercase primary-btn" (click)="onEditPersonalDetails(userData)">Edit</button>-->
-                <!-- </div> -->
-            </div>
-
-            <!--  -->
-
-            <div class="item-card">
-                <div class="item-card-header">
-                    <h3 class="heading">LESSON REVIEW</h3>
-                </div>
-                <div class="item-card-body">
-
-                    <ul class="list-style-none mb-0 pl-0" id="respondent-details">
-                        <li class="item">
-                            <div class="_key">PROGRAM:</div>
-                            <div class="_value">{{reportDetails?.gms_type}}</div>
-                        </li>
-                        <li class="item">
-                            <div class="_key">STATUS:</div>
-                            <div class="_value">{{reportDetails?.status}}</div>
-                        </li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-
-                </div>
-                <!-- <div class="item-card-footer"> -->
-                <!--    <button class="btn text-uppercase primary-btn" (click)="onEditPersonalDetails(userData)">Edit</button>-->
-                <!-- </div> -->
-
-                <div class="item-card px-0">
-                    <div class="table-responsive">
-                        <table class="table table-borderless">
-                            <thead class="item-card-header px-1">
-                                <tr>
-                                    <th scope="col">LEVEL</th>
-                                    <th scope="col" colspan="4">SCORES</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td>Stage 1</td>
-                                    <td>Stage 2</td>
-                                    <td>Stage 3</td>
-                                    <!-- <td>Stage 4</td> -->
-                                </tr>
-                                <tr>
-                                    <th scope="row">LETTERING</th>
-                                    <td>{{reportDetails?.letter_stage_1}}</td>
-                                    <td>{{reportDetails?.letter_stage_2}}</td>
-                                    <td>{{reportDetails?.letter_stage_3}}</td>
-                                    <!-- <td>{{reportDetails?.letter_stage_4}}</td> -->
-                                </tr>
-                                <tr>
-                                    <th scope="row">WORD</th>
-                                    <td>{{reportDetails?.word_stage_1}}</td>
-                                    <td>{{reportDetails?.word_stage_2}}</td>
-                                    <td>{{reportDetails?.word_stage_3}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">PARAGRAPH</th>
-                                    <td>{{reportDetails?.paragraph_stage_1}}</td>
-                                    <td>{{reportDetails?.paragraph_stage_2}}</td>
-                                    <td>{{reportDetails?.paragraph_stage_3}}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">STORY</th>
-                                    <td>{{reportDetails?.story_stage_1}}</td>
-                                    <td>{{reportDetails?.story_stage_2}}</td>
-                                    <td>{{reportDetails?.story_stage_3}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        </div>
+                        <!-- <div class="item-card-footer"> -->
+                        <!--    <button class="btn text-uppercase primary-btn" (click)="onEditPersonalDetails(userData)">Edit</button>-->
+                        <!-- </div> -->
                     </div>
-                </div>
 
-                <div id="overall-score">
-                    <div class="score-label">
-                        Overall Score
+                    <!--  -->
+
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3 class="heading">LESSON REVIEW</h3>
+                        </div>
+                        <div class="item-card-body">
+
+                            <ul class="list-style-none mb-0 pl-0" id="respondent-details">
+                                <li class="item">
+                                    <div class="_key">PROGRAM:</div>
+                                    <div class="_value">{{reportDetails?.dataLitercy?.gms_type}}</div>
+                                </li>
+                                <li class="item">
+                                    <div class="_key">STATUS:</div>
+                                    <div class="_value">{{reportDetails?.dataLitercy?.status}}</div>
+                                </li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+
+                        </div>
+                        <!-- <div class="item-card-footer"> -->
+                        <!--    <button class="btn text-uppercase primary-btn" (click)="onEditPersonalDetails(userData)">Edit</button>-->
+                        <!-- </div> -->
+
+                        <div class="item-card px-0">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <thead class="item-card-header px-1">
+                                        <tr>
+                                            <th scope="col">LEVEL</th>
+                                            <th scope="col" colspan="4">SCORES</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td>Stage 1</td>
+                                            <td>Stage 2</td>
+                                            <td>Stage 3</td>
+                                            <td>Stage 4</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">LETTERING</th>
+                                            <td>{{reportDetails?.dataLitercy?.letter_stage_1}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.letter_stage_2}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.letter_stage_3}}</td>
+                                            <!-- <td>{{reportDetails?.dataLitercy?.letter_stage_4}}</td> -->
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">WORD</th>
+                                            <td>{{reportDetails?.dataLitercy?.word_stage_1}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.word_stage_2}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.word_stage_3}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.word_stage_4}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">PARAGRAPH</th>
+                                            <td>{{reportDetails?.dataLitercy?.paragraph_stage_1}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.paragraph_stage_2}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.paragraph_stage_3}}</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">STORY</th>
+                                            <td>{{reportDetails?.dataLitercy?.story_stage_1}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.story_stage_2}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.story_stage_3}}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="overall-score">
+                            <div class="score-label">
+                                Overall Score
+                            </div>
+                            <div class="score-value">
+                                <ng-template #noScore>
+                                    0
+                                </ng-template>
+                                <ng-container *ngIf="reportDetails?.dataLitercy?.score_percent; else noScore">
+                                    {{reportDetails?.dataLitercy?.score_percent}}
+                                </ng-container>
+                            </div>
+                        </div>
                     </div>
-                    <div class="score-value">
-                        <ng-template #noScore>
-                            0
-                        </ng-template>
-                        <ng-container *ngIf="reportDetails?.score_percent; else noScore">
-                            {{reportDetails?.score_percent}}
-                        </ng-container>
+                    <div class="actions-btn-wrapper">
+                        <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
+                            (onClickEvent)="onContinueReportGame(reportDetails?.dataLitercy?.session_id, reportDetails?.dataLitercy?.gms_type)"></app-primary-button>
+                        <div class="mx-1"></div>
+                        <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses"
+                            (onClickEvent)="onRemoveReport(reportDetails?.dataLitercy?.session_id)"></app-danger-button>
                     </div>
-                </div>
-            </div>
-            <div class="actions-btn-wrapper">
-                <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
-                    (onClickEvent)="onContinueReportGame(reportDetails?.session_id, reportDetails?.gms_type)"></app-primary-button>
-                <div class="mx-1"></div>
-                <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses"
-                    (onClickEvent)="onRemoveReport(reportDetails?.session_id)"></app-danger-button>
-            </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="numeracyGameType | lowercase">
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3 class="heading">CHILDS INFORMATION</h3>
+                        </div>
+                        <div class="item-card-body">
+                            <!-- <ul class="row list-style-none mb-0 pl-0" id="respondent-details">
+                                <li class="col-12 col-md-6 order-md-1">
+                                    <div class="_key">FULL NAME:</div>
+                                    <div class="_value">{{respondentInformation?.fullname}}</div>
+                                </li>
+                                <li class="col-12 col-md-6 order-md-3">
+                                    <div class="_key">Age:</div>
+                                    <div class="_value">{{respondentInformation?.fullname}}</div>
+                                </li>
+                                <li class="col-12 col-md-6 order-md-3">
+                                    <div class="_key">GENDER:</div>
+                                    <div class="_value">{{respondentInformation?.fullname}}</div>
+                                </li>
+                                <li class="col-12 col-md-6 order-md-2">
+                                    <div class="_key">STATE:</div>
+                                    <div class="_value email">{{respondentInformation?.fullname}}</div>
+                                </li>
+                            </ul> -->
+                            <ul class="list-style-none mb-0 pl-0" id="respondent-details">
+                                <li class="item" *ngIf="reportDetails?.dataNumeracy?.occ_name">
+                                    <div class="_key">FULL NAME:</div>
+                                    <div class="_value"> {{reportDetails?.dataNumeracy?.occ_name}}</div>
+                                </li>
+                                <li class="item" *ngIf="reportDetails?.dataNumeracy?.occ_age">
+                                    <div class="_key">Age:</div>
+                                    <div class="_value">{{reportDetails?.dataNumeracy?.occ_age}}</div>
+                                </li>
+                                <li class="item" *ngIf="reportDetails?.dataNumeracy?.occ_gender">
+                                    <div class="_key">GENDER:</div>
+                                    <div class="_value">{{reportDetails?.dataNumeracy?.occ_gender}}</div>
+                                </li>
+                                <li class="item" *ngIf="reportDetails?.dataNumeracy?.occ_state">
+                                    <div class="_key">STATE:</div>
+                                    <div class="_value">Adamawa</div>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <!-- <div class="item-card-footer"> -->
+                        <!--    <button class="btn text-uppercase primary-btn" (click)="onEditPersonalDetails(userData)">Edit</button>-->
+                        <!-- </div> -->
+                    </div>
+
+                    <!--  -->
+
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3 class="heading">LESSON REVIEW</h3>
+                        </div>
+                        <div class="item-card-body">
+
+                            <ul class="list-style-none mb-0 pl-0" id="respondent-details">
+                                <li class="item">
+                                    <div class="_key">PROGRAM:</div>
+                                    <div class="_value">{{reportDetails?.dataNumeracy?.gms_type}}</div>
+                                </li>
+                                <li class="item">
+                                    <div class="_key">STATUS:</div>
+                                    <div class="_value program-status">{{reportDetails?.dataNumeracy?.status | uppercase}}</div>
+                                </li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+
+                        </div>
+                        <!-- <div class="item-card-footer"> -->
+                        <!--    <button class="btn text-uppercase primary-btn" (click)="onEditPersonalDetails(userData)">Edit</button>-->
+                        <!-- </div> -->
+
+                        <div class="item-card px-0">
+                            <div class="table-responsive">
+                                <table class="table table-borderless">
+                                    <thead class="item-card-header px-1">
+                                        <tr>
+                                            <th scope="col">LEVEL</th>
+                                            <th scope="col" colspan="4">SCORES</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td>Stage 1</td>
+                                            <td>Stage 2</td>
+                                            <td>Stage 3</td>
+                                            <!-- <td>Stage 4</td> -->
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">NUMBER RECOGNITION 1</th>
+                                            <td>{{reportDetails?.dataNumeracy?.number_recognition_1}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">NUMBER RECOGNITION 2</th>
+                                            <td>{{reportDetails?.dataNumeracy?.number_recognition_2}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">NUMBER RECOGNITION 3</th>
+                                            <td>{{reportDetails?.dataNumeracy?.number_recognition_3}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">PLACE VALUE</th>
+                                            <td>{{reportDetails?.dataNumeracy?.place_value}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">ADDITION</th>
+                                            <td>{{reportDetails?.dataLitercy?.addition_stage_1}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.addition_stage_2}}</td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">SUBTRACTION</th>
+                                            <td>{{reportDetails?.dataLitercy?.subtraction_stage_1}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.subtraction_stage_2}}</td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">MULTIPLICATION</th>
+                                            <td>{{reportDetails?.dataLitercy?.division_stage_1}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.division_stage_2}}</td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">DIVISION</th>
+                                            <td>{{reportDetails?.dataLitercy?.division_stage_1}}</td>
+                                            <td>{{reportDetails?.dataLitercy?.division_stage_2}}</td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="overall-score">
+                            <div class="score-label">
+                                Overall Score
+                            </div>
+                            <div class="score-value">
+                                <ng-template #noScore>
+                                    0
+                                </ng-template>
+                                <ng-container *ngIf="reportDetails?.dataNumeracy?.score_percent; else noScore">
+                                    {{reportDetails?.dataNumeracy?.score_percent}}
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions-btn-wrapper">
+                        <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
+                            (onClickEvent)="onContinueReportGame(reportDetails?.dataNumeracy?.session_id, reportDetails?.dataNumeracy?.gms_type)"></app-primary-button>
+                        <div class="mx-1"></div>
+                        <app-danger-button [btnTitle]="btnDanger.title | uppercase" [btnClasses]="btnClasses"
+                            (onClickEvent)="onRemoveReport(reportDetails?.dataNumeracy?.session_id)"></app-danger-button>
+                    </div>
+                </ng-container>
+                <ng-container *ngSwitchDefault>No game result found</ng-container>
+            </ng-container>
         </div>
 
     </div>
