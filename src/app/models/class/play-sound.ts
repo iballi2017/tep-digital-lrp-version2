@@ -8,7 +8,7 @@ export class PlaySound {
     this.item = item;
     this.volume = volume;
     this.loop = loop
-    console.warn('item: ', item);
+    // console.warn('item: ', item);
   }
 
   playBGSound() {
@@ -22,7 +22,7 @@ export class PlaySound {
   }
 
   playAlphabetVoice() {
-    console.warn('this.item: ', this.item);
+    // console.warn('this.item: ', this.item);
     if (this.item.vn) {
       this.audio.src = this.item.vn;
       this.audio.load();

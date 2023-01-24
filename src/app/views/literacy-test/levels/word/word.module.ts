@@ -6,6 +6,7 @@ import { WordStageOneComponent } from './stages/word-stage-one/word-stage-one.co
 import { WordStageTwoComponent } from './stages/word-stage-two/word-stage-two.component';
 import { WordStageThreeComponent } from './stages/word-stage-three/word-stage-three.component';
 import { WordStageFourComponent } from './stages/word-stage-four/word-stage-four.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { WordStageFourComponent } from './stages/word-stage-four/word-stage-four
   ],
   imports: [
     CommonModule,
-    WordRoutingModule
+    WordRoutingModule,
+    SharedModule
   ]
 })
 export class WordModule { }

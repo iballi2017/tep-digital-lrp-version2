@@ -22,7 +22,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Create syllables';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -67,20 +67,12 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: Store<LetterLevelResultState>,
     private _router: Router,
     private _letterStageThreeSvc: LetterStageThreeService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onReplceKeyList();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
-  }
-
-  
-
-  ngAfterViewInit() {
-    let sound = BackgroundNote.Literacy_Note;
-    let _PlayBGSound = new PlaySound(sound);
-    _PlayBGSound.playBGSound();
   }
 
   onCheckTestCompletion() {

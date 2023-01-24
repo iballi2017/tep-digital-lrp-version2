@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
@@ -15,6 +16,7 @@ import {
   addWordLevelStageThreeResult,
 } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
 import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.reducer';
+import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
@@ -90,6 +92,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     } else {
       if (this.resultItemList.length < testAnswerLength) {
         this.resultItemList.push(alphabet.name);
+        let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+        playSound.playAlphabetVoice();
       }
       if (this.resultItemList.length == testAnswerLength) {
         this.testResult();

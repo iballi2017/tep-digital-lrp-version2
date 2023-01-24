@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
@@ -11,9 +12,11 @@ import { GameService } from 'src/app/services/game.service';
 import { StoryStageOneService } from 'src/app/services/story/story-stage-one.service';
 import { WordStageFourService } from 'src/app/services/word/word-stage-four.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { LongTextReadDialogComponent } from 'src/app/views/literacy-test/completion/long-text-read-dialog/long-text-read-dialog.component';
 import { addStoryLevelStageOneResult } from 'src/app/views/literacy-test/store/story-level-result/story-level-result.actions';
 import { addWordLevelStageFourResult } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
 import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.reducer';
+import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
@@ -36,6 +39,11 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   gameSessionId!: string;
   stageNumber: number = 1;
   gameLevel = GameLevel.STORY;
+  fullDataText: string = `
+  Title: The boy Abba
+  
+  Short story: Abba is a boy He lives in Yola. He lives with his uncle. He has a black ball. Aba and his uncle play the ball all day.`
+
   resultListResult = [
     {
       title: {
@@ -257,6 +265,167 @@ export class ExerciseComponent implements OnInit, OnDestroy {
                 parent: keyParent.body,
               }
             ]
+          },
+          {
+            statement: 3,
+            isItemTestDone: false,
+            content: [
+              {
+                text: "he",
+                display: false,
+              },
+              {
+                text: "has",
+                display: false,
+              },
+              {
+                text: "a",
+                display: false,
+              },
+              {
+                text: "black",
+                display: false,
+              },
+              {
+                text: "ball",
+                display: false,
+              }
+            ],
+            keyList: [
+              {
+                label: "ball",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "black",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "has",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "a",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "have",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "he",
+                isWrong: false,
+                parent: keyParent.body,
+              }
+            ]
+          }
+
+          // 
+          ,
+          {
+            statement: 3,
+            isItemTestDone: false,
+            content: [
+              {
+                text: "Abba",
+                display: false,
+              },
+              {
+                text: "and",
+                display: false,
+              },
+              {
+                text: "his",
+                display: false,
+              },
+              {
+                text: "uncle",
+                display: false,
+              },
+              {
+                text: "play",
+                display: false,
+              },
+              {
+                text: "the",
+                display: false,
+              },
+              {
+                text: "ball",
+                display: false,
+              },
+              {
+                text: "always",
+                display: false,
+              }
+            ],
+            keyList: [
+              {
+                label: "mine",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "always",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "Abba",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "his",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "play",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "tin",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "ball",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "the",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "and",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "bet",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "choice",
+                isWrong: false,
+                parent: keyParent.body,
+              },
+              {
+                label: "uncle",
+                isWrong: false,
+                parent: keyParent.body,
+              }
+            ]
           }
         ]
       }
@@ -294,7 +463,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   loadTestContent() {
     let x = this.resultListResult[this.testNumber];
-    console.warn("x: ", x)
+    // console.warn("x: ", x)
     if (!x.title.isDone) {
       let testKeyArr = x?.title.keyList
       if (testKeyArr) {
@@ -320,7 +489,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   onSelectAlphabet(alphabet: any, _keyParent: string) {
-    console.log("alphabet: ", alphabet)
+    // console.log("alphabet: ", alphabet)
     // console.log("keyParent: ", _keyParent)
     // console.warn("keyType: ", keyParent.body)
     this.previewText = alphabet.label;
@@ -337,6 +506,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         // console.warn("item: ", x.title.titleContent[isExist]);
         if (x.title.titleContent[isExist]) {
           x.title.titleContent[isExist].display = true;
+          let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+          playSound.playAlphabetVoice();
           this.testResult(_keyParent)
         }
         break;
@@ -347,6 +518,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         if (x.body.bodyContent[this.testBodyLoopNumber].content[isExist2]) {
           // console.warn("item: ", x.body.bodyContent[this.testBodyLoopNumber].content[isExist2]);
           x.body.bodyContent[this.testBodyLoopNumber].content[isExist2].display = true;
+          let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+          playSound.playAlphabetVoice();
           this.testResult(_keyParent)
         }
         break;
@@ -376,8 +549,10 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       });
       if (isBodyContentCompleted.length == x.body.bodyContent[this.testBodyLoopNumber].content.length) {
         if ((this.testBodyLoopNumber + 1) < x.body.bodyContent.length) {
-          this.testBodyLoopNumber++;
-          this.keyList = x?.body.bodyContent[this.testBodyLoopNumber].keyList;
+          setTimeout(() => {
+            this.testBodyLoopNumber++;
+            this.keyList = x?.body.bodyContent[this.testBodyLoopNumber].keyList;
+          }, 1200);
         }
         this.isTestBodyCompleted(x?.body)
       }
@@ -402,7 +577,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       BodyData.isDone = true;
       if (BodyData.isDone) {
         setTimeout(() => {
-          this.SubmitTest(this.resultListResult)
+          // this.SubmitTest(this.resultListResult)
+          this.openDialog(this.resultListResult);
         }, 1200);
       }
     }
@@ -415,6 +591,22 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       next: (msg: any) => {
         this.gameSessionId = msg?.session_id;
       },
+    });
+  }
+  openDialog(ResultListResult: any) {
+    const dialogRef = this.dialog.open(LongTextReadDialogComponent, {
+      width: '100%',
+      maxWidth: '600px',
+      data: {
+        text: this.fullDataText,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      //
+      if (result) {
+        this.SubmitTest(ResultListResult)
+      }
     });
   }
 

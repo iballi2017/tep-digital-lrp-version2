@@ -6,6 +6,7 @@ import { ParagraphStageTwoComponent } from './stages/paragraph-stage-two/paragra
 import { ParagraphStageThreeComponent } from './stages/paragraph-stage-three/paragraph-stage-three.component';
 import { ParagraphStageFourComponent } from './stages/paragraph-stage-four/paragraph-stage-four.component';
 import { ParagraphStageOneComponent } from './stages/paragraph-stage-one/paragraph-stage-one.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ParagraphStageOneComponent } from './stages/paragraph-stage-one/paragra
   ],
   imports: [
     CommonModule,
-    ParagraphRoutingModule
+    ParagraphRoutingModule,
+    SharedModule
   ]
 })
 export class ParagraphModule { }

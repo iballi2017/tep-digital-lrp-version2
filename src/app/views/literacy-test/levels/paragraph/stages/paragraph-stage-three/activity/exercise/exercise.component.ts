@@ -7,7 +7,9 @@ import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { ParagraphStageThreeService } from 'src/app/services/paragraph/paragraph-stage-three.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addParagraphLevelStageThreeResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
@@ -47,7 +49,8 @@ export class ExerciseComponent implements OnInit {
     private _wordStageThreeSvc: WordStageThreeService,
     // Speech recog
     private _paragraphStageThreeSvc: ParagraphStageThreeService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) {
     this._paragraphStageThreeSvc?.init();
   }
@@ -128,11 +131,14 @@ export class ExerciseComponent implements OnInit {
   startService() {
     this.isStart = true;
     this._paragraphStageThreeSvc.start();
+    this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
   stopService() {
     this.isStart = false;
     this._paragraphStageThreeSvc.stop();
+    this._playSoundSvc.playLiteracyBGSound();
   }
 
   clearService() {

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
@@ -14,6 +15,7 @@ import { LongTextReadDialogComponent } from 'src/app/views/literacy-test/complet
 import { addParagraphLevelStageFourResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
 import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.selectors';
+import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
@@ -43,7 +45,7 @@ export class ExerciseComponent implements OnInit {
   speechTexts$!: Observable<any>;
   boardData: any;
   testList: any;
-  fullDataText: any = `My name is Ahmed.
+  fullDataText: string = `My name is Ahmed.
   I live in a big town,
   I have three brothers and two sisters, We all clean the house every morning before going out to the shop. Today is a market day in the town I live we are going to have lots of fun today.`;
 
@@ -54,7 +56,7 @@ export class ExerciseComponent implements OnInit {
     private _router: Router,
     // Speech recog
     private _paragraphStageFourSvc: ParagraphStageFourService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // this.loadTestContent();
@@ -88,6 +90,8 @@ export class ExerciseComponent implements OnInit {
     let indexItem = statement.findIndex((st: any) => st.text == alphabet.name);
     if (statement[indexItem]) {
       statement[indexItem].isHide = false;
+      let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+      playSound.playAlphabetVoice();
       this.onTestStatement(this.resultTextList[this.testNumber]);
     }
     // this.resultTextList[this.testNumber].
@@ -109,8 +113,8 @@ export class ExerciseComponent implements OnInit {
       this.testNumber++;
       this.loadBoardData();
       this.loadKeyList();
-    }else{
-      this.openDialog(TestList);      
+    } else {
+      this.openDialog(TestList);
     }
   }
 
@@ -130,43 +134,11 @@ export class ExerciseComponent implements OnInit {
         }
       }
     );
-
-
-    // this.ngRedux.dispatch({ type: SUBMIT_GAME_STAGE_RESULT });
-    // let subscription = this._paragraphStageFourSvc.SubmitGameStageResult(Result).subscribe({
-    //   next: (response: any) => {
-    //     if (response) {
-
-    //       this.ngRedux.dispatch({
-    //         type: SUBMIT_GAME_STAGE_RESULT_SUCCESS,
-    //         payload: Result,
-    //       });
-    //       this.openSnackBar(response?.message);
-    //       setTimeout(() => {
-    //         this.isFinishedMessage = '';
-    //         this.successMessage = '';
-    //         // alert('completed!!!');
-    //         this._router.navigate([
-    //           `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-    //         ]);
-    //       }, 3000);
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     if (err) {
-    //       // console.warn('Error: ', err);
-    //       this.ngRedux.dispatch({
-    //         type: SUBMIT_GAME_STAGE_RESULT_ERROR,
-    //         payload: err,
-    //       });
-    //     }
-    //   },
-    // });
-    // this.Subscriptions.push(subscription)
   }
 
   GetExerciseTexts() {
-    this.resultTextList = this._paragraphStageFourSvc.GetExerciseTexts();
+    let apiArr = this._paragraphStageFourSvc.GetExerciseTexts();
+    this.resultTextList = [...apiArr]
   }
 
   onCheckTestCompletion() {
@@ -194,17 +166,22 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
-  refreshGame() {}
+  refreshGame() {
+    // console.log("this.resultTextList: ", this.resultTextList)
+    // let apiArr = this._paragraphStageFourSvc.GetExerciseTexts();
+    // let x = [...apiArr]
+    // console.log("x: ", x)
+  }
 
-  openDialog(TestList:any[]) {
-   const dialogRef = this.dialog.open(LongTextReadDialogComponent, {
+  openDialog(TestList: any[]) {
+    const dialogRef = this.dialog.open(LongTextReadDialogComponent, {
       width: '100%',
       maxWidth: '600px',
       data: {
         text: this.fullDataText,
       },
     });
-    
+
     dialogRef.afterClosed().subscribe((result) => {
       //
       if (result) {
@@ -213,7 +190,7 @@ export class ExerciseComponent implements OnInit {
           answer: '5',
           data: [...TestList],
         }
-        this.onSubmit(Payload) 
+        this.onSubmit(Payload)
       }
     });
   }

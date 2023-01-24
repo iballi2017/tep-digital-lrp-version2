@@ -53,6 +53,11 @@ export class LevelCompletionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     this.gameLevel = {
       stageNumber: this.stageNumber,
       levelTitle: this.levelTitle,

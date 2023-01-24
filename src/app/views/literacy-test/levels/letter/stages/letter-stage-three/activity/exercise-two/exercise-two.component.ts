@@ -22,7 +22,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise-two.component.html',
   styleUrls: ['./exercise-two.component.scss'],
 })
-export class ExerciseTwoComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExerciseTwoComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Create words';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -67,7 +67,7 @@ export class ExerciseTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: Store<LetterLevelResultState>,
     private _router: Router,
     private _letterStageThreeSvc: LetterStageThreeService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onReplceKeyList();
@@ -75,13 +75,7 @@ export class ExerciseTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onGetGameSessionId();
   }
 
-  
 
-  ngAfterViewInit() {
-    let sound = BackgroundNote.Literacy_Note;
-    let _PlayBGSound = new PlaySound(sound);
-    _PlayBGSound.playBGSound();
-  }
 
   onCheckTestCompletion() {
     this.checkTestCompletion = this.testList.filter(

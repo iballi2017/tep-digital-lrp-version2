@@ -1,5 +1,6 @@
 <!-- <p>word-stage-four works!</p> -->
 
+<app-launch-activity-sound [btnTitle] = "btnTitle" (onPlayBGSound)="playBGSound()" *ngIf="!isLaunchTest"></app-launch-activity-sound>
 <div id="word-stage-four-page">
     <!-- <div class="inner container-fluid"> -->
         <router-outlet></router-outlet>

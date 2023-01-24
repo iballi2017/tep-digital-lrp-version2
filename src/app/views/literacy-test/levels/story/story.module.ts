@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StoryRoutingModule } from './story-routing.module';
 import { StoryStageOneComponent } from './stages/story-stage-one/story-stage-one.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { StoryStageOneComponent } from './stages/story-stage-one/story-stage-one
   ],
   imports: [
     CommonModule,
-    StoryRoutingModule
+    StoryRoutingModule,
+    SharedModule
   ]
 })
 export class StoryModule { }
