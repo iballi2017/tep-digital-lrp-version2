@@ -13,7 +13,7 @@ export class Snackbar {
     console.log('this.text: ', this.text);
     this.snackBar.open(this.text, '', {
       horizontalPosition: 'end',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -22,7 +22,7 @@ export class Snackbar {
     this.snackBar.openFromComponent(SuccessSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'end',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       data: this.text,
     });
   }

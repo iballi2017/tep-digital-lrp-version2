@@ -11,10 +11,12 @@ export class PlaySoundService {
   numeracySound = BackgroundNote.Numeracy_Note;
   stageCompletionSound = BackgroundNote.StageCompletion_Note;
   levelCompletionSound = BackgroundNote.LevelCompletion_Note;
+  programCompletionSound = BackgroundNote.ProgramCompletion_Note;
   _PlayLiteracyBGSound = new PlaySound(this.literacySound);
   _PlayNumeracyBGSound = new PlaySound(this.numeracySound);
   _PlayStageCompletionSound = new PlaySound(this.stageCompletionSound, 1, false);
   _PlayLevelCompletionSound = new PlaySound(this.levelCompletionSound, 1, false);
+  _PlayProgramCompletionSound = new PlaySound(this.programCompletionSound, 1, false);
 
   constructor() {}
 
@@ -30,6 +32,9 @@ export class PlaySoundService {
   playLevelCompletionSound() {
     this._PlayLevelCompletionSound.playBGSound();
   }
+  playProgramCompletionSound() {
+    this._PlayProgramCompletionSound.playBGSound();
+  }
 
   stopLiteracyBGSound() {
     this._PlayLiteracyBGSound.stopSound();
@@ -42,5 +47,8 @@ export class PlaySoundService {
   }
   stopLevelCompletionSound() {
     this._PlayLevelCompletionSound.stopSound();
+  }
+  stopProgramCompletionSound() {
+    this._PlayProgramCompletionSound.stopSound();
   }
 }
