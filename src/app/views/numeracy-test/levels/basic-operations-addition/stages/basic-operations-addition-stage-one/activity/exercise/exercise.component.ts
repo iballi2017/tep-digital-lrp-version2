@@ -7,11 +7,11 @@ import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { NumberDigitType } from 'src/app/models/interface/number-type';
+import { BasicOperationsAdditionStageOneService } from 'src/app/services/basic-operations/addition/basic-operations-addition-stage-one.service';
 import { GameService } from 'src/app/services/game.service';
-import { NumberRecognitionOneService } from 'src/app/services/number-recognition/number-recognition-one.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
-import { addNumberRecognitionOneLevelStageOneResult } from 'src/app/views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.actions';
-import { NumberRecognitionOneLevelResultState } from 'src/app/views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.reducer';
+import { addBasicOperationsAdditionLevelStageOneResult } from 'src/app/views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.actions';
+import { BasicOperationsAdditionLevelResultState } from 'src/app/views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.reducer';
 
 @Component({
   selector: 'app-exercise',
@@ -19,7 +19,7 @@ import { NumberRecognitionOneLevelResultState } from 'src/app/views/numeracy-tes
   styleUrls: ['./exercise.component.scss']
 })
 export class ExerciseComponent implements OnInit {
-  boardActivityHint: string = 'Identify the 1-digit numbers';
+  boardActivityHint: string = 'Add the 1-digit numbers here';
   testNumber: number = 0;
   ONE_DIGIT_NUMBER = NumberDigitType.ONE_DIGIT_NUMBER;
   TWO_DIGIT_NUMBER = NumberDigitType.TWO_DIGIT_NUMBER;
@@ -30,82 +30,27 @@ export class ExerciseComponent implements OnInit {
   checkTestCompletion: any;
   gameSessionId!: string;
   stageNumber: number = 1;
-  gameLevel = GameLevel.NUMBER_RECOGNITION_ONE;
+  gameLevel = GameLevel.BASIC_OPERATIONS_ADDITION;
 
 
-  testList = [
-    {
-      testName: 'test-1',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: '5',
-          type: NumberDigitType.ONE_DIGIT_NUMBER,
-          // vn: NumberNote.A_Note,
-        },
-        {
-          name: '23',
-          type: null,
-        },
-        {
-          name: '3',
-          type: NumberDigitType.ONE_DIGIT_NUMBER
-        },
-      ],
-    },
-    {
-      testName: 'test-2',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: '23',
-          type: null,
-          // vn: NumberNote.A_Note,
-        },
-        {
-          name: '6',
-          type: NumberDigitType.ONE_DIGIT_NUMBER,
-        },
-        {
-          name: '9',
-          type: NumberDigitType.ONE_DIGIT_NUMBER
-        },
-      ],
-    },
-    {
-      testName: 'test-3',
-      isTestComplete: false,
-      testKeys: [
-        {
-          name: '2',
-          type: NumberDigitType.ONE_DIGIT_NUMBER,
-          // vn: NumberNote.A_Note,
-        },
-        {
-          name: '23',
-          type: null,
-        },
-        {
-          name: '7',
-          type: NumberDigitType.ONE_DIGIT_NUMBER
-        },
-      ],
-    }
-  ];
-  activityHint: any = "Identify the 1-digit numbers selecting the right answer in the green boxes below";
-  constructor(private _gameSvc: GameService, private _numberRecognitionOneSvc: NumberRecognitionOneService,
-    private store: Store<NumberRecognitionOneLevelResultState>,
+  // testList: any = [...testList]
+  testList: any = testList;
+  activityHint: any = "Count the single digit numbers together and select the right answer in the green box below.";
+  test: any;
+  constructor(private _gameSvc: GameService, private _basicOperationsAdditionStageOneSvc: BasicOperationsAdditionStageOneService,
+    private store: Store<BasicOperationsAdditionLevelResultState>,
     private _router: Router,
     public dialog: MatDialog,) { }
 
   ngOnInit(): void {
-    this.onReplceKeyList();
+    this.placeQuestion();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
   }
 
-  onReplceKeyList() {
-    let keys = this.testList[this.testNumber]?.testKeys;
+  placeQuestion() {
+    this.test = this.testList[this.testNumber]
+    let keys = this.test?.testKeys;
     this.keyList = new ShuffleArray(keys).shuffle();
   }
 
@@ -121,44 +66,24 @@ export class ExerciseComponent implements OnInit {
 
 
   onSelectAlphabet(number: any) {
-    this.previewList.push(number.name);
-    this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
-    if (number.type == NumberDigitType.ONE_DIGIT_NUMBER) {
-      if (
-        !this.resultItemList.find((item: any) => item.name === number.name)
-      ) {
-        this.resultItemList.push(number);
+    if (number.name == this.test.answer) {
+      this.test.isAnswered = true;
+      setTimeout(() => {
         this.isComplete();
-      }
+      }, 1500);
     }
   }
 
 
   isComplete() {
-    let expectedList = this.resultItemList.filter((item: any) => {
-      return item.type == NumberDigitType.ONE_DIGIT_NUMBER;
+    let answeredList = this.testList.filter((item: any) => {
+      return item.isAnswered == true;
     });
-    let availableList = this.keyList.filter((item: any) => {
-      return item.type == NumberDigitType.ONE_DIGIT_NUMBER;
-    });
-    if (availableList.length == expectedList.length) {
-      this.testList[this.testNumber].isTestComplete = true;
-      this.onCheckTestCompletion();
-      if (this.testList.length == this.checkTestCompletion.length) {
-        setTimeout(() => {
-          this.testGameCompletion();
-        }, 2000);
-        return;
-      }
-      setTimeout(() => {
-        this.testNumber++;
-        this.resultItemList = [];
-        this.onReplceKeyList();
-      }, 1500);
+    if (answeredList.length < testList.length) {
+      this.testNumber++;
+      this.placeQuestion();
     } else {
+      this.testGameCompletion()
       return;
     }
   }
@@ -171,13 +96,13 @@ export class ExerciseComponent implements OnInit {
         answer: '1',
         data: [...this.checkTestCompletion],
       };
-      this.store.dispatch(addNumberRecognitionOneLevelStageOneResult({ payload: Payload }));
-      this._numberRecognitionOneSvc.addNumberRecognitionOneLevelResultBehaviour.subscribe(
+      this.store.dispatch(addBasicOperationsAdditionLevelStageOneResult({ payload: Payload }));
+      this._basicOperationsAdditionStageOneSvc.BasicOperationsAdditionLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
             this._router.navigate([
-              `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`
-              // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+              // `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`
+              `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             ]);
           }
         }
@@ -188,7 +113,7 @@ export class ExerciseComponent implements OnInit {
 
   onCheckTestCompletion() {
     this.checkTestCompletion = this.testList.filter(
-      (test: any) => test.isTestComplete == true
+      (test: any) => test.isAnswered == true
     );
   }
 
@@ -204,10 +129,69 @@ export class ExerciseComponent implements OnInit {
   refreshGame() {
     this.resultItemList = [];
     this.testNumber = 0;
-    this.onReplceKeyList();
+    this.placeQuestion();
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isTestComplete = false;
     }
   }
 
 }
+
+
+export const
+  testList = [
+    {
+      testName: 'test-1',
+      // isTestComplete: false,
+      question: '3 + 2 =',
+      answer: '5',
+      isAnswered: false,
+      testKeys: [
+        {
+          name: '7',
+        },
+        {
+          name: '10',
+        },
+        {
+          name: '5',
+        },
+      ],
+    },
+    {
+      testName: 'test-2',
+      // isTestComplete: false,
+      question: '4 + 4 =',
+      answer: '8',
+      isAnswered: false,
+      testKeys: [
+        {
+          name: '16',
+        },
+        {
+          name: '8',
+        },
+        {
+          name: '6',
+        },
+      ],
+    },
+    {
+      testName: 'test-3',
+      // isTestComplete: false,
+      question: '7 + 3 =',
+      answer: '10',
+      isAnswered: false,
+      testKeys: [
+        {
+          name: '21',
+        },
+        {
+          name: '4',
+        },
+        {
+          name: '10',
+        },
+      ],
+    },
+  ];

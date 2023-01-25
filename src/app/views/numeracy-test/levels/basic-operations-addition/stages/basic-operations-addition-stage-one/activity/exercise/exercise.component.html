@@ -6,9 +6,18 @@
         </div>
         <div class="inner">
             <div id="result-item-list">
-                <ul class="item-list ps-0 mb-0">
+                <!-- <ul class="item-list ps-0 mb-0">
                     <li *ngFor="let item of resultItemList">{{item?.name}}</li>
-                </ul>
+                </ul> -->
+                <div class="d-flex">
+                    <ul class="item-list ps-0 mb-0">
+                        <li>{{test?.question}}</li>
+                    </ul>
+                    <ul class="item-list ps-0 mb-0">
+                        <li [ngClass]="{'answer-field': !test?.isAnswered}">
+                            <ng-container *ngIf="test?.isAnswered">{{test?.answer}}</ng-container></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -23,7 +32,7 @@
             <li *ngFor="let key of keyList">
                 <!-- {{key}} -->
                 <button class="btn" (click)="onSelectAlphabet(key)"
-                    [ngClass]="{'is-right': key?.type == ONE_DIGIT_NUMBER,'is-wrong': key?.type != ONE_DIGIT_NUMBER}">{{key?.name}}</button>
+                    [ngClass]="{'is-right': key?.name == test?.answer,'is-wrong': key?.name != test?.answer}">{{key?.name}}</button>
             </li>
         </ul>
     </div>

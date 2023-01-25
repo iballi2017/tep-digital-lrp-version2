@@ -9,6 +9,8 @@ import { StoryLevelResultState } from '../views/literacy-test/store/story-level-
 import { isSubmitResultStoryLevelResult, storyLevelResultIsLoading } from '../views/literacy-test/store/story-level-result/story-level-result.selectors';
 import { WordLevelResultState } from '../views/literacy-test/store/word-level-result/word-level-result.reducer';
 import { isSubmitResultWordLevelResult, wordLevelResultIsLoading } from '../views/literacy-test/store/word-level-result/word-level-result.selectors';
+import { BasicOperationsAdditionLevelResultState } from '../views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.reducer';
+import { isSubmitResultBasicOperationsAdditionLevelResult } from '../views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.selectors';
 import { NumberRecognitionOneLevelResultState } from '../views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.reducer';
 import { isSubmitResultNumberRecognitionOneLevelResult } from '../views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.selectors';
 import { NumberRecognitionThreeLevelResultState } from '../views/numeracy-test/store/number-recognition-three-level-result/number-recognition-three-level-result.reducer';
@@ -32,6 +34,7 @@ export class LayoutComponent implements OnInit {
   numberRecognitionTwoResultLoading$!: Observable<any>;
   placeValueResultLoading$!: Observable<boolean>;
   numberRecognitionThreeResultLoading$!: Observable<any>;
+  basicOperationsAdditionResultLoading$!: Observable<boolean>;
   
   constructor(
     private storeLetter: Store<LetterLevelResultState>,
@@ -41,7 +44,8 @@ export class LayoutComponent implements OnInit {
     private storeNumberRecognitionOne: Store<NumberRecognitionOneLevelResultState>,
     private storeNumberRecognitionTwo: Store<NumberRecognitionTwoLevelResultState>,
     private storePlaceValue: Store<PlaceValueLevelResultState>,
-    private storeNumberRecognitionThree: Store<NumberRecognitionThreeLevelResultState>) {}
+    private storeNumberRecognitionThree: Store<NumberRecognitionThreeLevelResultState>,
+    private storeBasicOperationsAddition: Store<BasicOperationsAdditionLevelResultState>) {}
 
   ngOnInit(): void {
     this.letterResultLoading$ = this.storeLetter.pipe(
@@ -54,5 +58,6 @@ export class LayoutComponent implements OnInit {
     this.numberRecognitionTwoResultLoading$ = this.storeNumberRecognitionTwo.pipe(select(isSubmitResultNumberRecognitionTwoLevelResult));
     this.placeValueResultLoading$ = this.storePlaceValue.pipe(select(isSubmitResultPlaceValueLevelResult));
     this.numberRecognitionThreeResultLoading$ = this.storeNumberRecognitionThree.pipe(select(isSubmitResultNumberRecognitionThreeLevelResult));
+    this.basicOperationsAdditionResultLoading$ = this.storeBasicOperationsAddition.pipe(select(isSubmitResultBasicOperationsAdditionLevelResult));
   }
 }

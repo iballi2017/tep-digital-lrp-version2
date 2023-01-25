@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { BasicOperationsAdditionLevelResult } from './basic-operations-addition-level-result.model';
+import { ActivityAnswer } from 'src/app/models/interface/game';
 
 
 export const loadBasicOperationsAdditionLevelResult = createAction(
@@ -18,6 +19,23 @@ export const loadBasicOperationsAdditionLevelResultFailure = createAction(
   '[BasicOperationsAdditionLevelResult/API] Load BasicOperationsAdditionLevelResults Failure',
   props<{ error: any }>()
 );
+
+
+// ADD BasicOperationsAdditionLevelStageOneResult
+export const addBasicOperationsAdditionLevelStageOneResult = createAction(
+  '[BasicOperationsAddition Stage-one Activity] Add BasicOperationsAddition Stage One Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addBasicOperationsAdditionLevelStageOneResultSuccess = createAction(
+  '[BasicOperationsAddition Level Result Effect] Add BasicOperationsAddition Stage One Result Success',
+  props<{ payload: any }>()
+);
+export const addBasicOperationsAdditionLevelStageOneResultFailure = createAction(
+  '[BasicOperationsAddition Level Result Effect] Add BasicOperationsAddition Stage One Result Failure',
+  props<{ error: any }>()
+);
+
+
 
 
 

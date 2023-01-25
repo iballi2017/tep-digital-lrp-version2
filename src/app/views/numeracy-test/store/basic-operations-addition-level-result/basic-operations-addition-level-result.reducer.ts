@@ -12,6 +12,7 @@ export interface BasicOperationsAdditionLevelResultState
   isLoading: boolean;
   error: any;
   isSubmitResult: boolean;
+  result: any;
 }
 
 export const adapter: EntityAdapter<BasicOperationsAdditionLevelResult> =
@@ -23,6 +24,7 @@ export const initialState: BasicOperationsAdditionLevelResultState =
     isLoading: false,
     error: null,
     isSubmitResult: false,
+    result: null
   });
 
 export const reducer = createReducer(
@@ -59,7 +61,45 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
+  ),
+
+
+  /* ADD NUMBER_RECOGNITION_ONE LEVEL STAGE ONE RESULT */
+  on(BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
 
   // on(BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelResult,
   //   (state, action) => adapter.addOne(action.basicOperationsAdditionLevelResult, state)
