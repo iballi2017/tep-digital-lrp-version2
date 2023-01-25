@@ -167,15 +167,20 @@ export class ExerciseTwoComponent implements OnInit, OnDestroy {
         (msg: any) => {
           if (msg) {
             // console.log('msg: ', msg);
-            this._router.navigate([
-              `/${GameType.LITERACY}/level-completion/${this.gameLevel}`
-              // `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-            ]);
+            this.onRouteLevelCompletion();
           }
         }
       );
     }
     return;
+  }
+
+  onRouteLevelCompletion() {
+    
+    this._router.navigate([
+      `/${GameType.LITERACY}/level-completion/${this.gameLevel}`
+      // `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+    ]);
   }
 
   onReadHint() {

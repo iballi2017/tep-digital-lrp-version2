@@ -79,16 +79,16 @@ export class ProgramCompletionComponent implements OnInit {
   }
 
   playBGSound() {
-    this._playSoundSvc.playProgramCompletionSound();
+    this._playSoundSvc.playStageCompletionSound();
     this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
   }
 
   stopBGSound() {
-    this._playSoundSvc.stopProgramCompletionSound();
+    this._playSoundSvc.stopStageCompletionSound();
   }
 
   ngOnDestroy(): void {
-    this._playSoundSvc.stopProgramCompletionSound();
+    this._playSoundSvc.stopStageCompletionSound();
     this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 }

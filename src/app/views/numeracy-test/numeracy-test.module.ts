@@ -38,6 +38,10 @@ import { PlaceValueLevelResultEffects } from './store/place-value-level-result/p
 import { NumberRecognitionTwoModule } from './levels/number-recognition-two/number-recognition-two.module';
 import { NumberRecognitionThreeModule } from './levels/number-recognition-three/number-recognition-three.module';
 import { PlaceValueModule } from './levels/place-value/place-value.module';
+import { BasicOperationsAdditionModule } from './levels/basic-operations-addition/basic-operations-addition.module';
+import { BasicOperationsSubtractionModule } from './levels/basic-operations-subtraction/basic-operations-subtraction.module';
+import { BasicOperationsMultiplicationModule } from './levels/basic-operations-multiplication/basic-operations-multiplication.module';
+import { BasicOperationsDivisionModule } from './levels/basic-operations-division/basic-operations-division.module';
 @NgModule({
   declarations: [
     NumeracyTestComponent,
@@ -62,6 +66,10 @@ import { PlaceValueModule } from './levels/place-value/place-value.module';
     NumberRecognitionTwoModule,
     NumberRecognitionThreeModule,
     PlaceValueModule,
+    BasicOperationsAdditionModule,
+    BasicOperationsSubtractionModule,
+    BasicOperationsDivisionModule,
+    BasicOperationsMultiplicationModule,
     StoreModule.forFeature(fromNumberRecognitionOneLevelResult.numberRecognitionOneLevelResultsFeatureKey, fromNumberRecognitionOneLevelResult.reducer),
     StoreModule.forFeature(fromNumberRecognitionTwoLevelResult.numberRecognitionTwoLevelResultsFeatureKey, fromNumberRecognitionTwoLevelResult.reducer),
     StoreModule.forFeature(fromNumberRecognitionThreeLevelResult.numberRecognitionThreeLevelResultsFeatureKey, fromNumberRecognitionThreeLevelResult.reducer),
