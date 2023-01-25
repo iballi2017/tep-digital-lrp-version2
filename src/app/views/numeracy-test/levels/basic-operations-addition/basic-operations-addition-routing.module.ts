@@ -55,7 +55,7 @@ const routes: Routes = [
         path: 'activity',
         loadChildren: () =>
           import(
-            './stages/basic-operations-addition-stage-one/activity/activity.module'
+            './stages/basic-operations-addition-stage-two/activity/activity.module'
           ).then((m) => m.ActivityModule),
       },
     ],
