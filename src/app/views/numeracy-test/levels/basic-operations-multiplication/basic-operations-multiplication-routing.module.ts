@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameStage } from 'src/app/models/interface/game-stage';
 import { BasicOperationsMultiplicationStageOneComponent } from './stages/basic-operations-multiplication-stage-one/basic-operations-multiplication-stage-one.component';
+import { BasicOperationsMultiplicationStageThreeComponent } from './stages/basic-operations-multiplication-stage-three/basic-operations-multiplication-stage-three.component';
 import { BasicOperationsMultiplicationStageTwoComponent } from './stages/basic-operations-multiplication-stage-two/basic-operations-multiplication-stage-two.component';
 
 const routes: Routes = [
@@ -56,6 +57,33 @@ const routes: Routes = [
         loadChildren: () =>
           import(
             './stages/basic-operations-multiplication-stage-two/activity/activity.module'
+          ).then((m) => m.ActivityModule),
+      },
+    ],
+  },
+  {
+    path: `${GameLevel.BASIC_OPERATIONS_MULTIPLICATION}/stage-${GameStage.THREE}`,
+    component: BasicOperationsMultiplicationStageThreeComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import(
+            './stages/basic-operations-multiplication-stage-three/basic-operations-multiplication-stage-three-splash/basic-operations-multiplication-stage-three-splash.module'
+          ).then((m) => m.BasicOperationsMultiplicationStageThreeSplashModule),
+      },
+      {
+        path: 'basic-operations-multiplication-splash',
+        loadChildren: () =>
+          import(
+            './stages/basic-operations-multiplication-stage-three/basic-operations-multiplication-stage-three-splash/basic-operations-multiplication-stage-three-splash.module'
+          ).then((m) => m.BasicOperationsMultiplicationStageThreeSplashModule),
+      },
+      {
+        path: 'activity',
+        loadChildren: () =>
+          import(
+            './stages/basic-operations-multiplication-stage-three/activity/activity.module'
           ).then((m) => m.ActivityModule),
       },
     ],

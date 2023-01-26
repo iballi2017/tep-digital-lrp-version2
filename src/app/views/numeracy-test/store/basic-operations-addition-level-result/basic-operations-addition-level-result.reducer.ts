@@ -64,7 +64,7 @@ export const reducer = createReducer(
   ),
 
 
-  /* ADD NUMBER_RECOGNITION_ONE LEVEL STAGE ONE RESULT */
+  /* ADD BASIC_OPERATIONS_ADDITION LEVEL STAGE ONE RESULT */
   on(BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageOneResult, (state, action) => {
     return {
       ...state,
@@ -99,6 +99,45 @@ export const reducer = createReducer(
       };
     }
   ),
+
+
+  /* ADD BASIC_OPERATIONS_ADDITION LEVEL STAGE TWO RESULT */
+  on(BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageTwoResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageTwoResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
 
 
   // on(BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelResult,

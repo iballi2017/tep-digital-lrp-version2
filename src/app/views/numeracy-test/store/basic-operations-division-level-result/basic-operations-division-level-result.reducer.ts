@@ -10,20 +10,22 @@ export interface BasicOperationsDivisionLevelResultState extends EntityState<Bas
   isLoading: boolean;
   error: any;
   isSubmitResult: boolean;
+  result: any;
 }
 
 export const adapter: EntityAdapter<BasicOperationsDivisionLevelResult> = createEntityAdapter<BasicOperationsDivisionLevelResult>();
 
 export const initialState: BasicOperationsDivisionLevelResultState = adapter.getInitialState({
   // additional entity state properties
-    isLoading: false,
-    error: null,
-    isSubmitResult: false,
+  isLoading: false,
+  error: null,
+  isSubmitResult: false,
+  result: null
 });
 
 export const reducer = createReducer(
   initialState,
- 
+
   on(
     BasicOperationsDivisionLevelResultActions.loadBasicOperationsDivisionLevelResult,
     (state, action) => {
@@ -56,8 +58,85 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
- 
+  ),
+
+  
+
+  
+  /* ADD BASIC_OPERATIONS_DIVISION LEVEL STAGE ONE RESULT */
+  on(BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
+  /* ADD BASIC_OPERATIONS_MULTIPLICATION LEVEL STAGE TWO RESULT */
+  on(BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageTwoResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageTwoResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
   // on(BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelResult,
   //   (state, action) => adapter.addOne(action.basicOperationsDivisionLevelResult, state)
   // ),

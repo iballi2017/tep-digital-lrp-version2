@@ -213,7 +213,7 @@ export class ExerciseComponent implements OnInit {
   submitData(data: any) {
     const Payload: ActivityAnswer = {
       session_id: this.gameSessionId,
-      answer: '1',
+      answer: '3',
       data: [...data],
     };
     this.store.dispatch(addPlaceValueLevelStageOneResult({ payload: Payload }));

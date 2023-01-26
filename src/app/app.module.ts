@@ -29,6 +29,10 @@ import * as fromNumberRecognitionOneLevelResult from './views/numeracy-test/stor
 import * as fromNumberRecognitionTwoLevelResult from './views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.reducer';
 import * as fromPlaceValueLevelResult from './views/numeracy-test/store/place-value-level-result/place-value-level-result.reducer';
 import * as fromNumberRecognitionThreeLevelResult from './views/numeracy-test/store/number-recognition-three-level-result/number-recognition-three-level-result.reducer';
+import * as fromBasicOperationsAdditionLevelResult from './views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.reducer';
+import * as fromBasicOperationsSubtractionLevelResult from './views/numeracy-test/store/basic-operations-subtraction-level-result/basic-operations-subtraction-level-result.reducer';
+import * as fromBasicOperationsMultiplicationLevelResult from './views/numeracy-test/store/basic-operations-multiplication-level-result/basic-operations-multiplication-level-result.reducer';
+import * as fromBasicOperationsDivisionLevelResult from './views/numeracy-test/store/basic-operations-division-level-result/basic-operations-division-level-result.reducer';
 
 @NgModule({
   declarations: [
@@ -77,6 +81,22 @@ import * as fromNumberRecognitionThreeLevelResult from './views/numeracy-test/st
       fromPlaceValueLevelResult.placeValueLevelResultsFeatureKey,
       fromPlaceValueLevelResult.reducer
     ), //add to import this because the letterLevelResult loading stte belongs to another module
+    StoreModule.forFeature(
+      fromBasicOperationsAdditionLevelResult.basicOperationsAdditionLevelResultsFeatureKey,
+      fromBasicOperationsAdditionLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
+    StoreModule.forFeature(
+      fromBasicOperationsSubtractionLevelResult.basicOperationsSubtractionLevelResultsFeatureKey,
+      fromBasicOperationsSubtractionLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
+    StoreModule.forFeature(
+      fromBasicOperationsMultiplicationLevelResult.basicOperationsMultiplicationLevelResultsFeatureKey,
+      fromBasicOperationsMultiplicationLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
+    StoreModule.forFeature(
+      fromBasicOperationsDivisionLevelResult.basicOperationsDivisionLevelResultsFeatureKey,
+      fromBasicOperationsDivisionLevelResult.reducer
+    ), //add to import this because the letterLevelResult loading stte belongs to another module
     NgbModule,
     // StoreModule.forRoot({}, {}),
     // ToastNoAnimationModule.forRoot(),
@@ -101,4 +121,4 @@ import * as fromNumberRecognitionThreeLevelResult from './views/numeracy-test/st
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

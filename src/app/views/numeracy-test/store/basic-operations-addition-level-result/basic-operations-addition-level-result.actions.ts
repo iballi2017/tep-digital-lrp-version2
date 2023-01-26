@@ -37,6 +37,22 @@ export const addBasicOperationsAdditionLevelStageOneResultFailure = createAction
 
 
 
+// ADD BasicOperationsAdditionLevelStageTwoResult
+export const addBasicOperationsAdditionLevelStageTwoResult = createAction(
+  '[BasicOperationsAddition Stage-two Activity] Add BasicOperationsAddition Stage Two Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addBasicOperationsAdditionLevelStageTwoResultSuccess = createAction(
+  '[BasicOperationsAddition Level Result Effect] Add BasicOperationsAddition Stage Two Result Success',
+  props<{ payload: any }>()
+);
+export const addBasicOperationsAdditionLevelStageTwoResultFailure = createAction(
+  '[BasicOperationsAddition Level Result Effect] Add BasicOperationsAddition Stage Two Result Failure',
+  props<{ error: any }>()
+);
+
+
+
 
 
 

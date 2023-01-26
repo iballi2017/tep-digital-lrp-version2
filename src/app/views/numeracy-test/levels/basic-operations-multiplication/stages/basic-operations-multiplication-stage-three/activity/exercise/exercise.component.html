@@ -7,13 +7,11 @@
         </div>
         <div class="inner">
             <div id="result-item-list">
-                <div class="d-flex">
+                <div class="d-flex px-2">
                     <ul class="item-list ps-0 mb-0">
-                        <li>{{test?.question}}</li>
-                    </ul>
-                    <ul class="item-list ps-0 mb-0">
-                        <li [ngClass]="{'answer-field': !test?.isAnswered}">
-                            <ng-container *ngIf="test?.isAnswered">{{test?.answer}}</ng-container></li>
+                        <li>
+                            <p class="m-0">{{test?.question}}</p>
+                        </li>
                     </ul>
                 </div>
             </div>

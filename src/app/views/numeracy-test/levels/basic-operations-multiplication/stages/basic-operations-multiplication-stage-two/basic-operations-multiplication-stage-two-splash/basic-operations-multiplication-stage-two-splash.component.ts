@@ -11,7 +11,7 @@ export class BasicOperationsMultiplicationStageTwoSplashComponent implements OnI
       title: 'NUMERACY',
     },
     {
-      title: 'BASIC OPERATIONS MULTIPLICATION',
+      title: 'MULTIPLICATION',
     },
     {
       title: 'STAGE 2',

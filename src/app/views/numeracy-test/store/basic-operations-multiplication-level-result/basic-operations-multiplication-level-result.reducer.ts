@@ -12,6 +12,7 @@ export interface BasicOperationsMultiplicationLevelResultState
   isLoading: boolean;
   error: any;
   isSubmitResult: boolean;
+  result: any;
 }
 
 export const adapter: EntityAdapter<BasicOperationsMultiplicationLevelResult> =
@@ -23,6 +24,7 @@ export const initialState: BasicOperationsMultiplicationLevelResultState =
     isLoading: false,
     error: null,
     isSubmitResult: false,
+    result: null,
   });
 
 export const reducer = createReducer(
@@ -60,7 +62,121 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
+  ),
+
+  
+  /* ADD BASIC_OPERATIONS_MULTIPLICATION LEVEL STAGE ONE RESULT */
+  on(BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
+  /* ADD BASIC_OPERATIONS_MULTIPLICATION LEVEL STAGE TWO RESULT */
+  on(BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageTwoResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageTwoResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
+  /* ADD BASIC_OPERATIONS_MULTIPLICATION LEVEL STAGE THREE RESULT */
+  on(BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageThreeResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageThreeResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageThreeResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageThreeResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
+
 
   // on(BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelResult,
   //   (state, action) => adapter.addOne(action.basicOperationsMultiplicationLevelResult, state)

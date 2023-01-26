@@ -10,7 +10,7 @@ import { ExerciseAnswer } from 'src/app/models/interface/game';
 })
 export class BasicOperationsAdditionStageOneService {
   StartGameUrl = baseUrl + '/start-game-session';
-    SubmitBasicOperationsAddGameStage_1_Url = baseUrl + '/submit-basic-operations-add-stage-1';
+    SubmitBasicOperationsAdditionGameStage_1_Url = baseUrl + '/submit-basic-operations-add-stage-1';
   BasicOperationsAdditionLevelResultBehaviour = new BehaviorSubject(false);
 
   constructor(private _http: HttpClient) {}
@@ -27,7 +27,7 @@ export class BasicOperationsAdditionStageOneService {
   SubmitResult(_GameStageResult: ExerciseAnswer) {
     return this._http
       .post(
-        `${this.SubmitBasicOperationsAddGameStage_1_Url}`,
+        `${this.SubmitBasicOperationsAdditionGameStage_1_Url}`,
         _GameStageResult
       )
       .pipe(catchError(handleError));

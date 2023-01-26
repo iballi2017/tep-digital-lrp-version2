@@ -12,6 +12,7 @@ export interface BasicOperationsSubtractionLevelResultState
   isLoading: boolean;
   error: any;
   isSubmitResult: boolean;
+  result: any;
 }
 
 export const adapter: EntityAdapter<BasicOperationsSubtractionLevelResult> =
@@ -23,6 +24,7 @@ export const initialState: BasicOperationsSubtractionLevelResultState =
     isLoading: false,
     error: null,
     isSubmitResult: false,
+    result: null
   });
 
 export const reducer = createReducer(
@@ -60,7 +62,83 @@ export const reducer = createReducer(
         isLoading: false,
       };
     }
-  )
+  ),
+
+
+  /* ADD BASIC_OPERATIONS_SUBTRACTION LEVEL STAGE ONE RESULT */
+  on(BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageOneResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageOneResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageOneResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
+  /* ADD BASIC_OPERATIONS_SUBTRACTION LEVEL STAGE TWO RESULT */
+  on(BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageTwoResult, (state, action) => {
+    return {
+      ...state,
+      isSubmitResult: true,
+    };
+  }),
+  on(
+    BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        result: action.payload,
+      };
+    }
+  ),
+  on(
+    BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageTwoResultSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        isSubmitResult: false,
+      };
+    }
+  ),
+  on(
+    BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageTwoResultFailure,
+    (state, action) => {
+      return {
+        ...state,
+        error: action.error,
+        isSubmitResult: false,
+      };
+    }
+  ),
+
+
 
   // on(BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelResult,
   //   (state, action) => adapter.addOne(action.basicOperationsSubtractionLevelResult, state)

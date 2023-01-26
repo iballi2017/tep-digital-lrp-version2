@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameType } from 'src/app/models/interface/game-type';
+import { GameService } from 'src/app/services/game.service';
 import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 
@@ -40,14 +41,24 @@ export class ProgramCompletionComponent implements OnInit {
   durationInSeconds = 10;
   constructor(private _router: Router,
     private _playSoundSvc: PlaySoundService,
-    private _launchGameSvc: LaunchGameService) { }
+    private _launchGameSvc: LaunchGameService,
+    private _gameSvc: GameService) { }
 
   ngOnInit(): void {
+    this.  onGetGameSessionId()
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg
       }
     })
+  }
+
+  onGetGameSessionId() {
+    this._gameSvc.LoadGameSession();
+    this._gameSvc.gameSessionBehaviorSubject.subscribe((msg: any) => {
+      // console.log("msg: ", msg)
+      this.gameSessionId = msg.session_id;
+    });
   }
 
   onContinueToNextStage($event: any) {
@@ -57,10 +68,12 @@ export class ProgramCompletionComponent implements OnInit {
     setTimeout(() => {
       switch (this.gameType) {
         case GameType.LITERACY:
-          this._router.navigate([`/literacy/levels/letter`]);
+          // this._router.navigate([`/literacy/levels/letter`]);
+          this._router.navigate([`/account/reports/details/${this.gameSessionId}`]);
           break;
         case GameType.NUMERACY:
-          this._router.navigate([`/numeracy/levels/number-recognition-one`]);
+          // this._router.navigate([`/numeracy/levels/number-recognition-one`]);
+          this._router.navigate([`/account/reports/details/${this.gameSessionId}`]);
           break;
 
         default:

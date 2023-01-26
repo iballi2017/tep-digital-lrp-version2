@@ -5,6 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Snackbar } from 'src/app/models/class/snackbar';
 import { BasicOperationsAdditionStageOneService } from 'src/app/services/basic-operations/addition/basic-operations-addition-stage-one.service';
+import { BasicOperationsAdditionStageTwoService } from 'src/app/services/basic-operations/addition/basic-operations-addition-stage-two.service';
 import { GameLevelResultAndRatingService } from 'src/app/services/game-level-result-and-rating.service';
 import * as BasicOperationsAdditionLevelResultActions from './basic-operations-addition-level-result.actions';
 
@@ -97,12 +98,56 @@ export class BasicOperationsAdditionLevelResultEffects {
     );
   });
 
+  
+  // ADD NumberRecognitionOne LEVEL STAGE TWO
+  addNumberRecognitionOneLevelStageTwoResult$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageTwoResult),
+      mergeMap((action: any) => {
+        console.group('action: ', action);
+        return this._basicOperationsAdditionStageTwoSvc.SubmitResult(action.payload).pipe(
+          map((response: any) => {
+            if (response) {
+              // console.warn('response: ', response);
+              const successResponse = response?.message;
+              const x = new Snackbar(successResponse, this._snackBar);
+              x.successSnackbar();
+              this._basicOperationsAdditionStageTwoSvc.sendBasicOperationsAdditionLevelResultBehaviour(
+                'Occupant added!'
+              );
+            }
+            return BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageTwoResultSuccess(
+              { payload: response }
+            );
+          }),
+          catchError((err: any) => {
+            console.warn('Error: ', err);
+            let successResponse = err?.error?.message;
+            if (err?.error?.message) {
+              successResponse = err?.error?.message;
+            } else {
+              successResponse = 'Test submission failed!, please try again';
+            }
+            const x = new Snackbar(successResponse, this._snackBar);
+            x.errorSnackbar();
+            return of(
+              BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageTwoResultFailure({
+                error: err,
+              })
+            );
+          })
+        );
+      })
+      // tap(() => this._router.navigate(['']))
+    );
+  });
 
   constructor(
     private actions$: Actions,
     private _gameLevelResultAndRatingSvc: GameLevelResultAndRatingService,
     private _router: Router,
     private _basicOperationsAdditionStageOneSvc: BasicOperationsAdditionStageOneService,
+    private _basicOperationsAdditionStageTwoSvc: BasicOperationsAdditionStageTwoService,
     private _snackBar: MatSnackBar
   ) {}
 }

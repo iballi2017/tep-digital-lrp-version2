@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivityRoutingModule } from './activity-routing.module';
 import { ActivityComponent } from './activity.component';
 import { ExerciseComponent } from './exercise/exercise.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ExerciseComponent } from './exercise/exercise.component';
   ],
   imports: [
     CommonModule,
-    ActivityRoutingModule
+    ActivityRoutingModule,
+    SharedModule
   ]
 })
 export class ActivityModule { }

@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import { BasicOperationsDivisionLevelResult } from './basic-operations-division-level-result.model';
+import { ActivityAnswer } from 'src/app/models/interface/game';
 
 export const loadBasicOperationsDivisionLevelResult = createAction(
   '[BasicOperationsDivisionLevelResult/API] Load BasicOperationsDivisionLevelResults',
@@ -19,6 +20,39 @@ export const loadBasicOperationsDivisionLevelResultFailure = createAction(
   '[BasicOperationsDivisionLevelResult/API] Load BasicOperationsDivisionLevelResults Failure',
   props<{ error: any }>()
 );
+
+
+// ADD BasicOperationsDivisionLevelStageOneResult
+export const addBasicOperationsDivisionLevelStageOneResult = createAction(
+  '[BasicOperationsDivision Stage-one Activity] Add BasicOperationsDivision Stage One Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addBasicOperationsDivisionLevelStageOneResultSuccess = createAction(
+  '[BasicOperationsDivision Level Result Effect] Add BasicOperationsDivision Stage One Result Success',
+  props<{ payload: any }>()
+);
+export const addBasicOperationsDivisionLevelStageOneResultFailure = createAction(
+  '[BasicOperationsDivision Level Result Effect] Add BasicOperationsDivision Stage One Result Failure',
+  props<{ error: any }>()
+);
+
+
+
+// ADD BasicOperationsDivisionLevelStageTwoResult
+export const addBasicOperationsDivisionLevelStageTwoResult = createAction(
+  '[BasicOperationsDivision Stage-two Activity] Add BasicOperationsDivision Stage Two Result',
+  props<{ payload: ActivityAnswer }>()
+);
+export const addBasicOperationsDivisionLevelStageTwoResultSuccess = createAction(
+  '[BasicOperationsDivision Level Result Effect] Add BasicOperationsDivision Stage Two Result Success',
+  props<{ payload: any }>()
+);
+export const addBasicOperationsDivisionLevelStageTwoResultFailure = createAction(
+  '[BasicOperationsDivision Level Result Effect] Add BasicOperationsDivision Stage Two Result Failure',
+  props<{ error: any }>()
+);
+
+
 
 // export const loadBasicOperationsDivisionLevelResults = createAction(
 //   '[BasicOperationsDivisionLevelResult/API] Load BasicOperationsDivisionLevelResults',

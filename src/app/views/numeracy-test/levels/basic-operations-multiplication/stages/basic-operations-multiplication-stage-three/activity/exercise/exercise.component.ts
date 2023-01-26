@@ -96,7 +96,7 @@ export class ExerciseComponent implements OnInit {
     if (this.checkTestCompletion.length == this.testList.length) {
       const Payload: ActivityAnswer = {
         session_id: this.gameSessionId,
-        answer: '1',
+        answer: '2',
         data: [...this.checkTestCompletion],
       };
       this.store.dispatch(addBasicOperationsMultiplicationLevelStageThreeResult({ payload: Payload }));
@@ -145,37 +145,35 @@ export const
   testList = [
     {
       testName: 'test-1',
-      // isTestComplete: false,
-      question: '15 x 5 =',
-      answer: 15 * 5,
+      question: 'A car travels 6 kilometers per hour, how many kilometers will it travel for 4 hours',
+      answer: "24km",
       isAnswered: false,
       testKeys: [
         {
-          name: 15 * 5,
+          name: "2km",
         },
         {
-          name: 15 - 5,
+          name: "24km",
         },
         {
-          name: 15 + 5,
+          name: "10km",
         },
       ],
     },
     {
-      testName: 'test-2',
-      // isTestComplete: false,
-      question: '20 x 6 =',
-      answer: 20 * 6,
+      testName: 'test-1',
+      question: 'Ann has 5 egg cartons. Each carton has 12 eggs. How many eggs does she have in total?',
+      answer: "60km",
       isAnswered: false,
       testKeys: [
         {
-          name: 20 + 6,
+          name: "7km",
         },
         {
-          name: 20 * 6,
+          name: "17km",
         },
         {
-          name: 20 - 6,
+          name: "60km",
         },
       ],
     },

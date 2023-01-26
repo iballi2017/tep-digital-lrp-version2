@@ -1,1 +1,64 @@
-<p>exercise works!</p>
+<!-- <p>exercise works!</p> -->
+
+<div id="activity-canvas">
+    <div id="blue-board">
+        <div id="board-activity-hint">
+            <p class="my-0">{{boardActivityHint}}</p>
+        </div>
+        <div class="inner">
+            <div id="result-item-list">
+                <div class="d-flex">
+                    <ul class="item-list ps-0 mb-0">
+                        <li>
+                            <ul id="quest-items" class="list-style-none ps-0 mb-0">
+                                <li class="quest-item" *ngFor="let item of test?.question">
+                                    <span>{{item?.first}}</span>
+                                    <span class="spacer"></span>
+                                    <span>{{item?.second}}</span>
+                                </li>
+                            </ul>
+                            <ul class="list-style-none w-100 ps-0 mb-0">
+                                <li id="answer" *ngIf="test?.answer as answer">
+                                    <div>
+                                        <span>
+                                            <ng-container *ngIf="test?.isAnswered">{{answer?.first}}</ng-container>
+                                        </span>
+                                        <span class="spacer"></span>
+                                        <span>
+                                            <ng-container *ngIf="test?.isAnswered">{{answer?.second}}</ng-container>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="key-selection-preview-block">
+        <div class="preview-text" *ngIf="previewText">
+            {{previewText}}
+        </div>
+    </div>
+    <div id="activity-keypad">
+        <ul class="key-list ps-0 list-style-none">
+            <li *ngFor="let key of keyList">
+                <!-- {{key}} -->
+                <button class="btn" (click)="onSelectAlphabet(key)"
+                    [ngClass]="{'is-right': key?.name == test?.answer?.value,'is-wrong': key?.name != test?.answer?.value}">{{key?.name}}</button>
+            </li>
+        </ul>
+    </div>
+    <div id="utility-controls">
+        <div id="activity-hint-btn-wrapper">
+            <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
+            </button>
+            <p>Hint</p>
+        </div>
+        <div id="replay-voice-btn-wrapper">
+            <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
+            <p>Refresh</p>
+        </div>
+    </div>
+</div>

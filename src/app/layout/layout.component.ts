@@ -11,6 +11,12 @@ import { WordLevelResultState } from '../views/literacy-test/store/word-level-re
 import { isSubmitResultWordLevelResult, wordLevelResultIsLoading } from '../views/literacy-test/store/word-level-result/word-level-result.selectors';
 import { BasicOperationsAdditionLevelResultState } from '../views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.reducer';
 import { isSubmitResultBasicOperationsAdditionLevelResult } from '../views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.selectors';
+import { BasicOperationsDivisionLevelResultState } from '../views/numeracy-test/store/basic-operations-division-level-result/basic-operations-division-level-result.reducer';
+import { isSubmitResultBasicOperationsDivisionLevelResult } from '../views/numeracy-test/store/basic-operations-division-level-result/basic-operations-division-level-result.selectors';
+import { BasicOperationsMultiplicationLevelResultState } from '../views/numeracy-test/store/basic-operations-multiplication-level-result/basic-operations-multiplication-level-result.reducer';
+import { isSubmitResultBasicOperationsMultiplicationLevelResult } from '../views/numeracy-test/store/basic-operations-multiplication-level-result/basic-operations-multiplication-level-result.selectors';
+import { BasicOperationsSubtractionLevelResultState } from '../views/numeracy-test/store/basic-operations-subtraction-level-result/basic-operations-subtraction-level-result.reducer';
+import { isSubmitResultBasicOperationsSubtractionLevelResult } from '../views/numeracy-test/store/basic-operations-subtraction-level-result/basic-operations-subtraction-level-result.selectors';
 import { NumberRecognitionOneLevelResultState } from '../views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.reducer';
 import { isSubmitResultNumberRecognitionOneLevelResult } from '../views/numeracy-test/store/number-recognition-one-level-result/number-recognition-one-level-result.selectors';
 import { NumberRecognitionThreeLevelResultState } from '../views/numeracy-test/store/number-recognition-three-level-result/number-recognition-three-level-result.reducer';
@@ -35,6 +41,9 @@ export class LayoutComponent implements OnInit {
   placeValueResultLoading$!: Observable<boolean>;
   numberRecognitionThreeResultLoading$!: Observable<any>;
   basicOperationsAdditionResultLoading$!: Observable<boolean>;
+  basicOperationsSubtractionResultLoading$!: Observable<boolean>;
+  basicOperationsMultiplicationResultLoading$!: Observable<boolean>;
+  basicOperationsDivisionResultLoading$!: Observable<boolean>;
   
   constructor(
     private storeLetter: Store<LetterLevelResultState>,
@@ -45,7 +54,10 @@ export class LayoutComponent implements OnInit {
     private storeNumberRecognitionTwo: Store<NumberRecognitionTwoLevelResultState>,
     private storePlaceValue: Store<PlaceValueLevelResultState>,
     private storeNumberRecognitionThree: Store<NumberRecognitionThreeLevelResultState>,
-    private storeBasicOperationsAddition: Store<BasicOperationsAdditionLevelResultState>) {}
+    private storeBasicOperationsAddition: Store<BasicOperationsAdditionLevelResultState>,
+    private storeBasicOperationsSubtraction: Store<BasicOperationsSubtractionLevelResultState>,
+    private storeBasicOperationsMultiplication: Store<BasicOperationsMultiplicationLevelResultState>,
+    private storeBasicOperationsDivision: Store<BasicOperationsDivisionLevelResultState>) {}
 
   ngOnInit(): void {
     this.letterResultLoading$ = this.storeLetter.pipe(
@@ -59,5 +71,8 @@ export class LayoutComponent implements OnInit {
     this.placeValueResultLoading$ = this.storePlaceValue.pipe(select(isSubmitResultPlaceValueLevelResult));
     this.numberRecognitionThreeResultLoading$ = this.storeNumberRecognitionThree.pipe(select(isSubmitResultNumberRecognitionThreeLevelResult));
     this.basicOperationsAdditionResultLoading$ = this.storeBasicOperationsAddition.pipe(select(isSubmitResultBasicOperationsAdditionLevelResult));
+    this.basicOperationsSubtractionResultLoading$ = this.storeBasicOperationsSubtraction.pipe(select(isSubmitResultBasicOperationsSubtractionLevelResult));
+    this.basicOperationsMultiplicationResultLoading$ = this.storeBasicOperationsMultiplication.pipe(select(isSubmitResultBasicOperationsMultiplicationLevelResult));
+    this.basicOperationsDivisionResultLoading$ = this.storeBasicOperationsDivision.pipe(select(isSubmitResultBasicOperationsDivisionLevelResult));
   }
 }

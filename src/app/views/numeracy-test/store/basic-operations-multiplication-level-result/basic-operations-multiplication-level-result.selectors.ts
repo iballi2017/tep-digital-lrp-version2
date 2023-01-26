@@ -13,15 +13,15 @@ export const selectBasicOperationsMultiplicationLevelResult = createSelector(
   selectAll
 );
 
-// export const letterLevelResult = createSelector(
-//   selectBasicOperationsMultiplicationLevelResultState,
-//   (state: BasicOperationsMultiplicationLevelResultState) => state.result
-// );
+export const basicOperationsMultiplicationLevelResult = createSelector(
+  selectBasicOperationsMultiplicationLevelResultState,
+  (state: BasicOperationsMultiplicationLevelResultState) => state.result
+);
 export const basicOperationsMultiplicationLevelResultIsLoading = createSelector(
   selectBasicOperationsMultiplicationLevelResultState,
   (state: BasicOperationsMultiplicationLevelResultState) => state?.isLoading
 );
-// export const isSubmitResultLetterLevelResult = createSelector(
-//   selectBasicOperationsMultiplicationLevelResultState,
-//   (state: BasicOperationsMultiplicationLevelResultState) => state?.isSubmitResult
-// );
+export const isSubmitResultBasicOperationsMultiplicationLevelResult = createSelector(
+  selectBasicOperationsMultiplicationLevelResultState,
+  (state: BasicOperationsMultiplicationLevelResultState) => state?.isSubmitResult
+);

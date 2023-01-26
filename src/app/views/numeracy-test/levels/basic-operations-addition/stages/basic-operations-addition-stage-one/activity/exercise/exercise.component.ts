@@ -21,12 +21,9 @@ import { BasicOperationsAdditionLevelResultState } from 'src/app/views/numeracy-
 export class ExerciseComponent implements OnInit {
   boardActivityHint: string = 'Add the 1-digit numbers here';
   testNumber: number = 0;
-  ONE_DIGIT_NUMBER = NumberDigitType.ONE_DIGIT_NUMBER;
-  TWO_DIGIT_NUMBER = NumberDigitType.TWO_DIGIT_NUMBER;
   keyList: any[] = [];
   previewList: string[] = [];
   previewText: string = '';
-  resultItemList: any[] = [];
   checkTestCompletion: any;
   gameSessionId!: string;
   stageNumber: number = 1;
@@ -66,6 +63,10 @@ export class ExerciseComponent implements OnInit {
 
 
   onSelectAlphabet(number: any) {
+    this.previewText = number.name;
+    setTimeout(() => {
+      this.previewText = '';
+    }, 500);
     if (number.name == this.test.answer) {
       this.test.isAnswered = true;
       setTimeout(() => {
@@ -93,7 +94,7 @@ export class ExerciseComponent implements OnInit {
     if (this.checkTestCompletion.length == this.testList.length) {
       const Payload: ActivityAnswer = {
         session_id: this.gameSessionId,
-        answer: '1',
+        answer: '2',
         data: [...this.checkTestCompletion],
       };
       this.store.dispatch(addBasicOperationsAdditionLevelStageOneResult({ payload: Payload }));
@@ -127,12 +128,12 @@ export class ExerciseComponent implements OnInit {
     });
   }
   refreshGame() {
-    this.resultItemList = [];
     this.testNumber = 0;
     this.placeQuestion();
     for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
+      this.testList[i].isAnswered = false;
     }
+    this.placeQuestion()
   }
 
 }

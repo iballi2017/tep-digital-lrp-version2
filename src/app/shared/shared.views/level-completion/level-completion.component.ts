@@ -89,6 +89,8 @@ export class LevelCompletionComponent implements OnInit {
     }
     setTimeout(() => {
       switch (this.levelTitle) {
+
+        // LITERACY
         case GameLevel.LETTER:
           this._router.navigate([
             `/shared/new-task-loading/${GameLevel.WORD}/${this.stageNumber}/${GameType.LITERACY}`,
@@ -104,6 +106,14 @@ export class LevelCompletionComponent implements OnInit {
             `/shared/new-task-loading/${GameLevel.STORY}/${this.stageNumber}/${GameType.LITERACY}`,
           ]);
           break;
+        case GameLevel.STORY:
+          this._router.navigate([
+            `/account/reports/details/${this.gameSessionId}`,
+          ]);
+          break;
+
+
+          // NUMERACY
         case GameLevel.NUMBER_RECOGNITION_ONE:
           this._router.navigate([
             `/shared/new-task-loading/${GameLevel.NUMBER_RECOGNITION_TWO}/${this.stageNumber}/${GameType.NUMERACY}`,
@@ -157,6 +167,13 @@ export class LevelCompletionComponent implements OnInit {
           ]);
           break;
 
+        case GameLevel.BASIC_OPERATIONS_DIVISION:
+          this._router.navigate([
+            // `/shared/new-task-loading/${GameLevel.NUMBER_RECOGNITION_ONE}/${this.stageNumber}/${GameType.NUMERACY}`,
+            `/account/reports/details/${this.gameSessionId}`,
+          ]);
+          break;
+
         default:
           this._router.navigate([
             `/shared/new-task-loading/${GameLevel.LETTER}/${this.stageNumber}/${this.gameType}`,
@@ -192,7 +209,7 @@ export class LevelCompletionComponent implements OnInit {
     });
   }
 
-  
+
 
   playBGSound() {
     this._playSoundSvc.playLevelCompletionSound();

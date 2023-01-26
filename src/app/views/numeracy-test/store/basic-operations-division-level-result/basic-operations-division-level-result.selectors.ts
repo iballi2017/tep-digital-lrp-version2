@@ -17,11 +17,15 @@ export const selectBasicOperationsDivisionLevelResult = createSelector(
 //   selectBasicOperationsDivisionLevelResultState,
 //   (state: BasicOperationsDivisionLevelResultState) => state.result
 // );
+export const basicOperationsMultiplicationLevelResult = createSelector(
+  selectBasicOperationsDivisionLevelResultState,
+  (state: BasicOperationsDivisionLevelResultState) => state.result
+);
 export const basicOperationsDivisionLevelResultIsLoading = createSelector(
   selectBasicOperationsDivisionLevelResultState,
   (state: BasicOperationsDivisionLevelResultState) => state?.isLoading
 );
-// export const isSubmitResultLetterLevelResult = createSelector(
-//   selectBasicOperationsDivisionLevelResultState,
-//   (state: BasicOperationsDivisionLevelResultState) => state?.isSubmitResult
-// );
+export const isSubmitResultBasicOperationsDivisionLevelResult = createSelector(
+  selectBasicOperationsDivisionLevelResultState,
+  (state: BasicOperationsDivisionLevelResultState) => state?.isSubmitResult
+);
