@@ -1,5 +1,9 @@
 <!-- <p>exercise works!</p> -->
 
+<ng-container *ngIf="!isSTartTest">
+    <app-launch-activity-sound [btnTitle]="btnTitle" (onPlayBGSound)="playBGSound()"
+        *ngIf="!isLaunchTest"></app-launch-activity-sound>
+</ng-container>
 <div id="activity-canvas">
     <div id="blue-board">
         <div id="board-activity-hint">

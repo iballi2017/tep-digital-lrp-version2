@@ -10,7 +10,9 @@ import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { LetterStageTwoService } from 'src/app/services/letter/letter-stage-two.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addLetterLevelStageTwoResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
@@ -39,20 +41,53 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
+  isLaunchTest!: boolean;
   stageNumber: number = 2;
   gameLevel = GameLevel.LETTER;
+  btnTitle = "Start";
+  isFinishedTest: boolean = false;
+  // 
+  levelTitle!: string;
+  gameType = GameType.LITERACY;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private _letterStageTwoSvc: LetterStageTwoService,
     private store: Store<LetterLevelResultState>,
-    private _router: Router
+    private _router: Router,
+    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) { }
 
   ngOnInit(): void {
+
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     this.onReplceKeyList();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
+  }
+
+
+  playBGSound() {
+    this._playSoundSvc.playLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopLiteracyBGSound();
+  }
+
+
+  playLevelCompletedSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopLevelCOmpletedSound() {
+    this._playSoundSvc.stopStageCompletionSound();
   }
 
   onCheckTestCompletion() {
@@ -132,10 +167,13 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       this._letterStageTwoSvc.addLetterLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
-            console.log('msg: ', msg);
-            this._router.navigate([
-              `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-            ]);
+            // console.log('msg: ', msg);
+            this.isFinishedTest = true;
+            this.stopBGSound()
+            this.playLevelCompletedSound()
+            // this._router.navigate([
+            //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+            // ]);
           }
         }
       );
@@ -168,6 +206,11 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         x.unsubscribe();
       }
     });
+    
+
+    this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+    this._playSoundSvc.stopStageCompletionSound();
   }
 }
 

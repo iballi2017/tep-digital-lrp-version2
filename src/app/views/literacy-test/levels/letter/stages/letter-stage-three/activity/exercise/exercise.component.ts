@@ -10,7 +10,9 @@ import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { LetterStageThreeService } from 'src/app/services/letter/letter-stage-three.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addLetterLevelStageThreeResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
@@ -61,18 +63,40 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   gameSessionId!: string;
   stageNumber: number = 3;
   gameLevel = GameLevel.LETTER;
+  isLaunchTest: any;
+  btnTitle = "Start";
+  isSTartTest!: boolean;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<LetterLevelResultState>,
     private _router: Router,
-    private _letterStageThreeSvc: LetterStageThreeService
+    private _letterStageThreeSvc: LetterStageThreeService,
+    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) { }
 
   ngOnInit(): void {
+    this. isTestStart();
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     this.onReplceKeyList();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
+  }
+
+  isTestStart() {
+    this._letterStageThreeSvc.isStartTestBehaviour.subscribe((isStart: boolean) => {
+      this.isSTartTest = isStart
+    })
+  }
+
+  playBGSound() {
+    this._playSoundSvc.playLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
+    this._letterStageThreeSvc.sendIsStartTestBehaviour(true)
   }
 
   onCheckTestCompletion() {
@@ -132,6 +156,9 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       }
       this.isComplete();
     }
+    if (this.previewList.length > 2) {
+      this.previewList = []
+    }
   }
 
   isComplete() {
@@ -159,26 +186,31 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   testGameCompletion() {
     this.onCheckTestCompletion();
     if (this.checkTestCompletion.length == this.testList.length) {
-      const Payload: ActivityAnswer = {
-        session_id: this.gameSessionId,
-        answer: '2',
-        data: [...this.checkTestCompletion],
-      };
-      this.store.dispatch(addLetterLevelStageThreeResult({ payload: Payload }));
-      this._letterStageThreeSvc.addLetterLevelResultBehaviour.subscribe(
-        (msg: any) => {
-          console.log('msg: ', msg);
-          if (msg) {
-            console.log('msg: ', msg);
-            this._router.navigate([
-              '/literacy/letter/stage-3/activity/exercise-two',
-            ]);
-            // this._router.navigate([
-            //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-            // ]);
-          }
-        }
-      );
+      this._router.navigate([
+        '/literacy/letter/stage-3/activity/exercise-two',
+      ]);
+      // const Payload: ActivityAnswer = {
+      //   session_id: this.gameSessionId,
+      //   answer: '2',
+      //   data: [...this.checkTestCompletion],
+      // };
+      // this.store.dispatch(addLetterLevelStageThreeResult({ payload: Payload }));
+      // this._letterStageThreeSvc.addLetterLevelResultBehaviour.subscribe(
+      //   (msg: any) => {
+      //     console.log('msg: ', msg);
+      //     if (msg) {
+      //       console.log('msg: ', msg);
+      //       this.stopBGSound()
+      //       this.playLevelCompletedSound()
+      //       this._router.navigate([
+      //         '/literacy/letter/stage-3/activity/exercise-two',
+      //       ]);
+      // this._router.navigate([
+      //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+      // ]);
+      //     }
+      //   }
+      // );
     }
     return;
   }

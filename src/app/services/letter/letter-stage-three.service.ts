@@ -11,14 +11,19 @@ export class LetterStageThreeService {
   StartGameUrl = baseUrl + '/start-game-session';
   SubmitGameStage_3_Url = baseUrl + '/submit-letter-stage-3';
   addLetterLevelResultBehaviour = new BehaviorSubject(false);
+  isStartTestBehaviour = new BehaviorSubject(false);
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   sendAddLetterLevelResultBehaviour(Msg: any) {
     this.addLetterLevelResultBehaviour.next(Msg);
   }
   getAddLetterLevelResultBehaviour() {
     return this.addLetterLevelResultBehaviour.asObservable();
+  }
+
+  sendIsStartTestBehaviour(msg: boolean) {
+    this.isStartTestBehaviour.next(msg)
   }
 
   SubmitResult(_LetterStageThreeResult: any) {

@@ -71,3 +71,14 @@
 .border-radius-20{
     border-radius: 20px !important;
 }
+
+.completion-screen{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    &.level{
+        background-color: #ffffff;
+    }
+}
