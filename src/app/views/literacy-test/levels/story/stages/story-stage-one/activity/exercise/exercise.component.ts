@@ -9,6 +9,8 @@ import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { StoryStageOneService } from 'src/app/services/story/story-stage-one.service';
 import { WordStageFourService } from 'src/app/services/word/word-stage-four.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
@@ -360,7 +362,11 @@ export class ExerciseComponent implements OnInit, OnDestroy {
                 display: false,
               },
               {
-                text: "always",
+                text: "all",
+                display: false,
+              },
+              {
+                text: "day",
                 display: false,
               }
             ],
@@ -371,7 +377,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
                 parent: keyParent.body,
               },
               {
-                label: "always",
+                label: "day",
                 isWrong: false,
                 parent: keyParent.body,
               },
@@ -391,7 +397,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
                 parent: keyParent.body,
               },
               {
-                label: "tin",
+                label: "all",
                 isWrong: false,
                 parent: keyParent.body,
               },
@@ -431,17 +437,32 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       }
     }
   ];
-  boardData = this.resultListResult[this.testNumber]
+  boardData = this.resultListResult[this.testNumber];
+  isLaunchTest!: boolean;
+  btnTitle = "Start";
+  // isFinishedTest: boolean = true;
+  isFinishedTest: boolean = false;
+  // 
+  levelTitle!: string;
+  gameType = GameType.LITERACY;
+
 
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
     private _router: Router,
-    private _storyStageOneSvc: StoryStageOneService
+    private _storyStageOneSvc: StoryStageOneService,
+    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) { }
 
   ngOnInit(): void {
+
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     // let testList = this.testList;
     // console.warn("testList: ", testList)
     // if (testList) {
@@ -454,6 +475,27 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.onGetGameSessionId();
 
   }
+
+
+  playBGSound() {
+    this._playSoundSvc.playLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopLiteracyBGSound();
+  }
+
+
+  playLevelCompletedSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopLevelCOmpletedSound() {
+    this._playSoundSvc.stopStageCompletionSound();
+  }
+
 
   // onCheckTestCompletion() {
   //   this.checkTestCompletion = this.testList.filter(
@@ -620,9 +662,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this._storyStageOneSvc.addStoryLevelResultBehaviour.subscribe(
       (msg: any) => {
         if (msg) {
-          this._router.navigate([
-            `/${GameType.LITERACY}/game-type-completion/${this.gameLevel}`
-          ]);
+          // this._router.navigate([
+          //   `/${GameType.LITERACY}/game-type-completion/${this.gameLevel}`
+          // ]);          
+          this.isFinishedTest = true;
+          this.stopBGSound()
+          this.playLevelCompletedSound()
         }
       }
     );

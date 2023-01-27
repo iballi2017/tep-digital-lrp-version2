@@ -44,6 +44,13 @@ export class ExerciseComponent implements OnInit {
   isStart: boolean = false;
   speechTexts$!: Observable<any>;
   boardData: any;
+  isLaunchTest!: boolean;
+  btnTitle = "Start";
+  // isFinishedTest: boolean = true;
+  isFinishedTest: boolean = false;
+  // 
+  levelTitle!: string;
+  gameType = GameType.LITERACY;
 
   constructor(
     private _gameSvc: GameService,
@@ -60,6 +67,12 @@ export class ExerciseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     this.cdr.detectChanges();
     //
     // this.loadTestContent();
@@ -72,6 +85,28 @@ export class ExerciseComponent implements OnInit {
     this.GetSpeechTextsFromAppState();
     this.loadBoardData();
   }
+
+
+  playBGSound() {
+    this._playSoundSvc.playLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopLiteracyBGSound();
+  }
+
+
+  playLevelCompletedSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopLevelCOmpletedSound() {
+    this._playSoundSvc.stopStageCompletionSound();
+  }
+
+
 
   /* SPEECH RECOG CODE STARTS */
 
@@ -147,9 +182,12 @@ export class ExerciseComponent implements OnInit {
     this._paragraphStageTwoSvc.addParagraphLevelResultBehaviour.subscribe(
       (msg: any) => {
         if (msg) {
-          this._router.navigate([
-            `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-          ]);
+          // this._router.navigate([
+          //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+          // ]);
+            this.isFinishedTest = true;
+            this.stopBGSound()
+            this.playLevelCompletedSound()
         }
       }
     );

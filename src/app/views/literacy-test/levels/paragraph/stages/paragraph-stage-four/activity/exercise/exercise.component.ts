@@ -9,7 +9,9 @@ import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { ParagraphStageFourService } from 'src/app/services/paragraph/paragraph-stage-four.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { LongTextReadDialogComponent } from 'src/app/views/literacy-test/completion/long-text-read-dialog/long-text-read-dialog.component';
 import { addParagraphLevelStageFourResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
@@ -49,16 +51,30 @@ export class ExerciseComponent implements OnInit {
   I live in a big town,
   I have three brothers and two sisters, We all clean the house every morning before going out to the shop. Today is a market day in the town I live we are going to have lots of fun today.`;
 
+  isLaunchTest!: boolean;
+  btnTitle = "Start";
+  // isFinishedTest: boolean = true;
+  isFinishedTest: boolean = false;
+  // 
+  levelTitle!: string;
+  gameType = GameType.LITERACY;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<ParagraphLevelResultState>,
     private _router: Router,
     // Speech recog
-    private _paragraphStageFourSvc: ParagraphStageFourService
+    private _paragraphStageFourSvc: ParagraphStageFourService,
+    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) { }
 
   ngOnInit(): void {
+
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     // this.loadTestContent();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
@@ -69,6 +85,27 @@ export class ExerciseComponent implements OnInit {
     this.loadBoardData();
     this.loadKeyList();
   }
+
+  playBGSound() {
+    this._playSoundSvc.playLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopLiteracyBGSound();
+  }
+
+
+  playLevelCompletedSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopLevelCOmpletedSound() {
+    this._playSoundSvc.stopStageCompletionSound();
+  }
+
+
 
   onReplceKeyList() {
     this.keyList = this.testList[this.testNumber]?.testKeys;
@@ -127,10 +164,13 @@ export class ExerciseComponent implements OnInit {
         // console.log('msg: ', msg);
         if (msg) {
           // console.log('msg: ', msg);
-          this._router.navigate([
-            `/${GameType.LITERACY}/level-completion/${this.gameLevel}`
-            // `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-          ]);
+          // this._router.navigate([
+          //   `/${GameType.LITERACY}/level-completion/${this.gameLevel}`
+          //   // `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+          // ]);
+          this.isFinishedTest = true;
+          this.stopBGSound()
+          this.playLevelCompletedSound()
         }
       }
     );

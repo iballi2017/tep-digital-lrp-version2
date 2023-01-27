@@ -182,12 +182,12 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
         (msg: any) => {
           if (msg) {
             console.log('msg: ', msg);
-            this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
             // this._router.navigate([
             //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);
+            this.isFinishedTest = true;
+            this.stopBGSound()
+            this.playLevelCompletedSound()
           }
         }
       );

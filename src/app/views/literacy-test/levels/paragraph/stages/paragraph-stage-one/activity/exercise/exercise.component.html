@@ -1,5 +1,8 @@
 <!-- <p>exercise works!</p> -->
 
+<ng-container *ngIf="!isFinishedTest">
+    <app-launch-activity-sound [btnTitle]="btnTitle" (onPlayBGSound)="playBGSound()"
+        *ngIf="!isLaunchTest"></app-launch-activity-sound>
 <div id="activity-canvas">
     <div id="blue-board">
         <div id="board-activity-hint">
@@ -52,3 +55,10 @@
         </div>
     </div>
 </div>
+</ng-container>
+<ng-container *ngIf="isFinishedTest">
+    <div class="completion-screen">
+        <app-stage-completion [levelTitle]="gameLevel" [stageNumber]="stageNumber"
+            [gameType]="gameType"></app-stage-completion>
+    </div>
+</ng-container>

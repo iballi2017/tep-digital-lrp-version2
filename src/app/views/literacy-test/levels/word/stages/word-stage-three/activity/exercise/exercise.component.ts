@@ -9,6 +9,8 @@ import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import {
@@ -40,15 +42,31 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   gameSessionId!: string;
   stageNumber: number = 3;
   gameLevel = GameLevel.WORD;
+  isLaunchTest!: boolean;
+  btnTitle = "Start";
+  // isFinishedTest: boolean = true;
+  isFinishedTest: boolean = false;
+  // 
+  levelTitle!: string;
+  gameType = GameType.LITERACY;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
     private _router: Router,
-    private _wordStageThreeSvc: WordStageThreeService
+    private _wordStageThreeSvc: WordStageThreeService,
+    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) { }
 
   ngOnInit(): void {
+
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
+
+
     let testList = this.testList;
     if (testList) {
       new ShuffleArray(testList).shuffle();
@@ -62,6 +80,26 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.loadTestContent();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
+  }
+
+
+  playBGSound() {
+    this._playSoundSvc.playLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopLiteracyBGSound();
+  }
+
+
+  playLevelCompletedSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopLevelCOmpletedSound() {
+    this._playSoundSvc.stopStageCompletionSound();
   }
 
   onCheckTestCompletion() {
@@ -150,9 +188,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         (msg: any) => {
           if (msg) {
             // console.log('msg: ', msg);
-            this._router.navigate([
-              `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-            ]);
+            // this._router.navigate([
+            //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+            // ]);
+            this.isFinishedTest = true;
+            this.stopBGSound()
+            this.playLevelCompletedSound()
           }
         }
       );

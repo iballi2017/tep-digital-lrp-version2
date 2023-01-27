@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameStage } from 'src/app/models/interface/game-stage';
+import { WordStageFourComponent } from './stages/word-stage-four/word-stage-four.component';
 import { WordStageOneComponent } from './stages/word-stage-one/word-stage-one.component';
+import { WordStageThreeComponent } from './stages/word-stage-three/word-stage-three.component';
 import { WordStageTwoComponent } from './stages/word-stage-two/word-stage-two.component';
 
 const routes: Routes = [
@@ -65,7 +67,7 @@ const routes: Routes = [
   },
   {
     path: `${GameLevel.WORD}/stage-${GameStage.THREE}`,
-    component: WordStageTwoComponent,
+    component: WordStageThreeComponent,
     children: [
       {
         path: '',
@@ -92,7 +94,7 @@ const routes: Routes = [
   },
   {
     path: `${GameLevel.WORD}/stage-${GameStage.FOUR}`,
-    component: WordStageTwoComponent,
+    component: WordStageFourComponent,
     children: [
       {
         path: '',

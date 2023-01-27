@@ -1,42 +1,52 @@
 <!-- <p>exercise works!</p> -->
 
-<div id="activity-canvas">
-    <div id="blue-board">
-        <div id="board-activity-hint">
-            <p class="my-0">{{boardActivityHint}}</p>
+<ng-container *ngIf="!isFinishedTest">
+    <app-launch-activity-sound [btnTitle]="btnTitle" (onPlayBGSound)="playBGSound()"
+        *ngIf="!isLaunchTest"></app-launch-activity-sound>
+    <div id="activity-canvas">
+        <div id="blue-board">
+            <div id="board-activity-hint">
+                <p class="my-0">{{boardActivityHint}}</p>
+            </div>
+            <div class="inner">
+                <div id="result-item-list">
+                    <ul class="item-list ps-0 mb-0">
+                        <li [ngClass]="{'hint': item.hint}" *ngFor="let item of testList[testNumber]?.answer">
+                            <span [ngClass]="{'d-none': !item?.isShow}">{{item?.text}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="inner">
-            <div id="result-item-list">
-                <ul class="item-list ps-0 mb-0">
-                    <li [ngClass]="{'hint': item.hint}" *ngFor="let item of testList[testNumber]?.answer">
-                        <span [ngClass]="{'d-none': !item?.isShow}">{{item?.text}}</span>
-                    </li>
-                </ul>
+        <div id="key-selection-preview-block">
+            <div class="preview-text" *ngIf="previewText">
+                {{previewText}}
+            </div>
+        </div>
+        <div id="activity-keypad">
+            <ul class="key-list ps-0 list-style-none">
+                <li *ngFor="let key of keyList">
+                    <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="utility-controls">
+            <div id="activity-hint-btn-wrapper">
+                <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
+                </button>
+                <p>Hint</p>
+            </div>
+            <div id="replay-voice-btn-wrapper">
+                <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
+                <p>Refresh</p>
             </div>
         </div>
     </div>
-    <div id="key-selection-preview-block">
-        <div class="preview-text" *ngIf="previewText">
-            {{previewText}}
-        </div>
+</ng-container>
+<ng-container *ngIf="isFinishedTest">
+    <div class="completion-screen level">
+        <app-level-completion [levelTitle]="gameLevel"
+            [gameType]="gameType"></app-level-completion>
     </div>
-    <div id="activity-keypad">
-        <ul class="key-list ps-0 list-style-none">
-            <li *ngFor="let key of keyList">
-                <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
-            </li>
-        </ul>
-    </div>
-
-    <div id="utility-controls">
-        <div id="activity-hint-btn-wrapper">
-            <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
-            </button>
-            <p>Hint</p>
-        </div>
-        <div id="replay-voice-btn-wrapper">
-            <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
-            <p>Refresh</p>
-        </div>
-    </div>
-</div>
+</ng-container>
