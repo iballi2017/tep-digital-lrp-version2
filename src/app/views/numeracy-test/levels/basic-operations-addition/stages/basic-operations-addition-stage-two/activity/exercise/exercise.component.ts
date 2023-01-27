@@ -8,6 +8,8 @@ import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { BasicOperationsAdditionStageTwoService } from 'src/app/services/basic-operations/addition/basic-operations-addition-stage-two.service';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addBasicOperationsAdditionLevelStageTwoResult } from 'src/app/views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.actions';
 import { BasicOperationsAdditionLevelResultState } from 'src/app/views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.reducer';
@@ -27,6 +29,10 @@ export class ExerciseComponent implements OnInit {
   gameSessionId!: string;
   stageNumber: number = 2;
   gameLevel = GameLevel.BASIC_OPERATIONS_ADDITION;
+  isLaunchTest!: boolean;
+  btnTitle = 'Start';
+  isFinishedTest: boolean = false;
+  gameType = GameType.NUMERACY;
 
 
   // testList: any = [...testList]
@@ -36,12 +42,40 @@ export class ExerciseComponent implements OnInit {
   constructor(private _gameSvc: GameService, private _basicOperationsAdditionStageTwoSvc: BasicOperationsAdditionStageTwoService,
     private store: Store<BasicOperationsAdditionLevelResultState>,
     private _router: Router,
-    public dialog: MatDialog,) { }
+    public dialog: MatDialog,
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService) { }
 
   ngOnInit(): void {
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     this.placeQuestion();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
+  }
+
+
+
+  playBGSound() {
+    this._playSoundSvc.playNumeracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopNumeracyBGSound();
+  }
+
+
+  playLevelCompletedSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopLevelCompletedSound() {
+    this._playSoundSvc.stopStageCompletionSound();
   }
 
   placeQuestion() {
@@ -100,10 +134,13 @@ export class ExerciseComponent implements OnInit {
       this._basicOperationsAdditionStageTwoSvc.BasicOperationsAdditionLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
-            this._router.navigate([
-              `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`
-              // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-            ]);
+            // this._router.navigate([
+            //   `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`
+            //   // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+            // ]);
+            this.isFinishedTest = true;
+            this.stopBGSound()
+            this.playLevelCompletedSound()
           }
         }
       );

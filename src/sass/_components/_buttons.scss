@@ -12,8 +12,11 @@
         box-shadow: none !important;
     }
 
-    &.btn-40-height {
-        height: 40px;
+    @include mixins.minmq(768px){
+        &.btn-40-height {
+            height: 40px;
+        }
+    
     }
 }
 
@@ -60,14 +63,18 @@
     }
 }
 .form-btn {
-    height: 45px;
     font-family: "Open Sans";
     font-style: normal;
     font-weight: 700;
-    font-size: 16px;
-    line-height: 22px;
-    padding-right: 1.3em !important;
-    padding-left: 1.3em !important;
+
+    @include mixins.minmq(768px){
+        height: 45px;
+        font-size: 16px;
+        line-height: 22px;
+        padding-right: 1.3em !important;
+        padding-left: 1.3em !important;
+    
+    }
 }
 
 .back-btn {

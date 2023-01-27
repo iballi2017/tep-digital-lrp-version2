@@ -34,25 +34,29 @@ export class ExerciseComponent implements OnInit {
   stageNumber: number = 1;
   gameLevel = GameLevel.NUMBER_RECOGNITION_ONE;
   isLaunchTest!: boolean;
-  btnTitle = "Start";
+  btnTitle = 'Start';
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
 
-
   testList = testList;
-  activityHint: any = "Identify the 1-digit numbers selecting the right answer in the green boxes below";
-  constructor(private _gameSvc: GameService, private _numberRecognitionOneSvc: NumberRecognitionOneService,
+  activityHint: any =
+    'Identify the 1-digit numbers selecting the right answer in the green boxes below';
+  constructor(
+    private _gameSvc: GameService,
+    private _numberRecognitionOneSvc: NumberRecognitionOneService,
     private store: Store<NumberRecognitionOneLevelResultState>,
     private _router: Router,
     public dialog: MatDialog,
-    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService) { }
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
+  ) {}
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     this.onReplceKeyList();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
@@ -60,29 +64,26 @@ export class ExerciseComponent implements OnInit {
 
   playBGSound() {
     this._playSoundSvc.playNumeracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopNumeracyBGSound();
   }
 
-
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
-  stopLevelCOmpletedSound() {
+  stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
-
 
   onReplceKeyList() {
     let keys = this.testList[this.testNumber]?.testKeys;
     this.keyList = new ShuffleArray(keys).shuffle();
   }
-
 
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
@@ -93,7 +94,6 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
-
   onSelectAlphabet(number: any) {
     this.previewList.push(number.name);
     this.previewText = number.name;
@@ -101,15 +101,12 @@ export class ExerciseComponent implements OnInit {
       this.previewText = '';
     }, 500);
     if (number.type == NumberDigitType.ONE_DIGIT_NUMBER) {
-      if (
-        !this.resultItemList.find((item: any) => item.name === number.name)
-      ) {
+      if (!this.resultItemList.find((item: any) => item.name === number.name)) {
         this.resultItemList.push(number);
         this.isComplete();
       }
     }
   }
-
 
   isComplete() {
     let expectedList = this.resultItemList.filter((item: any) => {
@@ -145,7 +142,9 @@ export class ExerciseComponent implements OnInit {
         answer: '1',
         data: [...this.checkTestCompletion],
       };
-      this.store.dispatch(addNumberRecognitionOneLevelStageOneResult({ payload: Payload }));
+      this.store.dispatch(
+        addNumberRecognitionOneLevelStageOneResult({ payload: Payload })
+      );
       this._numberRecognitionOneSvc.addNumberRecognitionOneLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
@@ -154,8 +153,8 @@ export class ExerciseComponent implements OnInit {
             //   // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);
             this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
+            this.stopBGSound();
+            this.playLevelCompletedSound();
           }
         }
       );
@@ -188,7 +187,6 @@ export class ExerciseComponent implements OnInit {
   }
 }
 
-
 const testList = [
   {
     testName: 'test-1',
@@ -205,7 +203,7 @@ const testList = [
       },
       {
         name: '3',
-        type: NumberDigitType.ONE_DIGIT_NUMBER
+        type: NumberDigitType.ONE_DIGIT_NUMBER,
       },
     ],
   },
@@ -224,7 +222,7 @@ const testList = [
       },
       {
         name: '9',
-        type: NumberDigitType.ONE_DIGIT_NUMBER
+        type: NumberDigitType.ONE_DIGIT_NUMBER,
       },
     ],
   },
@@ -243,8 +241,8 @@ const testList = [
       },
       {
         name: '7',
-        type: NumberDigitType.ONE_DIGIT_NUMBER
+        type: NumberDigitType.ONE_DIGIT_NUMBER,
       },
     ],
-  }
+  },
 ];

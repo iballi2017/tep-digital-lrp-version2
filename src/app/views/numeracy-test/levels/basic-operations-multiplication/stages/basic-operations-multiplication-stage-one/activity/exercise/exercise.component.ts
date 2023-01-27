@@ -8,6 +8,8 @@ import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { BasicOperationsMultiplicationStageOneService } from 'src/app/services/basic-operations/multiplication/basic-operations-multiplication-stage-one.service';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addBasicOperationsMultiplicationLevelStageOneResult } from 'src/app/views/numeracy-test/store/basic-operations-multiplication-level-result/basic-operations-multiplication-level-result.actions';
 import { BasicOperationsMultiplicationLevelResultState } from 'src/app/views/numeracy-test/store/basic-operations-multiplication-level-result/basic-operations-multiplication-level-result.reducer';
@@ -28,6 +30,10 @@ export class ExerciseComponent implements OnInit {
   gameSessionId!: string;
   stageNumber: number = 1;
   gameLevel = GameLevel.BASIC_OPERATIONS_MULTIPLICATION;
+  isLaunchTest!: boolean;
+  btnTitle = 'Start';
+  isFinishedTest: boolean = false;
+  gameType = GameType.NUMERACY;
 
 
   // testList: any = [...testList]
@@ -37,12 +43,39 @@ export class ExerciseComponent implements OnInit {
   constructor(private _gameSvc: GameService, private _basicOperationsMultiplicationStageOneSvc: BasicOperationsMultiplicationStageOneService,
     private store: Store<BasicOperationsMultiplicationLevelResultState>,
     private _router: Router,
-    public dialog: MatDialog,) { }
+    public dialog: MatDialog,
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService) { }
 
   ngOnInit(): void {
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg
+      }
+    })
     this.placeQuestion();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
+  }
+
+
+  playBGSound() {
+    this._playSoundSvc.playNumeracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopNumeracyBGSound();
+  }
+
+
+  playLevelCompletedSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopLevelCompletedSound() {
+    this._playSoundSvc.stopStageCompletionSound();
   }
 
   placeQuestion() {
@@ -101,10 +134,13 @@ export class ExerciseComponent implements OnInit {
       this._basicOperationsMultiplicationStageOneSvc.BasicOperationsMultiplicationLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
-            this._router.navigate([
-              // `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`
-              `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-            ]);
+            // this._router.navigate([
+            //   // `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`
+            //   `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+            // ]);
+            this.isFinishedTest = true;
+            this.stopBGSound()
+            this.playLevelCompletedSound()
           }
         }
       );

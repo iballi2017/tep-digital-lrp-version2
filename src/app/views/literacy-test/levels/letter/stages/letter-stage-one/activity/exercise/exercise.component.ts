@@ -94,7 +94,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
   }
 
-  stopLevelCOmpletedSound() {
+  stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
 

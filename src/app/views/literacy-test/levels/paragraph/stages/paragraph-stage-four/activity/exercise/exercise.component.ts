@@ -101,7 +101,7 @@ export class ExerciseComponent implements OnInit {
     this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
   }
 
-  stopLevelCOmpletedSound() {
+  stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
 
