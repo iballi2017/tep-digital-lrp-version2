@@ -8,8 +8,10 @@ import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameType } from 'src/app/models/interface/game-type';
 import { NumberDigitType } from 'src/app/models/interface/number-type';
 import { GameService } from 'src/app/services/game.service';
+import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { NumberRecognitionTwoService } from 'src/app/services/number-recognition/number-recognition-two.service';
 import { PlaceValueService } from 'src/app/services/place-value/place-value.service';
+import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addNumberRecognitionTwoLevelStageOneResult } from 'src/app/views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.actions';
 import { NumberRecognitionTwoLevelResultState } from 'src/app/views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.reducer';
@@ -36,96 +38,56 @@ export class ExerciseComponent implements OnInit {
   gameSessionId!: string;
   stageNumber: number = 1;
   gameLevel = GameLevel.PLACE_VALUE;
+  isLaunchTest!: boolean;
+  btnTitle = 'Start';
+  isFinishedTest: boolean = false;
+  gameType = GameType.NUMERACY;
   testingNumber: any;
-  testNumberList: any = [
-    {
-      isDone: false,
-      activeIndexList: [2, 0, 1],
-      numberArray: [
-        {
-          name: '2',
-          isActive: false,
-          placeValue: PlaceValue.HUNDRED,
-        },
-        {
-          name: '3',
-          isActive: false,
-          placeValue: PlaceValue.TENS,
-        },
-        {
-          name: '1',
-          isActive: false,
-          placeValue: PlaceValue.UNIT,
-        },
-      ],
-    },
-    {
-      isDone: false,
-      activeIndexList: [0, 2, 1],
-      numberArray: [
-        {
-          name: '4',
-          isActive: false,
-          placeValue: PlaceValue.HUNDRED,
-        },
-        {
-          name: '0',
-          isActive: false,
-          placeValue: PlaceValue.TENS,
-        },
-        {
-          name: '2',
-          isActive: false,
-          placeValue: PlaceValue.UNIT,
-        },
-      ],
-    },
-    {
-      isDone: false,
-      activeIndexList: [1, 0],
-      numberArray: [
-        {
-          name: '2',
-          isActive: false,
-          placeValue: PlaceValue.TENS,
-        },
-        {
-          name: '2',
-          isActive: false,
-          placeValue: PlaceValue.UNIT,
-        },
-      ],
-    },
-  ];
-
-  _keyList: any[] = [
-    {
-      name: 'hundred',
-      placeValue: PlaceValue.HUNDRED,
-    },
-    {
-      name: 'tens',
-      placeValue: PlaceValue.TENS,
-    },
-    {
-      name: 'unit',
-      placeValue: PlaceValue.UNIT,
-    },
-  ];
+  testNumberList: any = testNumberList;
+  _keyList: any[] = _keyList;
   numberList!: any[];
   constructor(
     private _gameSvc: GameService,
     private _placeValueSvc: PlaceValueService,
     private store: Store<NumberRecognitionTwoLevelResultState>,
     private _router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) {}
 
   ngOnInit(): void {
+    this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+        this.isLaunchTest = msg;
+      }
+    });
     this.onGetGameSessionId();
     this.updateNumberList();
     this.loadKeys();
   }
+  
+  
+  playBGSound() {
+    this._playSoundSvc.playNumeracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopBGSound() {
+    this._playSoundSvc.stopNumeracyBGSound();
+  }
+
+
+  playLevelCompletedSound() {
+    this._playSoundSvc.playStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+  }
+
+  stopLevelCOmpletedSound() {
+    this._playSoundSvc.stopStageCompletionSound();
+  }
+
+
+
 
   loadKeys() {
     this.keyList = this._keyList;
@@ -138,7 +100,6 @@ export class ExerciseComponent implements OnInit {
       this.moveToNextNumber();
     }
   }
-
 
   moveToNextNumber() {
     this.testNumberList[this.testNumber]?.numberArray.forEach(
@@ -220,10 +181,13 @@ export class ExerciseComponent implements OnInit {
     this._placeValueSvc.addPlaceValueLevelResultBehaviour.subscribe(
       (msg: any) => {
         if (msg) {
-          this._router.navigate([
-            `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`,
-            // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
-          ]);
+          // this._router.navigate([
+          //   `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`,
+          //   // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
+          // ]);
+          this.isFinishedTest = true;
+          this.stopBGSound();
+          this.playLevelCompletedSound();
         }
       }
     );
@@ -256,3 +220,79 @@ export enum PlaceValue {
   // TENS,
   // HUNDRED,
 }
+
+const testNumberList: any = [
+  {
+    isDone: false,
+    activeIndexList: [2, 0, 1],
+    numberArray: [
+      {
+        name: '2',
+        isActive: false,
+        placeValue: PlaceValue.HUNDRED,
+      },
+      {
+        name: '3',
+        isActive: false,
+        placeValue: PlaceValue.TENS,
+      },
+      {
+        name: '1',
+        isActive: false,
+        placeValue: PlaceValue.UNIT,
+      },
+    ],
+  },
+  {
+    isDone: false,
+    activeIndexList: [0, 2, 1],
+    numberArray: [
+      {
+        name: '4',
+        isActive: false,
+        placeValue: PlaceValue.HUNDRED,
+      },
+      {
+        name: '0',
+        isActive: false,
+        placeValue: PlaceValue.TENS,
+      },
+      {
+        name: '2',
+        isActive: false,
+        placeValue: PlaceValue.UNIT,
+      },
+    ],
+  },
+  {
+    isDone: false,
+    activeIndexList: [1, 0],
+    numberArray: [
+      {
+        name: '2',
+        isActive: false,
+        placeValue: PlaceValue.TENS,
+      },
+      {
+        name: '2',
+        isActive: false,
+        placeValue: PlaceValue.UNIT,
+      },
+    ],
+  },
+];
+
+const _keyList: any[] = [
+  {
+    name: 'hundred',
+    placeValue: PlaceValue.HUNDRED,
+  },
+  {
+    name: 'tens',
+    placeValue: PlaceValue.TENS,
+  },
+  {
+    name: 'unit',
+    placeValue: PlaceValue.UNIT,
+  },
+];

@@ -50,7 +50,6 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   // isFinishedTest: boolean = true;
   isFinishedTest: boolean = false;
   // 
-  levelTitle!: string;
   gameType = GameType.LITERACY;
 
   // audioFile: string = AlphabetNote.A_Note;

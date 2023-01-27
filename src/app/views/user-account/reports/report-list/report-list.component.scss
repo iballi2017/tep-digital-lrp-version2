@@ -77,28 +77,29 @@ select.form-select {
     overflow-y: auto;
     //
     /* width */
-    &::-webkit-scrollbar {
-        // width: 20px;
-        width: 0.9rem;
-    }
+    @include mixins.minmq(768px) {
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
 
-    /* Track */
-    &::-webkit-scrollbar-track {
-        border-radius: 10px;
-        background: #ffffff;
-        border: 1px solid #aeaeae;
-    }
+        /* Track */
+        &::-webkit-scrollbar-track {
+            border-radius: 10px;
+            background: #ffffff;
+            border: 1px solid #aeaeae;
+        }
 
-    /* Handle */
-    &::-webkit-scrollbar-thumb {
-        background: #d9d9d9;
-        border-radius: 10px;
-    }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #d9d9d9;
+            border-radius: 10px;
+        }
 
-    /* Handle on hover */
-    &::-webkit-scrollbar-thumb:hover {
-        // background: #b30000;
-        background: colors.$primaryColor !important;
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            // background: #b30000;
+            background: colors.$primaryColor !important;
+        }
     }
 }
 table {
