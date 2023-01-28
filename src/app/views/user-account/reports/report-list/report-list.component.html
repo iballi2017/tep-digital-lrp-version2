@@ -42,64 +42,79 @@ this.isLoadingReportList$  -->
                 <ng-container *ngIf="!reportList?.length && (isLoadingReportList$ |async)">
                     <P class="text-bold">LOADING...</P>
                 </ng-container>
-                <div class="table-responsive" *ngIf="reportList?.length">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">S/N</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">AGE</th>
-                                <th scope="col">GENDER</th>
-                                <th scope="col">PROGRAM</th>
-                                <th scope="col">SCORE</th>
-                                <th scope="col">PERCENTAGE</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of reportsList$ | async   | paginate
+                <div *ngIf="reportList?.length">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">S/N</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">AGE</th>
+                                    <th scope="col">GENDER</th>
+                                    <th scope="col">PROGRAM</th>
+                                    <th scope="col">SCORE</th>
+                                    <th scope="col">PERCENTAGE</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of reportList  | paginate
                             : {
                                 itemsPerPage: ItemsPerPage,
                                 currentPage: page,
                                 totalItems: totalRecords
                               }; let i = index ">
-                                <th scope="row">
-                                    {{i + 1}}
-                                </th>
-                                <td>
-                                    <div class="name mb-3">{{item?.fullname}}</div>
-                                    <div class="status">
-                                        <label>Status:</label>
-                                        <div class="value">{{item?.status}}</div>
-                                    </div>
-                                </td>
-                                <td>{{item?.age}}</td>
-                                <td>{{item?.gender}}</td>
-                                <td>{{item?.program}}</td>
-                                <td>{{item?.overallScore}}</td>
-                                <td>{{item?.scorePercent}}</td>
-                                <td class="text-right">
-                                    <div class="actions-btn">
-                                        <div class="d-flex justify-content-end">
-                                            <app-primary-button [btnTitle]="btnEdit.title | uppercase"
-                                                [btnClasses]="btnClasses"
-                                                (onClickEvent)="onViewReportDetails(item?.sessionId)"></app-primary-button>
-                                            <div class="mx-1"></div>
-                                            <app-danger-button [btnTitle]="btnDanger.title | uppercase"
-                                                [btnClasses]="btnClasses"
-                                                (onClickEvent)="onRemoveReport(item?.sessionId)"></app-danger-button>
+                                    <th scope="row">
+                                        {{i + 1}}
+                                    </th>
+                                    <td>
+                                        <div class="name mb-3">{{item?.fullname}}</div>
+                                        <div class="status">
+                                            <label>Status:</label>
+                                            <div class="value">{{item?.status}}</div>
                                         </div>
-                                        <!-- <app-table-column-action-buttons (remove)="onRemoveReport(item)"
+                                    </td>
+                                    <td>{{item?.age}}</td>
+                                    <td>{{item?.gender}}</td>
+                                    <td>{{item?.program}}</td>
+                                    <td>{{item?.overallScore}}</td>
+                                    <td>{{item?.scorePercent}}</td>
+                                    <td class="text-right">
+                                        <div class="actions-btn">
+                                            <div class="d-flex justify-content-end">
+                                                <div>
+                                                    <app-primary-button class="d-none d-md-block"
+                                                        [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
+                                                        (onClickEvent)="onViewReportDetails(item?.sessionId)"></app-primary-button>
+                                                    <button class="edit-btn-icon d-block d-md-none" mat-icon-button
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        (click)="onViewReportDetails(item?.sessionId)">
+                                                        <mat-icon>visibility</mat-icon>
+                                                    </button>
+                                                </div>
+                                                <div class="mx-1"></div>
+                                                <div> <app-danger-button class="d-none d-md-block"
+                                                        [btnTitle]="btnDanger.title | uppercase"
+                                                        [btnClasses]="btnClasses"
+                                                        (onClickEvent)="onRemoveReport(item?.sessionId)"></app-danger-button>
+                                                    <button class="d-block d-md-none" mat-icon-button color="warn"
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        (click)="onRemoveReport(item?.sessionId)">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- <app-table-column-action-buttons (remove)="onRemoveReport(item)"
                                                 (edit)="onViewRespondentDetails(item)" [item]="item"></app-table-column-action-buttons> -->
-                                        <!-- <app-table-column-action-buttons (remove)="onRemoveReport(item?.sessionId)"
+                                            <!-- <app-table-column-action-buttons (remove)="onRemoveReport(item?.sessionId)"
                                                 (edit)="onViewReportDetails(item?.sessionId)"
                                                 [primaryBtnTitle]="primaryBtnTitle" [dangerBtnTitle]="dangerBtnTitle"
                                                 [primaryBtnTitle]="primaryBtnTitle"></app-table-column-action-buttons> -->
-                                        <!--  -->
-                                        <!-- <button class="btn btn-sm edit-btn primary-btn text-bold" (click)="onViewReportDetails(item)">View</button>
+                                            <!--  -->
+                                            <!-- <button class="btn btn-sm edit-btn primary-btn text-bold" (click)="onViewReportDetails(item)">View</button>
                                             <button class="btn btn-sm delete-btn danger-btn" (click)="onRemoveReport(item?.id)">Delete</button> -->
 
-                                        <!-- 
+                                            <!-- 
                                         <div class="d-none d-lg-block">
                                             <button class="btn btn-sm edit-btn primary-btn text-bold"
                                                 (click)="onViewRespondentDetails(item)">Edit</button>
@@ -115,17 +130,34 @@ this.isLoadingReportList$  -->
                                                 (click)="onRemove(item)">
                                                 <i class="fas fa-trash"></i></button>
                                         </div> -->
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="py-2 d-flex">
-                    <div class="ms-auto"></div>
-                    <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="py-2 d-flex">
+                        <div class="ms-auto"></div>
+                        <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- 
+<app-primary-button class="d-none d-md-block" [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
+(onClickEvent)="onViewRespondentDetails(item)"></app-primary-button>
+<button class="edit-btn-icon d-block d-md-none" mat-icon-button aria-label="Example icon button with a vertical three dot icon" (click)="onViewRespondentDetails(item)">
+    <mat-icon>edit</mat-icon>
+</button>
+</div>
+<div class="mx-1"></div>
+<div>
+<app-danger-button class="d-none d-md-block" [btnTitle]="btnDanger.title | uppercase"
+[btnClasses]="btnClasses"
+(onClickEvent)="onRemove(item?.occ_id)"></app-danger-button>
+<button class="d-block d-md-none" mat-icon-button color="warn" aria-label="Example icon button with a vertical three dot icon" (click)="onRemove(item?.occ_id)">
+    <mat-icon>delete</mat-icon>
+</button>
+</div> -->

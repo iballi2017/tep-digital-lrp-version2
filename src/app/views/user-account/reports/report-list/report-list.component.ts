@@ -26,7 +26,7 @@ import { ReportState } from '../../store/reports/reports.reducer';
   styleUrls: ['./report-list.component.scss'],
 })
 export class ReportListComponent implements OnInit {
-  reportsList$!: Observable<any>;
+  reportList$!: Observable<any>;
   filterDropdownList = [
     FilterDropdown?.ASCENDING,
     FilterDropdown?.DESCENDING,
@@ -86,7 +86,7 @@ export class ReportListComponent implements OnInit {
           this.reportQuery.search = searchTerm;
           if (!searchTerm) {
             this.reportQuery.search = '';
-          }else{
+          } else {
             this._reportSvc.sendGameResultWithSearchParamBehavior(true);
           }
           const Payload = buildQueryParams(this.reportQuery);
@@ -98,19 +98,19 @@ export class ReportListComponent implements OnInit {
       },
     });
   }
-  
+
   onGetReportList() {
     if (!this.searchTerm) {
       this.reportQuery.search = '';
     }
     const Payload = buildQueryParams(this.reportQuery);
     this.store.dispatch(loadPagedReports({ Payload }));
-    this.reportsList$ = this.store.pipe(select(selectReports));
+    this.reportList$ = this.store.pipe(select(selectReports));
     this.reportParams$ = this.store.pipe(select(selectedReportParams));
     this.isLoadingReportList$ = this.store.pipe(
       select(reportSelectStateIsLoading)
     );
-    let subscription = this.reportsList$.subscribe({
+    let subscription = this.reportList$.subscribe({
       next: (response: any) => {
         if (response) {
           this.reportList = response;
@@ -160,22 +160,25 @@ export class ReportListComponent implements OnInit {
   }
 
   sortReportListBy(FilterForm: any) {
+    console.warn('FilterForm: ', FilterForm.value.Filter);
+    console.log('this.reportList: ', this.reportList);
     let SortItem = FilterForm.value.Filter;
     switch (SortItem) {
       case FilterDropdown.ASCENDING:
-        this.reportList.sort((a: any, b: any) =>
+        this.reportList = [...this.reportList].sort((a: any, b: any) =>
           a['fullname'] > b['fullname'] ? 1 : -1
         );
+        console.log('arange: ', this.reportList);
         break;
 
       case FilterDropdown.DESCENDING:
-        this.reportList.sort((a: any, b: any) =>
+        this.reportList = [...this.reportList].sort((a: any, b: any) =>
           a['fullname'] > b['fullname'] ? -1 : 1
         );
         break;
 
       case FilterDropdown.AGE:
-        this.reportList.sort((a: any, b: any) => {
+        this.reportList = [...this.reportList].sort((a: any, b: any) => {
           let x = parseInt(a['age']);
           let y = parseInt(b['age']);
           return x > y ? 1 : -1;
@@ -183,7 +186,7 @@ export class ReportListComponent implements OnInit {
         break;
 
       case FilterDropdown.HIGHEST_SCORE:
-        this.reportList.sort((a: any, b: any) => {
+        [...this.reportList].sort((a: any, b: any) => {
           let x = parseInt(a['overallScore']);
           let y = parseInt(b['overallScore']);
           return x > y ? -1 : 1;
@@ -191,7 +194,7 @@ export class ReportListComponent implements OnInit {
         break;
 
       case FilterDropdown.LOWEST_SCORE:
-        this.reportList.sort((a: any, b: any) => {
+        this.reportList = [...this.reportList].sort((a: any, b: any) => {
           let x = parseInt(a['overallScore']);
           let y = parseInt(b['overallScore']);
           return x > y ? 1 : -1;

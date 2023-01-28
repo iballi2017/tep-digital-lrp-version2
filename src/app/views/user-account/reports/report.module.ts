@@ -8,6 +8,7 @@ import { ReportsComponent } from './reports.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReportSearchResultComponent } from './report-search-result/report-search-result.component';
+import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ReportSearchResultComponent } from './report-search-result/report-searc
     ReportRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgMaterialModule
   ]
 })
 export class ReportModule { }

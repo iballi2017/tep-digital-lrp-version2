@@ -34,18 +34,18 @@
                         <td class="text-end">
                             <div class="d-flex justify-content-end">
                                 <div>
-                                    <app-primary-button [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
+                                    <app-primary-button class="d-none d-md-block" [btnTitle]="btnEdit.title | uppercase" [btnClasses]="btnClasses"
                                         (onClickEvent)="onViewRespondentDetails(item)"></app-primary-button>
-                                        <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                                        <button class="edit-btn-icon d-block d-md-none" mat-icon-button aria-label="Example icon button with a vertical three dot icon" (click)="onViewRespondentDetails(item)">
                                             <mat-icon>edit</mat-icon>
                                         </button>
                                 </div>
                                 <div class="mx-1"></div>
                                 <div>
-                                    <app-danger-button [btnTitle]="btnDanger.title | uppercase"
+                                    <app-danger-button class="d-none d-md-block" [btnTitle]="btnDanger.title | uppercase"
                                         [btnClasses]="btnClasses"
                                         (onClickEvent)="onRemove(item?.occ_id)"></app-danger-button>
-                                        <button mat-icon-button color="warn" aria-label="Example icon button with a vertical three dot icon">
+                                        <button class="d-block d-md-none" mat-icon-button color="warn" aria-label="Example icon button with a vertical three dot icon" (click)="onRemove(item?.occ_id)">
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                 </div>

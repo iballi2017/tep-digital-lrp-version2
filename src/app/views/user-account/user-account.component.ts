@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { RouteService } from 'src/app/services/route.service';
 
 @Component({
   selector: 'app-user-account',
@@ -9,6 +10,8 @@ export class UserAccountComponent implements OnInit {
   title = 'ACCOUNT';
   literacyTestSideNavTitle = 'My Account';
   logout = 'Logout';
+  isRoute = false;
+  @ViewChild('drawer') drawer!: any;
   menuList = [
     {
       title: 'ACCOUNT',
@@ -37,7 +40,22 @@ export class UserAccountComponent implements OnInit {
       url: '/account/contact-us',
     },
   ];
-  constructor() {}
+  divEl!: HTMLDivElement;
+  constructor(private _routeSvc: RouteService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._routeSvc.onCheckRouteEvents();
+  }
+
+  ngAfterViewInit() {
+    this.divEl = this.drawer.nativeElement;
+    console.warn('drawer: ', this.drawer);
+    console.warn('drawer.nativeElement: ', this.drawer.nativeElement);
+    console.warn('divEl: ', this.divEl);
+    // console.warn('drawer: ', this.drawer.nativeElement.value);
+  }
+
+  onTest() {
+    this.drawer.toggle();
+  }
 }

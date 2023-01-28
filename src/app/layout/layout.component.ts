@@ -1,14 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+} from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { LetterLevelResultState } from '../views/literacy-test/store/letter-level-result/letter-level-result.reducer';
-import { isSubmitResultLetterLevelResult, letterLevelResultIsLoading } from '../views/literacy-test/store/letter-level-result/letter-level-result.selectors';
+import {
+  isSubmitResultLetterLevelResult,
+  letterLevelResultIsLoading,
+} from '../views/literacy-test/store/letter-level-result/letter-level-result.selectors';
 import { ParagraphLevelResultState } from '../views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
-import { isSubmitResultParagraphLevelResult, paragraphLevelResultIsLoading } from '../views/literacy-test/store/paragraph-level-result/paragraph-level-result.selectors';
+import {
+  isSubmitResultParagraphLevelResult,
+  paragraphLevelResultIsLoading,
+} from '../views/literacy-test/store/paragraph-level-result/paragraph-level-result.selectors';
 import { StoryLevelResultState } from '../views/literacy-test/store/story-level-result/story-level-result.reducer';
-import { isSubmitResultStoryLevelResult, storyLevelResultIsLoading } from '../views/literacy-test/store/story-level-result/story-level-result.selectors';
+import {
+  isSubmitResultStoryLevelResult,
+  storyLevelResultIsLoading,
+} from '../views/literacy-test/store/story-level-result/story-level-result.selectors';
 import { WordLevelResultState } from '../views/literacy-test/store/word-level-result/word-level-result.reducer';
-import { isSubmitResultWordLevelResult, wordLevelResultIsLoading } from '../views/literacy-test/store/word-level-result/word-level-result.selectors';
+import {
+  isSubmitResultWordLevelResult,
+  wordLevelResultIsLoading,
+} from '../views/literacy-test/store/word-level-result/word-level-result.selectors';
 import { BasicOperationsAdditionLevelResultState } from '../views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.reducer';
 import { isSubmitResultBasicOperationsAdditionLevelResult } from '../views/numeracy-test/store/basic-operations-addition-level-result/basic-operations-addition-level-result.selectors';
 import { BasicOperationsDivisionLevelResultState } from '../views/numeracy-test/store/basic-operations-division-level-result/basic-operations-division-level-result.reducer';
@@ -44,8 +62,10 @@ export class LayoutComponent implements OnInit {
   basicOperationsSubtractionResultLoading$!: Observable<boolean>;
   basicOperationsMultiplicationResultLoading$!: Observable<boolean>;
   basicOperationsDivisionResultLoading$!: Observable<boolean>;
-  
+  Subscriptions: Subscription[] = [];
+
   constructor(
+    private _router: Router,
     private storeLetter: Store<LetterLevelResultState>,
     private storeWord: Store<WordLevelResultState>,
     private storePragraph: Store<ParagraphLevelResultState>,
@@ -57,22 +77,94 @@ export class LayoutComponent implements OnInit {
     private storeBasicOperationsAddition: Store<BasicOperationsAdditionLevelResultState>,
     private storeBasicOperationsSubtraction: Store<BasicOperationsSubtractionLevelResultState>,
     private storeBasicOperationsMultiplication: Store<BasicOperationsMultiplicationLevelResultState>,
-    private storeBasicOperationsDivision: Store<BasicOperationsDivisionLevelResultState>) {}
+    private storeBasicOperationsDivision: Store<BasicOperationsDivisionLevelResultState>
+  ) {}
 
   ngOnInit(): void {
+
+    //
     this.letterResultLoading$ = this.storeLetter.pipe(
       select(isSubmitResultLetterLevelResult)
     );
-    this.wordResultLoading$ = this.storeWord.pipe(select(isSubmitResultWordLevelResult));
-    this.paragraphResultLoading$ = this.storePragraph.pipe(select(isSubmitResultParagraphLevelResult));
-    this.storyResultLoading$ = this.storeStory.pipe(select(isSubmitResultStoryLevelResult));
-    this.numberRecognitionOneResultLoading$ = this.storeNumberRecognitionOne.pipe(select(isSubmitResultNumberRecognitionOneLevelResult));
-    this.numberRecognitionTwoResultLoading$ = this.storeNumberRecognitionTwo.pipe(select(isSubmitResultNumberRecognitionTwoLevelResult));
-    this.placeValueResultLoading$ = this.storePlaceValue.pipe(select(isSubmitResultPlaceValueLevelResult));
-    this.numberRecognitionThreeResultLoading$ = this.storeNumberRecognitionThree.pipe(select(isSubmitResultNumberRecognitionThreeLevelResult));
-    this.basicOperationsAdditionResultLoading$ = this.storeBasicOperationsAddition.pipe(select(isSubmitResultBasicOperationsAdditionLevelResult));
-    this.basicOperationsSubtractionResultLoading$ = this.storeBasicOperationsSubtraction.pipe(select(isSubmitResultBasicOperationsSubtractionLevelResult));
-    this.basicOperationsMultiplicationResultLoading$ = this.storeBasicOperationsMultiplication.pipe(select(isSubmitResultBasicOperationsMultiplicationLevelResult));
-    this.basicOperationsDivisionResultLoading$ = this.storeBasicOperationsDivision.pipe(select(isSubmitResultBasicOperationsDivisionLevelResult));
+    this.wordResultLoading$ = this.storeWord.pipe(
+      select(isSubmitResultWordLevelResult)
+    );
+    this.paragraphResultLoading$ = this.storePragraph.pipe(
+      select(isSubmitResultParagraphLevelResult)
+    );
+    this.storyResultLoading$ = this.storeStory.pipe(
+      select(isSubmitResultStoryLevelResult)
+    );
+    this.numberRecognitionOneResultLoading$ =
+      this.storeNumberRecognitionOne.pipe(
+        select(isSubmitResultNumberRecognitionOneLevelResult)
+      );
+    this.numberRecognitionTwoResultLoading$ =
+      this.storeNumberRecognitionTwo.pipe(
+        select(isSubmitResultNumberRecognitionTwoLevelResult)
+      );
+    this.placeValueResultLoading$ = this.storePlaceValue.pipe(
+      select(isSubmitResultPlaceValueLevelResult)
+    );
+    this.numberRecognitionThreeResultLoading$ =
+      this.storeNumberRecognitionThree.pipe(
+        select(isSubmitResultNumberRecognitionThreeLevelResult)
+      );
+    this.basicOperationsAdditionResultLoading$ =
+      this.storeBasicOperationsAddition.pipe(
+        select(isSubmitResultBasicOperationsAdditionLevelResult)
+      );
+    this.basicOperationsSubtractionResultLoading$ =
+      this.storeBasicOperationsSubtraction.pipe(
+        select(isSubmitResultBasicOperationsSubtractionLevelResult)
+      );
+    this.basicOperationsMultiplicationResultLoading$ =
+      this.storeBasicOperationsMultiplication.pipe(
+        select(isSubmitResultBasicOperationsMultiplicationLevelResult)
+      );
+    this.basicOperationsDivisionResultLoading$ =
+      this.storeBasicOperationsDivision.pipe(
+        select(isSubmitResultBasicOperationsDivisionLevelResult)
+      );
   }
+
+  // onCheckRouteEvents() {
+  //   let subscription = this._router.events.subscribe({
+  //     next: (event: any) => {
+  //       if (event instanceof NavigationStart) {
+  //         // Show progress spinner or progress bar
+  //         console.log('event: ', event);
+  //         //
+  //       }
+
+  //       if (event instanceof NavigationEnd) {
+  //         // Hide progress spinner or progress bar
+  //         // console.log("event: ", event)
+  //         let currentRoute = event.url;
+  //         console.log('currentRoute: ', currentRoute);
+  //         //
+  //         // this._messengerSvc.sendOpenSideNavitionMessageBehaviorSubjet(false);
+  //       }
+
+  //       if (event instanceof NavigationError) {
+  //         // Hide progress spinner or progress bar
+
+  //         // Present error to user
+  //         console.log(event.error);
+  //       }
+  //     },
+  //     error: (err: any) => {
+  //       console.warn('Error: ', err);
+  //     },
+  //   });
+  //   this.Subscriptions.push(subscription);
+  // }
+
+  // ngOnDestroy(): void {
+  //   this.Subscriptions.forEach((x) => {
+  //     if (!x.closed) {
+  //       x.unsubscribe();
+  //     }
+  //   });
+  // }
 }
