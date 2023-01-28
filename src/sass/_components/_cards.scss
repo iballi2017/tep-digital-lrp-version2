@@ -26,6 +26,7 @@
     .form-group {
         margin-bottom: 2.5em;
     }
+
 }
 
 .details-card-1 {
@@ -106,35 +107,30 @@
 }
 .details-card-2 {
     .title-wrapper {
+        border-radius: 5px 5px 0px 0px;
         background: #1e2b19;
-        border-radius: 10px 10px 0px 0px;
         display: flex;
-        // padding: 17px 18px;
-        // padding: 17px 25px;
         padding: 1.05em 1.7em;
         .title {
-            align-items: center;
-            color: #ffffff;
             font-family: "Open Sans";
             font-style: normal;
+            align-items: center;
+            color: #ffffff;
             font-weight: 800;
-            font-size: 1.5rem;
-            // line-height: 34px;
             margin-bottom: 0;
         }
     }
-
+    .title-wrapper,
     .body-wrapper {
-        // padding: 23px 25px;
-        // padding: 23px 25px;
-        padding: 1.05em 1.7em;
+        padding: 0.8em 0.8em;
+    }
+    
+    .body-wrapper {
         background: #ffffff;
         .item-card {
             border: 1px solid #aeaeae;
             border-radius: 10px;
-            // padding: 13px;
             padding: 0.87em;
-            // margin-bottom: 20px;
             margin-bottom: 1.2em;
             &:last-child {
                 margin-bottom: 0;
@@ -144,8 +140,6 @@
         .item-card-body,
         .item-card-header {
             border-bottom: 1px solid #aeaeae;
-            // padding-bottom: 20px;
-            // margin-bottom: 20px;
             padding-bottom: 1em;
             margin-bottom: 1em;
         }
@@ -155,9 +149,7 @@
                 font-family: "Open Sans";
                 font-style: normal;
                 font-weight: 400;
-                // font-size: 24px;
                 font-size: 1.3rem;
-                // line-height: 33px;
                 display: flex;
                 align-items: center;
                 text-transform: uppercase;
@@ -165,6 +157,21 @@
                 margin: 0;
             }
         }
+
+    }
+
+    @include mixins.minmq(768px) {
+        .title-wrapper {
+            border-radius: 10px 10px 0px 0px;
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    
+        .body-wrapper {
+            padding: 1.05em 1.7em;
+        }
+    
 
         .item-card-footer,
         .item-card-header {
@@ -178,16 +185,7 @@
                 padding-left: 0.9em;
             }
         }
-    }
-
-    @include mixins.maxmq(768px) {
-        .title-wrapper {
-            border-radius: 5px 5px 0px 0px;
-        }
-        .title-wrapper,
-        .body-wrapper {
-            padding: 0.8em 0.8em;
-        }
+        
     }
 }
 

@@ -2,26 +2,25 @@
 @use "../../../../sass/_partials/mixins";
 
 button {
-    // background: #73CF48;
-    background: colors.$primaryColor;
-    border-radius: 10px;
-    font-family: 'Open Sans';
+    font-family: "Open Sans";
     font-style: normal;
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 27px;
-    text-transform: capitalize;
-    color: #FFFFFF;
+    background: colors.$primaryColor;
+    color: #ffffff;
+    border-radius: 5px !important;
+    font-weight: 500;
+    // font-size: 0.95;
 
-    &:hover,
-    &:focus {
-        background: colors.$primaryColorDark;
-        color: #FFFFFF;
-    }
+    @include mixins.minmq(768px) {
+        // background: #73CF48;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 27px;
 
-    @include mixins.maxmq(768px){
-        border-radius: 5px !important;
-        font-weight: 500;
-        font-size: .95;
+        &:hover,
+        &:focus {
+            background: colors.$primaryColorDark;
+            color: #ffffff;
+        }
     }
 }

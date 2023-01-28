@@ -1,59 +1,42 @@
 // @use "../../../../sass/_abstracts/colors";
 @use "../../../../sass/_partials/mixins";
 #personal-details {
+    font-family: "Open Sans";
+    font-style: normal;
     li {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        // line-height: 47px;
-        line-height: 3em;
-        font-family: "Open Sans";
-        font-style: normal;
-        div:first-child {
-            margin-right: 10px;
-            font-weight: 300;
-            // font-size: 20px;
-            font-size: 1.2rem;
-            // line-height: 27px;
-            text-transform: capitalize;
-            color: #1e1e1e;
-        }
+        font-size: 1rem;
+        line-height: 25px;
+        margin-bottom: 0.5em;
         ._value {
-            font-weight: 600;
-            // font-size: 20px;
-            font-size: 1.2rem;
-            // line-height: 27px;
+            font-weight: 400;
+            color: #1e1e1e;
             text-transform: uppercase;
             word-break: break-word;
             &.selected-party,
             &.email {
-                font-weight: 600;
-                // font-size: 20px;
-                font-size: 1.2rem;
-                // line-height: 27px;
                 text-transform: capitalize;
                 color: #aeaeae;
             }
-
+        }
+        div:first-child {
+            margin-right: 10px;
+            font-weight: 300;
+            text-transform: capitalize;
             color: #1e1e1e;
         }
 
-        @include mixins.maxmq(768px){
+        @include mixins.minmq(768px) {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            line-height: 3em;
             div:first-child {
-                font-size: 1rem;
+                font-size: 1.2rem;
             }
             ._value {
-                font-weight: 400;
-                font-size: 1rem;
-                &.selected-party,
-                &.email {
-                    font-weight: 400;
-                    font-size: 1rem;
-                }
+                font-weight: 600;
+                font-size: 1.2rem;
             }
-    
         }
     }
-
-    
 }

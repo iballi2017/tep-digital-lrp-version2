@@ -32,7 +32,7 @@
                     </ul>
                 </div>
                 <div class="item-card-footer">
-                    <app-primary-button [btnTitle]="'Edit'" [btnClasses]="btnClasses"
+                    <app-primary-button [btnTitle]="'Edit' | uppercase" [btnClasses]="btnClasses"
                         (onClickEvent)="onEditPersonalDetails(userData)"></app-primary-button>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                     <!-- <app-button [btnTitle]="editPasswordBtnLabel" [btnType]="editPasswordBtnType"
                         [btnClasses]="editPasswordBtnClasses" [routerLink]="['/account/update-password']"></app-button> -->
 
-                    <app-primary-button [btnTitle]="'EDIT PASSWORD'" [btnClasses]="btnClasses"
+                    <app-primary-button [btnTitle]="'Edit Password' | uppercase" [btnClasses]="btnClasses"
                         [routerLink]="['/account/update-password']"></app-primary-button>
                 </div>
             </div>
