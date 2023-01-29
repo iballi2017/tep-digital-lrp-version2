@@ -1,10 +1,14 @@
+@use "../../../../../sass/_partials/mixins";
+
 #respondent-details {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    // padding-left: 0;
     li {
-        margin-right: 1.3em;
+        margin-right: 1em;
+        line-height: 2em;
         &:last-child {
             margin-right: 0;
         }
@@ -12,14 +16,14 @@
         flex-wrap: wrap;
         align-items: center;
         // line-height: 47px;
-        line-height: 3em;
+        // line-height: 3em;
         font-family: "Open Sans";
         font-style: normal;
         div:first-child {
             margin-right: 10px;
             font-weight: 300;
             // font-size: 20px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             // line-height: 27px;
             text-transform: uppercase;
             color: #1e1e1e;
@@ -27,7 +31,7 @@
         ._value {
             font-weight: 600;
             // font-size: 20px;
-            font-size: 1.2rem;
+            // font-size: 1.2rem;
             // line-height: 27px;
             text-transform: uppercase;
             word-break: break-word;
@@ -35,23 +39,48 @@
             &.email {
                 font-weight: 600;
                 // font-size: 20px;
-                font-size: 1.2rem;
+                // font-size: 1.2rem;
                 // line-height: 27px;
                 text-transform: uppercase;
                 color: #aeaeae;
             }
 
             color: #1e1e1e;
-            &.program-status {
-                font-family: "Open Sans";
-                font-style: normal;
+            // &.program-status {
+            //     font-family: "Open Sans";
+            //     font-style: normal;
+            //     font-weight: 600;
+            //     font-size: 20px;
+            //     line-height: 27px;
+            //     display: flex;
+            //     align-items: center;
+            //     text-transform: capitalize;
+            //     color: #f58a27;
+            // }
+        }
+    }
+
+    @include mixins.minmq(768px) {
+        li {
+            line-height: 3em;
+            div:first-child {
+                margin-right: 10px;
+                font-weight: 300;
+                font-size: 1.2rem;
+            }
+            ._value {
                 font-weight: 600;
-                font-size: 20px;
-                line-height: 27px;
-                display: flex;
-                align-items: center;
-                text-transform: capitalize;
-                color: #f58a27;
+                font-size: 1.2rem;
+                &.selected-party,
+                &.email {
+                    font-size: 1.2rem;
+                }
+                &.completed {
+                    color: #73CF48;
+                }
+                &.incomplete{
+                    color: #f58a27;
+                }
             }
         }
     }
@@ -61,37 +90,19 @@
     font-style: normal;
     thead {
         font-weight: 700;
-        font-size: 1.2rem;
         text-transform: uppercase;
         color: #1e1e1e;
         tr {
             th {
                 font-weight: inherit;
-                &:first-child {
-                    padding-left: 13px;
-                }
-                &:last-child {
-                    padding-left: 13px;
-                }
             }
         }
     }
     tbody {
         tr {
             font-weight: 400;
-            font-size: 1.2rem;
-            // line-height: 27px;
             text-transform: uppercase;
             color: #1e1e1e;
-            th {
-                padding-left: 13px;
-                font-weight: inherit;
-            }
-            td {
-                &:last-child {
-                    padding-left: 13px;
-                }
-            }
         }
     }
 
@@ -99,11 +110,8 @@
         background: #1e1e1e;
         border: 1px solid #aeaeae;
         border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
         color: #ffffff;
-        padding: 0.7em 13px;
+        padding: 0.5em 13px;
         .score-label,
         .score-value {
             text-transform: uppercase;
@@ -111,13 +119,68 @@
 
         .score-label {
             font-weight: 800;
-            font-size: 1.25rem;
+            // font-size: 1.25rem;
             // line-height: 33px;
         }
         .score-value {
             font-weight: 700;
-            font-size: 2.1rem;
+            // font-size: 2.1rem;
             // line-height: 65px;
+        }
+    }
+    @include mixins.minmq(768px) {
+        thead {
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            color: #1e1e1e;
+            tr {
+                th {
+                    font-weight: inherit;
+                    &:first-child {
+                        padding-left: 13px;
+                    }
+                    &:last-child {
+                        padding-left: 13px;
+                    }
+                }
+            }
+        }
+        tbody {
+            tr {
+                font-weight: 400;
+                font-size: 1.2rem;
+                th {
+                    padding-left: 13px;
+                    font-weight: inherit;
+                }
+                td {
+                    &:last-child {
+                        padding-left: 13px;
+                    }
+                }
+            }
+        }
+
+        #overall-score {
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            color: #ffffff;
+            padding: 0.7em 13px;
+
+            .score-label {
+                font-weight: 800;
+                font-size: 1.25rem;
+                // line-height: 33px;
+            }
+            .score-value {
+                font-weight: 700;
+                font-size: 2.1rem;
+                // line-height: 65px;
+            }
         }
     }
 }
@@ -135,4 +198,7 @@
 .actions-btn-wrapper {
     display: inline-flex;
     align-items: center;
+}
+
+#report-score-table {
 }

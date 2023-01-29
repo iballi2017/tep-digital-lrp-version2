@@ -140,6 +140,13 @@ table {
             color: #1e1e1e;
         }
     }
+    tr {
+        td,
+        th {
+            vertical-align: middle;
+        }
+    }
+    
 }
 .actions-btn {
     display: inline-flex;

@@ -6,7 +6,7 @@
     <div class="details-card-1">
         <div class="title-wrapper">
             <div class="d-flex align-items-center">
-                <button class="btn back-btn black-arrow pl-0" (click)="back()"></button>
+                <button class="btn back-btn black-arrow ps-0" (click)="back()"></button>
                 <h2 class="title">{{title}}</h2>
             </div>
         </div>
@@ -55,7 +55,7 @@
                                     <div class="_value email">{{respondentInformation?.fullname}}</div>
                                 </li>
                             </ul> -->
-                            <ul class="list-style-none mb-0 pl-0" id="respondent-details">
+                            <ul class="list-style-none mb-0 ps-0" id="respondent-details">
                                 <li class="item" *ngIf="reportDetails?.dataLitercy?.occ_name">
                                     <div class="_key">FULL NAME:</div>
                                     <div class="_value"> {{reportDetails?.dataLitercy?.occ_name}}</div>
@@ -88,14 +88,17 @@
                         </div>
                         <div class="item-card-body">
 
-                            <ul class="list-style-none mb-0 pl-0" id="respondent-details">
+                            <ul class="list-style-none mb-0 ps-0" id="respondent-details">
                                 <li class="item">
                                     <div class="_key">PROGRAM:</div>
                                     <div class="_value">{{reportDetails?.dataLitercy?.gms_type}}</div>
                                 </li>
                                 <li class="item">
                                     <div class="_key">STATUS:</div>
-                                    <div class="_value">{{reportDetails?.dataLitercy?.status}}</div>
+                                    <div class="_value" [ngClass]="{'completed': reportDetails?.dataLitercy?.status == completed,
+                                'incomplete': reportDetails?.dataLitercy?.status != completed}">
+                                        {{reportDetails?.dataLitercy?.status}}
+                                    </div>
                                 </li>
                                 <li></li>
                                 <li></li>
@@ -107,7 +110,7 @@
                         <!-- </div> -->
 
                         <div class="item-card px-0">
-                            <div class="table-responsive">
+                            <div id="report-score-table" class="table-responsive">
                                 <table class="table table-borderless">
                                     <thead class="item-card-header px-1">
                                         <tr>
@@ -243,11 +246,26 @@
                                 </li>
                                 <li class="item">
                                     <div class="_key">STATUS:</div>
-                                    <div class="_value program-status">{{reportDetails?.dataNumeracy?.status | uppercase}}</div>
+                                    <div class="_value" [ngClass]="{'completed': reportDetails?.dataNumeracy?.status.toLowerCase() == completed,
+                                    'incomplete': reportDetails?.dataNumeracy?.status.toLowerCase() != completed}">{{reportDetails?.dataNumeracy?.status |
+                                        uppercase}}</div>
                                 </li>
                                 <li></li>
                                 <li></li>
                             </ul>
+
+
+                            <!--    <li class="item">
+                                    <div class="_key">PROGRAM:</div>
+                                    <div class="_value">{{reportDetails?.dataLitercy?.gms_type}}</div>
+                                </li>
+                                <li class="item">
+                                    <div class="_key">STATUS:</div>
+                                    <div class="_value" [ngClass]="{'completed': reportDetails?.dataLitercy?.status == completed,
+                                'incomplete': reportDetails?.dataLitercy?.status != completed}">
+                                        {{reportDetails?.dataLitercy?.status}}
+                                    </div>
+                                </li> -->
 
                         </div>
                         <!-- <div class="item-card-footer"> -->

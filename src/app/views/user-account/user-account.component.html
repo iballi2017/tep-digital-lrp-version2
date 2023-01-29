@@ -15,10 +15,9 @@
                 </div>
                 <div class="col-12 col-xl-9">
                     <main>
-                        <button class="" (click)="onTest()">Click me!</button>
                         <mat-drawer-container class="example-container" hasBackdrop="true">
                             <mat-drawer #drawer class="example-sidenav main-nav-sidebar-wrapper" mode="over">
-                                <app-side-navigation-option-one [title]="literacyTestSideNavTitle"
+                                <app-side-navigation-option-one [something]="drawer" [title]="literacyTestSideNavTitle"
                                     [navItemList]="navItemList" [logout]="logout"></app-side-navigation-option-one>
                             </mat-drawer>
 
@@ -32,7 +31,6 @@
                                         </button>
                                     </mat-toolbar>
                                 </div>
-                                <h1 #hello>Hello</h1>
                                 <router-outlet></router-outlet>
                             </div>
 

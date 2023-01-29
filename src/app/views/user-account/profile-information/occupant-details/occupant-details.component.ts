@@ -54,9 +54,9 @@ export class OccupantDetailsComponent implements OnInit, OnDestroy {
   onGetParams() {
     let subscription = this._route.paramMap.subscribe({
       next: (params: any) => {
-        console.warn('params: ', params);
+        // console.warn('params: ', params);
         let occupantId = params.get('occupantId');
-        console.warn('occupantId: ', occupantId);
+        // console.warn('occupantId: ', occupantId);
         this.occupantId = occupantId;
         this.store.dispatch(loadSingleOccupant({ id: occupantId }))
       },
@@ -92,7 +92,7 @@ export class OccupantDetailsComponent implements OnInit, OnDestroy {
   getOccupantDetailsFromStore() {
     this.store.pipe(select(selectedOccupant)).subscribe(
       data => {
-        console.warn("=>>: ", data)
+        // console.warn("=>>: ", data)
         let occupantData$ = Object.assign(new Occupant(), data);
         this.prefillForm(occupantData$);
       }
@@ -100,7 +100,7 @@ export class OccupantDetailsComponent implements OnInit, OnDestroy {
   }
 
   prefillForm(data: any) {
-    console.group("occupant details: ", data)
+    // console.group("occupant details: ", data)
     this.UpdateRespondentDetailsForm.controls['FullName'].setValue(
       data?.occ_name
     );

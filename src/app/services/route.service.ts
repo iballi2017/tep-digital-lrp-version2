@@ -28,7 +28,7 @@ export class RouteService {
       next: (event: any) => {
         if (event instanceof NavigationStart) {
           // Show progress spinner or progress bar
-          console.log('event: ', event);
+          // console.log('event: ', event);
           //
         }
 
@@ -36,7 +36,9 @@ export class RouteService {
           // Hide progress spinner or progress bar
           // console.log("event: ", event)
           let currentRoute = event.url;
-          console.log('currentRoute: ', currentRoute);
+          if(currentRoute){
+            this.sendRouteBehaviorSubject(true)
+          }
           //
           // this._messengerSvc.sendOpenSideNavitionMessageBehaviorSubjet(false);
         }

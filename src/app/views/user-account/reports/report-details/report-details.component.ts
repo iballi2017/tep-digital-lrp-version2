@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { SessionId } from 'src/app/models/interface/game-report';
-import { GameType } from 'src/app/models/interface/game-type';
+import { GameType, ProgramCompletion } from 'src/app/models/interface/game-type';
 import { ReportService } from 'src/app/services/report.service';
 import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
 import {
@@ -56,6 +56,8 @@ export class ReportDetailsComponent implements OnInit {
   reportDetailsIsLoading$!: Observable<boolean>;
   literacyGameType = GameType.LITERACY;
   numeracyGameType = GameType.NUMERACY;
+  Incomplete = ProgramCompletion.INCOMPLETE;
+  completed = ProgramCompletion.COMPLETED;
   constructor(
     private _route: ActivatedRoute,
     private _reportSvc: ReportService,

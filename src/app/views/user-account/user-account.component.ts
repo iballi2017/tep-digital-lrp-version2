@@ -45,17 +45,10 @@ export class UserAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this._routeSvc.onCheckRouteEvents();
-  }
-
-  ngAfterViewInit() {
-    this.divEl = this.drawer.nativeElement;
-    console.warn('drawer: ', this.drawer);
-    console.warn('drawer.nativeElement: ', this.drawer.nativeElement);
-    console.warn('divEl: ', this.divEl);
-    // console.warn('drawer: ', this.drawer.nativeElement.value);
-  }
-
-  onTest() {
-    this.drawer.toggle();
+    this._routeSvc.routeBehaviorSubject.subscribe((msg: any) => {
+      if (msg) {
+          this.drawer.close();
+      }
+    });
   }
 }
