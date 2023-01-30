@@ -72,6 +72,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -212,6 +213,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

@@ -72,13 +72,11 @@
     <div [ngSwitch]="programStatus">
         <div *ngSwitchCase="'Completed'">
             <div class="completion-screen level">
-                <p class="text-danger">{{programStatus}}</p>
                 <app-level-completion [levelTitle]="gameLevel" [gameType]="gameType"></app-level-completion>
             </div>
         </div>
         <div *ngSwitchDefault>
             <div class="completion-screen">
-                <p class="text-danger">{{programStatus}}</p>
                 <app-stage-completion [levelTitle]="gameLevel" [gameType]="gameType"
                     [stageNumber]="stageNumber"></app-stage-completion>
             </div>

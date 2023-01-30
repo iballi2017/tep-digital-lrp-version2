@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameService } from 'src/app/services/game.service';
 import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
@@ -78,6 +79,10 @@ export class StageCompletionComponent implements OnInit {
       return;
     } else {
       setTimeout(() => {
+        if(this.levelTitle == GameLevel.STORY){
+          this._router.navigate(['/literacy/letter/stage-1/letter-splash']);
+          return;
+        }
         this._router.navigate([
           `/shared/new-task-loading/${this.levelTitle}/${this.stageNumber}/${this.gameType}`,
         ]);
