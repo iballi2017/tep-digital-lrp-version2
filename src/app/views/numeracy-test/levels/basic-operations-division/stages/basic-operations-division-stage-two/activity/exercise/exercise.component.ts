@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
@@ -13,6 +14,7 @@ import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
 import { addBasicOperationsDivisionLevelStageTwoResult } from 'src/app/views/numeracy-test/store/basic-operations-division-level-result/basic-operations-division-level-result.actions';
 import { BasicOperationsDivisionLevelResultState } from 'src/app/views/numeracy-test/store/basic-operations-division-level-result/basic-operations-division-level-result.reducer';
+import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
@@ -102,6 +104,8 @@ export class ExerciseComponent implements OnInit {
     }, 500);
     if (number.name == this.test.answer) {
       this.test.isAnswered = true;
+      let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+      playSound.playAlphabetVoice();
       setTimeout(() => {
         this.isComplete();
       }, 1500);
@@ -134,6 +138,7 @@ export class ExerciseComponent implements OnInit {
       this._basicOperationsDivisionStageTwoSvc.BasicOperationsDivisionLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
+            console.log("msg: ", msg)
             // this._router.navigate([
             //   // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             //   // `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`

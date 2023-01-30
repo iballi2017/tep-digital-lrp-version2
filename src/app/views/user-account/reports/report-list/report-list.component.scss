@@ -37,8 +37,15 @@
             // font-size: 20px;
             // line-height: 27px;
             text-transform: capitalize;
-            color: #f58a27;
+            // color: #f58a27;
             text-transform: uppercase;
+
+            &.completed {
+                color: #73cf48;
+            }
+            &.incomplete {
+                color: #f58a27;
+            }
         }
     }
 }
@@ -146,7 +153,6 @@ table {
             vertical-align: middle;
         }
     }
-    
 }
 .actions-btn {
     display: inline-flex;

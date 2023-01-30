@@ -71,7 +71,8 @@ this.isLoadingReportList$  -->
                                         <div class="name mb-3">{{item?.fullname}}</div>
                                         <div class="status">
                                             <label>Status:</label>
-                                            <div class="value">{{item?.status}}</div>
+                                            <div class="value" [ngClass]="{'completed': item?.status.toLowerCase() == completed,
+                                            'incomplete': item?.status.toLowerCase() != completed}">{{item?.status}}</div>
                                         </div>
                                     </td>
                                     <td>{{item?.age}}</td>

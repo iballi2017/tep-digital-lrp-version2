@@ -5,6 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { buildQueryParams } from 'src/app/helpers/buildQueryParams';
 import { SessionId } from 'src/app/models/interface/game-report';
+import { ProgramCompletion } from 'src/app/models/interface/game-type';
 import { QueryParamsModel } from 'src/app/models/interface/queryParamsModel';
 import { ReportService } from 'src/app/services/report.service';
 import { BooleanAlertDialogComponent } from 'src/app/shared/shared.components/boolean-alert-dialog/boolean-alert-dialog.component';
@@ -55,6 +56,7 @@ export class ReportListComponent implements OnInit {
   ItemsPerPage = 20;
   searchTerm: string = '';
   totalRecords!: string;
+  completed = ProgramCompletion.COMPLETED;
 
   reportQuery: QueryParamsModel = {
     pageSize: this.ItemsPerPage,

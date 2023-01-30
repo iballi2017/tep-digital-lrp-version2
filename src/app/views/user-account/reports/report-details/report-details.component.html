@@ -94,9 +94,9 @@
                                     <div class="_value">{{reportDetails?.dataLitercy?.gms_type}}</div>
                                 </li>
                                 <li class="item">
-                                    <div class="_key">STATUS:</div>
-                                    <div class="_value" [ngClass]="{'completed': reportDetails?.dataLitercy?.status == completed,
-                                'incomplete': reportDetails?.dataLitercy?.status != completed}">
+                                    <div class="_key">STATUSTT:</div>
+                                    <div class="_value" [ngClass]="{'completed': reportDetails?.dataLitercy?.status.toLowerCase() == completed,
+                                'incomplete': reportDetails?.dataLitercy?.status.toLowerCase() != completed}">
                                         {{reportDetails?.dataLitercy?.status}}
                                     </div>
                                 </li>

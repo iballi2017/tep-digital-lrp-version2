@@ -121,3 +121,10 @@
         }
     }
 }
+
+#blue-board > .inner #result-item-list .item-list > li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}

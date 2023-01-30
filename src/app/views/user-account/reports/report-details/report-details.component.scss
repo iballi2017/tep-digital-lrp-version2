@@ -57,6 +57,12 @@
             //     text-transform: capitalize;
             //     color: #f58a27;
             // }
+            &.completed {
+                color: #73CF48;
+            }
+            &.incomplete{
+                color: #f58a27;
+            }
         }
     }
 
@@ -74,12 +80,6 @@
                 &.selected-party,
                 &.email {
                     font-size: 1.2rem;
-                }
-                &.completed {
-                    color: #73CF48;
-                }
-                &.incomplete{
-                    color: #f58a27;
                 }
             }
         }

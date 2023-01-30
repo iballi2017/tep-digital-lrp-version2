@@ -36,7 +36,8 @@ export class LevelCompletionComponent implements OnInit {
     'btn-block': true,
     'mb-3': true,
     'w-100': true,
-    'py-3': true,
+    'py-xl-3': true,
+    'py-2': true,
   };
   btnTitle = 'CONTINUE';
   btnTitle2 = 'END ASSESSMENT';

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
@@ -16,6 +17,7 @@ import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/ac
 import { addNumberRecognitionTwoLevelStageOneResult } from 'src/app/views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.actions';
 import { NumberRecognitionTwoLevelResultState } from 'src/app/views/numeracy-test/store/number-recognition-two-level-result/number-recognition-two-level-result.reducer';
 import { addPlaceValueLevelStageOneResult } from 'src/app/views/numeracy-test/store/place-value-level-result/place-value-level-result.actions';
+import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
@@ -127,11 +129,13 @@ export class ExerciseComponent implements OnInit {
   }
 
   onSelectAlphabet(number: any) {
-    // console.log('number: ', number);
+    console.log('number: ', number);
     let numberList = this.testNumberList[this.testNumber].numberArray;
     let activeItem = numberList.findIndex((item: any) => item.isActive == true);
     if (activeItem != undefined) {
       if (numberList[activeItem].placeValue == number.placeValue) {
+        let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
+        playSound.playAlphabetVoice();
         if (
           this.testNumberList[this.testNumber].activeIndexList?.length >
           this.microNumberIndex + 1
@@ -154,7 +158,7 @@ export class ExerciseComponent implements OnInit {
       } else {
         number.isWrongChoice = true;
         setTimeout(() => {
-          number.isWrongChoice = true;
+          number.isWrongChoice = false;
         }, 500);
       }
     }

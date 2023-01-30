@@ -61,7 +61,7 @@ export class StoryLevelResultEffects {
                 const x = new Snackbar(successResponse, this._snackBar);
                 x.successSnackbar();
                 this._storyStageOneSvc.sendAddStoryLevelResultBehaviour(
-                  'Occupant added!'
+                  response
                 );
               }
               return StoryLevelResultActions.addStoryLevelStageOneResultSuccess(

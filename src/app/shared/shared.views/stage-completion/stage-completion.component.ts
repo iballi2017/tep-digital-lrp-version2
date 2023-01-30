@@ -33,7 +33,8 @@ export class StageCompletionComponent implements OnInit {
     'btn-block': true,
     'mb-3': true,
     'w-100': true,
-    'py-3': true,
+    'py-xl-3': true,
+    'py-2': true,
   };
   btnClasses2 = { 'danger-btn': true, 'btn-block': true };
   btnTitle = 'CONTINUE';

@@ -56,7 +56,6 @@ export class ReportDetailsComponent implements OnInit {
   reportDetailsIsLoading$!: Observable<boolean>;
   literacyGameType = GameType.LITERACY;
   numeracyGameType = GameType.NUMERACY;
-  Incomplete = ProgramCompletion.INCOMPLETE;
   completed = ProgramCompletion.COMPLETED;
   constructor(
     private _route: ActivatedRoute,

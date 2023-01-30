@@ -115,7 +115,7 @@ export class BasicOperationsDivisionLevelResultEffects {
               const x = new Snackbar(successResponse, this._snackBar);
               x.successSnackbar();
               this._basicOperationsDivisionStageTwoSvc.sendBasicOperationsDivisionLevelResultBehaviour(
-                'Occupant added!'
+                response
               );
             }
             return BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageTwoResultSuccess(
