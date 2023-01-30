@@ -4,68 +4,70 @@
         <div class="title-wrapper">
             <h2 class="title">{{title | uppercase}}</h2>
         </div>
-        <div class="body-wrapper" *ngIf="(userData$ | async ) as userData">
-            <div class="item-card">
-                <div class="item-card-header">
-                    <h3 class="heading">{{heading | uppercase}}</h3>
+        <div class="body-wrapper">
+                <ng-container *ngIf="!(userData$ | async ) && (isLoadingUserData$ | async)">
+                    <P class="text-bold">LOADING...</P>
+                </ng-container>
+            <ng-container *ngIf="(userData$ | async ) as userData">
+                <div class="item-card">
+                    <div class="item-card-header">
+                        <h3 class="heading">{{heading | uppercase}}</h3>
+                    </div>
+                    <div class="item-card-body">
+                        <ul class="row list-style-none mb-0 ps-0" id="personal-details">
+                            <li class="col-12 col-md-6 order-md-1">
+                                <div class="_key">FULL NAME:</div>
+                                <div class="_value">{{userData?.usr_fullname}}</div>
+                            </li>
+                            <li class="col-12 col-md-6 order-md-3">
+                                <div class="_key">GENDER:</div>
+                                <div class="_value">{{userData?.usr_gender}}</div>
+                            </li>
+                            <li class="col-12 col-md-6 order-md-2">
+                                <div class="_key">EMAIL ADDRESS:</div>
+                                <div class="_value email">{{userData?.usr_email}}</div>
+                            </li>
+                            <li class="col-12 col-md-6 order-md-4">
+                                <div class="_key">SELECTED PARTY:</div>
+                                <div class="_value selected-party">{{userData?.usr_party}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="item-card-footer">
+                        <app-primary-button [btnTitle]="'Edit' | uppercase" [btnClasses]="btnClasses"
+                            (onClickEvent)="onEditPersonalDetails(userData)"></app-primary-button>
+                    </div>
                 </div>
-                <!-- ==> {{userData$ | async | json}} -->
-                <div class="item-card-body">
-                    <!-- {{userData | json}} -->
-                    <ul class="row list-style-none mb-0 ps-0" id="personal-details">
-                        <li class="col-12 col-md-6 order-md-1">
-                            <div class="_key">FULL NAME:</div>
-                            <div class="_value">{{userData?.usr_fullname}}</div>
-                        </li>
-                        <li class="col-12 col-md-6 order-md-3">
-                            <div class="_key">GENDER:</div>
-                            <div class="_value">{{userData?.usr_gender}}</div>
-                        </li>
-                        <li class="col-12 col-md-6 order-md-2">
-                            <div class="_key">EMAIL ADDRESS:</div>
-                            <div class="_value email">{{userData?.usr_email}}</div>
-                        </li>
-                        <li class="col-12 col-md-6 order-md-4">
-                            <div class="_key">SELECTED PARTY:</div>
-                            <div class="_value selected-party">{{userData?.usr_party}}</div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="item-card-footer">
-                    <app-primary-button [btnTitle]="'Edit' | uppercase" [btnClasses]="btnClasses"
-                        (onClickEvent)="onEditPersonalDetails(userData)"></app-primary-button>
-                </div>
-            </div>
-            <!--  -->
-            <div class="item-card">
-                <div class="item-card-header">
-                    <h3 class="heading">SECURITY</h3>
-                </div>
-                <div class="item-card-footer">
-                    <!-- <button class="btn text-uppercase primary-btn" [routerLink]="['/account/update-password']">EDIT
+                <!--  -->
+                <div class="item-card">
+                    <div class="item-card-header">
+                        <h3 class="heading">SECURITY</h3>
+                    </div>
+                    <div class="item-card-footer">
+                        <!-- <button class="btn text-uppercase primary-btn" [routerLink]="['/account/update-password']">EDIT
                         PASSWORD</button> -->
-                    <!-- <app-button [btnTitle]="editPasswordBtnLabel" [btnType]="editPasswordBtnType"
+                        <!-- <app-button [btnTitle]="editPasswordBtnLabel" [btnType]="editPasswordBtnType"
                         [btnClasses]="editPasswordBtnClasses" [routerLink]="['/account/update-password']"></app-button> -->
 
-                    <app-primary-button [btnTitle]="'Edit Password' | uppercase" [btnClasses]="btnClasses"
-                        [routerLink]="['/account/update-password']"></app-primary-button>
+                        <app-primary-button [btnTitle]="'Edit Password' | uppercase" [btnClasses]="btnClasses"
+                            [routerLink]="['/account/update-password']"></app-primary-button>
+                    </div>
                 </div>
-            </div>
-            <!--  -->
-            
+                <!--  -->
 
-            <div class="item-card">
-                <div class="item-card-header d-flex align-items-center justify-content-between flex-wrap">
-                    <h3 class="heading">LIST OF OCCUPANT</h3>
-                    <app-default-button [btnTitle]="addNewOccupantBtnLabel" [btnType]="addNewOccupantBtnType"
-                        [btnClasses]="addNewOccupantBtnClasses" (onClickEvent)="openRespondentListDialog()">
-                    </app-default-button>
-                </div>
-                <div class="item-card-body">
-                    <app-occupant-list></app-occupant-list>
-                </div>
-            </div>
 
+                <div class="item-card">
+                    <div class="item-card-header d-flex align-items-center justify-content-between flex-wrap">
+                        <h3 class="heading">LIST OF OCCUPANT</h3>
+                        <app-default-button [btnTitle]="addNewOccupantBtnLabel" [btnType]="addNewOccupantBtnType"
+                            [btnClasses]="addNewOccupantBtnClasses" (onClickEvent)="openRespondentListDialog()">
+                        </app-default-button>
+                    </div>
+                    <div class="item-card-body">
+                        <app-occupant-list></app-occupant-list>
+                    </div>
+                </div>
+            </ng-container>
         </div>
 
     </div>

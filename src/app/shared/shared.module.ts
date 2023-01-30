@@ -30,6 +30,7 @@ import { ActivityLauncherComponent } from './shared.components/activity-launcher
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LaunchActivitySoundComponent } from './shared.components/launch-activity-sound/launch-activity-sound.component';
 import { LaunchStageCompletionSoundComponent } from './shared.components/launch-stage-completion-sound/launch-stage-completion-sound.component';
+import { ComponentReloadFunctionalityComponent } from './shared.components/component-reload-functionality/component-reload-functionality.component';
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -55,6 +56,7 @@ import { LaunchStageCompletionSoundComponent } from './shared.components/launch-
     ActivityLauncherComponent,
     LaunchActivitySoundComponent,
     LaunchStageCompletionSoundComponent,
+    ComponentReloadFunctionalityComponent,
   ],
   imports: [
     CommonModule,

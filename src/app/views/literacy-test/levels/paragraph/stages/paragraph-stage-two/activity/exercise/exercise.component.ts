@@ -12,6 +12,7 @@ import { ParagraphStageTwoService } from 'src/app/services/paragraph/paragraph-s
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addParagraphLevelStageTwoResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
 import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.selectors';
@@ -22,7 +23,7 @@ import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-lev
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss']
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit {
   boardActivityHint: string = 'Read the paragraph below';
   checkTestCompletion: any;
   keyList: any[] = [];
@@ -56,17 +57,18 @@ export class ExerciseComponent implements OnInit {
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<ParagraphLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _wordStageThreeSvc: WordStageThreeService,
     // Speech recog
     private _paragraphStageTwoSvc: ParagraphStageTwoService,
     private cdr: ChangeDetectorRef,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) {
+    super(_router);
     this._paragraphStageTwoSvc?.init();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -92,10 +94,11 @@ export class ExerciseComponent implements OnInit {
     this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
   }
 
+ 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
-
 
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
@@ -240,17 +243,19 @@ export class ExerciseComponent implements OnInit {
   }
 
   refreshGame() {
-    this.stopService();
-    this.clearService();
-    this.boardData = null;
-    this.resultTextList = [];
-    this.textPosition = 0;
-    this.GetExerciseTexts();
-    this.resultTextList.forEach((obj: any) => (obj.isDone = false));
-    this.loadBoardData();
+    this.reloadComponent(true);
+    // this.stopService();
+    // this.clearService();
+    // this.boardData = null;
+    // this.resultTextList = [];
+    // this.textPosition = 0;
+    // this.GetExerciseTexts();
+    // this.resultTextList.forEach((obj: any) => (obj.isDone = false));
+    // this.loadBoardData();
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound()
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

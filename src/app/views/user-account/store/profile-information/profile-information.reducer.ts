@@ -11,6 +11,7 @@ export interface ProfileInformationState
   // additional entities state properties
   profileInformation: any;
   error: any;
+  isLoading: any;
 }
 
 export const adapter: EntityAdapter<ProfileInformation> =
@@ -20,16 +21,27 @@ export const initialState: ProfileInformationState = adapter.getInitialState({
   // additional entity state properties,
   profileInformation: undefined,
   error: undefined,
+  isLoading: false
 });
 
 export const reducer = createReducer(
   initialState,
+  on(
+    ProfileInformationActions.loadProfileInformations,
+    (state, action: any) => {
+      return {
+        ...state,
+        isLoading: true
+      };
+    }
+  ),
   on(
     ProfileInformationActions.loadProfileInformationsSuccess,
     (state, action: any) => {
       return {
         ...state,
         profileInformation: action?.profileInformation,
+        isLoading: false
       };
     }
   ),
@@ -39,6 +51,7 @@ export const reducer = createReducer(
       return {
         ...state,
         error: action.error,
+        isLoading: false
       };
     }
   ),

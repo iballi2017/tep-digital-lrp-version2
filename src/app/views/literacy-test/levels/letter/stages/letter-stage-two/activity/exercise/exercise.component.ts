@@ -14,6 +14,7 @@ import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { LetterStageTwoService } from 'src/app/services/letter/letter-stage-two.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addLetterLevelStageTwoResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 import { BackgroundNote } from 'src/assets/data/background-sound.voicenote';
@@ -24,7 +25,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Reveal the hidden consonant letters';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
@@ -54,11 +55,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private _letterStageTwoSvc: LetterStageTwoService,
     private store: Store<LetterLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) { 
+    super(_router);}
 
-  ngOnInit(): void {
+    override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -78,6 +80,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -126,12 +129,14 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     let availableList = this.keyList.filter((item: any) => {
       return item.type == AlphabetType.CONSONANT;
     });
-    console.log("availableList.length: ", availableList.length);
-    console.log("expectedList.length: ", expectedList.length);
+    // console.log("availableList.length: ", availableList.length);
+    // console.log("expectedList.length: ", expectedList.length);
     if (availableList.length == expectedList.length) {
       this.testList[this.testNumber].isTestComplete = true;
       this.onCheckTestCompletion();
       if (expectedList.length == this.checkTestCompletion.length) {
+        // console.log("this.checkTestCompletion.length: ", this.checkTestCompletion.length);
+        // console.log("expectedList.length: ", expectedList.length);
         this.testGameCompletion();
         return;
       }
@@ -192,21 +197,23 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
-    this.testNumber = 0;
-    this.onReplceKeyList();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    this.reloadComponent(true);
+    // this.resultItemList = [];
+    // this.testNumber = 0;
+    // this.onReplceKeyList();
+    // for (let i = 0; i < this.testList.length; i++) {
+    //   this.testList[i].isTestComplete = false;
+    // }
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();
       }
     });
-    
+
 
     this._playSoundSvc.stopLiteracyBGSound();
     this._launchGameSvc.sendLaunchGameBehaviorSubject(false)

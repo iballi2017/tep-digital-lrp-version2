@@ -14,6 +14,7 @@ import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { StoryStageOneService } from 'src/app/services/story/story-stage-one.service';
 import { WordStageFourService } from 'src/app/services/word/word-stage-four.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { LongTextReadDialogComponent } from 'src/app/views/literacy-test/completion/long-text-read-dialog/long-text-read-dialog.component';
 import { addStoryLevelStageOneResult } from 'src/app/views/literacy-test/store/story-level-result/story-level-result.actions';
 import { addWordLevelStageFourResult } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
@@ -25,8 +26,8 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
-  boardActivityHint: string = 'Read the paragraph below';
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
+  boardActivityHint: string = 'Complete the short story';
   testNumber: number = 0;
   testBodyLoopNumber: number = 0;
   checkTestCompletion: any;
@@ -35,7 +36,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   resultItemList: any[] = [];
   previewText: string = '';
   activityHint: any =
-    'Fill in the gaps using appropriate words in the green boxes below to write short story(Title and story).';
+    'Fill in the gaps using appropriate words in the green boxes below to write short story (Title and story).';
 
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
@@ -63,13 +64,15 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _storyStageOneSvc: StoryStageOneService,
     private _playSoundSvc: PlaySoundService,
     private _launchGameSvc: LaunchGameService
-  ) { }
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
+  override  ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg;
@@ -301,13 +304,11 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
-    // this.resultItemList = [];
-    this.testNumber = 0;
-    this.loadTestContent();
-    console.log('this.resultListResult: ', this.resultListResult);
-    // for (let i = 0; i < this.testList.length; i++) {
-    //   this.testList[i].isTestComplete = false;
-    // }
+    // this.reloadComponent(true);
+    this.reloadPage();
+    // this.testNumber = 0;
+    // this.loadTestContent();
+    // console.log('this.resultListResult: ', this.resultListResult);
   }
 
   ngOnDestroy(): void {

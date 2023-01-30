@@ -14,6 +14,7 @@ import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageFourService } from 'src/app/services/word/word-stage-four.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addWordLevelStageFourResult, addWordLevelStageThreeResult } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
 import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.reducer';
 import { KeySound } from 'src/assets/data/key-sound';
@@ -23,7 +24,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss']
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Build connecting sentences using the word FISH';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -51,12 +52,14 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _wordStageFourSvc: WordStageFourService,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -98,6 +101,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
   onCheckTestCompletion() {
     this.checkTestCompletion = this.testList.filter(
@@ -216,15 +220,17 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
-    this.testNumber = 0;
-    this.loadTestContent();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    this.reloadComponent(true);
+    // this.resultItemList = [];
+    // this.testNumber = 0;
+    // this.loadTestContent();
+    // for (let i = 0; i < this.testList.length; i++) {
+    //   this.testList[i].isTestComplete = false;
+    // }
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound()
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

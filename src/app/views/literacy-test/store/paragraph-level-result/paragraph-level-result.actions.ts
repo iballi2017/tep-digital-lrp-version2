@@ -21,22 +21,22 @@ export const loadParagraphLevelResultFailure = createAction(
 
 // ADD ParagraphLevelStageOneResult
 export const addParagraphLevelStageOneResult = createAction(
-  '[Paragraph Stage-one Activity] Add Level Stage Two Result',
+  '[Paragraph Stage-one Activity] Add Level Stage One Result',
   props<{ payload: ActivityAnswer }>()
 );
 export const addParagraphLevelStageOneResultSuccess = createAction(
-  '[Paragraph Level Result Effect] Add Level Stage Two Result Success',
+  '[Paragraph Level Result Effect] Add Level Stage One Result Success',
   props<{ payload: any }>()
 );
 export const addParagraphLevelStageOneResultFailure = createAction(
-  '[Paragraph Level Result Effect] Add Level Stage Two Result Failure',
+  '[Paragraph Level Result Effect] Add Level Stage One Result Failure',
   props<{ error: any }>()
 );
 
 
 // ADD ParagraphLevelStageTwoResult
 export const addParagraphLevelStageTwoResult = createAction(
-  '[Paragraph Stage-one Activity] Add Level Stage Two Result',
+  '[Paragraph Stage-two Activity] Add Level Stage Two Result',
   props<{ payload: ActivityAnswer }>()
 );
 export const addParagraphLevelStageTwoResultSuccess = createAction(
@@ -51,7 +51,7 @@ export const addParagraphLevelStageTwoResultFailure = createAction(
 
 // ADD ParagraphLevelStageThreeResult
 export const addParagraphLevelStageThreeResult = createAction(
-  '[Paragraph Stage-one Activity] Add Level Stage Three Result',
+  '[Paragraph Stage-three Activity] Add Level Stage Three Result',
   props<{ payload: ActivityAnswer }>()
 );
 export const addParagraphLevelStageThreeResultSuccess = createAction(
@@ -67,7 +67,7 @@ export const addParagraphLevelStageThreeResultFailure = createAction(
 
 // ADD ParagraphLevelStageFourResult
 export const addParagraphLevelStageFourResult = createAction(
-  '[Paragraph Stage-one Activity] Add Level Stage Four Result',
+  '[Paragraph Stage-four Activity] Add Level Stage Four Result',
   props<{ payload: ActivityAnswer }>()
 );
 export const addParagraphLevelStageFourResultSuccess = createAction(

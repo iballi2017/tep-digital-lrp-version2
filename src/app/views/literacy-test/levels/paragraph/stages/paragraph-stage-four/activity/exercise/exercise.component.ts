@@ -13,6 +13,7 @@ import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { ParagraphStageFourService } from 'src/app/services/paragraph/paragraph-stage-four.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { LongTextReadDialogComponent } from 'src/app/views/literacy-test/completion/long-text-read-dialog/long-text-read-dialog.component';
 import { addParagraphLevelStageFourResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
@@ -24,15 +25,15 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
-  boardActivityHint: string = 'Read the paragraph below';
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent  implements OnInit {
+  boardActivityHint: string = 'Complete the paragraph';
   testNumber: number = 0;
   checkTestCompletion: any;
   keyList: any[] = [];
   previewList: any[] = [];
   previewText: string = '';
   activityHint: any =
-    'Click on the start button below to start the activity; Read the paragraph below noting the punctuations and at a steady pace';
+    'Fill in the gaps using appropriate words in the green boxes below to complete the paragraph.';
 
   Subscriptions: Subscription[] = [];
   gameSessionId!: string;
@@ -62,13 +63,14 @@ export class ExerciseComponent implements OnInit {
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<ParagraphLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     // Speech recog
     private _paragraphStageFourSvc: ParagraphStageFourService,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) { 
+    super(_router);}
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -93,6 +95,7 @@ export class ExerciseComponent implements OnInit {
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -207,6 +210,8 @@ export class ExerciseComponent implements OnInit {
   }
 
   refreshGame() {
+    // this.reloadComponent(true);
+    this.reloadPage();
     // console.log("this.resultTextList: ", this.resultTextList)
     // let apiArr = this._paragraphStageFourSvc.GetExerciseTexts();
     // let x = [...apiArr]
@@ -236,6 +241,7 @@ export class ExerciseComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

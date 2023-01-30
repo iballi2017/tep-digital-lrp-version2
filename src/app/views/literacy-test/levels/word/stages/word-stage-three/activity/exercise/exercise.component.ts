@@ -13,6 +13,7 @@ import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import {
   addWordLevelStageOneResult,
   addWordLevelStageThreeResult,
@@ -25,7 +26,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Make a sentence';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -53,12 +54,14 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _wordStageThreeSvc: WordStageThreeService,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -89,6 +92,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   stopBGSound() {
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
     this._playSoundSvc.stopLiteracyBGSound();
   }
 
@@ -212,15 +216,17 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
-    this.testNumber = 0;
-    this.loadTestContent();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    this.reloadComponent(true);
+    // this.resultItemList = [];
+    // this.testNumber = 0;
+    // this.loadTestContent();
+    // for (let i = 0; i < this.testList.length; i++) {
+    //   this.testList[i].isTestComplete = false;
+    // }
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound()
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

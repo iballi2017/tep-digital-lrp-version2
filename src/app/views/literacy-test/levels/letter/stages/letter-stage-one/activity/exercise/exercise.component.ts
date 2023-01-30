@@ -14,6 +14,7 @@ import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { LetterStageOneService } from 'src/app/services/letter/letter-stage-one.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addLetterLevelStageOneResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 import { AlphabetNote } from 'src/assets/data/alphabet.voicenote';
@@ -25,7 +26,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, AfterViewInit, OnDestroy {
   boardActivityHint: string = 'Reveal the hidden vowel letters';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
@@ -58,11 +59,13 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private _letterStageOneSvc: LetterStageOneService,
     private store: Store<LetterLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -86,6 +89,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -205,17 +209,19 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
-    this.testNumber = 0;
-    this.onReplceKeyList();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    this.reloadComponent(true);
+    // this.resultItemList = [];
+    // this.testNumber = 0;
+    // this.onReplceKeyList();
+    // for (let i = 0; i < this.testList.length; i++) {
+    //   this.testList[i].isTestComplete = false;
+    // }
   }
 
 
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

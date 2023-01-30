@@ -1,4 +1,5 @@
 @use "../../sass/_partials/mixins";
+
 #activity-keypad {
     max-width: 300px;
     margin: 0 auto;
@@ -18,37 +19,64 @@
 
             .btn {
                 background: #ffffff;
-                border: 7px solid #73cf48;
+                border: 3px solid #73cf48;
                 box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
-                border-radius: 20px;
+                border-radius: 10px;
                 width: 100%;
                 font-family: "Open Sans";
                 font-style: normal;
                 font-weight: 600;
-                // font-size: 36px;
-                font-size: 1.2rem;
-                line-height: 49px;
-                // display: flex;
-                // align-items: center;
-                // text-align: center;
                 color: #000000;
+                line-height: 30px;
 
                 &.is-right {
                     &:focus {
                         background-color: #73cf48;
-                        border: 7px solid #ffffff;
+                        border: 3px solid #ffffff;
                     }
                 }
 
                 &.is-wrong {
                     &:focus {
-                        border: 7px solid #d93333;
+                        border: 3px solid #d93333;
                     }
                 }
             }
         }
     }
 
+    @include mixins.minmq(768px) {
+        .key-list {
+            // display: flex;
+            // flex-wrap: wrap;
+            // gap: 10px;
+            // justify-content: center;
+            // margin-bottom: 0;
+
+            li {
+                // flex-basis: calc((100% - 40px) / 3);
+
+                .btn {
+                    border: 7px solid #73cf48;
+                    border-radius: 20px;
+                    font-size: 1.2rem;
+                    line-height: 49px;
+
+                    &.is-right {
+                        &:focus {
+                            border: 7px solid #ffffff;
+                        }
+                    }
+    
+                    &.is-wrong {
+                        &:focus {
+                            border: 7px solid #d93333;
+                        }
+                    }
+                }
+            }
+        }
+    }
     @include mixins.maxmq(500px) {
         margin-bottom: 2em;
     }
