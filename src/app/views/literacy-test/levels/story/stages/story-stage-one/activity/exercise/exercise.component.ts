@@ -67,7 +67,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     private _storyStageOneSvc: StoryStageOneService,
     private _playSoundSvc: PlaySoundService,
     private _launchGameSvc: LaunchGameService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {

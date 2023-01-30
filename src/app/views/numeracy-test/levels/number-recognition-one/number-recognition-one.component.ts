@@ -52,7 +52,7 @@ export class NumberRecognitionOneComponent implements OnInit {
     this.store.dispatch(loadNumberRecognitionOneLevelResult({ session_id: GameSessionId }));
     let subscription = this.userData$.subscribe({
       next: (response: any) => {
-        console.warn('response***: ', response);
+        // console.warn('response***: ', response);
         if (response) {
           this.gameLevelResultAndRating = response;
           this.modifyStageArray();

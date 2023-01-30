@@ -51,7 +51,7 @@ export class StoryLevelResultEffects {
     return this.actions$.pipe(
       ofType(StoryLevelResultActions.addStoryLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._storyStageOneSvc
           .SubmitResult(action.payload)
           .pipe(

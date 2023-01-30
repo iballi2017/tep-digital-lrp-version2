@@ -62,7 +62,7 @@ export class BasicOperationsDivisionLevelResultEffects {
     return this.actions$.pipe(
       ofType(BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._basicOperationsDivisionStageOneSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -71,7 +71,7 @@ export class BasicOperationsDivisionLevelResultEffects {
               const x = new Snackbar(successResponse, this._snackBar);
               x.successSnackbar();
               this._basicOperationsDivisionStageOneSvc.sendBasicOperationsDivisionLevelResultBehaviour(
-                'Occupant added!'
+                response
               );
             }
             return BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageOneResultSuccess(
@@ -106,7 +106,7 @@ export class BasicOperationsDivisionLevelResultEffects {
     return this.actions$.pipe(
       ofType(BasicOperationsDivisionLevelResultActions.addBasicOperationsDivisionLevelStageTwoResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._basicOperationsDivisionStageTwoSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {

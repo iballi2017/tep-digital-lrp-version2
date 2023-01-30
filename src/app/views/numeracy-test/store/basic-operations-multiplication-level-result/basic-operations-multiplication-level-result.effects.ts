@@ -61,7 +61,6 @@ export class BasicOperationsMultiplicationLevelResultEffects {
     return this.actions$.pipe(
       ofType(BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
         return this._basicOperationsMultiplicationStageOneSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -70,7 +69,7 @@ export class BasicOperationsMultiplicationLevelResultEffects {
               const x = new Snackbar(successResponse, this._snackBar);
               x.successSnackbar();
               this._basicOperationsMultiplicationStageOneSvc.sendBasicOperationsMultiplicationLevelResultBehaviour(
-                'Occupant added!'
+                response
               );
             }
             return BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageOneResultSuccess(
@@ -105,7 +104,7 @@ export class BasicOperationsMultiplicationLevelResultEffects {
     return this.actions$.pipe(
       ofType(BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageTwoResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._basicOperationsMultiplicationStageTwoSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -149,7 +148,7 @@ export class BasicOperationsMultiplicationLevelResultEffects {
     return this.actions$.pipe(
       ofType(BasicOperationsMultiplicationLevelResultActions.addBasicOperationsMultiplicationLevelStageThreeResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._basicOperationsMultiplicationStageThreeSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {

@@ -113,7 +113,7 @@ export class ReportService {
 
   // LoadGameResultDetails(sessionId: SessionId) {
   LoadGameResultDetails(sessionId: string) {
-    console.warn('sessionId: ', sessionId);
+    // console.warn('sessionId: ', sessionId);
     return this._http.get(
       `${this.GetUserGameResultDetailsUrl}/${encodeURIComponent(sessionId)}`
     );
