@@ -26,7 +26,8 @@
         <div id="activity-keypad">
             <ul class="key-list ps-0 list-style-none">
                 <li *ngFor="let key of keyList">
-                    <button class="btn" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
+                    <button class="btn is-wrong"
+                    [ngClass]="{'is-right': key?.isWrongChoice == false,'is-wrong': key?.isWrongChoice == true}" (click)="onSelectAlphabet(key)">{{key?.name}}</button>
                 </li>
             </ul>
         </div>

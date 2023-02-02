@@ -137,6 +137,10 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
           }
           return;
         }, 2000);
+        
+          let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+          playSound.playAlphabetVoice();
+        
       } else {
         let resultObject = {
           item1: this.previewList[0],
@@ -166,10 +170,10 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   isComplete() {
     if (this.resultItemList.length == 4) {
-      console.warn(
-        'this.testList[this.testNumber]: ',
-        this.testList[this.testNumber]
-      );
+      // console.warn(
+      //   'this.testList[this.testNumber]: ',
+      //   this.testList[this.testNumber]
+      // );
       this.testList[this.testNumber].isTestComplete = true;
       this.testGameCompletion();
     } else {

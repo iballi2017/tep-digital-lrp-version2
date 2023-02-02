@@ -76,7 +76,7 @@ export class ReportListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // this.onGetSearchTerm();
-    // this.onGetReportList();
+    this.onGetReportList();
   }
 
   ngAfterViewInit(): void {

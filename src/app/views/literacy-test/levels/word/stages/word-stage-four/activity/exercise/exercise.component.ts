@@ -91,6 +91,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -125,9 +126,17 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     let item = this.testList[this.testNumber].answer[isExist];
     if (item) {
       item.isShow = true;
+      alphabet.isWrongChoice = false;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
       playSound.playAlphabetVoice();
+    } else {
+      alphabet.isWrongChoice = true;
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      alphabet.isWrongChoice = null
+    }, 1000);
     // setTimeout(() => {
     this.testResult()
     // }, 1500);
@@ -249,27 +258,27 @@ const testList = [
     testKeys: [
       {
         name: 'this',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'have',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'my',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'food',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'is',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'not',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
     ],
     // answer: ['this', 'is', 'my', 'fish'],
@@ -294,27 +303,27 @@ const testList = [
     testKeys: [
       {
         name: 'lives',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'have',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'my',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'water',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'in',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'not',
-        isWrongChoice: false,
+        isWrongChoice: null,
       }
     ],
     // answer: ['this', 'is', 'a', 'big', 'book'],
@@ -342,27 +351,27 @@ const testList = [
     testKeys: [
       {
         name: 'my',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'have',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'did',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'i',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'is',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'love',
-        isWrongChoice: false,
+        isWrongChoice: null,
       }
     ],
     // answer: ['this', 'is', 'a', 'big', 'book'],

@@ -23,7 +23,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent extends ComponentReloadFunctionalityComponent  implements OnInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Create two rhyming words';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -52,9 +52,10 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     private _wordStageOneSvc: WordStageOneService,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) {
-    super(_router); }
+    super(_router);
+  }
 
-    override ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -103,6 +104,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     this.previewList.push(alphabet);
     if (this.previewList.length == 2) {
       if (this.previewList[0].position == this.previewList[1].position) {
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
         for (let i = 0; i < this.previewList.length; i++) {
           this.previewList[i].isWrongChoice = true;
         }
@@ -126,6 +129,10 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
           this.previewList = [];
           return;
         }, 2000);
+
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
+
         return;
       }
       let resultObject = {

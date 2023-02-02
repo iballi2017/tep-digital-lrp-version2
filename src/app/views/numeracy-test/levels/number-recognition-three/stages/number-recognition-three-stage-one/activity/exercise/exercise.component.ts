@@ -52,7 +52,7 @@ export class ExerciseComponent implements OnInit {
     public dialog: MatDialog,
     private _playSoundSvc: PlaySoundService,
     private _launchGameSvc: LaunchGameService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
@@ -114,6 +114,9 @@ export class ExerciseComponent implements OnInit {
         playSound.playAlphabetVoice();
         this.isComplete();
       }
+    } else {
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
   }
 

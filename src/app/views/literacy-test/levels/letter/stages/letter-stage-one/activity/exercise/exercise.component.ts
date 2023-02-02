@@ -128,6 +128,9 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
         playSound.playAlphabetVoice();
         this.isComplete();
       }
+    }else{
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
   }
 
@@ -142,8 +145,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
       this.testList[this.testNumber].isTestComplete = true;
 
       this.onCheckTestCompletion();
-      console.log("this.checkTestCompletion: ", this.checkTestCompletion)
-      console.log("this.testList: ", this.testList)
+      // console.log("this.checkTestCompletion: ", this.checkTestCompletion)
+      // console.log("this.testList: ", this.testList)
 
       if (this.testList.length == this.checkTestCompletion.length) {
         setTimeout(() => {
@@ -184,7 +187,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
       this._letterStageOneSvc.addLetterLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
-            console.log('msg: ', msg);
+            // console.log('msg: ', msg);
             // this._router.navigate([
             //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);

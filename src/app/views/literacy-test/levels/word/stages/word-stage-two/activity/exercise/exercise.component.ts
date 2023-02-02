@@ -89,6 +89,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -99,6 +100,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
   onFillNewTest() {
@@ -150,6 +152,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
       }
     } else {
       alphabet.isWrongChoice = true;
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
       setTimeout(() => {
         alphabet.isWrongChoice = false;
       }, 1000);
@@ -190,6 +194,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound()
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

@@ -157,6 +157,8 @@ export class ExerciseComponent implements OnInit {
         }
       } else {
         number.isWrongChoice = true;
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
         setTimeout(() => {
           number.isWrongChoice = false;
         }, 500);

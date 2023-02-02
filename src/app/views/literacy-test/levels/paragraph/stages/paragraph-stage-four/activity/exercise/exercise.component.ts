@@ -25,7 +25,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent extends ComponentReloadFunctionalityComponent  implements OnInit {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit {
   boardActivityHint: string = 'Complete the paragraph';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -67,8 +67,9 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     // Speech recog
     private _paragraphStageFourSvc: ParagraphStageFourService,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { 
-    super(_router);}
+  ) {
+    super(_router);
+  }
 
   override ngOnInit(): void {
 
@@ -130,10 +131,18 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     let indexItem = statement.findIndex((st: any) => st.text == alphabet.name);
     if (statement[indexItem]) {
       statement[indexItem].isHide = false;
+      alphabet.isWrongChoice = false;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
       playSound.playAlphabetVoice();
       this.onTestStatement(this.resultTextList[this.testNumber]);
+    } else {
+      alphabet.isWrongChoice = true
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      alphabet.isWrongChoice = null;
+    }, 500);
     // this.resultTextList[this.testNumber].
   }
 

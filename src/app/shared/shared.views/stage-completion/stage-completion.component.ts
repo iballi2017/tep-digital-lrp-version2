@@ -94,10 +94,10 @@ export class StageCompletionComponent implements OnInit {
     this.openDialog(this.gameSessionId);
   }
 
-  onRemoveReport(sessionId: string) {
-    console.log('sessionId: ', sessionId);
-    this.openDialog(sessionId);
-  }
+  // onRemoveReport(sessionId: string) {
+  //   console.log('sessionId: ', sessionId);
+  //   this.openDialog(sessionId);
+  // }
 
   openDialog(item: any) {
     const dialogRef = this.dialog.open(BooleanAlertDialogComponent, {
@@ -114,9 +114,10 @@ export class StageCompletionComponent implements OnInit {
           this._router.navigate(['/']);
           return;
         } else {
-          this._router.navigate([
-            `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
-          ]);
+          // this._router.navigate([
+          //   `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
+          // ]);
+          this._router.navigate([`/account/reports/details/${this.gameSessionId}`]);
         }
       }
     });

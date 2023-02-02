@@ -33,6 +33,7 @@
                     &:focus {
                         background-color: #73cf48;
                         border: 3px solid #ffffff;
+                        color: #ffffff;
                     }
                 }
 
@@ -67,7 +68,7 @@
                             border: 7px solid #ffffff;
                         }
                     }
-    
+
                     &.is-wrong {
                         &:focus {
                             border: 7px solid #d93333;
@@ -77,6 +78,7 @@
             }
         }
     }
+
     @include mixins.maxmq(500px) {
         margin-bottom: 2em;
     }

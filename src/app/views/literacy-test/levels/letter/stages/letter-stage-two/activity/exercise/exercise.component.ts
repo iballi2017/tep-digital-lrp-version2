@@ -119,6 +119,9 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
         playSound.playAlphabetVoice();
         this.isComplete();
       }
+    }else{
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
   }
 

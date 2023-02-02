@@ -58,7 +58,6 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   gameType = GameType.LITERACY;
   programStatus: any;
   Completed = ProgramCompletion.COMPLETED;
-  Incomplete = ProgramCompletion.INCOMPLETE;
 
   constructor(
     private _gameSvc: GameService,
@@ -161,7 +160,14 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
           let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
           playSound.playAlphabetVoice();
           this.testResult(_keyParent);
+        } else {
+          alphabet.isWrongChoice = true;
+          let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+          playSound.playAlphabetVoice();
         }
+        setTimeout(() => {
+          alphabet.isWrongChoice = null;
+        }, 500);
         break;
       case keyParent.body:
         let isExist2 = x.body.bodyContent[
@@ -175,7 +181,14 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
           let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
           playSound.playAlphabetVoice();
           this.testResult(_keyParent);
+        } else {
+          alphabet.isWrongChoice = true;
+          let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+          playSound.playAlphabetVoice();
         }
+        setTimeout(() => {
+          alphabet.isWrongChoice = null;
+        }, 500);
         break;
 
       default:
@@ -280,7 +293,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     this._storyStageOneSvc.addStoryLevelResultBehaviour.subscribe(
       (msg: any) => {
         if (msg) {
-          console.log("msg: ", msg);
+          // console.log("msg: ", msg);
           this.programStatus = msg?.resultStatus?.literacyStatus
           // this._router.navigate([
           //   `/${GameType.LITERACY}/game-type-completion/${this.gameLevel}`

@@ -6,7 +6,7 @@ import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
-import { GameType } from 'src/app/models/interface/game-type';
+import { GameType, ProgramCompletion } from 'src/app/models/interface/game-type';
 import { BasicOperationsDivisionStageTwoService } from 'src/app/services/basic-operations/division/basic-operations-division-stage-two.service';
 import { GameService } from 'src/app/services/game.service';
 import { LaunchGameService } from 'src/app/services/launch-game.service';
@@ -42,6 +42,8 @@ export class ExerciseComponent implements OnInit {
   testList: any = testList;
   activityHint: any = "Split the number on the left into equal group of number in the right"
   test: any;
+  programStatus: any;
+  Completed = ProgramCompletion.COMPLETED;
   constructor(private _gameSvc: GameService, private _basicOperationsDivisionStageTwoSvc: BasicOperationsDivisionStageTwoService,
     private store: Store<BasicOperationsDivisionLevelResultState>,
     private _router: Router,
@@ -109,6 +111,9 @@ export class ExerciseComponent implements OnInit {
       setTimeout(() => {
         this.isComplete();
       }, 1500);
+    }else {
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
   }
 
@@ -139,6 +144,7 @@ export class ExerciseComponent implements OnInit {
         (msg: any) => {
           if (msg) {
             console.log("msg: ", msg)
+            this.programStatus = msg?.resultStatus?.numeracyStatus;
             // this._router.navigate([
             //   // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             //   // `/${GameType.NUMERACY}/level-completion/${this.gameLevel}`

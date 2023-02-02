@@ -203,9 +203,10 @@ export class LevelCompletionComponent implements OnInit {
           this._router.navigate(['/']);
         }
         // this._router.navigate([`/literacy/levels/lettering`]);
-        this._router.navigate([
-          `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
-        ]);
+        // this._router.navigate([
+        //   `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
+        // ]);
+        this._router.navigate([`/account/reports/details/${this.gameSessionId}`]);
       }
     });
   }

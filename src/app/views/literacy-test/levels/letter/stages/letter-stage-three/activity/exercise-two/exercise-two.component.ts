@@ -158,6 +158,9 @@ export class ExerciseTwoComponent extends ComponentReloadFunctionalityComponent 
           }
           return;
         }, 2000);
+
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
       } else {
         let resultObject = {
           item1: this.previewList[0],

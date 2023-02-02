@@ -51,7 +51,7 @@ export class ExerciseComponent implements OnInit {
     private _router: Router,
     public dialog: MatDialog,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
@@ -63,7 +63,7 @@ export class ExerciseComponent implements OnInit {
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
   }
-  
+
   playBGSound() {
     this._playSoundSvc.playNumeracyBGSound();
     this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
@@ -111,6 +111,9 @@ export class ExerciseComponent implements OnInit {
         playSound.playAlphabetVoice();
         this.isComplete();
       }
+    } else {
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
   }
 

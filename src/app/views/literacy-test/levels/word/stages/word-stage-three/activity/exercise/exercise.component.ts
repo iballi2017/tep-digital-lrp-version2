@@ -92,7 +92,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   stopBGSound() {
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
     this._playSoundSvc.stopLiteracyBGSound();
   }
 
@@ -147,7 +147,9 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     let expectedResult = JSON.stringify(this.testList[this.testNumber].answer);
     let selectedResult = JSON.stringify(this.resultItemList);
     if (expectedResult != selectedResult) {
-      console.warn('incorrect!');
+      // console.warn('incorrect!');
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
       setTimeout(() => {
         alert('Incorrect sentence, try again!');
       }, 1200);

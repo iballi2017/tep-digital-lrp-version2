@@ -109,6 +109,9 @@ export class ExerciseComponent implements OnInit {
       setTimeout(() => {
         this.isComplete();
       }, 1500);
+    }else {
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
   }
 
