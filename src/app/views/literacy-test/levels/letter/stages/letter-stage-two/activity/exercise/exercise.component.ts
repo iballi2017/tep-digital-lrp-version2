@@ -17,6 +17,7 @@ import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/ac
 import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addLetterLevelStageTwoResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
+import { AlphabetNote } from 'src/assets/data/alphabet.voicenote';
 import { BackgroundNote } from 'src/assets/data/background-sound.voicenote';
 import { KeySound } from 'src/assets/data/key-sound';
 
@@ -50,6 +51,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   // 
   levelTitle!: string;
   gameType = GameType.LITERACY;
+  isWrongSelection!: boolean;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
@@ -57,10 +59,11 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     private store: Store<LetterLevelResultState>,
     public override _router: Router,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { 
-    super(_router);}
+  ) {
+    super(_router);
+  }
 
-    override ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -107,9 +110,9 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   onSelectAlphabet(alphabet: any) {
     this.previewList.push(alphabet.name);
     this.previewText = alphabet.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
+    let playSound = new PlaySound({ vn: alphabet.vn });
+    playSound.playAlphabetVoice();
+    
     if (alphabet.type == AlphabetType.CONSONANT) {
       if (
         !this.resultItemList.find((item: any) => item.name === alphabet.name)
@@ -119,10 +122,15 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
         playSound.playAlphabetVoice();
         this.isComplete();
       }
-    }else{
+    } else {
+      this.isWrongSelection = true
       let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
       playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection = false
+    }, 500);
   }
 
   isComplete() {
@@ -233,26 +241,32 @@ export const testList = [
       {
         name: 'b',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.B_Note
       },
       {
         name: 'a',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.A_Note
       },
       {
         name: 'c',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.C_Note
       },
       {
         name: 'e',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.E_Note
       },
       {
         name: 'd',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.D_Note
       },
       {
         name: 'u',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.U_Note
       },
     ],
   },
