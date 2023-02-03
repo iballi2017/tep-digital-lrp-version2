@@ -276,12 +276,12 @@ export const testList = [
       {
         name: 'i',
         type: AlphabetType.VOWEL,
-        vn: AlphabetNote.A_Note
+        vn: AlphabetNote.I_Note
       },
       {
         name: 'b',
         type: AlphabetType.CONSONANT,
-        vn: AlphabetNote.A_Note
+        vn: AlphabetNote.B_Note
       },
     ],
   },
