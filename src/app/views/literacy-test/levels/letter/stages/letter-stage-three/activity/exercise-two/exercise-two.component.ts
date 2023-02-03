@@ -38,17 +38,17 @@ export class ExerciseTwoComponent extends ComponentReloadFunctionalityComponent 
       testKeys: [
         {
           name: 'mo',
-          type: AlphabetType.CONSONANT,
+          // type: AlphabetType.CONSONANT,
           isWrongChoice: false,
         },
         {
           name: 'so',
-          type: AlphabetType.VOWEL,
+          // type: AlphabetType.VOWEL,
           isWrongChoice: false,
         },
         {
           name: 'bo',
-          type: AlphabetType.CONSONANT,
+          // type: AlphabetType.CONSONANT,
           isWrongChoice: false,
         },
       ],
@@ -171,7 +171,7 @@ export class ExerciseTwoComponent extends ComponentReloadFunctionalityComponent 
             this.resultItemList[i].item1 == resultObject.item1 &&
             this.resultItemList[i].item2 == resultObject.item2
           ) {
-            alert('item already exist!');
+            alert('word already added!');
             this.previewList = [];
             return;
           }

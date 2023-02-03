@@ -52,6 +52,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   isFinishedTest: boolean = false;
   // 
   gameType = GameType.LITERACY;
+  isWrongSelection!: boolean;
 
   // audioFile: string = AlphabetNote.A_Note;
   constructor(
@@ -116,9 +117,9 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   onSelectAlphabet(alphabet: any) {
     this.previewList.push(alphabet.name);
     this.previewText = alphabet.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
+    let playSound = new PlaySound({ vn: alphabet.vn });
+    playSound.playAlphabetVoice();
+
     if (alphabet.type == AlphabetType.VOWEL) {
       if (
         !this.resultItemList.find((item: any) => item.name === alphabet.name)
@@ -128,10 +129,15 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
         playSound.playAlphabetVoice();
         this.isComplete();
       }
-    }else{
+    } else {
+      this.isWrongSelection = true
       let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
       playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection = false
+    }, 500);
   }
 
   isComplete() {
@@ -250,26 +256,32 @@ export const testList = [
       {
         name: 'a',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.A_Note
       },
       {
         name: 'j',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.J_Note
       },
       {
         name: 'e',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.E_Note
       },
       {
         name: 'm',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.M_Note
       },
       {
         name: 'i',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.A_Note
       },
       {
         name: 'b',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.A_Note
       },
     ],
   },
@@ -280,22 +292,27 @@ export const testList = [
       {
         name: 'z',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.Z_Note
       },
       {
         name: 'u',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.U_Note
       },
       {
         name: 'y',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.Y_Note
       },
       {
         name: 'o',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.O_Note
       },
       {
         name: 'j',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.J_Note
       },
       {
         name: 'c',
@@ -311,14 +328,17 @@ export const testList = [
       {
         name: 'h',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.H_Note,
       },
       {
         name: 'o',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.O_Note,
       },
       {
         name: 'p',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.P_Note,
       }
     ],
   },
@@ -329,18 +349,22 @@ export const testList = [
       {
         name: 'q',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.Q_Note,
       },
       {
         name: 'l',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.C_Note,
       },
       {
         name: 'a',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.A_Note,
       },
       {
         name: 'u',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.U_Note,
       }
     ],
   }

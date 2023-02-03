@@ -20,7 +20,7 @@
     <div id="key-selection-preview-block">
         <ul class="preview-list list-style none mb-0 pl-0">
             <li class="" *ngFor="let previewList of previewList"
-                [ngClass]="{'is-right': !previewList?.isWrongChoice,'is-wrong': previewList?.isWrongChoice}">
+                [ngClass]="{'is-right': previewList?.isWrongChoice == false,'is-wrong': previewList?.isWrongChoice == true}">
                 {{previewList.name}}
             </li>
         </ul>

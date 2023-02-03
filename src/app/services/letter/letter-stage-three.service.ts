@@ -27,7 +27,7 @@ export class LetterStageThreeService {
   }
 
   SubmitResult(_LetterStageThreeResult: any) {
-    console.log('_LetterStageThreeResult: ', _LetterStageThreeResult);
+    // console.log('_LetterStageThreeResult: ', _LetterStageThreeResult);
     return this._http
       .post(`${this.SubmitGameStage_3_Url}`, _LetterStageThreeResult)
       .pipe(catchError(handleError));

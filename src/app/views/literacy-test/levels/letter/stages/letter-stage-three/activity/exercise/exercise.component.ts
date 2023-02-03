@@ -39,17 +39,17 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
         {
           name: 'f',
           type: AlphabetType.CONSONANT,
-          isWrongChoice: false,
+          // isWrongChoice: false,
         },
         {
           name: 'a',
           type: AlphabetType.VOWEL,
-          isWrongChoice: false,
+          // isWrongChoice: false,
         },
         {
           name: 'm',
           type: AlphabetType.CONSONANT,
-          isWrongChoice: false,
+          // isWrongChoice: false,
         },
       ],
     },
@@ -101,6 +101,12 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
     this._letterStageThreeSvc.sendIsStartTestBehaviour(true)
   }
+  stopBGSound() {
+    this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+  }
+
+
 
   onCheckTestCompletion() {
     this.checkTestCompletion = this.testList.filter(
@@ -114,7 +120,28 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   onSelectAlphabet(alphabet: any) {
-    this.previewList.push(alphabet);
+    // console.log("alphabet: ", alphabet)
+
+    /*
+    
+    let exist = this.previewList.findIndex((item: any) => {
+      console.log("item**: ", item)
+      console.log("alphabet**: ", alphabet)
+      return item.type == alphabet.type
+    });
+    console.log("exist: ", exist)
+    if (!this.previewList[exist]) {
+      this.previewList.push(alphabet)
+    }
+    console.log("this.previewList: ", this.previewList)
+    console.log(this.previewList[exist])
+
+    */
+
+    if (this.previewList.length < 2 || this.previewList.length == 2) {
+      this.previewList.push(alphabet);
+    }
+
     let consonantItems = this.previewList.filter(
       (alphabet: any) => alphabet.type == AlphabetType.CONSONANT
     );
@@ -130,17 +157,17 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
         for (let i = 0; i < this.previewList.length; i++) {
           this.previewList[i].isWrongChoice = true;
         }
-        setTimeout(() => {
-          for (let i = 0; i < this.previewList.length; i++) {
-            this.previewList[i].isWrongChoice = false;
-            this.previewList = [];
-          }
-          return;
-        }, 2000);
-        
-          let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
-          playSound.playAlphabetVoice();
-        
+        // setTimeout(() => {
+        //   for (let i = 0; i < this.previewList.length; i++) {
+        //     this.previewList[i].isWrongChoice = null;
+        //     this.previewList = [];
+        //   }
+        //   return;
+        // }, 1000);
+
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
+
       } else {
         let resultObject = {
           item1: this.previewList[0],
@@ -151,7 +178,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
             this.resultItemList[i].item1 == resultObject.item1 &&
             this.resultItemList[i].item2 == resultObject.item2
           ) {
-            alert('item already exist!');
+            alert('word already added!');
             this.previewList = [];
             return;
           }
@@ -166,6 +193,15 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     if (this.previewList.length > 2) {
       this.previewList = []
     }
+
+    setTimeout(() => {
+      for (let i = 0; i < this.previewList.length; i++) {
+        this.previewList[i].isWrongChoice = null;
+        this.previewList = [];
+      }
+      return;
+    }, 1200);
+    // console.log("this.resultItemList****: ", this.resultItemList)
   }
 
   isComplete() {
@@ -243,6 +279,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();
