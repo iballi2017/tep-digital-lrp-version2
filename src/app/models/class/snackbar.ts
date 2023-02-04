@@ -5,15 +5,24 @@ export class Snackbar {
   snackBar: any;
   text: any;
   durationInSeconds: number = 5;
-  constructor(text: any, snackBar: any, postion?: any) {
+  postionHorizontal: string;
+  postionVertical: string;
+  constructor(
+    text: any,
+    snackBar: any,
+    postionHorizontal: string = 'end',
+    postionVertical: string = 'bottom'
+  ) {
     this.snackBar = snackBar;
     this.text = text;
+    this.postionHorizontal = postionHorizontal;
+    this.postionVertical = postionVertical;
   }
   openTextSnackBar() {
     console.log('this.text: ', this.text);
     this.snackBar.open(this.text, '', {
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
+      horizontalPosition: this.postionHorizontal,
+      verticalPosition: this.postionVertical,
     });
   }
 
@@ -21,8 +30,8 @@ export class Snackbar {
     console.log('this.text: ', this.text);
     this.snackBar.openFromComponent(SuccessSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
-      horizontalPosition: 'end',
-      verticalPosition: 'bottom',
+      horizontalPosition: this.postionHorizontal,
+      verticalPosition: this.postionVertical,
       data: this.text,
     });
   }
@@ -31,8 +40,8 @@ export class Snackbar {
     console.log('this.text: ', this.text);
     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
       duration: this.durationInSeconds * 1000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
+      horizontalPosition: this.postionHorizontal,
+      verticalPosition: this.postionVertical,
       data: this.text,
     });
   }

@@ -8,6 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { SharedModule } from 'src/app/shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import * as fromLogin from './store/login/login.reducer';
+import * as fromRegister from './store/register/register.reducer';
 
 
 @NgModule({
@@ -21,7 +24,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AuthenticationRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(fromLogin.loginsFeatureKey, fromLogin.reducer),
+    StoreModule.forFeature(fromRegister.registersFeatureKey, fromRegister.reducer)
   ]
 })
 export class AuthenticationModule { }

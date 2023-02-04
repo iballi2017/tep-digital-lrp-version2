@@ -1,14 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, tap } from 'rxjs';
 import { baseUrl } from '../config/api';
 import { handleError } from '../helpers/errorHandler';
-import { UserLogin, UserRegister, UserTokenModel } from '../models/interface/user';
+import {
+  UserLogin,
+  UserRegister,
+  UserTokenModel,
+} from '../models/interface/user';
 import jwt_decode from 'jwt-decode';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
   LoginUserUrl = baseUrl + '/user-login';
@@ -17,8 +21,9 @@ export class AuthenticationService {
 
   RefreshTokenUrl = baseUrl + 'api/Identity/refresh-token/****';
   isRegistrationSending: boolean = false;
-  constructor(private _http: HttpClient, private _router: Router) { }
 
+  updateUserPasswordBehaviorSubject = new BehaviorSubject<any>(null);
+  constructor(private _http: HttpClient, private _router: Router) {}
 
   LoginUser(Payload: UserLogin): Observable<any> {
     this.isRegistrationSending = true;
@@ -99,10 +104,13 @@ export class AuthenticationService {
   }
 
   resetUserPassword(ChangePasswordData: ChangePasswordData) {
-    return this._http.post(this.ResetUserPasswordUrl, ChangePasswordData)
+    return this._http
+      .post(this.ResetUserPasswordUrl, ChangePasswordData)
       .pipe(catchError(handleError));
   }
-
+  sendUpdateUserPasswordBehaviorSubject(msg: any) {
+    this.updateUserPasswordBehaviorSubject.next(msg);
+  }
   logoutUser() {
     localStorage.clear();
     this._router.navigate(['/auth']);
