@@ -118,8 +118,26 @@ export const exerciseTexts = [
     isDone: false,
   },
   {
-    text: 'every day I like to drink some tea',
-    uiText: 'Every day, I like to drink some tea.',
+    text: 'I have some friends in my class',
+    uiText: 'I have some friends in my class',
     isDone: false,
   },
+  {
+    text: 'their names are kemi Ada and Amina',
+    uiText: 'Their names are Kemi, Ada and Amina',
+    isDone: false,
+  },
+
+  {
+    text: 'we love to play after school',
+    uiText: 'We love to play after school',
+    isDone: false,
+  },
+
+  // I have some friends in my class
+  // {
+  //   text: 'every day I like to drink some tea',
+  //   uiText: 'Every day, I like to drink some tea.',
+  //   isDone: false,
+  // },
 ];
