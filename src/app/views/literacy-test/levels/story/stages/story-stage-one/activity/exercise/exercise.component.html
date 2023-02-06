@@ -1,95 +1,131 @@
 <!-- <p>exercise works!</p> -->
 
 <ng-container *ngIf="!isFinishedTest">
-    <app-launch-activity-sound [btnTitle]="btnTitle" (onPlayBGSound)="playBGSound()"
-        *ngIf="!isLaunchTest"></app-launch-activity-sound>
-    <div id="activity-canvas">
-        <div id="blue-board">
-            <div id="board-activity-hint">
-                <p class="my-0">{{boardActivityHint}}</p>
-            </div>
-            <div class="inner">
-                <div id="result-item-list">
-                    <!-- <ul class="item-list ps-0 mb-0">
+  <app-launch-activity-sound
+    [btnTitle]="btnTitle"
+    (onPlayBGSound)="playBGSound()"
+    *ngIf="!isLaunchTest"
+  ></app-launch-activity-sound>
+  <div id="activity-canvas">
+    <div id="blue-board">
+      <div id="board-activity-hint">
+        <p class="my-0">{{ boardActivityHint }}</p>
+      </div>
+      <div class="inner">
+        <div id="result-item-list">
+          <!-- <ul class="item-list ps-0 mb-0">
                     <li [ngClass]="{'hint': item.hint}" *ngFor="let item of testList[testNumber]?.answer">
                         <span [ngClass]="{'d-none': !item?.isShow}">{{item?.text}}</span>
                     </li>
                 </ul> -->
-                    <ul class="ps-0 mb-0 list-style-none">
-                        <li class="queue">
-                            <div class="label">Title</div>
-                            <ul class="item-list ps-0 mb-0 list-style-none value">
-                                <li [ngClass]="{'disabled': !boardData.title.active}">
-                                    <div *ngFor="let item of boardData.title.titleContent">
-                                        <span [ngClass]="{'d-none': !item.display}">{{item?.text}}</span>
-                                    </div>
-                                    <span class="disable-film"></span>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="queue">
-                            <div class="label">Short story</div>
-                            <ul class="item-list ps-0 mb-0 list-style-none value">
-                                <li [ngClass]="{'disabled': !boardData.body.active}">
-                                    <div *ngFor="let item of boardData.body.bodyContent[testBodyLoopNumber].content">
-                                        <span [ngClass]="{'d-none': !item.display}">{{item?.text}}</span>
-                                    </div>
-                                    <span class="disable-film"></span>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div id="key-selection-preview-block">
-            <div class="preview-text" *ngIf="previewText">
-                {{previewText}}
-            </div>
-        </div>
-        <div id="activity-keypad">
-            <ul class="key-list ps-0 list-style-none">
-                <li *ngFor="let key of keyList">
-                    <button class="btn"
-                    [ngClass]="{'is-right': key?.isWrongChoice == false,'is-wrong': key?.isWrongChoice == true}"  (click)="onSelectAlphabet(key, key?.parent)">{{key?.label}}</button>
+          <ul class="ps-0 mb-0 list-style-none">
+            <li class="queue">
+              <div class="label">Title</div>
+              <ul class="item-list ps-0 mb-0 list-style-none value">
+                <li [ngClass]="{ disabled: !boardData.title.active }">
+                  <div *ngFor="let item of boardData.title.titleContent">
+                    <span [ngClass]="{ 'd-none': !item.display }">{{
+                      item?.text
+                    }}</span>
+                  </div>
+                  <span class="disable-film"></span>
                 </li>
-            </ul>
+              </ul>
+            </li>
+            <li class="queue">
+              <div class="label">Short story</div>
+              <ul class="item-list ps-0 mb-0 list-style-none value">
+                <li [ngClass]="{ disabled: !boardData.body.active }">
+                  <div
+                    *ngFor="
+                      let item of boardData.body.bodyContent[testBodyLoopNumber]
+                        .content
+                    "
+                  >
+                    <span [ngClass]="{ 'd-none': !item.display }">{{
+                      item?.text
+                    }}</span>
+                  </div>
+                  <span class="disable-film"></span>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
-
-        <div id="utility-controls">
-            <div id="activity-hint-btn-wrapper">
-                <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
-                </button>
-                <p>Hint</p>
-            </div>
-            <div id="replay-voice-btn-wrapper">
-                <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
-                <p>Refresh</p>
-            </div>
-        </div>
+      </div>
     </div>
+    <div id="key-selection-preview-block">
+      <div
+        class="preview-text"
+        [ngClass]="{ 'wrong-answer': isWrongSelection }"
+        *ngIf="previewText"
+      >
+        {{ previewText }}
+      </div>
+    </div>
+    <div id="activity-keypad">
+      <ul class="key-list ps-0 list-style-none">
+        <li *ngFor="let key of keyList">
+          <button
+            class="btn"
+            [ngClass]="{
+              'is-right': key?.isWrongChoice == false,
+              'is-wrong': key?.isWrongChoice == true
+            }"
+            (click)="onSelectAlphabet(key, key?.parent)"
+          >
+            {{ key?.label }}
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div id="utility-controls">
+      <div id="activity-hint-btn-wrapper">
+        <button
+          class="btn"
+          id="activity-hint-btn"
+          (click)="onReadHint()"
+        ></button>
+        <p>Hint</p>
+      </div>
+      <div id="replay-voice-btn-wrapper">
+        <button
+          class="btn"
+          id="replay-voice-btn"
+          (click)="refreshGame()"
+        ></button>
+        <p>Refresh</p>
+      </div>
+    </div>
+  </div>
 </ng-container>
 <ng-container *ngIf="isFinishedTest">
-    <div [ngSwitch]="programStatus">
-        <div *ngSwitchCase="'Completed'">
-            <div class="completion-screen level">
-                <app-level-completion [levelTitle]="gameLevel" [gameType]="gameType"></app-level-completion>
-            </div>
-        </div>
-        <div *ngSwitchDefault>
-            <div class="completion-screen">
-                <app-stage-completion [levelTitle]="gameLevel" [gameType]="gameType"
-                    [stageNumber]="stageNumber"></app-stage-completion>
-            </div>
-        </div>
+  <div [ngSwitch]="programStatus">
+    <div *ngSwitchCase="'Completed'">
+      <div class="completion-screen level">
+        <app-level-completion
+          [levelTitle]="gameLevel"
+          [gameType]="gameType"
+        ></app-level-completion>
+      </div>
     </div>
-    <!-- <div class="completion-screen level">
+    <div *ngSwitchDefault>
+      <div class="completion-screen">
+        <app-stage-completion
+          [levelTitle]="gameLevel"
+          [gameType]="gameType"
+          [stageNumber]="stageNumber"
+        ></app-stage-completion>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="completion-screen level">
         <p class="text-danger">{{programStatus}}</p>
         <app-level-completion [levelTitle]="gameLevel"
             [gameType]="gameType"></app-level-completion>
     </div> -->
 </ng-container>
-
 
 <!-- <ng-container *ngIf="isFinishedTest">
     <div class="completion-screen">

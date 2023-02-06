@@ -17,7 +17,6 @@ import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.com
 import { LongTextReadDialogComponent } from 'src/app/views/literacy-test/completion/long-text-read-dialog/long-text-read-dialog.component';
 import { addParagraphLevelStageFourResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
-import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.selectors';
 import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
@@ -25,7 +24,10 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit {
+export class ExerciseComponent
+  extends ComponentReloadFunctionalityComponent
+  implements OnInit
+{
   boardActivityHint: string = 'Complete the paragraph';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -44,8 +46,6 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   resultTextList: any[] = [];
   // textPosition = 0;
-  speechText!: string;
-  speechTexts$!: Observable<any>;
   boardData: any;
   testList: any;
   fullDataText: string = `My name is Ahmed.
@@ -53,12 +53,13 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   I have three brothers and two sisters, We all clean the house every morning before going out to the shop. Today is a market day in the town I live we are going to have lots of fun today.`;
 
   isLaunchTest!: boolean;
-  btnTitle = "Start";
+  btnTitle = 'Start';
   // isFinishedTest: boolean = true;
   isFinishedTest: boolean = false;
-  // 
+  //
   levelTitle!: string;
   gameType = GameType.LITERACY;
+  isWrongSelection!: boolean;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
@@ -66,18 +67,18 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     public override _router: Router,
     // Speech recog
     private _paragraphStageFourSvc: ParagraphStageFourService,
-    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
   ) {
     super(_router);
   }
 
   override ngOnInit(): void {
-
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     // this.loadTestContent();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
@@ -91,25 +92,22 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
-
 
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
-
-
 
   onReplceKeyList() {
     this.keyList = this.testList[this.testNumber]?.testKeys;
@@ -127,6 +125,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   onSelectAlphabet(alphabet: any) {
+    // console.log('alphabet: ', alphabet);
+    this.previewText = alphabet.name;
     let statement = [...this.resultTextList[this.testNumber].statement];
     let indexItem = statement.findIndex((st: any) => st.text == alphabet.name);
     if (statement[indexItem]) {
@@ -136,12 +136,15 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
       playSound.playAlphabetVoice();
       this.onTestStatement(this.resultTextList[this.testNumber]);
     } else {
-      alphabet.isWrongChoice = true
+      alphabet.isWrongChoice = true;
+      this.isWrongSelection = true;
       let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
       playSound.playAlphabetVoice();
     }
     setTimeout(() => {
       alphabet.isWrongChoice = null;
+      this.isWrongSelection = false;
+      this.previewText = "";
     }, 500);
     // this.resultTextList[this.testNumber].
   }
@@ -181,8 +184,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
           //   // `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
           // ]);
           this.isFinishedTest = true;
-          this.stopBGSound()
-          this.playLevelCompletedSound()
+          this.stopBGSound();
+          this.playLevelCompletedSound();
         }
       }
     );
@@ -190,7 +193,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   GetExerciseTexts() {
     let apiArr = this._paragraphStageFourSvc.GetExerciseTexts();
-    this.resultTextList = [...apiArr]
+    this.resultTextList = [...apiArr];
   }
 
   onCheckTestCompletion() {
@@ -243,8 +246,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
           session_id: this.gameSessionId,
           answer: '5',
           data: [...TestList],
-        }
-        this.onSubmit(Payload)
+        };
+        this.onSubmit(Payload);
       }
     });
   }

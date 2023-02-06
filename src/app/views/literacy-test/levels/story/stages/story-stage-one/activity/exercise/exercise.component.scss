@@ -102,6 +102,9 @@
         width: auto !important;
         display: inline-flex !important;
         min-width: 72px;
+        &.wrong-answer{
+            border: 3px solid red !important;
+        }
     }
 }
 
@@ -127,4 +130,5 @@
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
+    overflow: hidden;
 }

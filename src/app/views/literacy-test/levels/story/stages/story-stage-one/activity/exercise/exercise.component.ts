@@ -58,6 +58,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   gameType = GameType.LITERACY;
   programStatus: any;
   Completed = ProgramCompletion.COMPLETED;
+  isWrongSelection!: boolean;
 
   constructor(
     private _gameSvc: GameService,
@@ -140,7 +141,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   onSelectAlphabet(alphabet: any, _keyParent: string) {
-    // console.log("alphabet: ", alphabet)
+    console.log("alphabet: ", alphabet)
+    this.previewText = alphabet.label;
     // console.log("keyParent: ", _keyParent)
     // console.warn("keyType: ", keyParent.body)
     this.previewText = alphabet.label;
@@ -162,11 +164,13 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
           this.testResult(_keyParent);
         } else {
           alphabet.isWrongChoice = true;
+          this.isWrongSelection = true;
           let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
           playSound.playAlphabetVoice();
         }
         setTimeout(() => {
           alphabet.isWrongChoice = null;
+          this.isWrongSelection = false;
         }, 500);
         break;
       case keyParent.body:
@@ -183,11 +187,13 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
           this.testResult(_keyParent);
         } else {
           alphabet.isWrongChoice = true;
+          this.isWrongSelection = true;
           let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
           playSound.playAlphabetVoice();
         }
         setTimeout(() => {
           alphabet.isWrongChoice = null;
+          this.isWrongSelection = false;
         }, 500);
         break;
 
