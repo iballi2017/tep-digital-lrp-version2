@@ -277,26 +277,32 @@ export const testList = [
       {
         name: 's',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.S_Note
       },
       {
         name: 'a',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.A_Note
       },
       {
         name: 'v',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.V_Note
       },
       {
         name: 'p',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.P_Note
       },
       {
         name: 'e',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.E_Note
       },
       {
         name: 'u',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.U_Note
       },
     ],
   },
