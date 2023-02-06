@@ -354,7 +354,7 @@ export const testList = [
       {
         name: 'l',
         type: AlphabetType.CONSONANT,
-        vn: AlphabetNote.C_Note,
+        vn: AlphabetNote.L_Note,
       },
       {
         name: 'a',
