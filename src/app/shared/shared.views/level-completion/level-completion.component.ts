@@ -68,7 +68,9 @@ export class LevelCompletionComponent implements OnInit {
     this._gameSvc.LoadGameSession();
     this.onGetGameSessionId();
     this.onGetStageResult();
-    this.pageTitle = `YOU HAVE COMPLETE ${this.gameLevel?.levelTitle} LEVEL OF THE PROGRAM`;
+    // this.pageTitle = `YOU HAVE COMPLETE ${this.gameLevel?.levelTitle} LEVEL OF THE PROGRAM`;
+    this.pageTitle = `You have completed this level`;
+    
   }
 
   onGetGameSessionId() {

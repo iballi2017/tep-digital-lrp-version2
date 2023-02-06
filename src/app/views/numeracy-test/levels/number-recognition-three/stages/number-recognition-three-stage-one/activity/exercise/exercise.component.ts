@@ -23,9 +23,9 @@ import { KeySound } from 'src/assets/data/key-sound';
   styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit {
-  boardActivityHint: string = 'Identify the 3-digit numbers';
+  boardActivityHint: string = 'Identify the 3-digits numbers';
   activityHint: any =
-    'Identify the 3-digit numbers selecting the right answer in the green boxes below';
+    'Identify the 3-digits numbers selecting the right answer in the green boxes below';
   testNumber: number = 0;
   ONE_DIGIT_NUMBER = NumberDigitType.ONE_DIGIT_NUMBER;
   TWO_DIGIT_NUMBER = NumberDigitType.TWO_DIGIT_NUMBER;
