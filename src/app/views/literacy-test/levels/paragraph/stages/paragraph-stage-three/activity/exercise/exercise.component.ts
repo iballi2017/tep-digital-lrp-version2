@@ -20,14 +20,17 @@ import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/spee
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.scss']
+  styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent extends ComponentReloadFunctionalityComponent  implements OnInit {
+export class ExerciseComponent
+  extends ComponentReloadFunctionalityComponent
+  implements OnInit
+{
   boardActivityHint: string = 'Read the paragraph below';
   checkTestCompletion: any;
   keyList: any[] = [];
-  previewList: any[] = [];
-  previewText: string = '';
+  // previewList: any[] = [];
+  // previewText: string = '';
   activityHint: any =
     'Click on the start button below to start the activity; Read the paragraph below noting the punctuations and at a steady pace';
 
@@ -42,10 +45,10 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
   speechTexts$!: Observable<any>;
   boardData: any;
   isLaunchTest!: boolean;
-  btnTitle = "Start";
+  btnTitle = 'Start';
   // isFinishedTest: boolean = true;
   isFinishedTest: boolean = false;
-  // 
+  //
   levelTitle!: string;
   gameType = GameType.LITERACY;
 
@@ -58,19 +61,19 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     // Speech recog
     private _paragraphStageThreeSvc: ParagraphStageThreeService,
     private cdr: ChangeDetectorRef,
-    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
   ) {
     super(_router);
     this._paragraphStageThreeSvc?.init();
   }
 
   override ngOnInit(): void {
-
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     this.cdr.detectChanges();
     this.onGetGameSessionId();
 
@@ -81,21 +84,19 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     this.loadBoardData();
   }
 
-
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
-
 
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
@@ -113,9 +114,10 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     this.speechTexts$.subscribe({
       next: (response: any) => {
         if (response) {
+          this.speechText = response;
           let speechText = response.replace(/\s/g, '');
-          this.boardData.uiText == speechText;
-          this.boardData.uiText == speechText;
+          // this.boardData.uiText == speechText;
+          // this.boardData.uiText == speechText;
           if (this.boardData.text.replace(/\s/g, '') == speechText) {
             this.boardData.isDone = true;
             this.onTestValues(this.resultTextList);
@@ -157,8 +159,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
           //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
           // ]);
           this.isFinishedTest = true;
-          this.stopBGSound()
-          this.playLevelCompletedSound()
+          this.stopBGSound();
+          this.playLevelCompletedSound();
         }
       }
     );
@@ -171,7 +173,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     this.isStart = true;
     this._paragraphStageThreeSvc.start();
     this._playSoundSvc.stopLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
 
   stopService() {
@@ -183,6 +185,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
   clearService() {
     this._paragraphStageThreeSvc.clear();
   }
+
   /* SPEECH RECOG CODE ENDS */
 
   onGetGameSessionId() {
@@ -217,7 +220,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
   }
 
   ngOnDestroy(): void {
-    this.stopBGSound()
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();
