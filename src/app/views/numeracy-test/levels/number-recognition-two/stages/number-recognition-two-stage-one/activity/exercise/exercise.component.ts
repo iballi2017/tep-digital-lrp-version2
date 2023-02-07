@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Identify the 2-digits numbers';
   activityHint: any =
     'Identify the 2-digits numbers selecting the right answer in the green boxes below';
@@ -42,6 +42,7 @@ export class ExerciseComponent implements OnInit {
   btnTitle = "Start";
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
+  isWrongSelection!: boolean;
 
   testList = testList;
   constructor(
@@ -101,9 +102,6 @@ export class ExerciseComponent implements OnInit {
   onSelectAlphabet(number: any) {
     this.previewList.push(number.name);
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.type == NumberDigitType.TWO_DIGIT_NUMBER) {
       if (!this.resultItemList.find((item: any) => item.name === number.name)) {
         this.resultItemList.push(number);
@@ -114,7 +112,12 @@ export class ExerciseComponent implements OnInit {
     } else {
       let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
       playSound.playAlphabetVoice();
+      this.isWrongSelection = true;
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection = false;
+    }, 500);
   }
 
   isComplete() {
@@ -193,6 +196,10 @@ export class ExerciseComponent implements OnInit {
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isTestComplete = false;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.stopBGSound()
   }
 }
 

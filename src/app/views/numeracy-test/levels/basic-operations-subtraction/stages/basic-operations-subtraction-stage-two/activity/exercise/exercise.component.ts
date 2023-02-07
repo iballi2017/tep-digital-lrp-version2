@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -22,7 +22,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss']
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Subtract the 2-digit numbers here';
   testNumber: number = 0;
   keyList: any[] = [];
@@ -180,6 +180,10 @@ export class ExerciseComponent implements OnInit {
     this.placeQuestion()
   }
 
+
+  ngOnDestroy(): void {
+    this.stopBGSound()
+  }
 }
 
 
