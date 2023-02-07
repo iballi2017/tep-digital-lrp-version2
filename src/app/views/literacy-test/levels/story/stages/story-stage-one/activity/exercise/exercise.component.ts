@@ -331,6 +331,7 @@ export class ExerciseComponent
   refreshGame() {
     this.reloadComponent(true);
     console.log(' this.resultListResult: ', this.resultListResult);
+    this.testNumber = 0;
     for (let i = 0; i < this.resultListResult.length; i++) {
       this.resultListResult[i].title.active = true;
       this.resultListResult[i].title.isDone = false;
@@ -339,14 +340,17 @@ export class ExerciseComponent
       );
       this.resultListResult[i].body.active = false;
       this.resultListResult[i].body.isDone = false;
-      this.resultListResult[i].body.titleContent.forEach(
-        (content: any) => (content.display = false)
-      );
+      this.resultListResult[i].body.bodyContent.forEach((content: any) => {
+        content.isItemTestDone = false;
+        content.content.forEach((item: any) => {
+          item.display = false;
+        });
+      });
     }
 
     // this.reloadPage();
     // this.testNumber = 0;
-    // this.loadTestContent();
+    this.loadTestContent();
     // console.log('this.resultListResult: ', this.resultListResult);
   }
 
