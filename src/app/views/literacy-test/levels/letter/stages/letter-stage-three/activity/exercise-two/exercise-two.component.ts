@@ -248,6 +248,9 @@ export class ExerciseTwoComponent extends ComponentReloadFunctionalityComponent 
 
   refreshGame() {
     this.reloadComponent(true);
+    this._router.navigate([
+      '/literacy/letter/stage-3/activity',
+    ]);
     // this.resultItemList = [];
     // this.testNumber = 0;
     // this.onReplceKeyList();

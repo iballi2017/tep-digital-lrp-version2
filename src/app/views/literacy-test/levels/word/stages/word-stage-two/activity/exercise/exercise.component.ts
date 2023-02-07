@@ -180,7 +180,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   refreshGame() {
-    // this.reloadComponent(true);
+    this.reloadComponent(true);
     this.testNumber = 0;
     this.testList.forEach((element: any) => {
       element.testKeys.forEach((key: any) => {

@@ -66,7 +66,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   gameLevel = GameLevel.LETTER;
   isLaunchTest: any;
   btnTitle = "Start";
-  isSTartTest!: boolean;
+  // isSTartTest!: boolean;
+  isFinishedTest: boolean = false;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
@@ -79,7 +80,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   override ngOnInit(): void {
-    this.isTestStart();
+    // this.isTestStart();
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg
@@ -90,11 +91,11 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     this.onGetGameSessionId();
   }
 
-  isTestStart() {
-    this._letterStageThreeSvc.isStartTestBehaviour.subscribe((isStart: boolean) => {
-      this.isSTartTest = isStart
-    })
-  }
+  // isTestStart() {
+  //   this._letterStageThreeSvc.isStartTestBehaviour.subscribe((isStart: boolean) => {
+  //     this.isSTartTest = isStart
+  //   })
+  // }
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
@@ -229,6 +230,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   testGameCompletion() {
     this.onCheckTestCompletion();
     if (this.checkTestCompletion.length == this.testList.length) {
+      this.isFinishedTest = true;
       this._router.navigate([
         '/literacy/letter/stage-3/activity/exercise-two',
       ]);

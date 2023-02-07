@@ -26,7 +26,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Select the vowel letters from these options';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
@@ -77,11 +77,6 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
   }
-
-  ngAfterViewInit() {
-    // this.playBGSound().playBGSound();
-  }
-
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();

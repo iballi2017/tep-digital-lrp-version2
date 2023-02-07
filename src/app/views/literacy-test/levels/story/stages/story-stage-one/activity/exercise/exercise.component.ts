@@ -7,7 +7,10 @@ import { PlaySound } from 'src/app/models/class/play-sound';
 import { ShuffleArray } from 'src/app/models/class/shuffle-array';
 import { ActivityAnswer } from 'src/app/models/interface/game';
 import { GameLevel } from 'src/app/models/interface/game-level';
-import { GameType, ProgramCompletion } from 'src/app/models/interface/game-type';
+import {
+  GameType,
+  ProgramCompletion,
+} from 'src/app/models/interface/game-type';
 import { GameService } from 'src/app/services/game.service';
 import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
@@ -26,7 +29,10 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
+export class ExerciseComponent
+  extends ComponentReloadFunctionalityComponent
+  implements OnInit, OnDestroy
+{
   boardActivityHint: string = 'Complete the short story';
   testNumber: number = 0;
   testBodyLoopNumber: number = 0;
@@ -72,7 +78,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     super(_router);
   }
 
-  override  ngOnInit(): void {
+  override ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg;
@@ -97,7 +103,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
 
   playLevelCompletedSound() {
@@ -141,7 +147,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   onSelectAlphabet(alphabet: any, _keyParent: string) {
-    console.log("alphabet: ", alphabet)
+    console.log('alphabet: ', alphabet);
     this.previewText = alphabet.label;
     // console.log("keyParent: ", _keyParent)
     // console.warn("keyType: ", keyParent.body)
@@ -300,7 +306,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
       (msg: any) => {
         if (msg) {
           // console.log("msg: ", msg);
-          this.programStatus = msg?.resultStatus?.literacyStatus
+          this.programStatus = msg?.resultStatus?.literacyStatus;
           // this._router.navigate([
           //   `/${GameType.LITERACY}/game-type-completion/${this.gameLevel}`
           // ]);
@@ -323,8 +329,22 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   refreshGame() {
-    // this.reloadComponent(true);
-    this.reloadPage();
+    this.reloadComponent(true);
+    console.log(' this.resultListResult: ', this.resultListResult);
+    for (let i = 0; i < this.resultListResult.length; i++) {
+      this.resultListResult[i].title.active = true;
+      this.resultListResult[i].title.isDone = false;
+      this.resultListResult[i].title.titleContent.forEach(
+        (content: any) => (content.display = false)
+      );
+      this.resultListResult[i].body.active = false;
+      this.resultListResult[i].body.isDone = false;
+      this.resultListResult[i].body.titleContent.forEach(
+        (content: any) => (content.display = false)
+      );
+    }
+
+    // this.reloadPage();
     // this.testNumber = 0;
     // this.loadTestContent();
     // console.log('this.resultListResult: ', this.resultListResult);

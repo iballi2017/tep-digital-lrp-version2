@@ -10,7 +10,6 @@ import {
 } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.actions';
 import { SpeechTextsState } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.reducer';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -23,11 +22,7 @@ export class ParagraphStageFourService {
   tempWords!: string;
   VoiceText: any;
 
-  constructor(
-    private _http: HttpClient,
-  ) {}
-
-  
+  constructor(private _http: HttpClient) {}
 
   sendAddParagraphLevelResultBehaviour(Msg: any) {
     this.addParagraphLevelResultBehaviour.next(Msg);
@@ -35,8 +30,6 @@ export class ParagraphStageFourService {
   getAddParagraphLevelResultBehaviour() {
     return this.addParagraphLevelResultBehaviour.asObservable();
   }
-
-
 
   GetExerciseTexts() {
     return exerciseTexts;
@@ -53,7 +46,7 @@ export const exerciseTexts = [
   {
     isDone: false,
     statement: [
-      { text: 'my', isHide: true },
+      { text: 'my', hint: true, isHide: true },
       { text: 'name', isHide: false },
       { text: 'is', isHide: false },
       { text: 'Ahmed', isHide: false },
@@ -77,7 +70,7 @@ export const exerciseTexts = [
     isDone: false,
     statement: [
       { text: 'i', isHide: false },
-      { text: 'live', isHide: true },
+      { text: 'live', hint: true, isHide: true },
       { text: 'in', isHide: false },
       { text: 'a', isHide: false },
       { text: 'big', isHide: false },
@@ -102,10 +95,10 @@ export const exerciseTexts = [
     isDone: false,
     statement: [
       { text: 'i', isHide: false },
-      { text: 'have', isHide: true },
+      { text: 'have', hint: true, isHide: true },
       { text: 'three', isHide: false },
       { text: 'brothers', isHide: false },
-      { text: 'and', isHide: true },
+      { text: 'and', hint: true, isHide: true },
       { text: 'two', isHide: false },
       { text: 'sisters', isHide: false },
     ],
@@ -128,16 +121,16 @@ export const exerciseTexts = [
     isDone: false,
     statement: [
       { text: 'we', isHide: false },
-      { text: 'all', isHide: true },
+      { text: 'all', hint: true, isHide: true },
       { text: 'clean', isHide: false },
       { text: 'the', isHide: false },
       { text: 'house', isHide: false },
       { text: 'every', isHide: false },
       { text: 'morning', isHide: false },
-      { text: 'before', isHide: true },
+      { text: 'before', hint: true, isHide: true },
       { text: 'going', isHide: false },
       { text: 'out', isHide: false },
-      { text: 'to', isHide: true },
+      { text: 'to', hint: true, isHide: true },
       { text: 'the', isHide: false },
       { text: 'shop', isHide: false },
     ],
@@ -179,17 +172,17 @@ export const exerciseTexts = [
       { text: 'day', isHide: false },
       { text: 'in', isHide: false },
       { text: 'the', isHide: false },
-      { text: 'town', isHide: true },
+      { text: 'town', hint: true, isHide: true },
       { text: 'I', isHide: false },
       { text: 'live, ', isHide: false },
-      { text: 'we', isHide: true },
+      { text: 'we', hint: true, isHide: true },
       { text: 'are', isHide: false },
       { text: 'going', isHide: false },
       { text: 'to', isHide: false },
       { text: 'have', isHide: false },
       { text: 'lots', isHide: false },
       { text: 'of', isHide: false },
-      { text: 'fun', isHide: true },
+      { text: 'fun', hint: true, isHide: true },
       { text: 'today', isHide: false },
     ],
     testKeys: [
@@ -206,7 +199,7 @@ export const exerciseTexts = [
         isWrongChoice: false,
       },
       {
-        name: 'have',
+        name: 'has',
         isWrongChoice: false,
       },
       {

@@ -19,7 +19,9 @@
             </div>
         </div>
         <div id="key-selection-preview-block">
-            <div class="preview-text" *ngIf="previewText">
+            <div class="preview-text" 
+            [ngClass]="{ 'wrong-answer': isWrongSelection }"
+            *ngIf="previewText">
                 {{previewText}}
             </div>
         </div>

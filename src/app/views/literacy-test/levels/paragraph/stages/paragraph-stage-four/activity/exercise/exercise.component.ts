@@ -144,7 +144,7 @@ export class ExerciseComponent
     setTimeout(() => {
       alphabet.isWrongChoice = null;
       this.isWrongSelection = false;
-      this.previewText = "";
+      this.previewText = '';
     }, 500);
     // this.resultTextList[this.testNumber].
   }
@@ -222,8 +222,18 @@ export class ExerciseComponent
   }
 
   refreshGame() {
-    // this.reloadComponent(true);
-    this.reloadPage();
+    this.reloadComponent(true);
+    for (let i = 0; i < this.resultTextList.length; i++) {
+      this.resultTextList[i].isDone = false;
+      this.resultTextList[i].statement.forEach((state: any) => {
+        if (state.hint) {
+          state.isHide = true;
+        } else {
+          state.isHide = false;
+        }
+      });
+    }
+    // this.reloadPage();
     // console.log("this.resultTextList: ", this.resultTextList)
     // let apiArr = this._paragraphStageFourSvc.GetExerciseTexts();
     // let x = [...apiArr]
