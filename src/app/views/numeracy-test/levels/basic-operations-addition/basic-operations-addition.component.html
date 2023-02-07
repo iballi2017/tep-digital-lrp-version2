@@ -14,7 +14,7 @@
 
     <ul class="stage-status list-style-none ps-0">
         <li class="cursor-pointer" *ngFor="let item of testStageStars; let i = index"
-            [routerLink]="['/numeracy/basic-operations-addition/', item?.title, 'basic-operations-addition-splash']">
+            [routerLink]="['/numeracy/basic-operations-addition/', item?.title]">
             <div class="stage-card">
                 <p>{{i + 1}}</p>
             </div>
