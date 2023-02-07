@@ -1,79 +1,108 @@
 <!-- <p>exercise works!</p> -->
 
 <ng-container *ngIf="!isFinishedTest">
-    <app-launch-activity-sound [btnTitle]="btnTitle" (onPlayBGSound)="playBGSound()"
-        *ngIf="!isLaunchTest"></app-launch-activity-sound>
-<div id="activity-canvas">
+  <app-launch-activity-sound
+    [btnTitle]="btnTitle"
+    (onPlayBGSound)="playBGSound()"
+    *ngIf="!isLaunchTest"
+  ></app-launch-activity-sound>
+  <div id="activity-canvas">
     <div id="blue-board">
-        <div id="board-activity-hint">
-            <p class="my-0">{{boardActivityHint}}</p>
+      <div id="board-activity-hint">
+        <p class="my-0">{{ boardActivityHint }}</p>
+      </div>
+      <div class="inner">
+        <div id="result-item-list">
+          <div class="d-flex">
+            <ul class="item-list ps-0 mb-0">
+              <li>{{ test?.question }}</li>
+            </ul>
+            <ul class="item-list ps-0 mb-0">
+              <li [ngClass]="{ 'answer-field': !test?.isAnswered }">
+                <ng-container *ngIf="test?.isAnswered">{{
+                  test?.answer
+                }}</ng-container>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="inner">
-            <div id="result-item-list">
-                <div class="d-flex">
-                    <ul class="item-list ps-0 mb-0">
-                        <li>{{test?.question}}</li>
-                    </ul>
-                    <ul class="item-list ps-0 mb-0">
-                        <li [ngClass]="{'answer-field': !test?.isAnswered}">
-                            <ng-container *ngIf="test?.isAnswered">{{test?.answer}}</ng-container></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
     <div id="key-selection-preview-block">
-        <div class="preview-text" *ngIf="previewText">
-            {{previewText}}
-        </div>
+      <div
+        class="preview-text"
+        [ngClass]="{ 'wrong-answer': isWrongSelection }"
+        *ngIf="previewText"
+      >
+        {{ previewText }}
+      </div>
     </div>
     <div id="activity-keypad">
-        <ul class="key-list ps-0 list-style-none">
-            <li *ngFor="let key of keyList">
-                <!-- {{key}} -->
-                <button class="btn" (click)="onSelectAlphabet(key)"
-                    [ngClass]="{'is-right': key?.name == test?.answer,'is-wrong': key?.name != test?.answer}">{{key?.name}}</button>
-            </li>
-        </ul>
+      <ul class="key-list ps-0 list-style-none">
+        <li *ngFor="let key of keyList">
+          <!-- {{key}} -->
+          <button
+            class="btn"
+            (click)="onSelectAlphabet(key)"
+            [ngClass]="{
+              'is-right': key?.name == test?.answer,
+              'is-wrong': key?.name != test?.answer
+            }"
+          >
+            {{ key?.name }}
+          </button>
+        </li>
+      </ul>
     </div>
     <div id="utility-controls">
-        <div id="activity-hint-btn-wrapper">
-            <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
-            </button>
-            <p>Hint</p>
-        </div>
-        <div id="replay-voice-btn-wrapper">
-            <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
-            <p>Refresh</p>
-        </div>
+      <div id="activity-hint-btn-wrapper">
+        <button
+          class="btn"
+          id="activity-hint-btn"
+          (click)="onReadHint()"
+        ></button>
+        <p>Hint</p>
+      </div>
+      <div id="replay-voice-btn-wrapper">
+        <button
+          class="btn"
+          id="replay-voice-btn"
+          (click)="refreshGame()"
+        ></button>
+        <p>Refresh</p>
+      </div>
     </div>
-</div>
-
+  </div>
 </ng-container>
 <ng-container *ngIf="isFinishedTest">
-    <!-- <div class="completion-screen level">
+  <!-- <div class="completion-screen level">
         <p class="text-danger">{{programStatus}}</p>
         <app-level-completion [levelTitle]="gameLevel"
             [gameType]="gameType"></app-level-completion>
     </div> -->
 </ng-container>
 
-
 <ng-container *ngIf="isFinishedTest">
-    <div [ngSwitch]="programStatus">
-        <div *ngSwitchCase="'Completed'">
-            <div class="completion-screen level">
-                <app-level-completion [levelTitle]="gameLevel" [gameType]="gameType"></app-level-completion>
-            </div>
-        </div>
-        <div *ngSwitchDefault>
-            <div class="completion-screen">
-                <app-stage-completion [levelTitle]="gameLevel" [gameType]="gameType"
-                    [stageNumber]="stageNumber"></app-stage-completion>
-            </div>
-        </div>
+  <div [ngSwitch]="programStatus">
+    <div *ngSwitchCase="'Completed'">
+      <div class="completion-screen level">
+        <app-level-completion
+          [levelTitle]="gameLevel"
+          [gameType]="gameType"
+        ></app-level-completion>
+      </div>
     </div>
-    <!-- <div class="completion-screen level">
+    <div *ngSwitchDefault>
+      <div class="completion-screen">
+        <app-stage-completion
+          [levelTitle]="gameLevel"
+          [gameType]="gameType"
+          [stageNumber]="stageNumber"
+        ></app-stage-completion>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="completion-screen level">
         <app-level-completion [levelTitle]="gameLevel"
             [gameType]="gameType"></app-level-completion>
     </div> -->

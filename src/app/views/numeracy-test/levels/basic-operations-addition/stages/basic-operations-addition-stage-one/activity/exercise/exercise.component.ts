@@ -43,6 +43,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   testList: any = testList;
   activityHint: any = "Count the single digit numbers together and select the right answer in the green box below.";
   test: any;
+  isWrongSelection!: boolean;
   constructor(private _gameSvc: GameService, private _basicOperationsAdditionStageOneSvc: BasicOperationsAdditionStageOneService,
     private store: Store<BasicOperationsAdditionLevelResultState>,
     private _router: Router,
@@ -101,9 +102,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   onSelectAlphabet(number: any) {
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.name == this.test.answer) {
       this.test.isAnswered = true;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
@@ -112,9 +110,14 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         this.isComplete();
       }, 1500);
     } else {
+      this.isWrongSelection = true;
       let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
       playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection = false;
+    }, 500);
   }
 
 

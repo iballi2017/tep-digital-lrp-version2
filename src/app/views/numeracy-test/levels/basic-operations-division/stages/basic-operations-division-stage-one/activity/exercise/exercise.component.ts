@@ -19,10 +19,9 @@ import { KeySound } from 'src/assets/data/key-sound';
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.scss']
+  styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit, OnDestroy {
-
   boardActivityHint: string = 'Solve the division problems provided';
   testNumber: number = 0;
   keyList: any[] = [];
@@ -36,18 +35,22 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   btnTitle = 'Start';
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
-
+  isWrongSelection!: boolean;
 
   // testList: any = [...testList]
   testList: any = testList;
-  activityHint: any = "Split the number on the left into equal group of number in the right"
+  activityHint: any =
+    'Split the number on the left into equal group of number in the right';
   test: any;
-  constructor(private _gameSvc: GameService, private _basicOperationsDivisionStageOneSvc: BasicOperationsDivisionStageOneService,
+  constructor(
+    private _gameSvc: GameService,
+    private _basicOperationsDivisionStageOneSvc: BasicOperationsDivisionStageOneService,
     private store: Store<BasicOperationsDivisionLevelResultState>,
     private _router: Router,
     public dialog: MatDialog,
     private _playSoundSvc: PlaySoundService,
-    private _launchGameSvc: LaunchGameService) { }
+    private _launchGameSvc: LaunchGameService
+  ) {}
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
@@ -60,34 +63,29 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.onGetGameSessionId();
   }
 
-
   playBGSound() {
     this._playSoundSvc.playNumeracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopNumeracyBGSound();
   }
 
-
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
 
-
-
   placeQuestion() {
-    this.test = this.testList[this.testNumber]
+    this.test = this.testList[this.testNumber];
     let keys = this.test?.testKeys;
     this.keyList = new ShuffleArray(keys).shuffle();
   }
-
 
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
@@ -98,12 +96,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     });
   }
 
-
   onSelectAlphabet(number: any) {
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.name == this.test.answer) {
       this.test.isAnswered = true;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
@@ -111,12 +105,16 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.isComplete();
       }, 1500);
-    }else {
+    } else {
+      this.isWrongSelection = true;
       let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
       playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.isWrongSelection = false;
+      this.previewText = '';
+    }, 500);
   }
-
 
   isComplete() {
     let answeredList = this.testList.filter((item: any) => {
@@ -126,7 +124,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       this.testNumber++;
       this.placeQuestion();
     } else {
-      this.testGameCompletion()
+      this.testGameCompletion();
       return;
     }
   }
@@ -139,7 +137,9 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         answer: '3',
         data: [...this.checkTestCompletion],
       };
-      this.store.dispatch(addBasicOperationsDivisionLevelStageOneResult({ payload: Payload }));
+      this.store.dispatch(
+        addBasicOperationsDivisionLevelStageOneResult({ payload: Payload })
+      );
       this._basicOperationsDivisionStageOneSvc.BasicOperationsDivisionLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
@@ -148,8 +148,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
             //   `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);
             this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
+            this.stopBGSound();
+            this.playLevelCompletedSound();
           }
         }
       );
@@ -178,70 +178,67 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isAnswered = false;
     }
-    this.placeQuestion()
+    this.placeQuestion();
   }
 
-
   ngOnDestroy(): void {
-    this.stopBGSound()
+    this.stopBGSound();
   }
 }
 
-
-export const
-  testList = [
-    {
-      testName: 'test-1',
-      // isTestComplete: false,
-      question: '9 ÷ 3 =',
-      answer: 9 / 3,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 9 * 3,
-        },
-        {
-          name: 9 / 3,
-        },
-        {
-          name: 9 + 3,
-        },
-      ],
-    },
-    {
-      testName: 'test-2',
-      // isTestComplete: false,
-      question: '6 ÷ 3 =',
-      answer: 6 / 3,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 6 / 3,
-        },
-        {
-          name: 6 * 3,
-        },
-        {
-          name: 6 - 3,
-        },
-      ],
-    },
-    {
-      testName: 'test-3',
-      // isTestComplete: false,
-      question: '8 ÷ 2 =',
-      answer: 8 / 2,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 8 / 2,
-        },
-        {
-          name: 8 * 2,
-        },
-        {
-          name: 8 - 2,
-        },
-      ],
-    },
-  ];
+export const testList = [
+  {
+    testName: 'test-1',
+    // isTestComplete: false,
+    question: '9 ÷ 3 =',
+    answer: 9 / 3,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 9 * 3,
+      },
+      {
+        name: 9 / 3,
+      },
+      {
+        name: 9 + 3,
+      },
+    ],
+  },
+  {
+    testName: 'test-2',
+    // isTestComplete: false,
+    question: '6 ÷ 3 =',
+    answer: 6 / 3,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 6 / 3,
+      },
+      {
+        name: 6 * 3,
+      },
+      {
+        name: 6 - 3,
+      },
+    ],
+  },
+  {
+    testName: 'test-3',
+    // isTestComplete: false,
+    question: '8 ÷ 2 =',
+    answer: 8 / 2,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 8 / 2,
+      },
+      {
+        name: 8 * 2,
+      },
+      {
+        name: 8 - 2,
+      },
+    ],
+  },
+];

@@ -19,10 +19,9 @@ import { KeySound } from 'src/assets/data/key-sound';
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.scss']
+  styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit, OnDestroy {
-
   boardActivityHint: string = 'Multiply the 1-digit numbers here';
   testNumber: number = 0;
   keyList: any[] = [];
@@ -36,44 +35,46 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   btnTitle = 'Start';
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
-
+  isWrongSelection!: boolean;
 
   // testList: any = [...testList]
   testList: any = testList;
-  activityHint: any = "Take the number on the left and add it together a number of times of the number on the right, then select the right answer in the green box below."
+  activityHint: any =
+    'Take the number on the left and add it together a number of times of the number on the right, then select the right answer in the green box below.';
   test: any;
-  constructor(private _gameSvc: GameService, private _basicOperationsMultiplicationStageOneSvc: BasicOperationsMultiplicationStageOneService,
+  constructor(
+    private _gameSvc: GameService,
+    private _basicOperationsMultiplicationStageOneSvc: BasicOperationsMultiplicationStageOneService,
     private store: Store<BasicOperationsMultiplicationLevelResultState>,
     private _router: Router,
     public dialog: MatDialog,
     private _playSoundSvc: PlaySoundService,
-    private _launchGameSvc: LaunchGameService) { }
+    private _launchGameSvc: LaunchGameService
+  ) {}
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     this.placeQuestion();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
   }
 
-
   playBGSound() {
     this._playSoundSvc.playNumeracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopNumeracyBGSound();
   }
 
-
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
@@ -81,11 +82,10 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   placeQuestion() {
-    this.test = this.testList[this.testNumber]
+    this.test = this.testList[this.testNumber];
     let keys = this.test?.testKeys;
     this.keyList = new ShuffleArray(keys).shuffle();
   }
-
 
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
@@ -96,12 +96,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     });
   }
 
-
   onSelectAlphabet(number: any) {
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.name == this.test.answer) {
       this.test.isAnswered = true;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
@@ -109,12 +105,16 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.isComplete();
       }, 1500);
-    }else {
+    } else {
+      this.isWrongSelection = true;
       let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
       playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.isWrongSelection = false;
+      this.previewText = '';
+    }, 500);
   }
-
 
   isComplete() {
     let answeredList = this.testList.filter((item: any) => {
@@ -124,7 +124,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       this.testNumber++;
       this.placeQuestion();
     } else {
-      this.testGameCompletion()
+      this.testGameCompletion();
       return;
     }
   }
@@ -137,7 +137,11 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         answer: '2',
         data: [...this.checkTestCompletion],
       };
-      this.store.dispatch(addBasicOperationsMultiplicationLevelStageOneResult({ payload: Payload }));
+      this.store.dispatch(
+        addBasicOperationsMultiplicationLevelStageOneResult({
+          payload: Payload,
+        })
+      );
       this._basicOperationsMultiplicationStageOneSvc.BasicOperationsMultiplicationLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
@@ -146,8 +150,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
             //   `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);
             this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
+            this.stopBGSound();
+            this.playLevelCompletedSound();
           }
         }
       );
@@ -176,70 +180,67 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isAnswered = false;
     }
-    this.placeQuestion()
+    this.placeQuestion();
   }
 
-
   ngOnDestroy(): void {
-    this.stopBGSound()
+    this.stopBGSound();
   }
 }
 
-
-export const
-  testList = [
-    {
-      testName: 'test-1',
-      // isTestComplete: false,
-      question: '3 x 6 =',
-      answer: 3 * 6,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 3 * 6,
-        },
-        {
-          name: 6 - 3,
-        },
-        {
-          name: 3 + 6,
-        },
-      ],
-    },
-    {
-      testName: 'test-2',
-      // isTestComplete: false,
-      question: '4 x 4 =',
-      answer: 4 * 4,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 4 + 4,
-        },
-        {
-          name: 4 * 4,
-        },
-        {
-          name: 4 - 4,
-        },
-      ],
-    },
-    {
-      testName: 'test-3',
-      // isTestComplete: false,
-      question: '2 x 5 =',
-      answer: 2 * 5,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 2 + 5,
-        },
-        {
-          name: 2 * 5,
-        },
-        {
-          name: 5 - 2,
-        },
-      ],
-    },
-  ];
+export const testList = [
+  {
+    testName: 'test-1',
+    // isTestComplete: false,
+    question: '3 x 6 =',
+    answer: 3 * 6,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 3 * 6,
+      },
+      {
+        name: 6 - 3,
+      },
+      {
+        name: 3 + 6,
+      },
+    ],
+  },
+  {
+    testName: 'test-2',
+    // isTestComplete: false,
+    question: '4 x 4 =',
+    answer: 4 * 4,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 4 + 4,
+      },
+      {
+        name: 4 * 4,
+      },
+      {
+        name: 4 - 4,
+      },
+    ],
+  },
+  {
+    testName: 'test-3',
+    // isTestComplete: false,
+    question: '2 x 5 =',
+    answer: 2 * 5,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 2 + 5,
+      },
+      {
+        name: 2 * 5,
+      },
+      {
+        name: 5 - 2,
+      },
+    ],
+  },
+];

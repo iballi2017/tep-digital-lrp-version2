@@ -39,6 +39,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   btnTitle = 'Start';
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
+  isWrongSelection!: boolean;
 
   // testList: any = [...testList]
   testList: any = testList;
@@ -101,9 +102,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   onSelectAlphabet(number: any) {
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.name == this.test.answer) {
       this.test.isAnswered = true;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
@@ -111,10 +109,15 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.isComplete();
       }, 1500);
-    }else {
+    } else {
+      this.isWrongSelection = true;
       let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
       playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.isWrongSelection = false;
+      this.previewText = '';
+    }, 500);
   }
 
   isComplete() {
@@ -185,7 +188,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.stopBGSound()
+    this.stopBGSound();
   }
 }
 
