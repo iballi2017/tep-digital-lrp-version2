@@ -11,9 +11,12 @@
 
 #key-selection-preview-block .preview-text {
     width: auto;
-    display: inline-block;
+    // display: inline-block;
     padding: .6em .3em;
     align-items: center;
+    &.wrong-answer{
+        border: 3px solid red !important;
+    }
 }
 #key-selection-preview-block {
     display: flex;
