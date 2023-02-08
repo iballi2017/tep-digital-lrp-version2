@@ -155,6 +155,13 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     });
   }
 
+  
+  correct() {
+    this.boardData.isDone = true;
+    this.onTestValues(this.resultTextList);
+  }
+
+
   onTestValues(List: any) {
     let complete = List.filter((done: any) => done?.isDone == true);
 

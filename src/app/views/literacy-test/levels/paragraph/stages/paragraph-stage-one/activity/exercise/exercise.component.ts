@@ -106,6 +106,7 @@ export class ExerciseComponent
 
   loadBoardData() {
     this.boardData = this.resultTextList[this.textPosition];
+    // console.log('this.boardData: ', this.boardData);
   }
 
   GetSpeechTextsFromAppState() {
@@ -129,6 +130,12 @@ export class ExerciseComponent
     });
   }
 
+  correct() {
+    this.boardData.isDone = true;
+    this.onTestValues(this.resultTextList);
+  }
+
+
   onTestValues(List: any) {
     let complete = List.filter((done: any) => done?.isDone == true);
 
@@ -148,6 +155,7 @@ export class ExerciseComponent
       this.loadBoardData();
     }
   }
+  
 
   onSubmit(Result: ActivityAnswer) {
     // console.warn('Result: ', Result);
@@ -185,19 +193,6 @@ export class ExerciseComponent
 
   clearService() {
     this._paragraphStageOneSvc.clear();
-  }
-
-  correct() {
-    console.log('this.resultTextList: ', this.resultTextList);
-    // let list = this.boardData;
-    // let complete = List.filter((done: any) => done?.isDone == true);
-    // const Payload: ActivityAnswer = {
-    //   session_id: this.gameSessionId,
-    //   answer: '4',
-    //   data: List,
-    // };
-
-    // this.onSubmit(Payload);
   }
 
   onGetGameSessionId() {
