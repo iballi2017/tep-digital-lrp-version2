@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -55,7 +56,10 @@ export class ExerciseComponent
   levelTitle!: string;
   gameType = GameType.LITERACY;
 
+  toggleType!: FormGroup;
+
   constructor(
+    private _fb: FormBuilder,
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<ParagraphLevelResultState>,
@@ -71,6 +75,7 @@ export class ExerciseComponent
   }
 
   override ngOnInit(): void {
+    this.buildForm();
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg;
@@ -81,6 +86,22 @@ export class ExerciseComponent
     this.GetExerciseTexts();
     this.GetSpeechTextsFromAppState();
     this.loadBoardData();
+  }
+
+  buildForm() {
+    this.toggleType = this._fb.group({
+      toggleControl: true,
+    });
+  }
+  toggle(toggleControl: any) {
+    console.log('alli', toggleControl.value);
+    console.log('this.toggleType: ', this.toggleType.value);
+    if (this.toggleType.value.toggleControl) {
+      this.stopService();
+      this.clearService();
+    }else{
+      this.toggleType.controls['toggleControl'].setValue(false)
+    }
   }
 
   playBGSound() {
@@ -135,7 +156,6 @@ export class ExerciseComponent
     this.onTestValues(this.resultTextList);
   }
 
-
   onTestValues(List: any) {
     let complete = List.filter((done: any) => done?.isDone == true);
 
@@ -155,7 +175,6 @@ export class ExerciseComponent
       this.loadBoardData();
     }
   }
-  
 
   onSubmit(Result: ActivityAnswer) {
     // console.warn('Result: ', Result);
