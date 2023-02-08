@@ -330,7 +330,6 @@ export class ExerciseComponent
 
   refreshGame() {
     this.reloadComponent(true);
-    console.log(' this.resultListResult: ', this.resultListResult);
     this.testNumber = 0;
     for (let i = 0; i < this.resultListResult.length; i++) {
       this.resultListResult[i].title.active = true;
@@ -347,11 +346,7 @@ export class ExerciseComponent
         });
       });
     }
-
-    // this.reloadPage();
-    // this.testNumber = 0;
     this.loadTestContent();
-    // console.log('this.resultListResult: ', this.resultListResult);
   }
 
   ngOnDestroy(): void {

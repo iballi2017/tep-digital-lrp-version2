@@ -25,7 +25,10 @@ import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-lev
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
+export class ExerciseComponent
+  extends ComponentReloadFunctionalityComponent
+  implements OnInit, OnDestroy
+{
   boardActivityHint: string = 'Read the paragraph below';
   checkTestCompletion: any;
   keyList: any[] = [];
@@ -45,10 +48,10 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   speechTexts$!: Observable<any>;
   boardData: any;
   isLaunchTest!: boolean;
-  btnTitle = "Start";
+  btnTitle = 'Start';
   // isFinishedTest: boolean = true;
   isFinishedTest: boolean = false;
-  // 
+  //
   levelTitle!: string;
   gameType = GameType.LITERACY;
 
@@ -60,19 +63,19 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     // Speech recog
     private _paragraphStageOneSvc: ParagraphStageOneService,
     private cdr: ChangeDetectorRef,
-    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
   ) {
     super(_router);
     this._paragraphStageOneSvc?.init();
   }
 
   override ngOnInit(): void {
-
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     this.cdr.detectChanges();
     this.onGetGameSessionId();
     this.GetExerciseTexts();
@@ -82,26 +85,22 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
-
-
 
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
-
-
 
   /* SPEECH RECOG CODE STARTS */
 
@@ -160,8 +159,8 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
           //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
           // ]);
           this.isFinishedTest = true;
-          this.stopBGSound()
-          this.playLevelCompletedSound()
+          this.stopBGSound();
+          this.playLevelCompletedSound();
         }
       }
     );
@@ -174,18 +173,31 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
     this.isStart = true;
     this._paragraphStageOneSvc.start();
     this._playSoundSvc.stopLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
 
   stopService() {
     this.isStart = false;
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
     this._paragraphStageOneSvc.stop();
     this._playSoundSvc.playLiteracyBGSound();
   }
 
   clearService() {
     this._paragraphStageOneSvc.clear();
+  }
+
+  correct() {
+    console.log('this.resultTextList: ', this.resultTextList);
+    // let list = this.boardData;
+    // let complete = List.filter((done: any) => done?.isDone == true);
+    // const Payload: ActivityAnswer = {
+    //   session_id: this.gameSessionId,
+    //   answer: '4',
+    //   data: List,
+    // };
+
+    // this.onSubmit(Payload);
   }
 
   onGetGameSessionId() {
@@ -220,7 +232,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent imp
   }
 
   ngOnDestroy(): void {
-    this.stopBGSound()
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();
