@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -48,8 +49,10 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
   // 
   levelTitle!: string;
   gameType = GameType.LITERACY;
+  toggleType!: FormGroup;
 
   constructor(
+    private _fb: FormBuilder,
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<ParagraphLevelResultState>,
@@ -65,7 +68,7 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
   }
 
   override ngOnInit(): void {
-
+    this.buildForm();
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg
@@ -81,6 +84,19 @@ export class ExerciseComponent extends ComponentReloadFunctionalityComponent  im
     this.loadBoardData();
   }
 
+  buildForm() {
+    this.toggleType = this._fb.group({
+      toggleControl: true,
+    });
+  }
+  toggle(toggleControl: any) {
+    if (toggleControl.value.toggleControl) {
+      this.stopService();
+      this.clearService();
+    }else{
+      this.toggleType.controls['toggleControl'].setValue(false)
+    }
+  }
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();

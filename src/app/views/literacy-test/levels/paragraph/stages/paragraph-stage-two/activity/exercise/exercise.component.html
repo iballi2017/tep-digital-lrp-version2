@@ -21,7 +21,11 @@
         </div>
       </div>
     </div>
-    <!-- <p class="text-info text-center">{{ speechTexts$ | async }}</p> -->
+    <ng-container *ngIf="toggleType.value?.toggleControl">
+      <ng-container *ngIf="speechTexts$ | async">
+        <p class="text-info text-center">{{ speechTexts$ | async }}</p>
+      </ng-container>
+    </ng-container>
     <div id="key-selection-preview-block">
       <div class="preview-text" *ngIf="previewText">
         {{ previewText }}
@@ -33,9 +37,27 @@
         <button class="btn btn-danger" (click)="stopService()">Stop</button>
         <button class="btn btn-warning" (click)="clearService()">Clear</button>
     </div> -->
+    <form [formGroup]="toggleType" class="text-center text-white mb-3">
+      <mat-slide-toggle
+        name="toggleControl"
+        formControlName="toggleControl"
+        (change)="toggle(toggleType)"
+      >
+        <div>
+          <i
+            class="material-icons"
+            [ngClass]="{
+              'text-white': toggleType.value?.toggleControl,
+              'text-muted': !toggleType.value?.toggleControl
+            }"
+            >record_voice_over</i
+          >
+        </div>
+      </mat-slide-toggle>
+    </form>
 
     <!-- OLD KEYS FOR VOICE RECOGNITION -->
-    <div id="activity-keypad" *ngIf="false">
+    <div id="activity-keypad" *ngIf="toggleType.value?.toggleControl">
       <div class="key-list ps-0 list-style-none">
         <div class="action-btn">
           <button
@@ -66,15 +88,10 @@
       </div>
     </div>
     <!-- NEW KEYS FOR MARK-->
-    <div id="activity-keypad">
+    <div id="activity-keypad" *ngIf="!toggleType.value?.toggleControl">
       <div class="key-list ps-0 list-style-none">
         <div class="action-btn">
-          <button
-            mat-button
-            class="btn btn-primary"
-            (click)="correct()"
-            *ngIf="!isStart"
-          >
+          <button mat-button class="btn btn-primary" (click)="correct()">
             Correct
           </button>
         </div>

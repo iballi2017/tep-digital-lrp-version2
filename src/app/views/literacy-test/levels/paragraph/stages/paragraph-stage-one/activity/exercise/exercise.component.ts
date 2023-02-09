@@ -94,9 +94,7 @@ export class ExerciseComponent
     });
   }
   toggle(toggleControl: any) {
-    console.log('alli', toggleControl.value);
-    console.log('this.toggleType: ', this.toggleType.value);
-    if (this.toggleType.value.toggleControl) {
+    if (toggleControl.value.toggleControl) {
       this.stopService();
       this.clearService();
     }else{

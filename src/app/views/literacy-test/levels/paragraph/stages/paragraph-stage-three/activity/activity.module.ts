@@ -5,6 +5,8 @@ import { ActivityRoutingModule } from './activity-routing.module';
 import { ActivityComponent } from './activity.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ExerciseComponent } from './exercise/exercise.component';
+import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +17,10 @@ import { ExerciseComponent } from './exercise/exercise.component';
   imports: [
     CommonModule,
     ActivityRoutingModule,
-    SharedModule
+    SharedModule,
+    NgMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class ActivityModule { }

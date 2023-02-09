@@ -5,17 +5,18 @@ import { ActivityRoutingModule } from './activity-routing.module';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { ActivityComponent } from './activity.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    ExerciseComponent,
-    ActivityComponent
-  ],
+  declarations: [ExerciseComponent, ActivityComponent],
   imports: [
     CommonModule,
     ActivityRoutingModule,
-    SharedModule
-  ]
+    SharedModule,
+    NgMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
-export class ActivityModule { }
+export class ActivityModule {}

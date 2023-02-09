@@ -39,12 +39,22 @@
         <button class="btn btn-warning" (click)="clearService()">Clear</button>
     </div> -->
 
-    <form [formGroup]="toggleType" class="text-center text-white">
+    <form [formGroup]="toggleType" class="text-center text-white mb-3">
       <mat-slide-toggle
         name="toggleControl"
         formControlName="toggleControl"
         (change)="toggle(toggleType)"
-        >Speech</mat-slide-toggle
+      >
+        <div>
+          <i
+            class="material-icons"
+            [ngClass]="{
+              'text-white': toggleType.value?.toggleControl,
+              'text-muted': !toggleType.value?.toggleControl
+            }"
+            >record_voice_over</i
+          >
+        </div></mat-slide-toggle
       >
     </form>
 
@@ -83,11 +93,7 @@
     <div id="activity-keypad" *ngIf="!toggleType.value?.toggleControl">
       <div class="key-list ps-0 list-style-none">
         <div class="action-btn">
-          <button
-            mat-button
-            class="btn btn-primary"
-            (click)="correct()"
-          >
+          <button mat-button class="btn btn-primary" (click)="correct()">
             Correct
           </button>
         </div>
