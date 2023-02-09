@@ -58,7 +58,7 @@ this.isLoadingReportList$  -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of reportList  | paginate
+                                <tr class="cursor-pointer" *ngFor="let item of reportList  | paginate
                             : {
                                 itemsPerPage: ItemsPerPage,
                                 currentPage: page,
@@ -67,7 +67,7 @@ this.isLoadingReportList$  -->
                                     <th scope="row">
                                         {{i + 1}}
                                     </th>
-                                    <td>
+                                    <td (click)="onViewReportDetails(item?.sessionId)">
                                         <div class="name mb-3">{{item?.fullname}}</div>
                                         <div class="status">
                                             <label>Status:</label>
@@ -75,11 +75,11 @@ this.isLoadingReportList$  -->
                                             'incomplete': item?.status.toLowerCase() != completed}">{{item?.status}}</div>
                                         </div>
                                     </td>
-                                    <td>{{item?.age}}</td>
-                                    <td>{{item?.gender}}</td>
-                                    <td>{{item?.program}}</td>
-                                    <td>{{item?.overallScore}}</td>
-                                    <td>{{item?.scorePercent}}</td>
+                                    <td (click)="onViewReportDetails(item?.sessionId)">{{item?.age}}</td>
+                                    <td (click)="onViewReportDetails(item?.sessionId)">{{item?.gender}}</td>
+                                    <td (click)="onViewReportDetails(item?.sessionId)">{{item?.program}}</td>
+                                    <td (click)="onViewReportDetails(item?.sessionId)">{{item?.overallScore}}</td>
+                                    <td (click)="onViewReportDetails(item?.sessionId)">{{item?.scorePercent}}</td>
                                     <td class="text-right">
                                         <div class="actions-btn">
                                             <div class="d-flex justify-content-end">
