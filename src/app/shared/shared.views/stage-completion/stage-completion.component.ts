@@ -80,7 +80,11 @@ export class StageCompletionComponent implements OnInit {
     } else {
       setTimeout(() => {
         if(this.levelTitle == GameLevel.STORY){
-          this._router.navigate(['/literacy/letter/stage-1/letter-splash']);
+          this._router.navigate(['/literacy/letter/stage-1']);
+          return;
+        }
+        if(this.levelTitle == GameLevel.BASIC_OPERATIONS_DIVISION){
+          this._router.navigate(['/numeracy/number-recognition-one/stage-1']);
           return;
         }
         this._router.navigate([
