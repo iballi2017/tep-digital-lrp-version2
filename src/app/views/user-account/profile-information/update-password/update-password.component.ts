@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Snackbar } from 'src/app/models/class/snackbar';
+import { CustomValidators } from 'src/app/models/class/validators';
 import { UpdatePassword } from 'src/app/models/interface/user';
 import { IdentityService } from 'src/app/services/identity.service';
 
@@ -29,11 +30,25 @@ export class UpdatePasswordComponent implements OnInit {
   }
 
   buildForm() {
-    this.UpdatePasswordForm = this._fb.group({
-      OldPassword: ['', [Validators.required]],
-      NewPassword: ['', [Validators.required]],
-      ConfirmNewPassword: ['', [Validators.required]],
-    });
+    this.UpdatePasswordForm = this._fb.group(
+      {
+        OldPassword: ['', [Validators.required]],
+        NewPassword: ['', [Validators.required]],
+        ConfirmNewPassword: ['', [Validators.required]],
+      },
+      { validators: CustomValidators.matchPasswords } //"validators" is case sensitive, must be spelt like so
+    );
+  }
+
+  get OldPassword_() {
+    return this.UpdatePasswordForm.get('OldPassword');
+  }
+
+  get NewPassword_() {
+    return this.UpdatePasswordForm.get('NewPassword');
+  }
+  get ConfirmNewPassword_() {
+    return this.UpdatePasswordForm.get('ConfirmNewPassword');
   }
 
   toggleFieldAttr() {
