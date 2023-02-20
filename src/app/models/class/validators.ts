@@ -1,6 +1,9 @@
 import { AbstractControl } from '@angular/forms';
 
 export class CustomValidators {
+
+
+  /* MATCH PASSWORD */
   static matchPasswords(control: AbstractControl) {
     let newPassword = control.get('NewPassword');
     let confirmPassword = control.get('ConfirmNewPassword');

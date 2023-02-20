@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  get Email_() {
+    return this.LoginUserForm.get('Email');
+  }
+
   onSubmit() {
     const Payload = {
       usr_email: this.LoginUserForm.value.Email,
