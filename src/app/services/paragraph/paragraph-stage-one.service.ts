@@ -29,7 +29,7 @@ export class ParagraphStageOneService {
   constructor(
     private _http: HttpClient,
     private store: Store<SpeechTextsState>
-  ) {}
+  ) { }
 
   sendAddParagraphLevelResultBehaviour(Msg: any) {
     this.addParagraphLevelResultBehaviour.next(Msg);
