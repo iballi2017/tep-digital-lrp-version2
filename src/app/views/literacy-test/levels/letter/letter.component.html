@@ -9,7 +9,7 @@
     <!-- <p class="text-danger text-bold">{{testStageStars | json}}</p> -->
     <ul class="stage-status list-style-none ps-0">
         <li class="cursor-pointer" *ngFor="let item of testStageStars; let i = index"
-            [routerLink]="['/literacy/letter/', item?.title, 'letter-splash']">
+            [routerLink]="['/literacy/letter/', item?.title]">
             <div class="stage-card">
                 <p>{{i + 1}}</p>
             </div>

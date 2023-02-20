@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -12,6 +13,7 @@ import { ParagraphStageThreeService } from 'src/app/services/paragraph/paragraph
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addParagraphLevelStageThreeResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
 import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.selectors';
@@ -21,7 +23,7 @@ import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/spee
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss']
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent  implements OnInit {
   boardActivityHint: string = 'Read the paragraph below';
   checkTestCompletion: any;
   keyList: any[] = [];
@@ -47,23 +49,26 @@ export class ExerciseComponent implements OnInit {
   // 
   levelTitle!: string;
   gameType = GameType.LITERACY;
+  toggleType!: FormGroup;
 
   constructor(
+    private _fb: FormBuilder,
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<ParagraphLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _wordStageThreeSvc: WordStageThreeService,
     // Speech recog
     private _paragraphStageThreeSvc: ParagraphStageThreeService,
     private cdr: ChangeDetectorRef,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
   ) {
+    super(_router);
     this._paragraphStageThreeSvc?.init();
   }
 
-  ngOnInit(): void {
-
+  override ngOnInit(): void {
+    this.buildForm();
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg
@@ -79,6 +84,19 @@ export class ExerciseComponent implements OnInit {
     this.loadBoardData();
   }
 
+  buildForm() {
+    this.toggleType = this._fb.group({
+      toggleControl: true,
+    });
+  }
+  toggle(toggleControl: any) {
+    if (toggleControl.value.toggleControl) {
+      this.stopService();
+      this.clearService();
+    }else{
+      this.toggleType.controls['toggleControl'].setValue(false)
+    }
+  }
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
@@ -87,6 +105,7 @@ export class ExerciseComponent implements OnInit {
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -126,6 +145,10 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
+  correct() {
+    this.boardData.isDone = true;
+    this.onTestValues(this.resultTextList);
+  }
   onTestValues(List: any) {
     let complete = List.filter((done: any) => done?.isDone == true);
 
@@ -202,17 +225,19 @@ export class ExerciseComponent implements OnInit {
   }
 
   refreshGame() {
-    this.stopService();
-    this.clearService();
-    this.boardData = null;
-    this.resultTextList = [];
-    this.textPosition = 0;
-    this.GetExerciseTexts();
-    this.resultTextList.forEach((obj: any) => (obj.isDone = false));
-    this.loadBoardData();
+    this.reloadComponent(true);
+    // this.stopService();
+    // this.clearService();
+    // this.boardData = null;
+    // this.resultTextList = [];
+    // this.textPosition = 0;
+    // this.GetExerciseTexts();
+    // this.resultTextList.forEach((obj: any) => (obj.isDone = false));
+    // this.loadBoardData();
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound()
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

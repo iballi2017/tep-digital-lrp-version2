@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -19,9 +19,9 @@ import { KeySound } from 'src/assets/data/key-sound';
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.scss']
+  styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Subtract the 1-digit numbers here';
   testNumber: number = 0;
   keyList: any[] = [];
@@ -35,57 +35,57 @@ export class ExerciseComponent implements OnInit {
   btnTitle = 'Start';
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
-
+  isWrongSelection!: boolean;
 
   // testList: any = [...testList]
   testList: any = testList;
-  activityHint: any = "Subtract the single digit numbers by cut out the amount of numbers on the right from the left and select the right answer in the green box below.";
+  activityHint: any =
+    'Subtract the single digit numbers by cut out the amount of numbers on the right from the left and select the right answer in the green box below.';
   test: any;
-  constructor(private _gameSvc: GameService, private _basicOperationsSubtractionStageOneSvc: BasicOperationsSubtractionStageOneService,
+  constructor(
+    private _gameSvc: GameService,
+    private _basicOperationsSubtractionStageOneSvc: BasicOperationsSubtractionStageOneService,
     private store: Store<BasicOperationsSubtractionLevelResultState>,
     private _router: Router,
     public dialog: MatDialog,
     private _playSoundSvc: PlaySoundService,
-    private _launchGameSvc: LaunchGameService) { }
+    private _launchGameSvc: LaunchGameService
+  ) {}
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     this.placeQuestion();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
   }
 
-
   playBGSound() {
     this._playSoundSvc.playNumeracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopNumeracyBGSound();
   }
 
-
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
 
-
   placeQuestion() {
-    this.test = this.testList[this.testNumber]
+    this.test = this.testList[this.testNumber];
     let keys = this.test?.testKeys;
     this.keyList = new ShuffleArray(keys).shuffle();
   }
-
 
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
@@ -96,12 +96,8 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
-
   onSelectAlphabet(number: any) {
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.name == this.test.answer) {
       this.test.isAnswered = true;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
@@ -109,9 +105,16 @@ export class ExerciseComponent implements OnInit {
       setTimeout(() => {
         this.isComplete();
       }, 1500);
+    } else {
+      this.isWrongSelection = true;
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection = false;
+    }, 500);
   }
-
 
   isComplete() {
     let answeredList = this.testList.filter((item: any) => {
@@ -121,7 +124,7 @@ export class ExerciseComponent implements OnInit {
       this.testNumber++;
       this.placeQuestion();
     } else {
-      this.testGameCompletion()
+      this.testGameCompletion();
       return;
     }
   }
@@ -134,7 +137,9 @@ export class ExerciseComponent implements OnInit {
         answer: '2',
         data: [...this.checkTestCompletion],
       };
-      this.store.dispatch(addBasicOperationsSubtractionLevelStageOneResult({ payload: Payload }));
+      this.store.dispatch(
+        addBasicOperationsSubtractionLevelStageOneResult({ payload: Payload })
+      );
       this._basicOperationsSubtractionStageOneSvc.BasicOperationsSubtractionLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
@@ -143,8 +148,8 @@ export class ExerciseComponent implements OnInit {
             //   `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);
             this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
+            this.stopBGSound();
+            this.playLevelCompletedSound();
           }
         }
       );
@@ -173,66 +178,67 @@ export class ExerciseComponent implements OnInit {
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isAnswered = false;
     }
-    this.placeQuestion()
+    this.placeQuestion();
   }
 
+  ngOnDestroy(): void {
+    this.stopBGSound();
+  }
 }
 
-
-export const
-  testList = [
-    {
-      testName: 'test-1',
-      // isTestComplete: false,
-      question: '5 - 3 =',
-      answer: 5 - 3,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 5 - 2,
-        },
-        {
-          name: 5 - 3,
-        },
-        {
-          name: 4 - 3,
-        },
-      ],
-    },
-    {
-      testName: 'test-2',
-      // isTestComplete: false,
-      question: '16 - 5 =',
-      answer: 16 - 5,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 16 - 5,
-        },
-        {
-          name: 13 - 4,
-        },
-        {
-          name: 16 - 4,
-        },
-      ],
-    },
-    {
-      testName: 'test-3',
-      // isTestComplete: false,
-      question: '18 - 2 =',
-      answer: 18 - 2,
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 18 - 2,
-        },
-        {
-          name: 18 + 2,
-        },
-        {
-          name: 18 * 4,
-        },
-      ],
-    },
-  ];
+export const testList = [
+  {
+    testName: 'test-1',
+    // isTestComplete: false,
+    question: '5 - 3 =',
+    answer: 5 - 3,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 5 - 2,
+      },
+      {
+        name: 5 - 3,
+      },
+      {
+        name: 4 - 3,
+      },
+    ],
+  },
+  {
+    testName: 'test-2',
+    // isTestComplete: false,
+    question: '16 - 5 =',
+    answer: 16 - 5,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 16 - 5,
+      },
+      {
+        name: 13 - 4,
+      },
+      {
+        name: 16 - 4,
+      },
+    ],
+  },
+  {
+    testName: 'test-3',
+    // isTestComplete: false,
+    question: '18 - 2 =',
+    answer: 18 - 2,
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 18 - 2,
+      },
+      {
+        name: 18 + 2,
+      },
+      {
+        name: 18 * 4,
+      },
+    ],
+  },
+];

@@ -15,10 +15,18 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-  },];
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () =>
+      import('./forgot-password/forgot-password.module').then(
+        (m) => m.ForgotPasswordModule
+      ),
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AuthenticationRoutingModule { }
+export class AuthenticationRoutingModule {}

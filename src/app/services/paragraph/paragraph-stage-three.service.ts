@@ -4,12 +4,15 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, catchError } from 'rxjs';
 import { baseUrl } from 'src/app/config/api';
 import { handleError } from 'src/app/helpers/errorHandler';
-import { addSpeechTexts, addSpeechTextsSuccess } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.actions';
+import {
+  addSpeechTexts,
+  addSpeechTextsSuccess,
+} from 'src/app/views/literacy-test/store/speech-texts/speech-texts.actions';
 import { SpeechTextsState } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.reducer';
 
 declare var webkitSpeechRecognition: any;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParagraphStageThreeService {
   addParagraphLevelResultBehaviour = new BehaviorSubject(false);
@@ -21,10 +24,10 @@ export class ParagraphStageThreeService {
   tempWords!: string;
   VoiceText: any;
 
-  constructor(private _http: HttpClient,
-    private store: Store<SpeechTextsState>,) { }
-
-
+  constructor(
+    private _http: HttpClient,
+    private store: Store<SpeechTextsState>
+  ) {}
 
   sendAddParagraphLevelResultBehaviour(Msg: any) {
     this.addParagraphLevelResultBehaviour.next(Msg);
@@ -59,7 +62,6 @@ export class ParagraphStageThreeService {
       this.recognition.addEventListener('end', (condition: any) => {
         if (this.isStoppedSpeechRecog) {
           this.recognition.stop();
-
         } else {
           this.wordConcat();
           this.recognition.start();
@@ -75,7 +77,6 @@ export class ParagraphStageThreeService {
     this.isStoppedSpeechRecog = true;
     this.wordConcat();
     this.recognition.stop();
-
   }
 
   clear() {
@@ -90,12 +91,14 @@ export class ParagraphStageThreeService {
   wordConcat() {
     // let x = new SpeechToText(this.store, this.text, this.tempWords);
     // x.wordConcat();
-    // 
+    //
 
     this.store.dispatch(addSpeechTexts());
     this.text = this.text + ' ' + this.tempWords + ' ';
     this.tempWords = '';
-    this.store.dispatch(addSpeechTextsSuccess({ speechTexts: this.text.trim() }));
+    this.store.dispatch(
+      addSpeechTextsSuccess({ speechTexts: this.text.trim() })
+    );
   }
 
   GetExerciseTexts() {
@@ -109,8 +112,6 @@ export class ParagraphStageThreeService {
   }
 }
 
-
-
 export const exerciseTexts = [
   {
     text: 'my name is Joy',
@@ -118,8 +119,26 @@ export const exerciseTexts = [
     isDone: false,
   },
   {
-    text: 'every day I like to drink some tea',
-    uiText: 'Every day, I like to drink some tea.',
+    text: 'I have some friends in my class',
+    uiText: 'I have some friends in my class',
     isDone: false,
   },
+  {
+    text: 'their names are Mary Ada and Amina',
+    uiText: 'Their names are Mary, Ada and Amina',
+    isDone: false,
+  },
+
+  {
+    text: 'we love to play after school',
+    uiText: 'We love to play after school',
+    isDone: false,
+  },
+
+  // I have some friends in my class
+  // {
+  //   text: 'every day I like to drink some tea',
+  //   uiText: 'Every day, I like to drink some tea.',
+  //   isDone: false,
+  // },
 ];

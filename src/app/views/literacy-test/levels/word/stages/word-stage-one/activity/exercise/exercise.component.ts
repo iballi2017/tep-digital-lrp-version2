@@ -13,6 +13,7 @@ import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageOneService } from 'src/app/services/word/word-stage-one.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addWordLevelStageOneResult } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
 import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.reducer';
 import { KeySound } from 'src/assets/data/key-sound';
@@ -22,7 +23,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Create two rhyming words';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -47,12 +48,14 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
-    private _router: Router,
+    public override  _router: Router,
     private _wordStageOneSvc: WordStageOneService,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -72,6 +75,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -100,6 +104,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.previewList.push(alphabet);
     if (this.previewList.length == 2) {
       if (this.previewList[0].position == this.previewList[1].position) {
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
         for (let i = 0; i < this.previewList.length; i++) {
           this.previewList[i].isWrongChoice = true;
         }
@@ -123,6 +129,10 @@ export class ExerciseComponent implements OnInit, OnDestroy {
           this.previewList = [];
           return;
         }, 2000);
+
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
+
         return;
       }
       let resultObject = {
@@ -203,15 +213,17 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
-    this.testNumber = 0;
-    this.onReplceKeyList();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    this.reloadComponent(true);
+    // this.resultItemList = [];
+    // this.testNumber = 0;
+    // this.onReplceKeyList();
+    // for (let i = 0; i < this.testList.length; i++) {
+    //   this.testList[i].isTestComplete = false;
+    // }
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

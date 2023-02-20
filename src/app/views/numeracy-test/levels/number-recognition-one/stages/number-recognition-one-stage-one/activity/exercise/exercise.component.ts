@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -22,7 +22,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Identify the 1-digit numbers';
   testNumber: number = 0;
   ONE_DIGIT_NUMBER = NumberDigitType.ONE_DIGIT_NUMBER;
@@ -39,6 +39,7 @@ export class ExerciseComponent implements OnInit {
   btnTitle = 'Start';
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
+  isWrongSelection!: boolean;
 
   testList = testList;
   activityHint: any =
@@ -51,7 +52,7 @@ export class ExerciseComponent implements OnInit {
     public dialog: MatDialog,
     private _playSoundSvc: PlaySoundService,
     private _launchGameSvc: LaunchGameService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
@@ -99,17 +100,22 @@ export class ExerciseComponent implements OnInit {
   onSelectAlphabet(number: any) {
     this.previewList.push(number.name);
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.type == NumberDigitType.ONE_DIGIT_NUMBER) {
       if (!this.resultItemList.find((item: any) => item.name === number.name)) {
         this.resultItemList.push(number);
         let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
         playSound.playAlphabetVoice();
         this.isComplete();
-      }
+      } 
+    }else {
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
+      this.isWrongSelection = true;
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection = false;
+    }, 500);
   }
 
   isComplete() {
@@ -189,6 +195,10 @@ export class ExerciseComponent implements OnInit {
       this.testList[i].isTestComplete = false;
     }
   }
+
+  ngOnDestroy(): void {
+    this.stopBGSound()
+  }
 }
 
 const testList = [
@@ -216,7 +226,7 @@ const testList = [
     isTestComplete: false,
     testKeys: [
       {
-        name: '23',
+        name: '16',
         type: null,
         // vn: NumberNote.A_Note,
       },
@@ -240,7 +250,7 @@ const testList = [
         // vn: NumberNote.A_Note,
       },
       {
-        name: '23',
+        name: '27',
         type: null,
       },
       {

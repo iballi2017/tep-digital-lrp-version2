@@ -7,7 +7,7 @@ import { IdentityService } from 'src/app/services/identity.service';
 import { OccupantService } from 'src/app/services/occupant.service';
 import { loadProfileInformations } from '../store/profile-information/profile-information.actions';
 import { ProfileInformationState } from '../store/profile-information/profile-information.reducer';
-import { profileInformation } from '../store/profile-information/profile-information.selectors';
+import { isLoadingProfileInformationState, profileInformation } from '../store/profile-information/profile-information.selectors';
 import { AddNewOccupantComponent } from './add-new-occupant/add-new-occupant.component';
 
 @Component({
@@ -25,6 +25,7 @@ export class ProfileInformationComponent implements OnInit, OnDestroy {
   addNewOccupantBtnLabel = "Add New";
   addNewOccupantBtnType = "button";
   addNewOccupantBtnClasses = "btn primary-bordered-btn test-strong text-uppercase d-none d-lg-block";
+  isLoadingUserData$!: Observable<any>;
   constructor(private _identitySvc: IdentityService, private _router: Router,
     private store: Store<ProfileInformationState>,
     public dialog: MatDialog,) { }
@@ -37,6 +38,7 @@ export class ProfileInformationComponent implements OnInit, OnDestroy {
   getUserData() {
     this.store.dispatch(loadProfileInformations());
     this.userData$ = this.store.pipe(select(profileInformation));
+    this.isLoadingUserData$ = this.store.pipe(select(isLoadingProfileInformationState));
     // console.warn(this.userData$)
     // this._identitySvc.getUserById().subscribe({
     //   next: (response) => {

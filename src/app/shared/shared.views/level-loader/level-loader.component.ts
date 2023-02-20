@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GameLevel } from 'src/app/models/interface/game-level';
 // import { GameLevel } from 'src/app/models/types/game-level';
 // import { GameStage } from 'src/app/models/types/game-stage';
 

@@ -42,3 +42,13 @@
         }
     }
 }
+
+
+
+#key-selection-preview-block {
+    .preview-text {
+        &.wrong-answer{
+            border: 3px solid red !important;
+        }
+    }
+}

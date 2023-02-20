@@ -60,7 +60,6 @@ export class BasicOperationsSubtractionLevelResultEffects {
     return this.actions$.pipe(
       ofType(BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
         return this._basicOperationsSubtractionStageOneSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -69,7 +68,7 @@ export class BasicOperationsSubtractionLevelResultEffects {
               const x = new Snackbar(successResponse, this._snackBar);
               x.successSnackbar();
               this._basicOperationsSubtractionStageOneSvc.sendBasicOperationsSubtractionLevelResultBehaviour(
-                'Occupant added!'
+                response
               );
             }
             return BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageOneResultSuccess(
@@ -104,7 +103,7 @@ export class BasicOperationsSubtractionLevelResultEffects {
     return this.actions$.pipe(
       ofType(BasicOperationsSubtractionLevelResultActions.addBasicOperationsSubtractionLevelStageTwoResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._basicOperationsSubtractionStageTwoSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {

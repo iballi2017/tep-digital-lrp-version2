@@ -54,13 +54,13 @@ export class BasicOperationsAdditionLevelResultEffects {
     );
   });
 
-  
+
   // ADD NumberRecognitionOne LEVEL STAGE ONE
   addNumberRecognitionOneLevelStageOneResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._basicOperationsAdditionStageOneSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -69,7 +69,7 @@ export class BasicOperationsAdditionLevelResultEffects {
               const x = new Snackbar(successResponse, this._snackBar);
               x.successSnackbar();
               this._basicOperationsAdditionStageOneSvc.sendBasicOperationsAdditionLevelResultBehaviour(
-                'Occupant added!'
+                response
               );
             }
             return BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageOneResultSuccess(
@@ -98,13 +98,13 @@ export class BasicOperationsAdditionLevelResultEffects {
     );
   });
 
-  
+
   // ADD NumberRecognitionOne LEVEL STAGE TWO
   addNumberRecognitionOneLevelStageTwoResult$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(BasicOperationsAdditionLevelResultActions.addBasicOperationsAdditionLevelStageTwoResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._basicOperationsAdditionStageTwoSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -149,5 +149,5 @@ export class BasicOperationsAdditionLevelResultEffects {
     private _basicOperationsAdditionStageOneSvc: BasicOperationsAdditionStageOneService,
     private _basicOperationsAdditionStageTwoSvc: BasicOperationsAdditionStageTwoService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 }

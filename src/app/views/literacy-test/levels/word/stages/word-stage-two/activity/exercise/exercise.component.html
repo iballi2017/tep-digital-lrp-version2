@@ -1,57 +1,64 @@
 <!-- <p>exercise works!</p> -->
 
 <ng-container *ngIf="!isFinishedTest">
-    <app-launch-activity-sound [btnTitle]="btnTitle" (onPlayBGSound)="playBGSound()"
-        *ngIf="!isLaunchTest"></app-launch-activity-sound>
-<div id="activity-canvas">
+  <app-launch-activity-sound
+    [btnTitle]="btnTitle"
+    (onPlayBGSound)="playBGSound()"
+    *ngIf="!isLaunchTest"
+  ></app-launch-activity-sound>
+  <div id="activity-canvas">
     <!-- <div class="text-white">{{testList[0] | json}}</div>
     <div class="text-primary">{{test | json}}</div> -->
 
     <div id="blue-board">
-        <div id="board-activity-hint">
-            <p class="my-0">{{boardActivityHint}}</p>
-        </div>
-        <div class="inner">
-            <!-- <div id="result-item-list">
+      <div id="board-activity-hint">
+        <p class="my-0">{{ boardActivityHint }}</p>
+      </div>
+      <div class="inner">
+        <!-- <div id="result-item-list">
                 <ul class="item-list ps-0 mb-0">
                     <li *ngFor="let item of resultItemList">{{item?.item1.name + item?.item2.name | uppercase}}</li>
                 </ul>
             </div> -->
-            <div class="h-100">
-                <div id="mind-map-result-list">
-                    <div id="hint-item">
-                        <p class="m-0">{{test.hint | titlecase}}</p>
-                    </div>
-                    <div id="left-pole">
-                        <div class="item-container">
-                            <div class="item">
-                                <span [ngClass]="{'d-none': !test.answer[0].isCorrect}">{{test.answer[0].name |
-                                    titlecase}}</span>
-                            </div>
-                            <div class="item">
-                                <span [ngClass]="{'d-none': !test.answer[1].isCorrect}">{{test.answer[1].name |
-                                    titlecase}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="right-pole">
-                        <div class="item-container">
-                            <div class="item">
-                                <span [ngClass]="{'d-none': !test.answer[2].isCorrect}">{{test.answer[2].name |
-                                    titlecase}}</span>
-                            </div>
-                            <div class="item">
-                                <span [ngClass]="{'d-none': !test.answer[3].isCorrect}">{{test.answer[3].name |
-                                    titlecase}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="h-100">
+          <div id="mind-map-result-list">
+            <div id="hint-item">
+              <p class="m-0">{{ test.hint | titlecase }}</p>
             </div>
+            <div id="left-pole">
+              <div class="item-container">
+                <div class="item">
+                  <span [ngClass]="{ 'd-none': !test.answer[0].isCorrect }">{{
+                    test.answer[0].name | titlecase
+                  }}</span>
+                </div>
+                <div class="item">
+                  <span [ngClass]="{ 'd-none': !test.answer[1].isCorrect }">{{
+                    test.answer[1].name | titlecase
+                  }}</span>
+                </div>
+              </div>
+            </div>
+            <div id="right-pole">
+              <div class="item-container">
+                <div class="item">
+                  <span [ngClass]="{ 'd-none': !test.answer[2].isCorrect }">{{
+                    test.answer[2].name | titlecase
+                  }}</span>
+                </div>
+                <div class="item">
+                  <span [ngClass]="{ 'd-none': !test.answer[3].isCorrect }">{{
+                    test.answer[3].name | titlecase
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <div id="key-selection-preview-block">
-        <!-- <ul class="preview-list list-style none mb-0 pl-0">
+      <!-- <ul class="preview-list list-style none mb-0 pl-0">
             <li class="" *ngFor="let previewList of previewList"
                 [ngClass]="{'is-right': !previewList?.isWrongChoice,'is-wrong': previewList?.isWrongChoice}">
                 {{previewList.name | uppercase}}
@@ -59,30 +66,48 @@
         </ul> -->
     </div>
     <div id="activity-keypad">
-        <ul class="key-list ps-0 list-style-none">
-            <li *ngFor="let key of test.keyList">
-                <button class="btn" [ngClass]="{'is-wrong': key.isWrongChoice, '': !key.isWrongChoice}"
-                    (click)="onSelectAlphabet(key)">{{key?.name | uppercase}}</button>
-            </li>
-        </ul>
+      <ul class="key-list ps-0 list-style-none">
+        <li *ngFor="let key of test.keyList">
+          <button
+            class="btn"
+            [ngClass]="{
+              'is-wrong': key.isWrongChoice,
+              '': !key.isWrongChoice
+            }"
+            (click)="onSelectAlphabet(key)"
+          >
+            {{ key?.name | uppercase }}
+          </button>
+        </li>
+      </ul>
     </div>
 
     <div id="utility-controls">
-        <div id="activity-hint-btn-wrapper">
-            <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
-            </button>
-            <p>Hint</p>
-        </div>
-        <div id="replay-voice-btn-wrapper">
-            <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
-            <p>Refresh</p>
-        </div>
+      <div id="activity-hint-btn-wrapper">
+        <button
+          class="btn"
+          id="activity-hint-btn"
+          (click)="onReadHint()"
+        ></button>
+        <p>Hint</p>
+      </div>
+      <div id="replay-voice-btn-wrapper">
+        <button
+          class="btn"
+          id="replay-voice-btn"
+          (click)="refreshGame()"
+        ></button>
+        <p>Refresh</p>
+      </div>
     </div>
-</div>
+  </div>
 </ng-container>
 <ng-container *ngIf="isFinishedTest">
-    <div class="completion-screen">
-        <app-stage-completion [levelTitle]="gameLevel" [stageNumber]="stageNumber"
-            [gameType]="gameType"></app-stage-completion>
-    </div>
+  <div class="completion-screen">
+    <app-stage-completion
+      [levelTitle]="gameLevel"
+      [stageNumber]="stageNumber"
+      [gameType]="gameType"
+    ></app-stage-completion>
+  </div>
 </ng-container>

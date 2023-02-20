@@ -12,7 +12,7 @@ export class LongTextReadDialogComponent implements OnInit {
   public dialogRef: MatDialogRef<LongTextReadDialogComponent>,) {}
 
   ngOnInit(): void {
-    console.log(this.data);
+    // console.log(this.data);
     this.text = this.data.text
   }
 

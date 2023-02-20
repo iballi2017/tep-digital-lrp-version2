@@ -14,22 +14,29 @@ import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageFourService } from 'src/app/services/word/word-stage-four.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
-import { addWordLevelStageFourResult, addWordLevelStageThreeResult } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
+import {
+  addWordLevelStageFourResult,
+  addWordLevelStageThreeResult,
+} from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
 import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.reducer';
 import { KeySound } from 'src/assets/data/key-sound';
 
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.scss']
+  styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent
+  extends ComponentReloadFunctionalityComponent
+  implements OnInit, OnDestroy
+{
   boardActivityHint: string = 'Build connecting sentences using the word FISH';
   testNumber: number = 0;
   checkTestCompletion: any;
   keyList: any[] = [];
 
-  testList = testList;
+  testList = [...testList];
   previewList: any[] = [];
   resultItemList: any[] = [];
   previewText: string = '';
@@ -41,28 +48,31 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   stageNumber: number = 4;
   gameLevel = GameLevel.WORD;
   isLaunchTest!: boolean;
-  btnTitle = "Start";
+  btnTitle = 'Start';
   // isFinishedTest: boolean = true;
   isFinishedTest: boolean = false;
-  // 
+  //
   levelTitle!: string;
   gameType = GameType.LITERACY;
+  isWrongSelection!: boolean;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _wordStageFourSvc: WordStageFourService,
-    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
-
+  override ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     // let testList = this.testList;
     // console.warn("testList: ", testList)
     // if (testList) {
@@ -77,27 +87,26 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     if (testKeyArr) {
       this.keyList = new ShuffleArray(testKeyArr).shuffle();
     }
-
   }
-
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
-
 
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
   onCheckTestCompletion() {
     this.checkTestCompletion = this.testList.filter(
@@ -112,23 +121,32 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   onSelectAlphabet(alphabet: any) {
     this.previewText = alphabet.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     let isExist = this.testList[this.testNumber].answer.findIndex(
       (item: any) => item.text == alphabet.name
     );
     let item = this.testList[this.testNumber].answer[isExist];
     if (item) {
       item.isShow = true;
+      alphabet.isWrongChoice = false;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
       playSound.playAlphabetVoice();
+    } else {
+      alphabet.isWrongChoice = true;
+      this.isWrongSelection = true;
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.isWrongSelection = false;
+      alphabet.isWrongChoice = null;
+      this.previewText = '';
+    }, 500);
     // setTimeout(() => {
-    this.testResult()
+    //   alphabet.isWrongChoice = null
+    // }, 1000);
+    // setTimeout(() => {
+    this.testResult();
     // }, 1500);
-
-
 
     // let testAnswerLength = this.testList[this.testNumber].answer.length
     // let isExist = this.resultItemList.findIndex(
@@ -147,12 +165,12 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     // }
   }
 
-
   testResult() {
-
-    let isCompleted = this.testList[this.testNumber].answer.filter((list: any) => {
-      return list.isShow == true;
-    })
+    let isCompleted = this.testList[this.testNumber].answer.filter(
+      (list: any) => {
+        return list.isShow == true;
+      }
+    );
 
     if (isCompleted.length == this.testList[this.testNumber].answer.length) {
       // alert("completed!");
@@ -161,11 +179,10 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         this.testNumber++;
         this.onCheckTestCompletion();
         if (this.checkTestCompletion.length < this.testList.length) {
-          this.loadTestContent()
+          this.loadTestContent();
         } else {
-          this.testGameCompletion()
+          this.testGameCompletion();
         }
-
       }, 1200);
     }
   }
@@ -196,8 +213,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
             //   `/${GameType.LITERACY}/level-completion/${this.gameLevel}`
             // ]);
             this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
+            this.stopBGSound();
+            this.playLevelCompletedSound();
           }
         }
       );
@@ -216,15 +233,18 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
-    this.testNumber = 0;
-    this.loadTestContent();
+    this.reloadComponent(true);
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isTestComplete = false;
+      let answerItems = this.testList[i].answer.filter(
+        (ans: any) => ans.hint != true
+      );
+      answerItems.forEach((ans: any) => (ans.isShow = false));
     }
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();
@@ -233,9 +253,6 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 }
 
-
-
-
 const testList = [
   {
     testName: 'test-1',
@@ -243,44 +260,49 @@ const testList = [
     testKeys: [
       {
         name: 'this',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'have',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'my',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'food',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'is',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'not',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
     ],
     // answer: ['this', 'is', 'my', 'fish'],
-    answer: [{
-      text: 'this',
-      isShow: false,
-    }, {
-      text: 'is',
-      isShow: false,
-    }, {
-      text: 'my',
-      isShow: false,
-    }, {
-      text: 'fish',
-      isShow: true,
-      hint: true
-    }],
+    answer: [
+      {
+        text: 'this',
+        isShow: false,
+      },
+      {
+        text: 'is',
+        isShow: false,
+      },
+      {
+        text: 'my',
+        isShow: false,
+      },
+      {
+        text: 'fish',
+        isShow: true,
+        hint: true,
+      },
+    ],
   },
   {
     testName: 'test-2',
@@ -288,47 +310,53 @@ const testList = [
     testKeys: [
       {
         name: 'lives',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'have',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'my',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'water',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'in',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'not',
-        isWrongChoice: false,
-      }
+        isWrongChoice: null,
+      },
     ],
     // answer: ['this', 'is', 'a', 'big', 'book'],
-    answer: [{
-      text: 'my',
-      isShow: false,
-    }, {
-      text: 'fish',
-      isShow: true,
-      hint: true
-    }, {
-      text: 'lives',
-      isShow: false,
-    }, {
-      text: 'in',
-      isShow: false,
-    }, {
-      text: 'water',
-      isShow: false,
-    }],
+    answer: [
+      {
+        text: 'my',
+        isShow: false,
+      },
+      {
+        text: 'fish',
+        isShow: true,
+        hint: true,
+      },
+      {
+        text: 'lives',
+        isShow: false,
+      },
+      {
+        text: 'in',
+        isShow: false,
+      },
+      {
+        text: 'water',
+        isShow: false,
+      },
+    ],
   },
   {
     testName: 'test-3',
@@ -336,43 +364,48 @@ const testList = [
     testKeys: [
       {
         name: 'my',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'have',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'did',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'i',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'is',
-        isWrongChoice: false,
+        isWrongChoice: null,
       },
       {
         name: 'love',
-        isWrongChoice: false,
-      }
+        isWrongChoice: null,
+      },
     ],
     // answer: ['this', 'is', 'a', 'big', 'book'],
-    answer: [{
-      text: 'i',
-      isShow: false,
-    }, {
-      text: 'love',
-      isShow: false,
-    }, {
-      text: 'my',
-      isShow: false,
-    }, {
-      text: 'fish',
-      isShow: true,
-      hint: true
-    },],
+    answer: [
+      {
+        text: 'i',
+        isShow: false,
+      },
+      {
+        text: 'love',
+        isShow: false,
+      },
+      {
+        text: 'my',
+        isShow: false,
+      },
+      {
+        text: 'fish',
+        isShow: true,
+        hint: true,
+      },
+    ],
   },
 ];

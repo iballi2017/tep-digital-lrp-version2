@@ -48,13 +48,15 @@ export class ExerciseComponent implements OnInit {
   testNumberList: any = testNumberList;
   _keyList: any[] = _keyList;
   numberList!: any[];
+  isWrongSelection!: boolean;
   constructor(
     private _gameSvc: GameService,
     private _placeValueSvc: PlaceValueService,
     private store: Store<NumberRecognitionTwoLevelResultState>,
     private _router: Router,
     public dialog: MatDialog,
-    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
   ) {}
 
   ngOnInit(): void {
@@ -67,29 +69,24 @@ export class ExerciseComponent implements OnInit {
     this.updateNumberList();
     this.loadKeys();
   }
-  
-  
+
   playBGSound() {
     this._playSoundSvc.playNumeracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopNumeracyBGSound();
   }
 
-
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
-
-
-
 
   loadKeys() {
     this.keyList = this._keyList;
@@ -130,6 +127,7 @@ export class ExerciseComponent implements OnInit {
 
   onSelectAlphabet(number: any) {
     console.log('number: ', number);
+    this.previewText = number.name;
     let numberList = this.testNumberList[this.testNumber].numberArray;
     let activeItem = numberList.findIndex((item: any) => item.isActive == true);
     if (activeItem != undefined) {
@@ -157,11 +155,16 @@ export class ExerciseComponent implements OnInit {
         }
       } else {
         number.isWrongChoice = true;
-        setTimeout(() => {
-          number.isWrongChoice = false;
-        }, 500);
+        this.isWrongSelection = true;
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
       }
     }
+    setTimeout(() => {
+      number.isWrongChoice = false;
+      this.isWrongSelection = false;
+      this.previewText = '';
+    }, 500);
   }
 
   onCheckTestCompletion() {

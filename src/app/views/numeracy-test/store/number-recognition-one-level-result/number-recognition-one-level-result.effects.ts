@@ -20,7 +20,7 @@ export class NumberRecognitionOneLevelResultEffects {
           .LoadNumberRecognition_1_gameResult(action?.session_id)
           .pipe(
             map((response: any) => {
-              console.warn('response>>>: ', response);
+              // console.warn('response>>>: ', response);
               let x: any;
               if (response) {
                 x =
@@ -60,7 +60,7 @@ export class NumberRecognitionOneLevelResultEffects {
     return this.actions$.pipe(
       ofType(NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._numberRecognitionOneSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -69,7 +69,7 @@ export class NumberRecognitionOneLevelResultEffects {
               const x = new Snackbar(successResponse, this._snackBar);
               x.successSnackbar();
               this._numberRecognitionOneSvc.sendAddNumberRecognitionOneLevelResultBehaviour(
-                'Occupant added!'
+                response
               );
             }
             return NumberRecognitionOneLevelResultActions.addNumberRecognitionOneLevelStageOneResultSuccess(

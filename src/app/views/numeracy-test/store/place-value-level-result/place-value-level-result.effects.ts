@@ -61,7 +61,7 @@ export class PlaceValueLevelResultEffects {
     return this.actions$.pipe(
       ofType(PlaceValueLevelResultActions.addPlaceValueLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._PlaceValueSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -26,7 +26,7 @@ import { ReportState } from '../../store/reports/reports.reducer';
   templateUrl: './report-list.component.html',
   styleUrls: ['./report-list.component.scss'],
 })
-export class ReportListComponent implements OnInit {
+export class ReportListComponent implements OnInit, AfterViewInit {
   reportList$!: Observable<any>;
   filterDropdownList = [
     FilterDropdown?.ASCENDING,
@@ -75,9 +75,13 @@ export class ReportListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.onGetSearchTerm();
+    this.onGetReportList();
+  }
+
+  ngAfterViewInit(): void {
     this.onGetSearchTerm();
     this.onGetReportList();
-    // this._reportSvc.LoadUserGameResult();
   }
 
   onGetSearchTerm() {

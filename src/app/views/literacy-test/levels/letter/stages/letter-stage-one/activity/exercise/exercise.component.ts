@@ -14,6 +14,7 @@ import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { LetterStageOneService } from 'src/app/services/letter/letter-stage-one.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addLetterLevelStageOneResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 import { AlphabetNote } from 'src/assets/data/alphabet.voicenote';
@@ -25,7 +26,11 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
+<<<<<<< HEAD
 export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
+=======
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
+>>>>>>> ce9325d4df5cd3be3d8206ba5630eb95f78acea6
   boardActivityHint: string = 'Select the vowel letters from these options';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
@@ -51,6 +56,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   isFinishedTest: boolean = false;
   // 
   gameType = GameType.LITERACY;
+  isWrongSelection!: boolean;
 
   // audioFile: string = AlphabetNote.A_Note;
   constructor(
@@ -58,11 +64,13 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     private _letterStageOneSvc: LetterStageOneService,
     private store: Store<LetterLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
 
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
@@ -74,11 +82,6 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.onGetGameSessionId();
   }
 
-  ngAfterViewInit() {
-    // this.playBGSound().playBGSound();
-  }
-
-
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
     this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
@@ -86,6 +89,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -112,9 +116,9 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   onSelectAlphabet(alphabet: any) {
     this.previewList.push(alphabet.name);
     this.previewText = alphabet.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
+    let playSound = new PlaySound({ vn: alphabet.vn });
+    playSound.playAlphabetVoice();
+
     if (alphabet.type == AlphabetType.VOWEL) {
       if (
         !this.resultItemList.find((item: any) => item.name === alphabet.name)
@@ -124,7 +128,15 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
         playSound.playAlphabetVoice();
         this.isComplete();
       }
+    } else {
+      this.isWrongSelection = true
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection = false
+    }, 500);
   }
 
   isComplete() {
@@ -138,8 +150,8 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.testList[this.testNumber].isTestComplete = true;
 
       this.onCheckTestCompletion();
-      console.log("this.checkTestCompletion: ", this.checkTestCompletion)
-      console.log("this.testList: ", this.testList)
+      // console.log("this.checkTestCompletion: ", this.checkTestCompletion)
+      // console.log("this.testList: ", this.testList)
 
       if (this.testList.length == this.checkTestCompletion.length) {
         setTimeout(() => {
@@ -180,7 +192,7 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
       this._letterStageOneSvc.addLetterLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
-            console.log('msg: ', msg);
+            // console.log('msg: ', msg);
             // this._router.navigate([
             //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);
@@ -205,17 +217,19 @@ export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
-    this.testNumber = 0;
-    this.onReplceKeyList();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    this.reloadComponent(true);
+    // this.resultItemList = [];
+    // this.testNumber = 0;
+    // this.onReplceKeyList();
+    // for (let i = 0; i < this.testList.length; i++) {
+    //   this.testList[i].isTestComplete = false;
+    // }
   }
 
 
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();
@@ -241,26 +255,32 @@ export const testList = [
       {
         name: 'a',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.A_Note
       },
       {
         name: 'j',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.J_Note
       },
       {
         name: 'e',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.E_Note
       },
       {
         name: 'm',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.M_Note
       },
       {
         name: 'i',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.I_Note
       },
       {
         name: 'b',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.B_Note
       },
     ],
   },
@@ -271,22 +291,27 @@ export const testList = [
       {
         name: 'z',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.Z_Note
       },
       {
         name: 'u',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.U_Note
       },
       {
         name: 'y',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.Y_Note
       },
       {
         name: 'o',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.O_Note
       },
       {
         name: 'j',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.J_Note
       },
       {
         name: 'c',
@@ -302,14 +327,17 @@ export const testList = [
       {
         name: 'h',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.H_Note,
       },
       {
         name: 'o',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.O_Note,
       },
       {
         name: 'p',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.P_Note,
       }
     ],
   },
@@ -320,18 +348,22 @@ export const testList = [
       {
         name: 'q',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.Q_Note,
       },
       {
         name: 'l',
         type: AlphabetType.CONSONANT,
+        vn: AlphabetNote.L_Note,
       },
       {
         name: 'a',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.A_Note,
       },
       {
         name: 'u',
         type: AlphabetType.VOWEL,
+        vn: AlphabetNote.U_Note,
       }
     ],
   }

@@ -1,3 +1,5 @@
+@use "../../../../sass/_partials/mixins";
+
 .card {
     background-color: unset;
     border: none;
@@ -9,8 +11,8 @@
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 600;
-    font-size: 1.7rem;
-    line-height: 44px;
+    font-size: 1.2rem;
+    line-height: 30px;
     border-radius: 20px 20px 0px 0px;
     text-align: center;
 }
@@ -21,16 +23,11 @@
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 600;
-    font-size: 1.14rem;
-    line-height: 27px;
     color: #000000;
     text-align: center;
-    // padding-top: 2em;
-    // padding-bottom: 2em;
-    padding: 2em 1.8em;
 
     p {
-        margin-bottom: 1.3em;
+        // margin-bottom: 1.3em;
     }
 
     button {
@@ -38,7 +35,30 @@
         font-style: normal;
         font-weight: 700;
         font-size: 1rem;
-        line-height: 22px;
         color: #FFFFFF;
+    }
+}
+
+@include mixins.minmq(768px) {
+
+    .card-header {
+        font-size: 1.7rem;
+        line-height: 44px;
+    }
+
+    .card-body {
+        font-size: 1.14rem;
+        line-height: 27px;
+        padding: 2em 1.8em;
+
+        p {
+            margin-bottom: 1.3em;
+        }
+
+        button {
+            font-weight: 700;
+            font-size: 1rem;
+            line-height: 22px;
+        }
     }
 }

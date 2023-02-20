@@ -1,7 +1,11 @@
 export class ShuffleArray {
   array: any;
   constructor(array: any) {
-    this.array = [...array];
+    if (array) {
+      this.array = [...array];
+    }else{
+      this.array = [];
+    }
   }
 
   shuffle() {

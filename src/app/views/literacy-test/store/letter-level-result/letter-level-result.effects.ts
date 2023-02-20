@@ -17,7 +17,7 @@ export class LetterLevelResultEffects {
     return this.actions$.pipe(
       ofType(fromLetterLevelResultActions.addLetterLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._letterStageOneSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -60,7 +60,7 @@ export class LetterLevelResultEffects {
     return this.actions$.pipe(
       ofType(fromLetterLevelResultActions.addLetterLevelStageTwoResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._letterStageTwoSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -102,7 +102,7 @@ export class LetterLevelResultEffects {
     return this.actions$.pipe(
       ofType(fromLetterLevelResultActions.addLetterLevelStageThreeResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._letterStageThreeSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {

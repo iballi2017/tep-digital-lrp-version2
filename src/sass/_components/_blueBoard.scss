@@ -24,20 +24,39 @@
 
                 // width: 100%;
               >  li {
-                    height: 90px;
-                    width: 90px;
+                    min-height: 2.8rem;
+                    width: 3rem;
+                    padding: .3em;
                     background: #fbff45;
-                    border: 7px solid #4a3d96;
-                    border-radius: 20px;
+                    border: 3px solid #4a3d96;
+                    border-radius: 10px;
                     font-family: "Open Sans";
                     font-style: normal;
-                    font-weight: 600;
+                    font-weight: 400;
                     // font-size: 1.75rem;
-                    line-height: 131px;
+                    // line-height: 131px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     color: #000000;
+                }
+            }
+        }
+        @include mixins.minmq(500px) {
+
+            #result-item-list {
+    
+                // width: 100%;
+                .item-list {
+                  >  li {
+                        height: 90px;
+                        width: 90px;
+                        border: 7px solid #4a3d96;
+                        border-radius: 20px;
+                        font-weight: 600;
+                        // font-size: 1.75rem;
+                        line-height: 131px;
+                    }
                 }
             }
         }
@@ -67,4 +86,5 @@
             }
         }
     }
+
 }

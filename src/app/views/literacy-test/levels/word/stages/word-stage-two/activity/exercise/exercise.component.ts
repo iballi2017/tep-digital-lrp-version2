@@ -13,6 +13,7 @@ import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageTwoService } from 'src/app/services/word/word-stage-two.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addWordLevelStageTwoResult } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.actions';
 import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-level-result/word-level-result.reducer';
 import { KeySound } from 'src/assets/data/key-sound';
@@ -22,7 +23,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Reveal the words connected to the center word';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -55,13 +56,16 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<WordLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _wordStageTwoSvc: WordStageTwoService,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
-    this.onGetGameSessionId(); 
+
+  override ngOnInit(): void {
+    this.onGetGameSessionId();
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg
@@ -85,6 +89,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
 
@@ -95,6 +100,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
   }
 
   onFillNewTest() {
@@ -146,6 +152,8 @@ export class ExerciseComponent implements OnInit, OnDestroy {
       }
     } else {
       alphabet.isWrongChoice = true;
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
       setTimeout(() => {
         alphabet.isWrongChoice = false;
       }, 1000);
@@ -172,6 +180,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
+    this.reloadComponent(true);
     this.testNumber = 0;
     this.testList.forEach((element: any) => {
       element.testKeys.forEach((key: any) => {
@@ -185,6 +194,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound()
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

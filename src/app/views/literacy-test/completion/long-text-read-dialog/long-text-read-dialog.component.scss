@@ -1,15 +1,15 @@
+@use "../../../../../sass//_partials/mixins";
 .card {
     background: #fbff45;
     border-radius: 8px;
-    padding: 0.7em 1.8em;
+    padding: 0.3em 1em;
 }
 
 .title {
     font-family: "Open Sans";
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
-    line-height: 33px;
+    font-size: 1rem;
     display: inline-flex;
     align-items: center;
     text-align: center;
@@ -17,24 +17,25 @@
     background: #000000;
     border: 1px solid #ffffff;
     border-radius: 20px;
-    padding: 0.4em 0.6em;
-    margin-bottom: 1em;
+    padding: 0.2em 0.6em;
+    margin-bottom: 0.5em;
 }
+
 
 .content {
     background: #4a3d96;
     border-radius: 20px;
     font-family: "Open Sans";
     font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 32px;
+    // font-weight: 700;
+    // font-size: 20px;
+    // line-height: 32px;
     display: flex;
     align-items: center;
     text-align: center;
     color: #ffffff;
-    padding: 1.2em 1.4em;
-    margin-bottom: 1em;
+    padding: 1em 1.4em 1.2em 1.4em;
+    // margin-bottom: 1em;
     white-space: pre-line;
 }
 
@@ -43,10 +44,44 @@ button {
     border-radius: 10px;
     font-family: "Open Sans";
     font-style: normal;
-    font-weight: 800;
-    font-size: 1.2rem;
-    line-height: 27px;
+    // font-weight: 800;
+    // font-size: 1.2rem;
+    // line-height: 27px;
     text-transform: capitalize;
     color: #ffffff;
-    padding: 1.3em 2.2em ;
+    // padding: 1.3em 2.2em ;
+}
+
+@include mixins.minmq(768px){
+    .card {
+        padding: 0.7em 1.8em;
+    }
+    
+    .title {
+        font-size: 24px;
+        line-height: 33px;
+        padding: 0.4em 0.6em;
+        margin-bottom: 1em;
+    }
+    
+    .content {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 32px;
+        padding: 1.2em 1.4em;
+        margin-bottom: 1em;
+    }
+    
+    button {
+        background: #6cd33b;
+        border-radius: 10px;
+        font-family: "Open Sans";
+        font-style: normal;
+        font-weight: 800;
+        font-size: 1.2rem;
+        line-height: 27px;
+        text-transform: capitalize;
+        color: #ffffff;
+        padding: 1.3em 2.2em ;
+    }
 }

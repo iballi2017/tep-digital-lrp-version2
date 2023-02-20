@@ -62,9 +62,9 @@ export class ProgramCompletionComponent implements OnInit {
   }
 
   onContinueToNextStage($event: any) {
-    console.log('this.gameSessionId: ', this.gameSessionId);
-    console.log('this.gameResult: ', this.gameResult);
-    console.log('this.gameType: ', this.gameType);
+    // console.log('this.gameSessionId: ', this.gameSessionId);
+    // console.log('this.gameResult: ', this.gameResult);
+    // console.log('this.gameType: ', this.gameType);
     setTimeout(() => {
       switch (this.gameType) {
         case GameType.LITERACY:
@@ -88,7 +88,8 @@ export class ProgramCompletionComponent implements OnInit {
       this._router.navigate(['/']);
     }
     // this._router.navigate([`/literacy/levels/lettering`]);
-    this._router.navigate([`/${this.gameType}/levels/${this.gameLevel.levelTitle}`]);
+    // this._router.navigate([`/${this.gameType}/levels/${this.gameLevel.levelTitle}`]);
+    this._router.navigate([`/account/reports/details/${this.gameSessionId}`]);
   }
 
   playBGSound() {

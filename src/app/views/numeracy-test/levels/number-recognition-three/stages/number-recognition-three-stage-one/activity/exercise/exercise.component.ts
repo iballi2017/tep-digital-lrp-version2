@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -22,10 +22,10 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
-  boardActivityHint: string = 'Identify the 3-digit numbers';
+export class ExerciseComponent implements OnInit, OnDestroy {
+  boardActivityHint: string = 'Identify the 3-digits numbers';
   activityHint: any =
-    'Identify the 3-digit numbers selecting the right answer in the green boxes below';
+    'Identify the 3-digits numbers selecting the right answer in the green boxes below';
   testNumber: number = 0;
   ONE_DIGIT_NUMBER = NumberDigitType.ONE_DIGIT_NUMBER;
   TWO_DIGIT_NUMBER = NumberDigitType.TWO_DIGIT_NUMBER;
@@ -44,6 +44,7 @@ export class ExerciseComponent implements OnInit {
   gameType = GameType.NUMERACY;
 
   testList = testList;
+  isWrongSelection!: boolean;
   constructor(
     private _gameSvc: GameService,
     private _numberRecognitionThreeSvc: NumberRecognitionThreeService,
@@ -57,35 +58,31 @@ export class ExerciseComponent implements OnInit {
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     this.onReplceKeyList();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
   }
 
-
   playBGSound() {
     this._playSoundSvc.playNumeracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopNumeracyBGSound();
   }
 
-
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
-
-
 
   onReplceKeyList() {
     let keys = this.testList[this.testNumber]?.testKeys;
@@ -104,9 +101,6 @@ export class ExerciseComponent implements OnInit {
   onSelectAlphabet(number: any) {
     this.previewList.push(number.name);
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.type == NumberDigitType.THREE_DIGIT_NUMBER) {
       if (!this.resultItemList.find((item: any) => item.name === number.name)) {
         this.resultItemList.push(number);
@@ -114,7 +108,15 @@ export class ExerciseComponent implements OnInit {
         playSound.playAlphabetVoice();
         this.isComplete();
       }
+    } else {
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
+      this.isWrongSelection! = true;
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection! = false;
+    }, 500);
   }
 
   isComplete() {
@@ -162,8 +164,8 @@ export class ExerciseComponent implements OnInit {
             //   // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);
             this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
+            this.stopBGSound();
+            this.playLevelCompletedSound();
           }
         }
       );
@@ -193,6 +195,10 @@ export class ExerciseComponent implements OnInit {
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isTestComplete = false;
     }
+  }
+
+  ngOnDestroy() {
+    this.stopBGSound();
   }
 }
 

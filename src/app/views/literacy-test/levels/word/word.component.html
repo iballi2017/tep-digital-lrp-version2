@@ -7,7 +7,7 @@
     </ng-container>
     <ul class="stage-status list-style-none ps-0">
         <li class="cursor-pointer" *ngFor="let item of testStageStars; let i = index"
-            [routerLink]="['/literacy/word/', item?.title, 'word-splash']">
+            [routerLink]="['/literacy/word/', item?.title]">
             <div class="stage-card">
                 <p>{{i + 1}}</p>
             </div>

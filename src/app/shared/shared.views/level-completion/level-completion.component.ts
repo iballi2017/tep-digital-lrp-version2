@@ -68,7 +68,9 @@ export class LevelCompletionComponent implements OnInit {
     this._gameSvc.LoadGameSession();
     this.onGetGameSessionId();
     this.onGetStageResult();
-    this.pageTitle = `YOU HAVE COMPLETE ${this.gameLevel?.levelTitle} LEVEL OF THE PROGRAM`;
+    // this.pageTitle = `YOU HAVE COMPLETE ${this.gameLevel?.levelTitle} LEVEL OF THE PROGRAM`;
+    this.pageTitle = `You have completed this level`;
+    
   }
 
   onGetGameSessionId() {
@@ -203,9 +205,10 @@ export class LevelCompletionComponent implements OnInit {
           this._router.navigate(['/']);
         }
         // this._router.navigate([`/literacy/levels/lettering`]);
-        this._router.navigate([
-          `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
-        ]);
+        // this._router.navigate([
+        //   `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
+        // ]);
+        this._router.navigate([`/account/reports/details/${this.gameSessionId}`]);
       }
     });
   }

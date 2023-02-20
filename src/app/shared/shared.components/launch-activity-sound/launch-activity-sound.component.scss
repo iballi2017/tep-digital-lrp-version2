@@ -1,3 +1,5 @@
+@use "../../../../sass/_partials/mixins";
+
 #activity-launcher {
     position: fixed;
     top: 0;
@@ -16,10 +18,18 @@
     }
 }
 .call-to-action {
-    max-width: 300px;
+    max-width: 200px;
     margin: 0 auto;
-    button {
-        padding-top: 0.7em;
-        padding-bottom: 0.7em;
+}
+
+
+@include mixins.minmq(768px){
+    .call-to-action {
+        max-width: 300px;
+        button {
+            padding-top: 0.7em;
+            padding-bottom: 0.7em;
+        }
     }
+    
 }

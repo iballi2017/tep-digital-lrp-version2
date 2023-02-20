@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -25,7 +25,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Solves multiplication word problems presented';
   testNumber: number = 0;
   keyList: any[] = [];
@@ -39,6 +39,7 @@ export class ExerciseComponent implements OnInit {
   btnTitle = 'Start';
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
+  isWrongSelection!: boolean;
 
   // testList: any = [...testList]
   testList: any = testList;
@@ -101,9 +102,6 @@ export class ExerciseComponent implements OnInit {
 
   onSelectAlphabet(number: any) {
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.name == this.test.answer) {
       this.test.isAnswered = true;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
@@ -111,7 +109,15 @@ export class ExerciseComponent implements OnInit {
       setTimeout(() => {
         this.isComplete();
       }, 1500);
+    } else {
+      this.isWrongSelection = true;
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.isWrongSelection = false;
+      this.previewText = '';
+    }, 500);
   }
 
   isComplete() {
@@ -179,6 +185,10 @@ export class ExerciseComponent implements OnInit {
       this.testList[i].isAnswered = false;
     }
     this.placeQuestion();
+  }
+
+  ngOnDestroy(): void {
+    this.stopBGSound();
   }
 }
 

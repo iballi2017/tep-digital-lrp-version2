@@ -1,0 +1,18 @@
+
+// #activity-canvas {
+//     position: relative;
+// }
+
+#key-selection-preview-block {
+    max-width: auto !important;
+    display: flex;
+
+    .preview-text {
+        width: auto !important;
+        display: inline-flex !important;
+        min-width: 72px;
+        &.wrong-answer{
+            border: 3px solid red !important;
+        }
+    }
+}

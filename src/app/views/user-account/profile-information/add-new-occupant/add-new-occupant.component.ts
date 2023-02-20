@@ -57,7 +57,7 @@ export class AddNewOccupantComponent implements OnInit, OnDestroy {
   }
 
   createNumberArray(d: number) {
-    while (d < 12) {
+    while (d < 15) {
       this.agesList.push(d);
       d++;
     }

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { GameLevel } from 'src/app/models/interface/game-level';
 import { GameService } from 'src/app/services/game.service';
 import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
@@ -78,6 +79,14 @@ export class StageCompletionComponent implements OnInit {
       return;
     } else {
       setTimeout(() => {
+        if(this.levelTitle == GameLevel.STORY){
+          this._router.navigate(['/literacy/letter/stage-1']);
+          return;
+        }
+        if(this.levelTitle == GameLevel.BASIC_OPERATIONS_DIVISION){
+          this._router.navigate(['/numeracy/number-recognition-one/stage-1']);
+          return;
+        }
         this._router.navigate([
           `/shared/new-task-loading/${this.levelTitle}/${this.stageNumber}/${this.gameType}`,
         ]);
@@ -89,10 +98,10 @@ export class StageCompletionComponent implements OnInit {
     this.openDialog(this.gameSessionId);
   }
 
-  onRemoveReport(sessionId: string) {
-    console.log('sessionId: ', sessionId);
-    this.openDialog(sessionId);
-  }
+  // onRemoveReport(sessionId: string) {
+  //   console.log('sessionId: ', sessionId);
+  //   this.openDialog(sessionId);
+  // }
 
   openDialog(item: any) {
     const dialogRef = this.dialog.open(BooleanAlertDialogComponent, {
@@ -109,9 +118,10 @@ export class StageCompletionComponent implements OnInit {
           this._router.navigate(['/']);
           return;
         } else {
-          this._router.navigate([
-            `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
-          ]);
+          // this._router.navigate([
+          //   `/${this.gameType}/levels/${this.gameLevel.levelTitle}`,
+          // ]);
+          this._router.navigate([`/account/reports/details/${this.gameSessionId}`]);
         }
       }
     });

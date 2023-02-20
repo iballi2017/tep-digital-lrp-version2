@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -19,9 +19,9 @@ import { KeySound } from 'src/assets/data/key-sound';
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.scss']
+  styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Add the 2-digit numbers here';
   testNumber: number = 0;
   keyList: any[] = [];
@@ -35,45 +35,46 @@ export class ExerciseComponent implements OnInit {
   btnTitle = 'Start';
   isFinishedTest: boolean = false;
   gameType = GameType.NUMERACY;
-
+  isWrongSelection!: boolean;
 
   // testList: any = [...testList]
   testList: any = testList;
-  activityHint: any = "Count the 2-digit numbers together and select the right answer in the green box below.";
+  activityHint: any =
+    'Count the 2-digit numbers together and select the right answer in the green box below.';
   test: any;
-  constructor(private _gameSvc: GameService, private _basicOperationsAdditionStageTwoSvc: BasicOperationsAdditionStageTwoService,
+  constructor(
+    private _gameSvc: GameService,
+    private _basicOperationsAdditionStageTwoSvc: BasicOperationsAdditionStageTwoService,
     private store: Store<BasicOperationsAdditionLevelResultState>,
     private _router: Router,
     public dialog: MatDialog,
     private _playSoundSvc: PlaySoundService,
-    private _launchGameSvc: LaunchGameService) { }
+    private _launchGameSvc: LaunchGameService
+  ) {}
 
   ngOnInit(): void {
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     this.placeQuestion();
     this.onCheckTestCompletion();
     this.onGetGameSessionId();
   }
 
-
-
   playBGSound() {
     this._playSoundSvc.playNumeracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopNumeracyBGSound();
   }
 
-
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
@@ -81,11 +82,10 @@ export class ExerciseComponent implements OnInit {
   }
 
   placeQuestion() {
-    this.test = this.testList[this.testNumber]
+    this.test = this.testList[this.testNumber];
     let keys = this.test?.testKeys;
     this.keyList = new ShuffleArray(keys).shuffle();
   }
-
 
   onGetGameSessionId() {
     this._gameSvc.LoadGameSession();
@@ -96,12 +96,8 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
-
   onSelectAlphabet(number: any) {
     this.previewText = number.name;
-    setTimeout(() => {
-      this.previewText = '';
-    }, 500);
     if (number.name == this.test.answer.value) {
       this.test.isAnswered = true;
       let playSound = new PlaySound({ vn: KeySound.CorrectAnswer_Note });
@@ -109,9 +105,16 @@ export class ExerciseComponent implements OnInit {
       setTimeout(() => {
         this.isComplete();
       }, 1500);
+    } else {
+      this.isWrongSelection = true;
+      let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+      playSound.playAlphabetVoice();
     }
+    setTimeout(() => {
+      this.previewText = '';
+      this.isWrongSelection = false;
+    }, 500);
   }
-
 
   isComplete() {
     let answeredList = this.testList.filter((item: any) => {
@@ -121,7 +124,7 @@ export class ExerciseComponent implements OnInit {
       this.testNumber++;
       this.placeQuestion();
     } else {
-      this.testGameCompletion()
+      this.testGameCompletion();
       return;
     }
   }
@@ -134,7 +137,9 @@ export class ExerciseComponent implements OnInit {
         answer: '2',
         data: [...this.checkTestCompletion],
       };
-      this.store.dispatch(addBasicOperationsAdditionLevelStageTwoResult({ payload: Payload }));
+      this.store.dispatch(
+        addBasicOperationsAdditionLevelStageTwoResult({ payload: Payload })
+      );
       this._basicOperationsAdditionStageTwoSvc.BasicOperationsAdditionLevelResultBehaviour.subscribe(
         (msg: any) => {
           if (msg) {
@@ -143,8 +148,8 @@ export class ExerciseComponent implements OnInit {
             //   // `/${GameType.NUMERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
             // ]);
             this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
+            this.stopBGSound();
+            this.playLevelCompletedSound();
           }
         }
       );
@@ -173,72 +178,73 @@ export class ExerciseComponent implements OnInit {
     for (let i = 0; i < this.testList.length; i++) {
       this.testList[i].isAnswered = false;
     }
-    this.placeQuestion()
+    this.placeQuestion();
   }
 
+  ngOnDestroy(): void {
+    this.stopBGSound();
+  }
 }
 
-
-export const
-  testList = [
-    {
-      testName: 'test-1',
-      question: [
-        {
-          first: 3,
-          second: 3
-        },
-        {
-          first: 1,
-          second: 8
-        }
-      ],
-      answer: {
-        value: 51,
-        first: 5,
-        second: 1
+export const testList = [
+  {
+    testName: 'test-1',
+    question: [
+      {
+        first: 3,
+        second: 3,
       },
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 33 + 18,
-        },
-        {
-          name: 33 - 18,
-        },
-        {
-          name: 5 * 11,
-        },
-      ],
-    },
-    {
-      testName: 'test-2',
-      question: [
-        {
-          first: 2,
-          second: 7
-        },
-        {
-          first: 2,
-          second: 3
-        }
-      ],
-      answer: {
-        value: 50,
-        first: 5,
-        second: 0
+      {
+        first: 1,
+        second: 8,
       },
-      isAnswered: false,
-      testKeys: [
-        {
-          name: 27 + 23,
-        },
-        {
-          name: 27 - 23,
-        },
-        {
-          name: 2 * 23,
-        },
-      ],
+    ],
+    answer: {
+      value: 51,
+      first: 5,
+      second: 1,
     },
-  ];
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 33 + 18,
+      },
+      {
+        name: 33 - 18,
+      },
+      {
+        name: 5 * 11,
+      },
+    ],
+  },
+  {
+    testName: 'test-2',
+    question: [
+      {
+        first: 2,
+        second: 7,
+      },
+      {
+        first: 2,
+        second: 3,
+      },
+    ],
+    answer: {
+      value: 50,
+      first: 5,
+      second: 0,
+    },
+    isAnswered: false,
+    testKeys: [
+      {
+        name: 27 + 23,
+      },
+      {
+        name: 27 - 23,
+      },
+      {
+        name: 2 * 23,
+      },
+    ],
+  },
+];

@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -12,6 +13,7 @@ import { ParagraphStageTwoService } from 'src/app/services/paragraph/paragraph-s
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { WordStageThreeService } from 'src/app/services/word/word-stage-three.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addParagraphLevelStageTwoResult } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.actions';
 import { ParagraphLevelResultState } from 'src/app/views/literacy-test/store/paragraph-level-result/paragraph-level-result.reducer';
 import { speechTexts } from 'src/app/views/literacy-test/store/speech-texts/speech-texts.selectors';
@@ -20,9 +22,12 @@ import { WordLevelResultState } from 'src/app/views/literacy-test/store/word-lev
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
-  styleUrls: ['./exercise.component.scss']
+  styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit {
+export class ExerciseComponent
+  extends ComponentReloadFunctionalityComponent
+  implements OnInit
+{
   boardActivityHint: string = 'Read the paragraph below';
   checkTestCompletion: any;
   keyList: any[] = [];
@@ -45,34 +50,38 @@ export class ExerciseComponent implements OnInit {
   speechTexts$!: Observable<any>;
   boardData: any;
   isLaunchTest!: boolean;
-  btnTitle = "Start";
+  btnTitle = 'Start';
   // isFinishedTest: boolean = true;
   isFinishedTest: boolean = false;
-  // 
+  //
   levelTitle!: string;
   gameType = GameType.LITERACY;
+  toggleType!: FormGroup;
 
   constructor(
+    private _fb: FormBuilder,
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<ParagraphLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _wordStageThreeSvc: WordStageThreeService,
     // Speech recog
     private _paragraphStageTwoSvc: ParagraphStageTwoService,
     private cdr: ChangeDetectorRef,
-    private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
+    private _playSoundSvc: PlaySoundService,
+    private _launchGameSvc: LaunchGameService
   ) {
+    super(_router);
     this._paragraphStageTwoSvc?.init();
   }
 
-  ngOnInit(): void {
-
+  override ngOnInit(): void {
+    this.buildForm();
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
-        this.isLaunchTest = msg
+        this.isLaunchTest = msg;
       }
-    })
+    });
     this.cdr.detectChanges();
     //
     // this.loadTestContent();
@@ -86,27 +95,38 @@ export class ExerciseComponent implements OnInit {
     this.loadBoardData();
   }
 
+  buildForm() {
+    this.toggleType = this._fb.group({
+      toggleControl: true,
+    });
+  }
+  toggle(toggleControl: any) {
+    if (toggleControl.value.toggleControl) {
+      this.stopService();
+      this.clearService();
+    } else {
+      this.toggleType.controls['toggleControl'].setValue(false);
+    }
+  }
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopBGSound() {
     this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
-
 
   playLevelCompletedSound() {
     this._playSoundSvc.playStageCompletionSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(true)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
   }
 
   stopLevelCompletedSound() {
     this._playSoundSvc.stopStageCompletionSound();
   }
-
-
 
   /* SPEECH RECOG CODE STARTS */
 
@@ -152,6 +172,11 @@ export class ExerciseComponent implements OnInit {
     });
   }
 
+  correct() {
+    this.boardData.isDone = true;
+    this.onTestValues(this.resultTextList);
+  }
+
   onTestValues(List: any) {
     let complete = List.filter((done: any) => done?.isDone == true);
 
@@ -185,9 +210,9 @@ export class ExerciseComponent implements OnInit {
           // this._router.navigate([
           //   `/${GameType.LITERACY}/stage-completion/${this.gameLevel}/${this.stageNumber}`,
           // ]);
-            this.isFinishedTest = true;
-            this.stopBGSound()
-            this.playLevelCompletedSound()
+          this.isFinishedTest = true;
+          this.stopBGSound();
+          this.playLevelCompletedSound();
         }
       }
     );
@@ -200,7 +225,7 @@ export class ExerciseComponent implements OnInit {
     this.isStart = true;
     this._paragraphStageTwoSvc.start();
     this._playSoundSvc.stopLiteracyBGSound();
-    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false);
   }
 
   stopService() {
@@ -240,17 +265,19 @@ export class ExerciseComponent implements OnInit {
   }
 
   refreshGame() {
-    this.stopService();
-    this.clearService();
-    this.boardData = null;
-    this.resultTextList = [];
-    this.textPosition = 0;
-    this.GetExerciseTexts();
-    this.resultTextList.forEach((obj: any) => (obj.isDone = false));
-    this.loadBoardData();
+    this.reloadComponent(true);
+    // this.stopService();
+    // this.clearService();
+    // this.boardData = null;
+    // this.resultTextList = [];
+    // this.textPosition = 0;
+    // this.GetExerciseTexts();
+    // this.resultTextList.forEach((obj: any) => (obj.isDone = false));
+    // this.loadBoardData();
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

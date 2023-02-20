@@ -18,7 +18,7 @@ export class WordLevelResultEffects {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.addWordLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._wordStageOneSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -60,7 +60,7 @@ export class WordLevelResultEffects {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.addWordLevelStageTwoResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._wordStageTwoSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -102,7 +102,7 @@ export class WordLevelResultEffects {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.addWordLevelStageThreeResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._wordStageThreeSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -144,7 +144,7 @@ export class WordLevelResultEffects {
     return this.actions$.pipe(
       ofType(fromWordLevelResultActions.addWordLevelStageFourResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._wordStageFourSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {

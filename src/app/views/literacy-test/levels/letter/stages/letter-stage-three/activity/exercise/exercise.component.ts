@@ -14,6 +14,7 @@ import { LaunchGameService } from 'src/app/services/launch-game.service';
 import { LetterStageThreeService } from 'src/app/services/letter/letter-stage-three.service';
 import { PlaySoundService } from 'src/app/services/play-sound.service';
 import { ActivityHintDialogComponent } from 'src/app/shared/shared.components/activity-hint-dialog/activity-hint-dialog.component';
+import { ComponentReloadFunctionalityComponent } from 'src/app/shared/shared.components/component-reload-functionality/component-reload-functionality.component';
 import { addLetterLevelStageThreeResult } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.actions';
 import { LetterLevelResultState } from 'src/app/views/literacy-test/store/letter-level-result/letter-level-result.reducer';
 import { BackgroundNote } from 'src/assets/data/background-sound.voicenote';
@@ -24,7 +25,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-export class ExerciseComponent implements OnInit, OnDestroy {
+export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
   boardActivityHint: string = 'Create syllables';
   testNumber: number = 0;
   checkTestCompletion: any;
@@ -38,17 +39,17 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         {
           name: 'f',
           type: AlphabetType.CONSONANT,
-          isWrongChoice: false,
+          // isWrongChoice: false,
         },
         {
           name: 'a',
           type: AlphabetType.VOWEL,
-          isWrongChoice: false,
+          // isWrongChoice: false,
         },
         {
           name: 'm',
           type: AlphabetType.CONSONANT,
-          isWrongChoice: false,
+          // isWrongChoice: false,
         },
       ],
     },
@@ -65,18 +66,21 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   gameLevel = GameLevel.LETTER;
   isLaunchTest: any;
   btnTitle = "Start";
-  isSTartTest!: boolean;
+  // isSTartTest!: boolean;
+  isFinishedTest: boolean = false;
   constructor(
     private _gameSvc: GameService,
     public dialog: MatDialog,
     private store: Store<LetterLevelResultState>,
-    private _router: Router,
+    public override _router: Router,
     private _letterStageThreeSvc: LetterStageThreeService,
     private _playSoundSvc: PlaySoundService, private _launchGameSvc: LaunchGameService
-  ) { }
+  ) {
+    super(_router);
+  }
 
-  ngOnInit(): void {
-    this. isTestStart();
+  override ngOnInit(): void {
+    // this.isTestStart();
     this._launchGameSvc.launchGameBehaviorSubject.subscribe((msg: any) => {
       if (msg) {
         this.isLaunchTest = msg
@@ -87,17 +91,23 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     this.onGetGameSessionId();
   }
 
-  isTestStart() {
-    this._letterStageThreeSvc.isStartTestBehaviour.subscribe((isStart: boolean) => {
-      this.isSTartTest = isStart
-    })
-  }
+  // isTestStart() {
+  //   this._letterStageThreeSvc.isStartTestBehaviour.subscribe((isStart: boolean) => {
+  //     this.isSTartTest = isStart
+  //   })
+  // }
 
   playBGSound() {
     this._playSoundSvc.playLiteracyBGSound();
     this._launchGameSvc.sendLaunchGameBehaviorSubject(true);
     this._letterStageThreeSvc.sendIsStartTestBehaviour(true)
   }
+  stopBGSound() {
+    this._playSoundSvc.stopLiteracyBGSound();
+    this._launchGameSvc.sendLaunchGameBehaviorSubject(false)
+  }
+
+
 
   onCheckTestCompletion() {
     this.checkTestCompletion = this.testList.filter(
@@ -111,7 +121,28 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   onSelectAlphabet(alphabet: any) {
-    this.previewList.push(alphabet);
+    // console.log("alphabet: ", alphabet)
+
+    /*
+    
+    let exist = this.previewList.findIndex((item: any) => {
+      console.log("item**: ", item)
+      console.log("alphabet**: ", alphabet)
+      return item.type == alphabet.type
+    });
+    console.log("exist: ", exist)
+    if (!this.previewList[exist]) {
+      this.previewList.push(alphabet)
+    }
+    console.log("this.previewList: ", this.previewList)
+    console.log(this.previewList[exist])
+
+    */
+
+    if (this.previewList.length < 2 || this.previewList.length == 2) {
+      this.previewList.push(alphabet);
+    }
+
     let consonantItems = this.previewList.filter(
       (alphabet: any) => alphabet.type == AlphabetType.CONSONANT
     );
@@ -127,13 +158,17 @@ export class ExerciseComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.previewList.length; i++) {
           this.previewList[i].isWrongChoice = true;
         }
-        setTimeout(() => {
-          for (let i = 0; i < this.previewList.length; i++) {
-            this.previewList[i].isWrongChoice = false;
-            this.previewList = [];
-          }
-          return;
-        }, 2000);
+        // setTimeout(() => {
+        //   for (let i = 0; i < this.previewList.length; i++) {
+        //     this.previewList[i].isWrongChoice = null;
+        //     this.previewList = [];
+        //   }
+        //   return;
+        // }, 1000);
+
+        let playSound = new PlaySound({ vn: KeySound.WrongAnswer_Note });
+        playSound.playAlphabetVoice();
+
       } else {
         let resultObject = {
           item1: this.previewList[0],
@@ -144,7 +179,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
             this.resultItemList[i].item1 == resultObject.item1 &&
             this.resultItemList[i].item2 == resultObject.item2
           ) {
-            alert('item already exist!');
+            alert('word already added!');
             this.previewList = [];
             return;
           }
@@ -159,14 +194,23 @@ export class ExerciseComponent implements OnInit, OnDestroy {
     if (this.previewList.length > 2) {
       this.previewList = []
     }
+
+    setTimeout(() => {
+      for (let i = 0; i < this.previewList.length; i++) {
+        this.previewList[i].isWrongChoice = null;
+        this.previewList = [];
+      }
+      return;
+    }, 1200);
+    // console.log("this.resultItemList****: ", this.resultItemList)
   }
 
   isComplete() {
     if (this.resultItemList.length == 4) {
-      console.warn(
-        'this.testList[this.testNumber]: ',
-        this.testList[this.testNumber]
-      );
+      // console.warn(
+      //   'this.testList[this.testNumber]: ',
+      //   this.testList[this.testNumber]
+      // );
       this.testList[this.testNumber].isTestComplete = true;
       this.testGameCompletion();
     } else {
@@ -186,6 +230,7 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   testGameCompletion() {
     this.onCheckTestCompletion();
     if (this.checkTestCompletion.length == this.testList.length) {
+      this.isFinishedTest = true;
       this._router.navigate([
         '/literacy/letter/stage-3/activity/exercise-two',
       ]);
@@ -226,15 +271,17 @@ export class ExerciseComponent implements OnInit, OnDestroy {
   }
 
   refreshGame() {
-    this.resultItemList = [];
-    this.testNumber = 0;
-    this.onReplceKeyList();
-    for (let i = 0; i < this.testList.length; i++) {
-      this.testList[i].isTestComplete = false;
-    }
+    this.reloadComponent(true);
+    // this.resultItemList = [];
+    // this.testNumber = 0;
+    // this.onReplceKeyList();
+    // for (let i = 0; i < this.testList.length; i++) {
+    //   this.testList[i].isTestComplete = false;
+    // }
   }
 
   ngOnDestroy(): void {
+    this.stopBGSound();
     this.Subscriptions.forEach((x) => {
       if (!x.closed) {
         x.unsubscribe();

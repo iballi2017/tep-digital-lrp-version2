@@ -56,7 +56,7 @@ export class ParagraphLevelResultEffects {
     return this.actions$.pipe(
       ofType(ParagraphLevelResultActions.addParagraphLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._paragraphStageOneSvc
           .SubmitGameStageResult(action.payload)
           .pipe(
@@ -102,7 +102,7 @@ export class ParagraphLevelResultEffects {
     return this.actions$.pipe(
       ofType(ParagraphLevelResultActions.addParagraphLevelStageTwoResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._paragraphStageTwoSvc
           .SubmitGameStageResult(action.payload)
           .pipe(
@@ -149,7 +149,7 @@ export class ParagraphLevelResultEffects {
     return this.actions$.pipe(
       ofType(ParagraphLevelResultActions.addParagraphLevelStageThreeResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._paragraphStageThreeSvc
           .SubmitGameStageResult(action.payload)
           .pipe(
@@ -196,7 +196,7 @@ export class ParagraphLevelResultEffects {
     return this.actions$.pipe(
       ofType(ParagraphLevelResultActions.addParagraphLevelStageFourResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._paragraphStageFourSvc
           .SubmitGameStageResult(action.payload)
           .pipe(

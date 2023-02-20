@@ -1,28 +1,35 @@
 <!-- <p>exercise works!</p> -->
 
 <ng-container *ngIf="!isFinishedTest">
-    <app-launch-activity-sound [btnTitle]="btnTitle" (onPlayBGSound)="playBGSound()"
-        *ngIf="!isLaunchTest"></app-launch-activity-sound>
-<div id="activity-canvas">
+  <app-launch-activity-sound
+    [btnTitle]="btnTitle"
+    (onPlayBGSound)="playBGSound()"
+    *ngIf="!isLaunchTest"
+  ></app-launch-activity-sound>
+  <div id="activity-canvas">
     <div id="blue-board">
-        <div id="board-activity-hint">
-            <p class="my-0">{{boardActivityHint}}</p>
+      <div id="board-activity-hint">
+        <p class="my-0">{{ boardActivityHint }}</p>
+      </div>
+      <div class="inner">
+        <div id="result-item-list">
+          <ul class="item-list ps-0 mb-0">
+            <!-- <li>The sky is blue.</li> -->
+            <!-- <li>{{resultTextList[textPosition]?.uiText}}</li> -->
+            <li>{{ boardData?.uiText }}</li>
+          </ul>
         </div>
-        <div class="inner">
-            <div id="result-item-list">
-                <ul class="item-list ps-0 mb-0">
-                    <!-- <li>The sky is blue.</li> -->
-                    <!-- <li>{{resultTextList[textPosition]?.uiText}}</li> -->
-                    <li>{{boardData?.uiText}}</li>
-                </ul>
-            </div>
-        </div>
+      </div>
     </div>
-    <p class="text-info text-center">{{speechTexts$ | async}}</p>
+    <ng-container *ngIf="toggleType.value?.toggleControl">
+      <ng-container *ngIf="speechTexts$ | async">
+        <p class="text-info text-center">{{ speechTexts$ | async }}</p>
+      </ng-container>
+    </ng-container>
     <div id="key-selection-preview-block">
-        <div class="preview-text" *ngIf="previewText">
-            {{previewText}}
-        </div>
+      <div class="preview-text" *ngIf="previewText">
+        {{ previewText }}
+      </div>
     </div>
 
     <!-- <div id="action-buttons" class="mark-control text-center">
@@ -31,34 +38,93 @@
         <button class="btn btn-warning" (click)="clearService()">Clear</button>
     </div> -->
 
-
-
-    <div id="activity-keypad">
-        <div class="key-list ps-0 list-style-none">
-            <div class="action-btn">
-                <button mat-button class="btn btn-primary" (click)="startService()" *ngIf="!isStart">Start</button>
-                <button mat-button class="btn danger-btn" (click)="stopService()" *ngIf="isStart">Stop</button>
-                <button mat-button class="btn btn-primary" (click)="clearService()" *ngIf="isStart">Clear</button>
-            </div>
+    <form [formGroup]="toggleType" class="text-center mb-3">
+      <mat-slide-toggle
+        name="toggleControl"
+        formControlName="toggleControl"
+        (change)="toggle(toggleType)"
+      >
+        <div>
+          <i
+            class="material-icons"
+            [ngClass]="{
+              'text-white': toggleType.value?.toggleControl,
+              'text-muted': !toggleType.value?.toggleControl
+            }"
+            >record_voice_over</i
+          >
         </div>
+      </mat-slide-toggle>
+    </form>
+
+    <!-- OLD KEYS FOR VOICE RECOGNITION -->
+    <div id="activity-keypad" *ngIf="toggleType.value?.toggleControl">
+      <div class="key-list ps-0 list-style-none">
+        <div class="action-btn">
+          <button
+            mat-button
+            class="btn btn-primary"
+            (click)="startService()"
+            *ngIf="!isStart"
+          >
+            Start
+          </button>
+          <button
+            mat-button
+            class="btn danger-btn"
+            (click)="stopService()"
+            *ngIf="isStart"
+          >
+            Stop
+          </button>
+          <button
+            mat-button
+            class="btn btn-primary"
+            (click)="clearService()"
+            *ngIf="isStart"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- NEW KEYS FOR MARK-->
+    <div id="activity-keypad" *ngIf="!toggleType.value?.toggleControl">
+      <div class="key-list ps-0 list-style-none">
+        <div class="action-btn">
+          <button mat-button class="btn btn-primary" (click)="correct()">
+            Correct
+          </button>
+        </div>
+      </div>
     </div>
 
     <div id="utility-controls">
-        <div id="activity-hint-btn-wrapper">
-            <button class="btn" id="activity-hint-btn" (click)="onReadHint()">
-            </button>
-            <p>Hint</p>
-        </div>
-        <div id="replay-voice-btn-wrapper">
-            <button class="btn" id="replay-voice-btn" (click)="refreshGame()"></button>
-            <p>Refresh</p>
-        </div>
+      <div id="activity-hint-btn-wrapper">
+        <button
+          class="btn"
+          id="activity-hint-btn"
+          (click)="onReadHint()"
+        ></button>
+        <p>Hint</p>
+      </div>
+      <div id="replay-voice-btn-wrapper">
+        <button
+          class="btn"
+          id="replay-voice-btn"
+          (click)="refreshGame()"
+        ></button>
+        <p>Refresh</p>
+      </div>
     </div>
-</div>
+  </div>
 </ng-container>
 <ng-container *ngIf="isFinishedTest">
-    <div class="completion-screen">
-        <app-stage-completion [levelTitle]="gameLevel" [stageNumber]="stageNumber"
-            [gameType]="gameType"></app-stage-completion>
-    </div>
+  <div class="completion-screen">
+    <app-stage-completion
+      [levelTitle]="gameLevel"
+      [stageNumber]="stageNumber"
+      [gameType]="gameType"
+    ></app-stage-completion>
+  </div>
 </ng-container>

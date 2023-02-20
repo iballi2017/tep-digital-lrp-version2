@@ -61,7 +61,7 @@ export class NumberRecognitionTwoLevelResultEffects {
     return this.actions$.pipe(
       ofType(NumberRecognitionTwoLevelResultActions.addNumberRecognitionTwoLevelStageOneResult),
       mergeMap((action: any) => {
-        console.group('action: ', action);
+        
         return this._numberRecognitionTwoSvc.SubmitResult(action.payload).pipe(
           map((response: any) => {
             if (response) {
@@ -70,7 +70,7 @@ export class NumberRecognitionTwoLevelResultEffects {
               const x = new Snackbar(successResponse, this._snackBar);
               x.successSnackbar();
               this._numberRecognitionTwoSvc.sendAddNumberRecognitionTwoLevelResultBehaviour(
-                'Occupant added!'
+                response
               );
             }
             return NumberRecognitionTwoLevelResultActions.addNumberRecognitionTwoLevelStageOneResultSuccess(
@@ -106,5 +106,5 @@ export class NumberRecognitionTwoLevelResultEffects {
     private _router: Router,
     private _numberRecognitionTwoSvc: NumberRecognitionTwoService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 }
