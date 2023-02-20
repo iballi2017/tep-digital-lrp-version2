@@ -29,7 +29,11 @@ export class ParagraphStageOneService {
   constructor(
     private _http: HttpClient,
     private store: Store<SpeechTextsState>
-  ) { }
+  ) {
+    if (webkitSpeechRecognition) {
+      this.recognition = new webkitSpeechRecognition();
+    }
+  }
 
   sendAddParagraphLevelResultBehaviour(Msg: any) {
     this.addParagraphLevelResultBehaviour.next(Msg);

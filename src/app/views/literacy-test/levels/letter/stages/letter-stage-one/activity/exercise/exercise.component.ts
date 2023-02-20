@@ -26,7 +26,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   styleUrls: ['./exercise.component.scss'],
 })
 export class ExerciseComponent implements OnInit, AfterViewInit, OnDestroy {
-  boardActivityHint: string = 'Reveal the hidden vowel letters';
+  boardActivityHint: string = 'Select the vowel letters from these options';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
   testList = testList;
