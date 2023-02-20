@@ -26,11 +26,7 @@ import { KeySound } from 'src/assets/data/key-sound';
   templateUrl: './exercise.component.html',
   styleUrls: ['./exercise.component.scss'],
 })
-<<<<<<< HEAD
-export class ExerciseComponent implements OnInit, OnDestroy {
-=======
 export class ExerciseComponent extends ComponentReloadFunctionalityComponent implements OnInit, OnDestroy {
->>>>>>> ce9325d4df5cd3be3d8206ba5630eb95f78acea6
   boardActivityHint: string = 'Select the consonant letters from these options';
   CONSONANT = AlphabetType.CONSONANT;
   VOWEL = AlphabetType.VOWEL;
